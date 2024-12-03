@@ -19,7 +19,7 @@ process snp_fingerprint {
   strVCFgz = sampleId + '.vcf.gz'
   
   output:
-  tuple val(sampleId), path("*.vcf.gz")
+  path("*.vcf.gz")
 
   script:
   """
