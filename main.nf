@@ -26,6 +26,31 @@ include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
 workflow {
 
+    workflow {
+    // Static information about the pipeline
+    def githubPath = "https://github.com/prc992/SNAP"
+    def releaseVersion = "v1.0.0"
+
+    // ASCII art for SNAP
+    def asciiArt = """
+      ███████╗ ███╗   ██╗ █████╗ ██████╗ 
+      ██╔════╝ ████╗  ██║██╔══██╗██╔══██╗
+      ███████╗ ██╔██╗ ██║███████║██████╔╝
+      ╚════██║ ██║╚██╗██║██╔══██║██╔═══╝ 
+      ███████╗ ██║ ╚████║██║  ██║██║     
+      ╚══════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     
+    """
+
+    // Print the introductory message
+    println asciiArt
+    println "BALAS pipeline running, created by BacaLab. https://bacalab.dana-farber.org/"
+    println "SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma"
+    println "GitHub repository: ${githubPath}"
+    println "Release version: ${releaseVersion}"
+
+    // Rest of the workflow...
+}
+
     chSampleInfo = Channel.fromPath(params.samples) \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }
