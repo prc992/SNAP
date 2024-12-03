@@ -27,7 +27,7 @@ include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.0.2"
+    def releaseVersion = "v1.0.3"
 
     // ASCII art for SNAP
     def asciiArt = """
