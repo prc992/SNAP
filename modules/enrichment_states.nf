@@ -1,0 +1,26 @@
+process enrichment_states {
+  label 'process_medium'
+
+  //Docker Image
+  container ='quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+
+  tag "Sample - $sampleId"   
+  publishDir "$path_sample_peaks", mode : 'copy'
+
+  input:
+  each path (chEnrichmentScript)
+  tuple path (sampleBam), val(_)
+  tuple val(sampleId), val(path),path(_), path(_)
+
+  exec:
+  path_sample_peaks = path + "/peaks/" + sampleId
+  strCSV = sampleId + '_enrichment.csv'
+
+  output:
+  path("*.csv")
+
+  script:
+  """
+  sh $chEnrichmentStatesScript $sampleBam $params.states_ref $sampleId >> $strCSV
+  """
+}
