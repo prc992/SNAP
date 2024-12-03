@@ -27,7 +27,7 @@ include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.0.0"
+    def releaseVersion = "v1.0.2"
 
     // ASCII art for SNAP
     def asciiArt = """
@@ -41,7 +41,7 @@ workflow {
 
     // Print the introductory message
     println asciiArt
-    println "BALAS pipeline running, created by BacaLab. https://bacalab.dana-farber.org/"
+    println "SNAP pipeline running, created by BacaLab. https://bacalab.dana-farber.org/"
     println "SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma"
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
