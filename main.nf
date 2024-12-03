@@ -25,8 +25,6 @@ include {json_uropa} from './modules/uropa'
 include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
 workflow {
-
-    workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
     def releaseVersion = "v1.0.0"
@@ -47,9 +45,6 @@ workflow {
     println "SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma"
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
-
-    // Rest of the workflow...
-}
 
     chSampleInfo = Channel.fromPath(params.samples) \
         | splitCsv(header:true) \
