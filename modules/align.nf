@@ -22,7 +22,7 @@ process align {
   
   script:
   """
-  INDEX=`find -L ./ -name "*.amb" | sed 's/.amb//'`
+  INDEX=`find -L ./ -name "*.fai" | sed 's/.fai//'`
   bwa mem \$INDEX $file1 $file2 -t $task.cpus | samtools view --threads $task.cpus -Sb -u > $strBam
   """
 }
