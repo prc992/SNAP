@@ -21,16 +21,27 @@ process align {
 
   script:
   """
-  # Define the index prefix based on the input reference file
-  INDEX=\$(basename $file_fa .fa)
+  file_fa=\$(find $file_fa -maxdepth 1 -type f -name "*.fa")
+  
+  #Define the index prefix based on the input reference file
+  INDEX=\$(basename \$file_fa .fa)
+
+  echo "Using index prefix: \$INDEX"
 
   # Check if the index exists, and create it if not
   if [ ! -f "\${INDEX}.bwt" ]; then
     echo "Index not found. Creating index for reference genome: $file_fa"
     bwa index $file_fa
+    if [ \$? -ne 0 ]; then
+      echo "Error: Failed to create index for $file_fa"
+      exit 1
+    fi
+  else
+    echo "Index found. Skipping index creation."
   fi
 
   # Perform alignment
-  bwa mem $file_fa $file1 $file2 -t $task.cpus | samtools view --threads $task.cpus -Sb -u > $strBam
+  echo "Running alignment with bwa mem..."
+  bwa mem \${INDEX} $file1 $file2 -t $task.cpus | samtools view --threads $task.cpus -Sb -u > $strBam
   """
 }
