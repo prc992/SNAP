@@ -30,8 +30,8 @@ process downloadGenome {
     tag "Sample - $sampleId" 
     publishDir "${projectDir}/ref_files/genome", mode : 'copy'
 
-    container = "ubuntu:25.04"
-
+    container = "quay.io/biocontainers/wget:1.21.4"
+    
     input:
     val genome
 
