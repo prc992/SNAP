@@ -24,10 +24,32 @@ include {uropa} from './modules/uropa'
 include {json_uropa} from './modules/uropa'
 include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
+process downloadGenome {
+
+    label 'low_cpu_low_mem'
+    tag "Sample - $sampleId" 
+    publishDir "${projectDir}/ref_files/genome", mode : 'copy'
+
+    container = "ubuntu:noble-20231221"
+
+    input:
+    val genome
+
+    output:
+    file 'genome.fa'
+
+    script:
+    def url = genome == 'hg19' ? params.hg19GenomeDownload : params.hg38GenomeDownload
+    """
+    wget -O genome.fa.gz ${url}
+    gunzip genome.fa.gz
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.0.3"
+    def releaseVersion = "v1.0.3 - LOCAL"
 
     // ASCII art for SNAP
     def asciiArt = """
@@ -73,9 +95,12 @@ workflow {
 
     ch_fasta = Channel.fromPath("$params.align_ref")
 
-    fastqc(chSampleInfo)
+    downloadGenome(params.genome)
+
+    /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chSampleInfo,ch_fasta)
+    
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
     chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)
@@ -109,6 +134,6 @@ workflow {
 
     //Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
-    //pileups_report_comp(chSampleDirPileUps,chChromSizes,chAllFiles,chPileUpBED,chRComparison)
+    //pileups_report_comp(chSampleDirPileUps,chChromSizes,chAllFiles,chPileUpBED,chRComparison)*/
 }
 
