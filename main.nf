@@ -28,7 +28,7 @@ process downloadGenome {
 
     label 'low_cpu_low_mem'
     tag "Dowloading - $url" 
-    publishDir "${projectDir}/ref_files/genome", mode : 'copy'
+    publishDir "$outputDir", mode : 'copy'
 
     container = "quay.io/biocontainers/wget:1.21.4"
     
@@ -40,13 +40,16 @@ process downloadGenome {
 
     script:
     def url = genome == 'hg19' ? params.hg19GenomeDownload : params.hg38GenomeDownload
+    def outputDir = "${projectDir}/ref_files/genome"
     """
-    if [ ! -f genome.fa ]; then
-        wget -O genome.fa.gz ${url}
-        gunzip genome.fa.gz
+    mkdir -p ${outputDir}
+    if [ ! -f ${outputDir}/genome.fa ]; then
+        wget -O ${outputDir}/genome.fa.gz ${url}
+        gunzip ${outputDir}/genome.fa.gz
     else
-        echo "File genome.fa already exists. Skipping download."
+        echo "File ${outputDir}/genome.fa already exists. Skipping download."
     fi
+    ln -s ${outputDir}/genome.fa genome.fa
     """
 }
 
