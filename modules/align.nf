@@ -27,10 +27,10 @@ process align {
   # Check if the index exists, and create it if not
   if [ ! -f "\${INDEX}.bwt" ]; then
     echo "Index not found. Creating index for reference genome: $file_fa"
-    bwa index -p \${INDEX} $file_fa
+    bwa index $file_fa
   fi
 
   # Perform alignment
-  bwa mem \${INDEX} $file1 $file2 -t $task.cpus | samtools view --threads $task.cpus -Sb -u > $strBam
+  bwa mem $file_fa $file1 $file2 -t $task.cpus | samtools view --threads $task.cpus -Sb -u > $strBam
   """
 }
