@@ -27,7 +27,7 @@ include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 process downloadGenome {
 
     label 'low_cpu_low_mem'
-    tag "Dowloading - $url" 
+    tag "Dowloading - $genome" 
     publishDir "$outputDir", mode : 'copy'
 
     container = "quay.io/biocontainers/wget:1.21.4"
@@ -38,7 +38,7 @@ process downloadGenome {
 
     output:
     file 'genome.fa'
-    
+
     script:
     def url = genome == 'hg19' ? params.hg19GenomeDownload : params.hg38GenomeDownload
     """
