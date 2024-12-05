@@ -34,22 +34,21 @@ process downloadGenome {
     
     input:
     val genome
+    path refDir
 
     output:
     file 'genome.fa'
-
+    
     script:
     def url = genome == 'hg19' ? params.hg19GenomeDownload : params.hg38GenomeDownload
-    def outputDir = "${projectDir}/ref_files/genome"
     """
-    mkdir -p ${outputDir}
-    if [ ! -f ${outputDir}/genome.fa ]; then
-        wget -O ${outputDir}/genome.fa.gz ${url}
-        gunzip ${outputDir}/genome.fa.gz
+    if [ ! -f ${refDir}/genome.fa ]; then
+        wget -O ${refDir}/genome.fa.gz ${url}
+        gunzip ${refDir}/genome.fa.gz
     else
-        echo "File ${outputDir}/genome.fa already exists. Skipping download."
+        echo "File ${refDir}/genome.fa already exists. Skipping download."
     fi
-    ln -s ${outputDir}/genome.fa genome.fa
+    ln -s ${refDir}/genome.fa genome.fa
     """
 }
 
@@ -102,7 +101,8 @@ workflow {
 
     ch_fasta = Channel.fromPath("$params.align_ref")
 
-    downloadGenome(params.genome)
+    refDir = Channel.fromPath("${projectDir}/ref_files/genome")
+    downloadGenome(params.genome,refDir)
 
     /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
