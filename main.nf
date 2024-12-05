@@ -30,7 +30,7 @@ process downloadGenome {
     tag "Sample - $sampleId" 
     publishDir "${projectDir}/ref_files/genome", mode : 'copy'
 
-    container = "ubuntu:noble-20231221"
+    container = "ubuntu:25.04"
 
     input:
     val genome
