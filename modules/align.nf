@@ -21,7 +21,7 @@ process align {
   script:
   """
   # Find the reference genome file from the input
-  file_fa=$(find -L . -type f -name "*.fa")
+  file_fa=\$(find -L . -type f -name "*.fa")
   if [ -z "\$file_fa" ]; then
     echo "Error: No .fa file found in the provided path $align_ref"
     exit 1
