@@ -32,17 +32,20 @@ process downloadGenome {
 
     container = "quay.io/biocontainers/wget:1.21.4"
     
+    exec:
+    genomeOut = refDir
+
     input:
     val genome
     path refDir
 
     output:
-    file 'genome.fa'
+    file "${genomeFile}"
 
-    exec:
-    genomeOut = refDir
-
+    
     script:
+    def genomeFile = "${genome}.fa"
+    def genomeFilegz = "${genome}.fa.gz"
     
     if (genome == 'hg19') {
         url = params.hg19GenomeDownload
@@ -52,13 +55,13 @@ process downloadGenome {
         error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
     }
     """
-    if [ ! -f ${refDir}/genome.fa ]; then
-        wget -O ${refDir}/genome.fa.gz ${url}
-        gunzip ${refDir}/genome.fa.gz
+    if [ ! -f ${refDir}/${genomeFile} ]; then
+        wget -O ${refDir}/${genomeFilegz} ${url}
+        gunzip ${refDir}/${genomeFilegz} 
     else
-        echo "File ${refDir}/genome.fa already exists. Skipping download."
+        echo "File ${refDir}/${genomeFile} already exists. Skipping download."
     fi
-    ln -s ${refDir}/genome.fa genome.fa
+    ln -s ${refDir}/${genomeFile} ${genomeFile}
     """
 }
 
@@ -139,11 +142,11 @@ workflow {
     //chSampleDirPileUps = mk_dir_pile_ups_comp(chSampleInfo)
     //chDirAnalysis = mk_dir_samples(chSampleInfo,chSampleDir)
 
-    ch_fasta = Channel.fromPath("$params.align_ref")
+    ///////*****ch_fasta = Channel.fromPath("$params.align_ref")
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
-    chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
+    //chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
     /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
