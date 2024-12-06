@@ -69,7 +69,7 @@ process downloadDACFile {
 
     label 'low_cpu_low_mem'
     tag "Dowloading DAC File - $genome" 
-    publishDir "$refDir", mode : 'copy'
+    //publishDir "$refDir", mode : 'copy'
 
     container = "quay.io/biocontainers/wget:1.21.4"
     
