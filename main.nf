@@ -72,7 +72,7 @@ process createGenomeIndex {
 
     script:
     """
-    bwa index --threads $task.cpus ${genomeFile}
+    bwa index ${genomeFile}
     """
 }
 
