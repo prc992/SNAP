@@ -153,9 +153,9 @@ workflow {
     chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
-    /*fastqc(chSampleInfo)
+    fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-    chAlignFiles = align(chTrimFiles,chSampleInfo,ch_fasta)
+    /*chAlignFiles = align(chTrimFiles,chSampleInfo,ch_fasta)
     
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
