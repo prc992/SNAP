@@ -73,6 +73,8 @@ process createGenomeIndex {
     script:
     """
     if [ ! -f ${refDir}/genome.fa.pac ]; then
+        echo "Contents of ${refDir}:"
+        ls ${refDir}
         echo "${refDir}/genome.fa.pac file not found. Creating index files."
         bwa index ${genomeFile}
     else
