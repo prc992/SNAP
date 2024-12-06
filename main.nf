@@ -61,6 +61,7 @@ process downloadGenome {
     else
         echo "File ${refDir}/${genomeFile} already exists. Skipping download."
     fi
+    ln -s ${refDir}/${genomeFile} ${genomeFile}
     """
 }
 
