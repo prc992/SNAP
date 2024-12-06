@@ -148,7 +148,7 @@ workflow {
     // Create the directory if it doesn't exist
     """
     mkdir -p ${projectDir}/ref_files/genome
-    """
+    """.execute().waitFor()
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
