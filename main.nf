@@ -40,9 +40,13 @@ process downloadGenome {
     file 'genome.fa'
 
     exec:
-    genomeOut = refDir //+ "/genome.fa"
+    genomeOut = refDir
 
     script:
+    def allowedGenomes = params.allowedGenomes
+    if (!allowedGenomes.contains(genome)) {
+        error "Invalid genome parameter: ${genome}. Allowed values are: ${allowedGenomes.join(', ')}"
+    }
     def url = genome == 'hg19' ? params.hg19GenomeDownload : params.hg38GenomeDownload
     """
     if [ ! -f ${refDir}/genome.fa ]; then
