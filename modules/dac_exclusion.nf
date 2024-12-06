@@ -10,7 +10,7 @@ process dac_exclusion {
   input:
   tuple path(sampleBam),path(_)
   tuple val(sampleId), val(path),path(_), path(_)
-  each path (sampleDAC)
+  path (sampleDAC)
 
   exec:
   path_sample_align = path + "/align/" + sampleId
