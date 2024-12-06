@@ -55,6 +55,7 @@ process downloadGenome {
         error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
     }
     """
+    mkdir -p ${refDir}
     if [ ! -f ${refDir}/${genomeFile} ]; then
         wget -O ${refDir}/${genomeFilegz} ${url}
         gunzip ${refDir}/${genomeFilegz} 
