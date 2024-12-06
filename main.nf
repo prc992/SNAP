@@ -126,7 +126,7 @@ workflow {
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
-    chGenomeIndex = createGenomeIndex(params.genome,chGenome.out,refDir)
+    chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
     /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
