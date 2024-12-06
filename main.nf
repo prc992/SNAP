@@ -65,6 +65,43 @@ process downloadGenome {
     """
 }
 
+process downloadDACFile {
+
+    label 'low_cpu_low_mem'
+    tag "Dowloading DAC File - $genome" 
+    publishDir "$refDir", mode : 'copy'
+
+    container = "quay.io/biocontainers/wget:1.21.4"
+    
+    input:
+    val genome
+    path refDir
+
+    output:
+    file "${genome}.DAC.bed"
+
+    script:
+    def dacFile = "${genome}.DAC.bed"
+    def dacFilegz = "${genome}.DAC.bed.gz"
+    
+    if (genome == 'hg19') {
+        url = params.hg19DACListDownload
+    } else if (genome == 'hg38') {
+        url = params.hg38DACListDownload
+    } else {
+        error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
+    }
+    """
+    if [ ! -f ${refDir}/${dacFile} ]; then
+        wget -O ${refDir}/${dacFilegz} ${url}
+        gunzip ${refDir}/${dacFilegz} 
+    else
+        echo "File ${refDir}/${dacFile} already exists. Skipping download."
+    fi
+    ln -s ${refDir}/${dacFile} ${dacFile}
+    """
+}
+
 process createGenomeIndex {
     label 'high_cpu_high_mem'
     container = 'quay.io/biocontainers/bwa:0.7.18--he4a0461_1'
@@ -150,7 +187,7 @@ workflow {
     """.execute().waitFor()
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
-    chGenome = downloadGenome(params.genome,refDir)
+    /*chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
     fastqc(chSampleInfo)
@@ -159,14 +196,18 @@ workflow {
     
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
-    chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)
+    chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)*/
+
+    chDACFile = downloadDACFile(params.genome,refDir)
+
+    /*
     chDedupFiles = dedup(chUniqueFiles,chSampleInfo)
     chDACFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFile)
 
     chIndexFiles = index_sam(chDedupFiles,chSampleInfo)
     chPeakFiles = peak_bed_graph(chDedupFiles,chSampleInfo)
 
-    /*//corrigir depois
+    //corrigir depois
     //chJson_file = json_uropa(chSampleInfo)
     //uropa(chPeakFiles,chJson_file,chGTF_ref,chSampleInfo)
 
