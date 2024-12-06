@@ -39,7 +39,7 @@ process align {
 
   # Perform alignment
   echo "Running alignment with bwa mem..."
-  bwa mem "\$file_fa" "\$file1" "\$file2" -t $task.cpus | \
+  bwa mem $genomeFile $file1 $file2 -t $task.cpus | \
   samtools view --threads $task.cpus -Sb -u > $strBam
   """
 }
