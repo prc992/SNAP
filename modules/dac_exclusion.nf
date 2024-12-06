@@ -14,7 +14,7 @@ process dac_exclusion {
 
   exec:
   path_sample_align = path + "/align/" + sampleId
-  strBam = sampleId + 'dac_filtered.dedup.unique.sorted.bam'
+  strBam = sampleId + '.dac_filtered.dedup.unique.sorted.bam'
 
   output:
   path("*.bam")

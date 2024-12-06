@@ -198,13 +198,13 @@ workflow {
     lib_complex(chSortedFiles,chSampleInfo)
     chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)
 
-    chDACFile = downloadDACFile(params.genome,refDir)
+    chDACFileRef = downloadDACFile(params.genome,refDir)
 
     
     chDedupFiles = dedup(chUniqueFiles,chSampleInfo)
-    chDACFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFile)
+    chDACFilteredFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFileRef)
 
-    chIndexFiles = index_sam(chDACFiles,chSampleInfo)
+    chIndexFiles = index_sam(chDACFilteredFiles,chSampleInfo)
     /*chPeakFiles = peak_bed_graph(chDedupFiles,chSampleInfo)
 
     //corrigir depois

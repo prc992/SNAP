@@ -8,7 +8,7 @@ process index_sam {
   publishDir "$path_sample_align", mode : 'copy'
   
   input:
-  tuple path (sampleBam), path(_)
+  each path (sampleBam)
   tuple val (sampleId), val(path), path(_), path(_)
 
   exec:
