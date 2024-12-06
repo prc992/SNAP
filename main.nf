@@ -79,6 +79,8 @@ process createGenomeIndex {
         bwa index ${genomeFile}
     else
         echo "Index files already exist in ${refDir}. Skipping index creation."
+        echo "Creating symlinks to index files."
+        ln -s ${refDir}/genome.fa.* .
     fi
     """
 }
