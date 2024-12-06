@@ -43,11 +43,13 @@ process downloadGenome {
     genomeOut = refDir
 
     script:
-    def allowedGenomes = params.allowedGenomes
-    if (!allowedGenomes.contains(genome)) {
+    if (genome == 'hg19') {
+        url = params.hg19GenomeDownload
+    } else if (genome == 'hg38') {
+        url = params.hg38GenomeDownload
+    } else {
         error "Invalid genome parameter: ${genome}. Allowed values are: ${allowedGenomes.join(', ')}"
     }
-    def url = genome == 'hg19' ? params.hg19GenomeDownload : params.hg38GenomeDownload
     """
     if [ ! -f ${refDir}/genome.fa ]; then
         wget -O ${refDir}/genome.fa.gz ${url}
