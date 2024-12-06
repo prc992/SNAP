@@ -55,6 +55,26 @@ process downloadGenome {
     """
 }
 
+process createGenomeIndex {
+    container = 'quay.io/biocontainers/bwa:0.7.18--he4a0461_1'
+    publishDir "$refDir", mode : 'copy'
+
+    tag "Creating Index - $genome" 
+
+    input:
+    val genome
+    path genomeFile
+    path refDir
+
+    output:
+    path 'genome.fa.*'
+
+    script:
+    """
+    bwa index ${genomeFile}
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -105,7 +125,8 @@ workflow {
     ch_fasta = Channel.fromPath("$params.align_ref")
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
-    downloadGenome(params.genome,refDir)
+    chGenome = downloadGenome(params.genome,refDir)
+    chGenomeIndex = createGenomeIndex(params.genome,chGenome.out,refDir)
 
     /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
