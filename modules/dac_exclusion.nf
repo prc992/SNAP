@@ -8,7 +8,7 @@ process dac_exclusion {
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  tuple path(sampleBam),path(_)
+  tuple path(sampleBam)
   tuple val(sampleId), val(path),path(_), path(_)
   path (sampleDAC)
 
