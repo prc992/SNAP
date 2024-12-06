@@ -157,7 +157,7 @@ workflow {
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chSampleInfo,chGenome,chGenomeIndex)
     
-    /*chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
+    chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
     chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)
     chDedupFiles = dedup(chUniqueFiles,chSampleInfo)
@@ -166,7 +166,7 @@ workflow {
     chIndexFiles = index_sam(chDedupFiles,chSampleInfo)
     chPeakFiles = peak_bed_graph(chDedupFiles,chSampleInfo)
 
-    //corrigir depois
+    /*//corrigir depois
     //chJson_file = json_uropa(chSampleInfo)
     //uropa(chPeakFiles,chJson_file,chGTF_ref,chSampleInfo)
 
