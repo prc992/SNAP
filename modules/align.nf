@@ -18,6 +18,7 @@ process align {
 
   exec:
   String strBam = sampleId + '.bam'
+  path_sample_align = path + "/align/" + sampleId
 
   script:
   """
