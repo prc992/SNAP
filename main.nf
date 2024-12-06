@@ -73,6 +73,7 @@ process createGenomeIndex {
     script:
     """
     if [ ! -f ${refDir}/genome.fa.sa ]; then
+        echo "${refDir}/genome.fa.sa file not found. Creating index files."
         bwa index ${genomeFile}
     else
         echo "Index files already exist in ${refDir}. Skipping index creation."
