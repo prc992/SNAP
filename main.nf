@@ -28,7 +28,7 @@ process downloadGenome {
 
     label 'low_cpu_low_mem'
     tag "Dowloading - $genome" 
-    publishDir "$genomeOut", mode : 'copy'
+    //publishDir "$genomeOut", mode : 'copy'
 
     container = "quay.io/biocontainers/wget:1.21.4"
     
@@ -105,7 +105,7 @@ process downloadDACFile {
 process createGenomeIndex {
     label 'high_cpu_high_mem'
     container = 'quay.io/biocontainers/bwa:0.7.18--he4a0461_1'
-    publishDir "$refDir", mode : 'copy'
+    //publishDir "$refDir", mode : 'copy'
 
     tag "Creating Index - $genome" 
 
@@ -126,8 +126,8 @@ process createGenomeIndex {
     else
         echo "Index files already exist in ${refDir}. Skipping index creation."
         echo "Creating symlinks to index files."
-        ln -s ${refDir}/${genome}.fa.* .
     fi
+    ln -s ${refDir}/${genome}.fa.* .
     """
 }
 
@@ -187,7 +187,7 @@ workflow {
     """.execute().waitFor()
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
-    /*chGenome = downloadGenome(params.genome,refDir)
+    chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
     fastqc(chSampleInfo)
@@ -196,7 +196,7 @@ workflow {
     
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
-    chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)*/
+    chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)
 
     chDACFile = downloadDACFile(params.genome,refDir)
 
