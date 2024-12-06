@@ -28,7 +28,7 @@ process downloadGenome {
 
     label 'low_cpu_low_mem'
     tag "Dowloading - $genome" 
-    publishDir "$outputDir", mode : 'copy'
+    publishDir "$genomeOut", mode : 'copy'
 
     container = "quay.io/biocontainers/wget:1.21.4"
     
@@ -38,6 +38,9 @@ process downloadGenome {
 
     output:
     file 'genome.fa'
+
+    exec:
+    genomeOut = refDir + "/genome.fa"
 
     script:
     def url = genome == 'hg19' ? params.hg19GenomeDownload : params.hg38GenomeDownload
