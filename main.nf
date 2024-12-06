@@ -151,10 +151,10 @@ workflow {
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
-    //chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
+    chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
-    //fastqc(chSampleInfo)
-    //chTrimFiles = trim(chSampleInfo)
+    fastqc(chSampleInfo)
+    chTrimFiles = trim(chSampleInfo)
     /*chAlignFiles = align(chTrimFiles,chSampleInfo,ch_fasta)
     
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
