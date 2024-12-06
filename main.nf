@@ -78,19 +78,18 @@ process createGenomeIndex {
     path refDir
 
     output:
-    path 'genome.fa.*'
+    path "${genome}.fa.*"
 
     script:
+    def genomeFilePac = "${genome}.fa.pac"
     """
-    if [ ! -f ${refDir}/genome.fa.pac ]; then
-        echo "Contents of ${refDir}:"
-        ls ${refDir}
-        echo "${refDir}/genome.fa.pac file not found. Creating index files."
+    if [ ! -f ${refDir}/${genomeFilePac} ]; then
+        echo "${refDir}/${genomeFilePac} file not found. Creating index files."
         bwa index ${genomeFile}
     else
         echo "Index files already exist in ${refDir}. Skipping index creation."
         echo "Creating symlinks to index files."
-        ln -s ${refDir}/genome.fa.* .
+        ln -s ${refDir}/${genome}.fa.* .
     fi
     """
 }
@@ -152,7 +151,7 @@ workflow {
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
-    //chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
+    chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
     /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
