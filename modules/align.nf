@@ -10,7 +10,8 @@ process align {
   input:
   tuple path(file1), path(file2)
   tuple val(sampleId), val(path), path(_), path(_)
-  each path (align_ref)
+  path genomeFile
+  path genomeIndexFiles
 
   output:
   path("*.bam")
@@ -23,37 +24,22 @@ process align {
   # Find the reference genome file from the input
   file_fa=\$(find -L . -type f -name "*.fa")
   if [ -z "\$file_fa" ]; then
-    echo "Error: No .fa file found in the provided path $align_ref"
+    echo "Error: No .fa file found in the provided path"
     exit 1
   fi
   echo "Reference genome found: \$file_fa"
 
-  # Define the index prefix based on the reference file
-  INDEX=\$(basename "\$file_fa" .fa)
-  echo "Using index prefix: \$INDEX"
-
-  # Check if the index exists, and create it if not
-  if [ ! -f "\${INDEX}.bwt" ]; then
-    echo "Index not found. Creating index for reference genome: \$file_fa"
-    bwa index "\$file_fa"
-    if [ \$? -ne 0 ]; then
-      echo "Error: Failed to create index for \$file_fa"
-      exit 1
-    fi
-  else
-    echo "Index found. Skipping index creation."
+  # Find the reference index file from the input
+  file_pac=\$(find -L . -type f -name "*.fa.pac")
+  if [ -z "\$file_fa" ]; then
+    echo "Error: Index not found. Please create index for reference genome."
+    exit 1
   fi
+  echo "Index file found: \$file_pac"
 
   # Perform alignment
   echo "Running alignment with bwa mem..."
   bwa mem "\$file_fa" "\$file1" "\$file2" -t $task.cpus | \
   samtools view --threads $task.cpus -Sb -u > $strBam
-
-  if [ \$? -eq 0 ]; then
-    echo "Alignment completed successfully. Output: $strBam"
-  else
-    echo "Error: Alignment failed for sample: $sampleId"
-    exit 1
-  fi
   """
 }

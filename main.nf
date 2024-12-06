@@ -155,9 +155,9 @@ workflow {
 
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-    /*chAlignFiles = align(chTrimFiles,chSampleInfo,ch_fasta)
+    chAlignFiles = align(chTrimFiles,chSampleInfo,chGenome,chGenomeIndex)
     
-    chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
+    /*chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
     chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)
     chDedupFiles = dedup(chUniqueFiles,chSampleInfo)
