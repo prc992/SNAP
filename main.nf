@@ -40,7 +40,7 @@ process downloadGenome {
     path refDir
 
     output:
-    file "${genomeFile}"
+    file "${genome}.fa"
 
     
     script:
@@ -145,7 +145,7 @@ workflow {
     ///////*****ch_fasta = Channel.fromPath("$params.align_ref")
 
     
-    // Create the directory if it doesn't exist
+    // Create the genome directory if it doesn't exist
     """
     mkdir -p ${projectDir}/ref_files/genome
     """.execute().waitFor()
