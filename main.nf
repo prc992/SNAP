@@ -40,7 +40,7 @@ process downloadGenome {
     file 'genome.fa'
 
     exec:
-    genomeOut = refDir + "/genome.fa"
+    genomeOut = refDir //+ "/genome.fa"
 
     script:
     def url = genome == 'hg19' ? params.hg19GenomeDownload : params.hg38GenomeDownload
@@ -56,6 +56,7 @@ process downloadGenome {
 }
 
 process createGenomeIndex {
+    label 'high_cpu_high_mem'
     container = 'quay.io/biocontainers/bwa:0.7.18--he4a0461_1'
     publishDir "$refDir", mode : 'copy'
 
@@ -71,7 +72,7 @@ process createGenomeIndex {
 
     script:
     """
-    bwa index ${genomeFile}
+    bwa index --threads $task.cpus ${genomeFile}
     """
 }
 
