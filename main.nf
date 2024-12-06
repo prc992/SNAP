@@ -200,12 +200,12 @@ workflow {
 
     chDACFile = downloadDACFile(params.genome,refDir)
 
-    /*
+    
     chDedupFiles = dedup(chUniqueFiles,chSampleInfo)
     chDACFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFile)
 
-    chIndexFiles = index_sam(chDedupFiles,chSampleInfo)
-    chPeakFiles = peak_bed_graph(chDedupFiles,chSampleInfo)
+    chIndexFiles = index_sam(chDACFiles,chSampleInfo)
+    /*chPeakFiles = peak_bed_graph(chDedupFiles,chSampleInfo)
 
     //corrigir depois
     //chJson_file = json_uropa(chSampleInfo)
