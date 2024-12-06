@@ -55,7 +55,6 @@ process downloadGenome {
         error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
     }
     """
-    mkdir -p ${refDir}
     if [ ! -f ${refDir}/${genomeFile} ]; then
         wget -O ${refDir}/${genomeFilegz} ${url}
         gunzip ${refDir}/${genomeFilegz} 
@@ -144,6 +143,12 @@ workflow {
     //chDirAnalysis = mk_dir_samples(chSampleInfo,chSampleDir)
 
     ///////*****ch_fasta = Channel.fromPath("$params.align_ref")
+
+    
+    // Create the directory if it doesn't exist
+    """
+    mkdir -p ${projectDir}/ref_files/genome
+    """
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
