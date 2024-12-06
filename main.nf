@@ -43,12 +43,13 @@ process downloadGenome {
     genomeOut = refDir
 
     script:
+    
     if (genome == 'hg19') {
         url = params.hg19GenomeDownload
     } else if (genome == 'hg38') {
         url = params.hg38GenomeDownload
     } else {
-        error "Invalid genome parameter: ${genome}. Allowed values are: ${allowedGenomes.join(', ')}"
+        error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
     }
     """
     if [ ! -f ${refDir}/genome.fa ]; then
