@@ -205,8 +205,8 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFileRef)
 
     chIndexFiles = index_sam(chDACFilteredFiles,chSampleInfo)
-    /*chPeakFiles = peak_bed_graph(chDedupFiles,chSampleInfo)
-
+    chPeakFiles = peak_bed_graph(chDACFilteredFiles,chSampleInfo)
+    /*
     //corrigir depois
     //chJson_file = json_uropa(chSampleInfo)
     //uropa(chPeakFiles,chJson_file,chGTF_ref,chSampleInfo)
