@@ -167,18 +167,18 @@ workflow {
 
 
     //Assets
-    chGTF_ref = Channel.fromPath("$params.gtf_ref")
+    //Exlcuir chGTF_ref = Channel.fromPath("$params.gtf_ref")
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
-    chDACFile = Channel.fromPath("$params.DAC_Exclusion")
+    //Exlcuir chDACFile = Channel.fromPath("$params.DAC_Exclusion")
     chSNPS_ref = Channel.fromPath("$params.snps_ref")
 
-    //chFilesRef = Channel.fromPath("$params.files_ref_genome")
+    //Exlcuir chFilesRef = Channel.fromPath("$params.files_ref_genome")
 
-    //chSampleDir = mk_dir(chSampleInfo)
-    //chSampleDirPileUps = mk_dir_pile_ups_comp(chSampleInfo)
-    //chDirAnalysis = mk_dir_samples(chSampleInfo,chSampleDir)
+    //Exlcuirh SampleDir = mk_dir(chSampleInfo)
+    //Exlcuir chSampleDirPileUps = mk_dir_pile_ups_comp(chSampleInfo)
+    //Exlcuir chDirAnalysis = mk_dir_samples(chSampleInfo,chSampleDir)
 
-    ///////*****ch_fasta = Channel.fromPath("$params.align_ref")
+    //Exlcuir ch_fasta = Channel.fromPath("$params.align_ref")
 
     
     // Create the genome directory if it doesn't exist
