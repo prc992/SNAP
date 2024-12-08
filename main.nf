@@ -134,7 +134,7 @@ process createGenomeIndex {
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.0.3 - LOCAL"
+    def releaseVersion = "v1.0.3 - LOCAL - 2021-09-30"
 
     // ASCII art for SNAP
     def asciiArt = """
