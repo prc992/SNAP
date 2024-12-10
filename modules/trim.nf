@@ -8,7 +8,7 @@ process trim {
   publishDir "$path_sample_trim", mode: 'copy'
 
   input:
-  tuple val(sampleId), val(path),path(read1), path(read2)
+  tuple val(sampleId), val(path),path(read1), val(read2)
 
   exec:
   path_sample_trim = path + "/trim/" + sampleId
@@ -18,6 +18,12 @@ process trim {
 
   script:
   """
-  trim_galore --paired $read1 $read2 --gzip --cores $task.cpus
+  if [ -z "$read2" ]; then
+    # Single-end
+    trim_galore $read1 --gzip --cores $task.cpus
+  else
+    # Paired-end
+    trim_galore --paired $read1 $read2 --gzip --cores $task.cpus
+  fi
   """
 }
