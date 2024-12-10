@@ -198,9 +198,9 @@ workflow {
     mkdir -p ${projectDir}/${output_dir}
     """.execute().waitFor()
 
-    chSampleInfo = createSamplesheet(sample_dir, output_dir)
+    chSampleSheet = createSamplesheet(sample_dir, output_dir)
 
-    /*chSampleInfo = Channel.fromPath(params.samples) \
+    chSampleInfo = Channel.fromPath(chSampleSheet) \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }*/
 
