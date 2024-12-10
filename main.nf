@@ -198,11 +198,11 @@ workflow {
     mkdir -p ${projectDir}/${output_dir}
     """.execute().waitFor()
 
-    createSamplesheet(sample_dir, output_dir)
+    chSampleInfo = createSamplesheet(sample_dir, output_dir)
 
     /*chSampleInfo = Channel.fromPath(params.samples) \
         | splitCsv(header:true) \
-        | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }
+        | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }*/
 
     //Auxiliar code
     chEnrichmentScript= Channel.fromPath("$params.pathEnrichmentScript")
@@ -227,7 +227,7 @@ workflow {
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
     fastqc(chSampleInfo)
-    chTrimFiles = trim(chSampleInfo)
+    /*chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chSampleInfo,chGenome,chGenomeIndex)
     
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
