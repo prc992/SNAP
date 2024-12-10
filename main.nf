@@ -190,16 +190,6 @@ workflow {
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
 
-    // Create the output directory if it doesn't exist
-    """
-    mkdir -p ${projectDir}/${params.output_dir}
-    """.execute().waitFor()
-
-    chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir)
-
-    chSampleInfo = chSampleSheet \
-        | splitCsv(header:true) \
-        | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
 
     //Auxiliar code
     chEnrichmentScript= Channel.fromPath("$params.pathEnrichmentScript")
@@ -208,7 +198,6 @@ workflow {
     chRPileups= Channel.fromPath("$params.pathRPileups")
     chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
     //chJson_file = Channel.fromPath("$params.pathJson_file")
-
 
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
@@ -222,6 +211,17 @@ workflow {
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
+
+    // Create the output directory if it doesn't exist
+    """
+    mkdir -p ${projectDir}/${params.output_dir}
+    """.execute().waitFor()
+
+    chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir)
+
+    chSampleInfo = chSampleSheet \
+        | splitCsv(header:true) \
+        | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
 
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
