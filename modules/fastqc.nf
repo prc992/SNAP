@@ -19,7 +19,7 @@ process fastqc {
   
   script:
   """
-  Debug : fastqc
+  #Debug : fastqc
   echo "Val path : $path"
   echo "path_sample_fastqc : $path_sample_fastqc"
 
