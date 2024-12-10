@@ -224,7 +224,7 @@ workflow {
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
 
     fastqc(chSampleInfo)
-    /*chTrimFiles = trim(chSampleInfo)
+    chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chSampleInfo,chGenome,chGenomeIndex)
     
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
