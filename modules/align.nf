@@ -9,8 +9,8 @@ process align {
   publishDir "$path_sample_align", mode: 'copy'
 
   input:
-  each tuple val(sampleId), val(path), path(_), path(_)
-  each path(trimmed_files)
+  tuple val(sampleId), val(path), path(_), path(_)
+  path(trimmed_files)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
@@ -22,7 +22,9 @@ process align {
   """
   # Debugging: Print input paths
   echo "Sample ID: $sampleId"
-  echo "Genome file: $genomeFile"
+  echo "Val path : $path"
   echo "Trimmed files: $trimmed_files"
+  echo "Genome file: $genomeFile"
+  echo "Genome index: $genomeIndexFiles"
   """
 }
