@@ -131,6 +131,33 @@ process createGenomeIndex {
     """
 }
 
+process createSamplesheet {
+    label 'low_cpu_low_mem'
+    container = "quay.io/biocontainers/wget:1.21.4"
+    tag "Creating Samplesheet" 
+
+    input:
+    val sample_dir
+    val output_dir
+
+    output:
+    path "snap-samplesheet-*.csv" into chSamplesheet
+
+    script:
+    """
+    now=\$(date +'%Y-%m-%d-%H-%M-%S')
+    filename="snap-samplesheet-\$now.csv"
+    echo "sampleId,path,read1,read2" > \$filename
+
+    for subfolder in \$(ls -d ${sample_dir}/*/); do
+        sampleId=\$(basename \$subfolder)
+        read1=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 1)
+        read2=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 2 | tail -n 1)
+        echo "\$sampleId,${output_dir},\$read1,\$read2" >> \$filename
+    done
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -153,7 +180,12 @@ workflow {
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
 
-    chSampleInfo = Channel.fromPath(params.samples) \
+    sample_dir = params.sample_dir
+    output_dir = params.output_dir
+
+    createSamplesheet(sample_dir, output_dir)
+
+    /*chSampleInfo = Channel.fromPath(params.samples) \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }
 
