@@ -225,7 +225,7 @@ workflow {
 
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-    chAlignFiles = align(chTrimFiles,chSampleInfo,chGenome,chGenomeIndex)
+    /*chAlignFiles = align(chTrimFiles,chSampleInfo,chGenome,chGenomeIndex)
     
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
@@ -238,7 +238,7 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFileRef)
 
     chIndexFiles = index_sam(chDACFilteredFiles,chSampleInfo)
-    chPeakFiles = peak_bed_graph(chDACFilteredFiles,chSampleInfo)
+    chPeakFiles = peak_bed_graph(chDACFilteredFiles,chSampleInfo)*/
     /*
     //corrigir depois
     //chJson_file = json_uropa(chSampleInfo)
