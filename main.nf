@@ -153,16 +153,13 @@ process createSamplesheet {
 
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
-        
         # Exclude hidden directories
         if [[ \$sampleId == .* ]]; then
             continue
         fi
-
-        files=(\$(find \$subfolder -type f \( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' \) | sort))
+        files=(\$(find \$subfolder -type f \\( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' \\) | sort))
         read1=\${files[0]}
         read2=\${files[1]:-}
-
         echo "\$sampleId,${output_dir},\$read1,\$read2" >> \$filename
     done
     """
