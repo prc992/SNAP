@@ -159,7 +159,10 @@ process createSamplesheet {
         fi
         files=(\$(find \$subfolder -type f \\( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' \\) | sort))
         read1=\$(realpath \${files[0]})
-        read2=\$(realpath \${files[1]:-})
+        read2=""
+        if [ \${#files[@]} -gt 1 ]; then
+            read2=\$(realpath \${files[1]})
+        fi
         echo "\$sampleId,${output_dir},\$read1,\$read2" >> \$filename
     done
     """
