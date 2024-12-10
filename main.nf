@@ -189,7 +189,7 @@ workflow {
 
     // Create the output directory if it doesn't exist
     """
-    mkdir -p ${params.sample_dir}/${params.output_dir}
+    mkdir -p ${projectDir}/${params.output_dir}
     """.execute().waitFor()
 
     chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir)
