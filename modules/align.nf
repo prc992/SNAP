@@ -13,8 +13,8 @@ process align {
   each path (genomeFile)
   each path (genomeIndexFiles)
 
-  //output:
-  //path("*.bam")
+  output:
+  path("*.bam")
 
   exec:
   String strBam = sampleId + '.bam'
@@ -22,6 +22,11 @@ process align {
 
   script:
   """
+  # Debugging: Print input paths
+  echo "Sample ID: $sampleId"
+  echo "Genome file: $genomeFile"
+  echo "Trimmed files: $trimmed_files"
+  
   # Find the reference genome file from the input
   file_fa=\$(find -L . -type f -name "*.fa")
   if [ -z "\$file_fa" ]; then
