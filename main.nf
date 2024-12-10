@@ -141,7 +141,6 @@ process createSamplesheet {
     input:
     val sample_dir
     val output_dir
-    path refDir
 
     output:
     path "snap-samplesheet-*.csv"
