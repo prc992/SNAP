@@ -14,7 +14,7 @@ process trim {
   path_sample_trim = path + "/trim/" + sampleId
 
   output:
-  path('*.fq.gz', arity: '1..*')
+  path('*.fq.gz')
 
   script:
   """
