@@ -150,8 +150,8 @@ process createSamplesheet {
     now=\$(date +'%Y-%m-%d-%H-%M-%S')
     filename="snap-samplesheet-\$now.csv"
     echo "sampleId,path,read1,read2" > \$filename
-
-    for subfolder in \$(ls -d ${sample_dir}/*/); do
+    
+    for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
         read1=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 1)
         read2=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 2 | tail -n 1)
