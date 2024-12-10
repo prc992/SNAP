@@ -8,3 +8,4 @@ hg19.fa.sa
 hg19.fa.gz
 hg19.DAC.bed
 .nextflow.log
+*.csv
