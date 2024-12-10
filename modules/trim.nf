@@ -14,7 +14,8 @@ process trim {
   path_sample_trim = path + "/trim/" + sampleId
 
   output:
-  tuple path("*1.fq.gz"),path("*2.fq.gz") 
+  tuple path("*_val_1.fq.gz"), path("*_val_2.fq.gz"), emit: paired_output
+  path "*_trimmed.fq.gz", emit: single_output
 
   script:
   """
