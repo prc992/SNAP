@@ -158,9 +158,11 @@ process createSamplesheet {
         if [[ \$sampleId == .* ]]; then
             continue
         fi
-        
-        read1=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 1)
-        read2=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 2 | tail -n 1)
+
+        files=(\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | sort))
+        read1=\${files[0]}
+        read2=\${files[1]}
+
         echo "\$sampleId,${output_dir},\$read1,\$read2" >> \$filename
     done
     """
