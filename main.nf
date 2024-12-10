@@ -197,7 +197,7 @@ workflow {
 
     chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir)
 
-    chSampleInfo = Channel.fromPath(chSampleSheet) \
+    chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }
 
