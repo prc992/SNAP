@@ -199,7 +199,7 @@ workflow {
 
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
-        | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }
+        | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
 
     //Auxiliar code
     chEnrichmentScript= Channel.fromPath("$params.pathEnrichmentScript")
