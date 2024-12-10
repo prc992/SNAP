@@ -19,6 +19,10 @@ process fastqc {
   
   script:
   """
+  Debug : fastqc
+  echo "Val path : $path"
+  echo "path_sample_fastqc : $path_sample_fastqc"
+
   if [ -z "$read2" ]; then
       # Single-end
       fastqc $read1 --threads $task.cpus
