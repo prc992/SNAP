@@ -1,4 +1,5 @@
 process align {
+  debug true
   label 'high_cpu_high_mem'
 
   // Docker Image
