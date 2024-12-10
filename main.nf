@@ -225,9 +225,9 @@ workflow {
 
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-    /*chAlignFiles = align(chTrimFiles,chSampleInfo,chGenome,chGenomeIndex)
+    chAlignFiles = align(chTrimFiles,chSampleInfo,chGenome,chGenomeIndex)
     
-    chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
+    /*chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
     chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)
 
