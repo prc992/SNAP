@@ -1,4 +1,5 @@
 process fastqc {
+  debug true
   label 'med_cpu_med_mem'
     
   //Docker Image
