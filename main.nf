@@ -190,19 +190,16 @@ workflow {
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
 
-    sample_dir = params.sample_dir
-    output_dir = params.output_dir
-
     // Create the output directory if it doesn't exist
     """
     mkdir -p ${projectDir}/${output_dir}
     """.execute().waitFor()
 
-    chSampleSheet = createSamplesheet(sample_dir, output_dir)
+    chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir)
 
     chSampleInfo = Channel.fromPath(chSampleSheet) \
         | splitCsv(header:true) \
-        | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }*/
+        | map { row-> tuple(row.sampleId,row.path, row.read1, row.read2) }
 
     //Auxiliar code
     chEnrichmentScript= Channel.fromPath("$params.pathEnrichmentScript")
