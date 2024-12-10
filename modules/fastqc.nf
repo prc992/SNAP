@@ -26,10 +26,10 @@ process fastqc {
 
   if [ -z "$read2" ]; then
       # Single-end
-      fastqc $read1 --threads $task.cpus --outdir $path_sample_fastqc
+      fastqc $read1 --threads $task.cpus
   else
       # Paired-end
-      fastqc --threads $task.cpus $read1 $read2 --outdir $path_sample_fastqc
+      fastqc --threads $task.cpus $read1 $read2
   fi
   """
 }
