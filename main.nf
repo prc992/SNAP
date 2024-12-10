@@ -158,7 +158,7 @@ process createSamplesheet {
             continue
         fi
         files=(\$(find \$subfolder -type f \\( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' \\) | sort))
-        read1=\${files[0]}
+        read1=\${files[0]:-}
         read2=\${files[1]:-}
         echo "\$sampleId,${output_dir},\$read1,\$read2" >> \$filename
     done
