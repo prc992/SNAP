@@ -133,7 +133,7 @@ process createGenomeIndex {
 
 process createSamplesheet {
     label 'low_cpu_low_mem'
-    container = "quay.io/biocontainers/wget:1.21.4"
+    //container = "quay.io/biocontainers/wget:1.21.4"
     tag "Creating Samplesheet" 
 
     publishDir "$projectDir/$output_dir", mode : 'copy'
@@ -150,7 +150,7 @@ process createSamplesheet {
     now=\$(date +'%Y-%m-%d-%H-%M-%S')
     filename="snap-samplesheet-\$now.csv"
     echo "sampleId,path,read1,read2" > \$filename
-    
+
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
         read1=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 1)
