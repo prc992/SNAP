@@ -8,7 +8,7 @@ process align {
   publishDir "$path_sample_align", mode: 'copy'
 
   input:
-  tuple path(file1), path(file2)
+  path(sequence_files)
   tuple val(sampleId), val(path), path(_), path(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
@@ -38,9 +38,23 @@ process align {
   fi
   echo "Index file found: \$file_pac"
 
+  # Align the reads to the reference genome using bwa mem and convert to bam
+  # Find the sequence files from the input it can be single or paired end
+  files=(\$(find . -type f \\( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' \\) | sort))
+  read1=\$(realpath \${files[0]})
+  read2=""
+  if [ \${#files[@]} -gt 1 ]; then
+    read2=\$(realpath \${files[1]})
+  fi
+
   # Perform alignment
   echo "Running alignment with bwa mem..."
-  bwa mem $genomeFile $file1 $file2 -t $task.cpus | \
-  samtools view --threads $task.cpus -Sb -u > $strBam
+  if [ -z "\$read2" ]; then
+    bwa mem \$file_fa \$read1 -t ${task.cpus} | \
+    samtools view --threads ${task.cpus} -Sb -u > ${sampleId}.bam
+  else
+    bwa mem \$file_fa \$read1 \$read2 -t ${task.cpus} | \
+    samtools view --threads ${task.cpus} -Sb -u > ${sampleId}.bam
+  fi
   """
 }
