@@ -153,6 +153,12 @@ process createSamplesheet {
 
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
+        
+        # Exclude hidden directories
+        if [[ \$sampleId == .* ]]; then
+            continue
+        fi
+        
         read1=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 1)
         read2=\$(find \$subfolder -type f -name '*.fq.gz' -o -name '*.fq' | head -n 2 | tail -n 1)
         echo "\$sampleId,${output_dir},\$read1,\$read2" >> \$filename
