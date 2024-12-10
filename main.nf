@@ -136,9 +136,12 @@ process createSamplesheet {
     container = "quay.io/biocontainers/wget:1.21.4"
     tag "Creating Samplesheet" 
 
+    publishDir "$projectDir/$output_dir", mode : 'copy'
+
     input:
     val sample_dir
     val output_dir
+    path refDir
 
     output:
     path "snap-samplesheet-*.csv"
@@ -182,6 +185,11 @@ workflow {
 
     sample_dir = params.sample_dir
     output_dir = params.output_dir
+
+    // Create the output directory if it doesn't exist
+    """
+    mkdir -p ${projectDir}/${output_dir}
+    """.execute().waitFor()
 
     createSamplesheet(sample_dir, output_dir)
 
