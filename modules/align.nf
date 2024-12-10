@@ -46,7 +46,8 @@ process align {
 
   # Align the reads to the reference genome using bwa mem and convert to bam
   # Find the sequence files from the input it can be single or paired end
-  files=(\$(find . \( -type f -o -type l \) \\( -name '*trimmed.fq.gz' -o -name '*val_1.fq.gz' -o -name '*val_2.fq.gz' \\) | sort))
+  files=(\$(find . -type l \\( -name '*trimmed.fq.gz' -o -name '*val_1.fq.gz' -o -name '*val_2.fq.gz' \\) | sort))
+  #files=(\$(find . \( -type f -o -type l \) \\( -name '*trimmed.fq.gz' -o -name '*val_1.fq.gz' -o -name '*val_2.fq.gz' \\) | sort))
   read1=\$(realpath \${files[0]})
   read2=""
   if [ \${#files[@]} -gt 1 ]; then
