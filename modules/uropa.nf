@@ -34,7 +34,7 @@ process uropa {
   container = "quay.io/biocontainers/uropa:4.0.3--pyhdfd78af_0"
 
   tag "Sample - $sampleId"  
-  //publishDir "$path_sample_peaks", mode : 'copy'
+  publishDir "$path_sample_peaks", mode : 'copy'
     
   input:
   tuple val(sampleId),val(path_analysis),path (bdgFile), path (narrowPeakFile)
@@ -43,13 +43,18 @@ process uropa {
   exec:
   path_sample_peaks = path_analysis + "/peaks/" + sampleId
   
-  //output:
-  //path ('*finalhits.bed')
+  output:
+  path ('*finalhits.bed')
   
   script:
   """
-  BED_FILE=`find -L ./ -name "*.narrowPeak"`
-  echo '"bed": "\$BED_FILE"}' 
+  echo '{"queries": [' >> cfchip.json
+  echo '{"feature":"gene","distance":10000,"filter.attribute" : "gene_type","attribute.value" : "protein_coding","feature.anchor":"start"}],' >> cfchip.json
+  echo '"show_attributes":["gene_id", "gene_name","gene_type"],   ' >> cfchip.json
+  echo '"priority" : "True",' >> cfchip.json
+  echo '"gtf": "$gtf_file",' >> cfchip.json
+  echo '"bed": "$narrowPeakFile"}' >> cfchip.json
+
+  uropa -i cfchip.json -t $task.cpus --summary
   """
-  //uropa -i $json_file -t $task.cpus --summary
 }
