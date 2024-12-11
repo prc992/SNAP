@@ -281,8 +281,8 @@ workflow {
 
     uropa(chPeakFiles,chGeneAnotation)
 
-    /*chBedFiles = bam_to_bed(chDedupFiles,chSampleInfo)
-    unique_frags(chBedFiles,chSampleInfo)
+    chBedFiles = bam_to_bed(chDACFilteredFiles)
+    /*unique_frags(chBedFiles,chSampleInfo)
     chChromSizes = fetch_chrom_sizes(chSampleInfo)
     //snp_fingerprint(chDedupFiles,chSNPS_ref,ch_fasta,chSampleInfo,chIndexFiles)
 

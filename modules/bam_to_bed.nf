@@ -8,15 +8,14 @@ process bam_to_bed {
   publishDir "$path_sample_peaks", mode : 'copy'
   
   input:
-  tuple path (sampleBam), path(_)
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path(sampleBam)
 
   exec:
   String strBed = sampleId + '.bed'
-  path_sample_peaks = path + "/peaks/" + sampleId
+  path_sample_peaks = path_analysis + "/peaks/" + sampleId
 
   output:
-  path ('*.bed')
+  tuple val(sampleId),val(path_analysis),path ('*.bed')
 
   script:
   """
