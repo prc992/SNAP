@@ -21,7 +21,6 @@ include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
 include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
 include {pileups_report} from './modules/pileups_report'
 include {uropa} from './modules/uropa'
-include {json_uropa} from './modules/uropa'
 include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
 process downloadGenome {
