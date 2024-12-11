@@ -11,8 +11,8 @@ process align {
   input:
   tuple val(sampleId), val(path), path(_), path(_)
   path(trimmed_files)
-  each path (genomeFile)
-  each path (genomeIndexFiles)
+  //each path (genomeFile)
+  //each path (genomeIndexFiles)
 
   exec:
   String strBam = sampleId + '.bam'
@@ -24,7 +24,5 @@ process align {
   echo "Sample ID: $sampleId"
   echo "Val path : $path"
   echo "Trimmed files: $trimmed_files"
-  echo "Genome file: $genomeFile"
-  echo "Genome index: $genomeIndexFiles"
   """
 }
