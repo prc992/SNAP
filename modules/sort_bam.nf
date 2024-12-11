@@ -8,15 +8,14 @@ process sort_bam {
   publishDir "$path_sample_align", mode : 'copy'
   
   input:
-  path(sampleBam)
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path(sampleBam)
   
   output:
-  path("*.bam")
+  tuple val(sampleId),val(path_analysis),path('*.bam')
 
   exec:
   String strBam = sampleId + '.sorted.bam'
-  path_sample_align = path + "/align/" + sampleId
+  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
