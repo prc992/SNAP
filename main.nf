@@ -248,6 +248,8 @@ workflow {
     chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
+    chChromSizes = fetch_chrom_sizes(params.genome,refDir)
+    chDACFileRef = downloadDACFile(params.genome,refDir)
     
     // Create the output directory if it doesn't exist
     """
@@ -260,30 +262,21 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
 
-    
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
     chUniqueFiles = unique_sam(chSortedFiles)
-
-    chDACFileRef = downloadDACFile(params.genome,refDir)
-
-    
     chDedupFiles = dedup(chUniqueFiles)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
-
-    
     chIndexFiles = index_sam(chDACFilteredFiles)
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
-
     uropa(chPeakFiles,chGeneAnotation)
-
     chBedFiles = bam_to_bed(chDACFilteredFiles)
     unique_frags(chBedFiles)
-    chChromSizes = fetch_chrom_sizes(params.genome,refDir)/*
+    
+    /*
     //snp_fingerprint(chDedupFiles,chSNPS_ref,ch_fasta,chSampleInfo,chIndexFiles)
 
     // Processo de SNP Fingerprint
