@@ -208,7 +208,7 @@ process createSamplesheet {
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.0.15 - LOCAL - 2024-12-10"
+    def releaseVersion = "v1.0.15 - LOCAL 2 - 2024-12-10"
 
     // ASCII art for SNAP
     def asciiArt = """
