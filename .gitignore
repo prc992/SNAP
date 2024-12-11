@@ -7,5 +7,6 @@ hg19.fa.pac
 hg19.fa.sa
 hg19.fa.gz
 hg19.DAC.bed
-.nextflow.log
+.nextflow.log*
+*.gtf
 analysis_results/
