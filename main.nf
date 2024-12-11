@@ -102,6 +102,43 @@ process downloadDACFile {
     """
 }
 
+process downloadGeneAnotation {
+
+    label 'low_cpu_low_mem'
+    tag "Dowloading Gene Anotation File - $genome" 
+    //publishDir "$refDir", mode : 'copy'
+
+    container = "quay.io/biocontainers/wget:1.21.4"
+    
+    input:
+    val genome
+    path refDir
+
+    output:
+    file "${genome}.GeneAnotation.gtf.gz"
+
+    script:
+    def gtfFile = "${genome}.GeneAnotation.gtf"
+    def gtfFilegz = "${genome}.GeneAnotation.gtf.gz"
+    
+    if (genome == 'hg19') {
+        url = params.hg19GeneAnotationDownload
+    } else if (genome == 'hg38') {
+        url = params.hg38GeneAnotationDownload
+    } else {
+        error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
+    }
+    """
+    if [ ! -f ${refDir}/${gtfFile} ]; then
+        wget -O ${refDir}/${gtfFilegz} ${url}
+        gunzip ${refDir}/${gtfFilegz} 
+    else
+        echo "File ${refDir}/${gtfFile} already exists. Skipping download."
+    fi
+    ln -s ${refDir}/${gtfFile} ${gtfFile}
+    """
+}
+
 process createGenomeIndex {
     label 'high_cpu_high_mem'
     container = 'quay.io/biocontainers/bwa:0.7.18--he4a0461_1'
@@ -211,7 +248,8 @@ workflow {
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
-
+    chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
+    /*
     // Create the output directory if it doesn't exist
     """
     mkdir -p ${projectDir}/${params.output_dir}
@@ -242,6 +280,7 @@ workflow {
     
     chIndexFiles = index_sam(chDACFilteredFiles)
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+
     /*
     //corrigir depois
     //chJson_file = json_uropa(chSampleInfo)
