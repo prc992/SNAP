@@ -16,10 +16,10 @@ process snp_fingerprint {
   exec:
   path_sample_snp_fingerprint = path_analysis + "/snp_fingerprint/" + sampleId
   strVCFgz = sampleId + '.vcf.gz'
-  
+
   output:
-  path("*.vcf.gz")
-  
+  tuple val(sampleId),val(path_analysis),path("*.vcf.gz")
+
   //FASTA=`find -L ./ -name "*.fa"`
   script:
   """
