@@ -12,7 +12,7 @@ process align {
   path(trimmed_files)
   //tuple val(sampleId), val(path), path(_), path(_)
   each path (genomeFile)
-  //each path (genomeIndexFiles)
+  each path (genomeIndexFiles)
 
   //exec:
   //String strBam = sampleId + '.bam'
