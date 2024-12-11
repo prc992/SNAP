@@ -41,10 +41,10 @@ process uropa {
   each path (gtf_file)
 
   exec:
-  path_sample_peaks = path_analysis + "/peaks/" + sampleId
+  path_sample_peaks = path_analysis + "/uropa/" + sampleId
   
   output:
-  path ('*finalhits.bed')
+  path ('*.*')
   
   script:
   """
