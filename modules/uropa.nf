@@ -1,5 +1,4 @@
 process uropa {
-  debug true
   label 'process_medium'
   //Docker Image
   container = "quay.io/biocontainers/uropa:4.0.3--pyhdfd78af_0"
