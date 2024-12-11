@@ -13,7 +13,7 @@ process align {
   each path (genomeIndexFiles)
 
   output:
-  path("*.bam")
+  tuple val(sampleId),val(path_analysis),path('*.bam')
 
   exec:
   String strBam = sampleId + '.bam'
