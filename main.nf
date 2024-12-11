@@ -231,9 +231,9 @@ workflow {
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
-    /*chUniqueFiles = unique_sam(chSortedFiles,chSampleInfo)
+    chUniqueFiles = unique_sam(chSortedFiles)
 
-    chDACFileRef = downloadDACFile(params.genome,refDir)
+    /*chDACFileRef = downloadDACFile(params.genome,refDir)
 
     
     chDedupFiles = dedup(chUniqueFiles,chSampleInfo)

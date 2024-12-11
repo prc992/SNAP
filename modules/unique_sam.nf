@@ -8,18 +8,17 @@ process unique_sam {
   publishDir "$path_sample_align", mode : 'copy'
   
   input:
-  path sampleBam
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path(sortedBam)
+
+  output:
+  tuple val(sampleId),val(path_analysis),path('*.bam')
 
   exec:
   String strBam = sampleId + '.unique.sorted.bam'
-  path_sample_align = path + "/align/" + sampleId
-
-  output:
-  path("*.bam")
+  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
-  samtools view --threads $task.cpus -b -q 1 $sampleBam > $strBam
+  samtools view --threads $task.cpus -b -q 1 $sortedBam > $strBam
   """
 }
