@@ -8,18 +8,17 @@ process lib_complex {
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  path sampleBam
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path(sortedBam)
 
   output:
   path("*.csv")
 
   exec:
-  String strBam = sampleId + '_lib_complexity.csv'
-  path_sample_align = path + "/align/" + sampleId
+  String strLib = sampleId + '_lib_complexity.csv'
+  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
-  picard EstimateLibraryComplexity I=$sampleBam  O=$strBam
+  picard EstimateLibraryComplexity I=$sortedBam  O=$strLib
   """
 }
