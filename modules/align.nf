@@ -1,5 +1,4 @@
 process align {
-  debug true
   label 'high_cpu_high_mem'
 
   // Docker Image
@@ -16,29 +15,12 @@ process align {
   output:
   path("*.bam")
 
-  /*input:
-  path(trimmed_files)
-  each path (genomeFile)
-  each path (genomeIndexFiles)*/
-
   exec:
   String strBam = sampleId + '.bam'
   path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
-  # Debugging: Print input paths
-  echo "Trimmed files: $trimmedFiles"
-  echo "sampleId : $sampleId"
-  echo "path : $path_analysis"
-  echo "strBam : $strBam"
-  echo "path_sample_align : $path_sample_align"
-  echo "genomeFile : $genomeFile"
-  
-  # Print number of files in trimmed_files
-  num_files=\$(ls -1 ${trimmedFiles} | wc -l)
-  echo "Number of files in trimmed_files: \$num_files"
-
   bwa mem $genomeFile $trimmedFiles -t $task.cpus | \
    samtools view --threads $task.cpus -Sb -u > $strBam
   """
