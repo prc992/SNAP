@@ -10,6 +10,7 @@ process align {
 
   input:
   path(trimmed_files)
+  val(sampleId)
   //tuple val(sampleId), val(path), path(_), path(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
@@ -22,5 +23,7 @@ process align {
   """
   # Debugging: Print input paths
   echo "Trimmed files: $trimmed_files"
+  echo "genome file: $genomeFile"
+  echo "genome Index: $genomeIndexFiles"
   """
 }

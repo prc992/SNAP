@@ -223,9 +223,11 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
 
+    chSampleIDOnly = chSampleInfo.map { tuple -> tuple[0] }
+
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-    align(chTrimFiles,chGenome,chGenomeIndex)
+    align(chTrimFiles,chSampleIDOnly,chGenome,chGenomeIndex)
     //align(chSampleInfo,chTrimFiles)
     //align(chSampleInfo,chTrimFiles,chGenome,chGenomeIndex)
     
