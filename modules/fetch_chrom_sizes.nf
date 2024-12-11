@@ -5,7 +5,7 @@ process fetch_chrom_sizes{
   container = 'quay.io/biocontainers/ucsc-fetchchromsizes:377--ha8a8165_3'
 
   tag "Fetch Chrom Sizes - $genome"   
-  publishDir "$refDir/genome", mode : 'copy'
+  //publishDir "$refDir/genome", mode : 'copy'
 
   input:
   val genome
@@ -20,5 +20,6 @@ process fetch_chrom_sizes{
   script:
   """
   fetchChromSizes $genome > $refGenomeFile
+  ln -s ${refDir}/${refGenomeFile} ${refGenomeFile}
   """
 }
