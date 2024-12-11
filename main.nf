@@ -280,7 +280,7 @@ workflow {
     //snp_fingerprint(chDedupFiles,chSNPS_ref,ch_fasta,chSampleInfo,chIndexFiles)*/
 
     // Processo de SNP Fingerprint
-    chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex)
+    chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome)
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Processo SNP Footprint Clustering (executa apenas após a conclusão de snp_fingerprint para todas as amostras)
