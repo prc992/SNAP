@@ -237,8 +237,9 @@ workflow {
 
     
     chDedupFiles = dedup(chUniqueFiles)
-    /*chDACFilteredFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFileRef)
-
+    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
+    
+    /*
     chIndexFiles = index_sam(chDACFilteredFiles,chSampleInfo)
     chPeakFiles = peak_bed_graph(chDACFilteredFiles,chSampleInfo)*/
     /*

@@ -8,19 +8,18 @@ process dac_exclusion {
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  tuple path(sampleBam), path(_)
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path(dedupBam),path(_)
   each path (sampleDAC)
 
   exec:
-  path_sample_align = path + "/align/" + sampleId
+  path_sample_align = path_analysis + "/align/" + sampleId
   strBam = sampleId + '.dac_filtered.dedup.unique.sorted.bam'
 
   output:
-  path("*.bam")
+  tuple val(sampleId),val(path_analysis),path('*.bam')
 
   script:
   """
-  bedtools intersect -v -abam $sampleBam -b $sampleDAC > $strBam
+  bedtools intersect -v -abam $dedupBam -b $sampleDAC > $strBam
 	"""
 }
