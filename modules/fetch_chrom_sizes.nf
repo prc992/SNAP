@@ -20,6 +20,5 @@ process fetch_chrom_sizes{
   script:
   """
   fetchChromSizes $genome > $refGenomeFile
-  ln -s ${refDir}/${refGenomeFile} ${refGenomeFile}
   """
 }
