@@ -9,7 +9,7 @@ process align {
   publishDir "$path_sample_align", mode: 'copy'
 
   input:
-  tuple val(sampleId), val(path),path(trimmedFiles)
+  tuple val(sampleId), val(path_analysis),path(trimmedFiles)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
@@ -20,14 +20,14 @@ process align {
 
   exec:
   String strBam = sampleId + '.bam'
-  path_sample_align = path + "/align/" + sampleId
+  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
   # Debugging: Print input paths
   echo "Trimmed files: $trimmedFiles"
   echo "sampleId : $sampleId"
-  echo "path : $path"
+  echo "path : $path_analysis"
   echo "strBam : $strBam"
   echo "path_sample_align : $path_sample_align"
   echo "genomeFile : $genomeFile"
