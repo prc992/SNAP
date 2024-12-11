@@ -236,8 +236,8 @@ workflow {
     chDACFileRef = downloadDACFile(params.genome,refDir)
 
     
-    /*chDedupFiles = dedup(chUniqueFiles,chSampleInfo)
-    chDACFilteredFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFileRef)
+    chDedupFiles = dedup(chUniqueFiles)
+    /*chDACFilteredFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFileRef)
 
     chIndexFiles = index_sam(chDACFilteredFiles,chSampleInfo)
     chPeakFiles = peak_bed_graph(chDACFilteredFiles,chSampleInfo)*/

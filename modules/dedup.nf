@@ -8,22 +8,21 @@ process dedup {
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  path sampleBam
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path(uniqueBam)
 
   exec:
-  path_sample_align = path + "/align/" + sampleId
-  strBam = sampleId + '.dedup.unique.sorted.bam'
+  path_sample_align = path_analysis + "/align/" + sampleId
+  strDedupBam = sampleId + '.dedup.unique.sorted.bam'
   strTxt = sampleId + '-MarkDuplicates.metrics.txt'
 
   output:
-  tuple path("*.bam"),path("*.txt")
+  tuple val(sampleId),val(path_analysis),path('*.bam'),path("*.txt")
 
   script:
   """
   picard MarkDuplicates \\
-  I=$sampleBam \\
-  O=$strBam \\
+  I=$uniqueBam \\
+  O=$strDedupBam \\
   REMOVE_DUPLICATES=true \\
   ASSUME_SORT_ORDER=coordinate \\
   VALIDATION_STRINGENCY=LENIENT \\
