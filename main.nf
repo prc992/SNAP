@@ -233,10 +233,10 @@ workflow {
     lib_complex(chSortedFiles)
     chUniqueFiles = unique_sam(chSortedFiles)
 
-    /*chDACFileRef = downloadDACFile(params.genome,refDir)
+    chDACFileRef = downloadDACFile(params.genome,refDir)
 
     
-    chDedupFiles = dedup(chUniqueFiles,chSampleInfo)
+    /*chDedupFiles = dedup(chUniqueFiles,chSampleInfo)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chSampleInfo,chDACFileRef)
 
     chIndexFiles = index_sam(chDACFilteredFiles,chSampleInfo)
