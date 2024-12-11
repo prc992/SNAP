@@ -8,23 +8,22 @@ process snp_fingerprint {
   publishDir "$path_sample_snp_fingerprint", mode : 'copy'
 
   input:
-  tuple path (sampleBam), val (_)
+  tuple val(sampleId),val(path_analysis),path(sampleBam),path (sampleBai)
   each path (snps_ref)
   each path (file_fa)
-  tuple val(sampleId), val(path),path(_), path(_)
-  path (indexFiles)
+
 
   exec:
-  path_sample_snp_fingerprint = path + "/snp_fingerprint/" + sampleId
+  path_sample_snp_fingerprint = path_analysis + "/snp_fingerprint/" + sampleId
   strVCFgz = sampleId + '.vcf.gz'
   
   output:
   path("*.vcf.gz")
-
+  
+  //FASTA=`find -L ./ -name "*.fa"`
   script:
   """
-  FASTA=`find -L ./ -name "*.fa"`
-  bcftools mpileup --threads $task.cpus -Ou -R $snps_ref -f \$FASTA $sampleBam | bcftools call --threads $task.cpus -c | bgzip --threads $task.cpus > $strVCFgz
+  bcftools mpileup --threads $task.cpus -Ou -R $snps_ref -f $file_fa $sampleBam | bcftools call --threads $task.cpus -c | bgzip --threads $task.cpus > $strVCFgz
   """
 
 }
