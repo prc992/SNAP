@@ -249,7 +249,7 @@ workflow {
     chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
-    /*
+    
     // Create the output directory if it doesn't exist
     """
     mkdir -p ${projectDir}/${params.output_dir}
@@ -281,12 +281,12 @@ workflow {
     chIndexFiles = index_sam(chDACFilteredFiles)
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
 
-    /*
+    
     //corrigir depois
     //chJson_file = json_uropa(chSampleInfo)
-    //uropa(chPeakFiles,chJson_file,chGTF_ref,chSampleInfo)
+    uropa(chPeakFiles,chGeneAnotation)
 
-    chBedFiles = bam_to_bed(chDedupFiles,chSampleInfo)
+    /*chBedFiles = bam_to_bed(chDedupFiles,chSampleInfo)
     unique_frags(chBedFiles,chSampleInfo)
     chChromSizes = fetch_chrom_sizes(chSampleInfo)
     //snp_fingerprint(chDedupFiles,chSNPS_ref,ch_fasta,chSampleInfo,chIndexFiles)

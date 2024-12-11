@@ -28,27 +28,28 @@ process json_uropa{
 
 
 process uropa {
+  debug true
   label 'process_medium'
   //Docker Image
   container = "quay.io/biocontainers/uropa:4.0.3--pyhdfd78af_0"
 
   tag "Sample - $sampleId"  
-  publishDir "$path_sample_peaks", mode : 'copy'
-  
+  //publishDir "$path_sample_peaks", mode : 'copy'
+    
   input:
-  tuple path(narrowpeak),val(_)
-  path (json_file)
+  tuple val(sampleId),val(path_analysis),path (bdgFiles),path (bedFiles)
   each path (gtf_file)
-  tuple val(sampleId), val(path),path(_), path(_)
 
   exec:
-  path_sample_peaks = path + "/peaks/" + sampleId
+  path_sample_peaks = path_analysis + "/peaks/" + sampleId
   
-  output:
-  path ('*finalhits.bed')
+  //output:
+  //path ('*finalhits.bed')
   
   script:
   """
-  uropa -i $json_file -t $task.cpus --summary
+  BED_FILE=`find -L ./ -name "*.narrowPeak"`
+  echo '"bed": "\$BED_FILE"}' 
   """
+  //uropa -i $json_file -t $task.cpus --summary
 }
