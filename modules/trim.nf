@@ -4,7 +4,7 @@ process trim {
   //Docker Image
   container = "quay.io/biocontainers/trim-galore:0.6.7--hdfd78af_0"
 
-  tag "Sample - $sampleId"
+  tag "Sample *.* - $sampleId"
   publishDir "$path_sample_trim", mode: 'copy'
 
   input:
