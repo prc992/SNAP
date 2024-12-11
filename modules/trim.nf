@@ -14,7 +14,7 @@ process trim {
   path_sample_trim = path + "/trim/" + sampleId
 
   output:
-  tuple val(sampleId),path('*.fq.gz')
+  tuple val(sampleId),val(path),path('*.fq.gz')
 
   script:
   """

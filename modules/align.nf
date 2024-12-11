@@ -9,7 +9,7 @@ process align {
   //publishDir "$path_sample_align", mode: 'copy'
 
   input:
-  tuple val(sampleId), path(trimmedFile)
+  tuple val(sampleId), val(path),path(trimmedFile)
 
   /*input:
   path(trimmed_files)
@@ -25,6 +25,7 @@ process align {
   # Debugging: Print input paths
   echo "Trimmed files: $trimmedFile"
   echo "sampleId : $sampleId"
+  echo "path : $path"
   
   # Print number of files in trimmed_files
   num_files=\$(ls -1 ${trimmedFile} | wc -l)
