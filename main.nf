@@ -115,7 +115,7 @@ process downloadGeneAnotation {
     path refDir
 
     output:
-    file "${genome}.GeneAnotation.gtf.gz"
+    file "${genome}.GeneAnotation.gtf"
 
     script:
     def gtfFile = "${genome}.GeneAnotation.gtf"
