@@ -11,6 +11,7 @@ process align {
   input:
   tuple val(sampleId), val(path),path(trimmedFile)
   each path (genomeFile)
+  each path (genomeIndexFiles)
 
   /*input:
   path(trimmed_files)
