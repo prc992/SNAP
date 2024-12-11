@@ -12,7 +12,7 @@ process snp_footprint_clustering{
 
   input:
   tuple val(sampleId),val(path_analysis),path(vcfGzFiles)
-  path (chRSNPFootprint)
+  each path (chRSNPFootprint)
   
   exec:
   path_sample_snp_footprint = path_analysis + "/snp_fingerprint" 
