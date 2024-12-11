@@ -16,9 +16,9 @@ process align {
   each path (genomeFile)
   each path (genomeIndexFiles)*/
 
-  //exec:
-  //String strBam = sampleId + '.bam'
-  //path_sample_align = path + "/align/" + sampleId
+  exec:
+  String strBam = sampleId + '.bam'
+  path_sample_align = path + "/align/" + sampleId
 
   script:
   """
@@ -26,6 +26,8 @@ process align {
   echo "Trimmed files: $trimmedFile"
   echo "sampleId : $sampleId"
   echo "path : $path"
+  echo "strBam : $strBam"
+  echo "path_sample_align : $path_sample_align"
   
   # Print number of files in trimmed_files
   num_files=\$(ls -1 ${trimmedFile} | wc -l)
