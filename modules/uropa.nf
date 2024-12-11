@@ -37,7 +37,7 @@ process uropa {
   //publishDir "$path_sample_peaks", mode : 'copy'
     
   input:
-  tuple val(sampleId),val(path_analysis),path (bdgFiles),path (bedFiles)
+  tuple val(sampleId),val(path_analysis),path (_), path (bedFiles)
   each path (gtf_file)
 
   exec:
