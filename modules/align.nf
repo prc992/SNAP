@@ -10,8 +10,6 @@ process align {
 
   input:
   path(trimmed_files)
-  val(sampleId)
-  //tuple val(sampleId), val(path), path(_), path(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
@@ -26,5 +24,9 @@ process align {
   echo "Trimmed files: $trimmed_files"
   echo "genome file: $genomeFile"
   echo "genome Index: $genomeIndexFiles"
+  
+  # Print number of files in trimmed_files
+  num_files=\$(ls -1 ${trimmed_files} | wc -l)
+  echo "Number of files in trimmed_files: \$num_files"
   """
 }
