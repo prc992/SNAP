@@ -23,11 +23,11 @@ process align {
   script:
   """
   # Debugging: Print input paths
-  echo "Trimmed files: $trimmed_files"
+  echo "Trimmed files: $trimmedFile"
   echo "sampleId : $sampleId"
   
   # Print number of files in trimmed_files
-  num_files=\$(ls -1 ${trimmed_files} | wc -l)
+  num_files=\$(ls -1 ${trimmedFile} | wc -l)
   echo "Number of files in trimmed_files: \$num_files"
   """
 }
