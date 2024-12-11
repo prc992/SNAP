@@ -14,7 +14,7 @@ process index_sam {
   path_sample_align = path_analysis + "/align/" + sampleId
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bam'),path ('*.bai')
+  tuple val(sampleId),val(path_analysis),path(sampleBam),path ('*.bai')
 
   script:
   """
