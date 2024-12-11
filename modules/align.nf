@@ -9,7 +9,7 @@ process align {
   //publishDir "$path_sample_align", mode: 'copy'
 
   input:
-  tuple val(sampleId), path(trimmedFile) from chTrimFiles
+  tuple val(sampleId), path(trimmedFile)
 
   /*input:
   path(trimmed_files)
