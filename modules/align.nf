@@ -25,7 +25,7 @@ process align {
   script:
   """
   # Debugging: Print input paths
-  echo "Trimmed files: $trimmedFile"
+  echo "Trimmed files: $trimmedFiles"
   echo "sampleId : $sampleId"
   echo "path : $path"
   echo "strBam : $strBam"
