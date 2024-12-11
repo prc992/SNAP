@@ -228,7 +228,7 @@ workflow {
     //chTrimFiles = trim(chSampleInfo)
     chTrimFiles = chSampleInfo | trim
 
-    align(chTrimFiles,chGenome,chGenomeIndex)
+    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)
     
     //align(chTrimFiles,chGenome,chGenomeIndex)
     //align(chSampleInfo,chTrimFiles)
