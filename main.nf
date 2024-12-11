@@ -226,8 +226,10 @@ workflow {
     chSampleIDOnly = chSampleInfo.map { tuple -> tuple[0] }
 
     fastqc(chSampleInfo)
-    chTrimFiles = trim(chSampleInfo)
-    align(chTrimFiles,chGenome,chGenomeIndex)
+    //chTrimFiles = trim(chSampleInfo)
+    chTrimFiles = chSampleInfo.map(trim)
+    
+    //align(chTrimFiles,chGenome,chGenomeIndex)
     //align(chSampleInfo,chTrimFiles)
     //align(chSampleInfo,chTrimFiles,chGenome,chGenomeIndex)
     

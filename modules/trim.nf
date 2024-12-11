@@ -15,6 +15,7 @@ process trim {
 
   output:
   path('*.fq.gz')
+  val(sampleId)
 
   script:
   """
