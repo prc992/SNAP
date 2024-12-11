@@ -9,9 +9,12 @@ process align {
   //publishDir "$path_sample_align", mode: 'copy'
 
   input:
+  tuple val(sampleId), path(trimmedFile) from chTrimFiles
+
+  /*input:
   path(trimmed_files)
   each path (genomeFile)
-  each path (genomeIndexFiles)
+  each path (genomeIndexFiles)*/
 
   //exec:
   //String strBam = sampleId + '.bam'
@@ -21,8 +24,7 @@ process align {
   """
   # Debugging: Print input paths
   echo "Trimmed files: $trimmed_files"
-  echo "genome file: $genomeFile"
-  echo "genome Index: $genomeIndexFiles"
+  echo "sampleId : $sampleId"
   
   # Print number of files in trimmed_files
   num_files=\$(ls -1 ${trimmed_files} | wc -l)
