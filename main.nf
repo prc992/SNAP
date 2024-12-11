@@ -224,8 +224,8 @@ workflow {
         | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
 
     fastqc(chSampleInfo)
-    /*chTrimFiles = trim(chSampleInfo)
-    align(chSampleInfo,chTrimFiles,chGenome,chGenomeIndex)
+    chTrimFiles = trim(chSampleInfo)
+    /*align(chSampleInfo,chTrimFiles,chGenome,chGenomeIndex)
     
     chSortedFiles = sort_bam(chAlignFiles,chSampleInfo)
     lib_complex(chSortedFiles,chSampleInfo)
