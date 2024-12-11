@@ -8,14 +8,13 @@ process peak_bed_graph{
   publishDir "$path_sample_peaks", mode : 'copy'
 
   input:
-  path (sampleBam)
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path(sampleBam)
 
   output:
-  tuple path ('*.*'),path ('*.bdg')
+  tuple val(sampleId),val(path_analysis),path ('*.bdg'),path ('*.*')
 
   exec:
-  path_sample_peaks = path + "/peaks/" + sampleId
+  path_sample_peaks = path_analysis + "/peaks/" + sampleId
   
   script:
   """

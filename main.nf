@@ -241,8 +241,8 @@ workflow {
 
     
     chIndexFiles = index_sam(chDACFilteredFiles)
-    /*chPeakFiles = peak_bed_graph(chDACFilteredFiles)
-    
+    chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+    /*
     //corrigir depois
     //chJson_file = json_uropa(chSampleInfo)
     //uropa(chPeakFiles,chJson_file,chGTF_ref,chSampleInfo)
