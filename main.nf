@@ -228,6 +228,8 @@ workflow {
     fastqc(chSampleInfo)
     //chTrimFiles = trim(chSampleInfo)
     chTrimFiles = chSampleInfo | trim
+
+    align(chTrimFiles)
     
     //align(chTrimFiles,chGenome,chGenomeIndex)
     //align(chSampleInfo,chTrimFiles)
