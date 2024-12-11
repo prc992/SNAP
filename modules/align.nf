@@ -10,6 +10,7 @@ process align {
 
   input:
   tuple val(sampleId), val(path),path(trimmedFile)
+  each path (genomeFile)
 
   /*input:
   path(trimmed_files)
@@ -28,6 +29,7 @@ process align {
   echo "path : $path"
   echo "strBam : $strBam"
   echo "path_sample_align : $path_sample_align"
+  echo "genomeFile : $genomeFile"
   
   # Print number of files in trimmed_files
   num_files=\$(ls -1 ${trimmedFile} | wc -l)
