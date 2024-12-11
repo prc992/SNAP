@@ -22,6 +22,7 @@ process align {
   script:
   """
   # Debugging: Print input paths
+  echo "sampleId: $sampleId"
   echo "Trimmed files: $trimmed_files"
   echo "genome file: $genomeFile"
   echo "genome Index: $genomeIndexFiles"
