@@ -283,7 +283,7 @@ workflow {
 
     chBedFiles = bam_to_bed(chDACFilteredFiles)
     unique_frags(chBedFiles)
-    /*chChromSizes = fetch_chrom_sizes(chSampleInfo)
+    chChromSizes = fetch_chrom_sizes(chSampleInfo)/*
     //snp_fingerprint(chDedupFiles,chSNPS_ref,ch_fasta,chSampleInfo,chIndexFiles)
 
     // Processo de SNP Fingerprint
