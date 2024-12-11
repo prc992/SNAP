@@ -9,8 +9,8 @@ process align {
   //publishDir "$path_sample_align", mode: 'copy'
 
   input:
-  tuple val(sampleId), val(_), path(_), path(_)
   path(trimmed_files)
+  tuple val(sampleId), val(path), path(_), path(_)
   //each path (genomeFile)
   //each path (genomeIndexFiles)
 
