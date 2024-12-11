@@ -13,6 +13,9 @@ process align {
   each path (genomeFile)
   each path (genomeIndexFiles)
 
+  output:
+  path("*.bam")
+
   /*input:
   path(trimmed_files)
   each path (genomeFile)
