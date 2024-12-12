@@ -15,8 +15,8 @@ process snp_footprint_clustering{
   path(vcfGzFiles)
   //each path (chRSNPFootprint)
   
-  exec:
-  path_sample_snp_footprint = path_analysis + "/snp_fingerprint" 
+  //exec:
+  //path_sample_snp_footprint = path_analysis + "/snp_fingerprint" 
 
   //output:
   //path ('*.pdf')
