@@ -11,26 +11,20 @@ process pileups_report{
   publishDir "$path_sample_pile_ups", mode : 'copy'
 
   input:
-  tuple val(sampleId), val(path),path(read1), path(read2)
-  path (chChromSizes)
-  tuple path (control_pileup_bw),path (treat_pileup_bw)
+  tuple val(sampleId),val(path_analysis),path (control_lambda_bdg_bw),path (treat_pileup_bdg_bw)
+  each path (chChromSizes)
   each path (chBED)
   each path (chRPileups)
+  each path (genomeFile)
 
   exec:
-  //Here we extract the reference genome from the param align_ref
-  //using string manipulation
   path_sample_pile_ups = path + "/pile_ups/" + sampleId
-
-  //strAlign = '"$params.align_ref"'
-  //fim = strAlign.lastIndexOf('/')
-  //refGenome = strAlign.substring(fim-4,fim)
 
   output:
   path ('*.pdf')
 
   script:
   """
-  Rscript $chRPileups $treat_pileup_bw $chBED $chChromSizes $params.genome_ref
+  Rscript $chRPileups $treat_pileup_bdg_bw $chBED $chChromSizes $genomeFile
   """
 }

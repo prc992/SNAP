@@ -20,7 +20,7 @@ process bedGraphToBigWig {
   //fileNameOutput = sampleId + "_treat_pileup.bdg.bw"
 
   output:
-  tuple path ("*control_lambda.bdg.bw"),path ("*treat_pileup.bdg.bw")
+  tuple val(sampleId),val(path_analysis),path ("*control_lambda.bdg.bw"),path ("*treat_pileup.bdg.bw")
 
   script:
   """
