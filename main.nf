@@ -271,13 +271,12 @@ workflow {
     chDedupFiles = dedup(chUniqueFiles)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
     chIndexFiles = index_sam(chDACFilteredFiles)
-    chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+
+    /*chPeakFiles = peak_bed_graph(chDACFilteredFiles)
     uropa(chPeakFiles,chGeneAnotation)
     chBedFiles = bam_to_bed(chDACFilteredFiles)
-    unique_frags(chBedFiles)
+    unique_frags(chBedFiles)*/
 
-    /*
-    //snp_fingerprint(chDedupFiles,chSNPS_ref,ch_fasta,chSampleInfo,chIndexFiles)*/
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
