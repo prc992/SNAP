@@ -1,4 +1,5 @@
 process snp_footprint_clustering{
+  debug true
   //errorStrategy 'ignore'
   //errorStrategy { sleep(Math.pow(2, task.attempt) * 200 as long); return 'retry' }
   //maxRetries 3
@@ -20,8 +21,9 @@ process snp_footprint_clustering{
   output:
   path ('*.pdf')
 
+  //Rscript $chRSNPFootprint
   script:
   """
-  Rscript $chRSNPFootprint
+  ls
   """
 }
