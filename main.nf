@@ -287,10 +287,10 @@ workflow {
     //snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
 
     enrichment(chDACFilteredFiles,chEnrichmentScript)
-    /*chFragDis = lenght_fragment_dist_step1(chDedupFiles,chSampleInfo)
-    lenght_fragment_dist_step2(chRfrag_plotFragDist,chFragDis,chSampleInfo)
+    chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
+    lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
 
-    chBWFiles = bedGraphToBigWig(chChromSizes,chPeakFiles,chSampleInfo)
+    /*chBWFiles = bedGraphToBigWig(chChromSizes,chPeakFiles,chSampleInfo)
     pileups_report(chSampleInfo,chChromSizes,chBWFiles,chPileUpBED,chRPileups)
 
     //Collect all files output and the pass to me program that will merge then

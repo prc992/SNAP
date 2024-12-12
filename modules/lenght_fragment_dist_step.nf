@@ -8,14 +8,13 @@ process lenght_fragment_dist_step1{
   publishDir "$path_sample_frag", mode : 'copy'
 
   input:
-  tuple path (sampleBam), path(_)
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path(sampleBam)
 
   exec:
-  path_sample_frag = path + "/frag/" + sampleId
+  path_sample_frag = path_analysis + "/frag/" + sampleId
 
   output:
-  path ('*.txt')
+  tuple val(sampleId),val(path_analysis),path('*.txt')
 
   exec:
   strtxt = sampleId + '_fragment_lengths.txt'
@@ -40,13 +39,12 @@ process lenght_fragment_dist_step2{
   path ('*.png')
 
   input:
+  tuple val(sampleId),val(path_analysis),path(fragLeng)
   each path (chRfrag_plotFragDist)
-  path(fragLeng)
-  tuple val(sampleId), val(path),path(_), path(_)
 
   exec:
   strPNG = sampleId + '_fragDist.png' 
-  path_sample_frag = path + "/frag/" + sampleId
+  path_sample_frag = path_analysis + "/frag/" + sampleId
 
   script:
   """
