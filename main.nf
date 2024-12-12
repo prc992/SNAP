@@ -282,11 +282,12 @@ workflow {
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
+    // Ver Depois
     // Processo SNP Footprint Clustering (executa apenas após a conclusão de snp_fingerprint para todas as amostras)
     //snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
 
-    /*enrichment(chEnrichmentScript,chDedupFiles,chSampleInfo)
-    chFragDis = lenght_fragment_dist_step1(chDedupFiles,chSampleInfo)
+    enrichment(chDACFilteredFiles,chEnrichmentScript)
+    /*chFragDis = lenght_fragment_dist_step1(chDedupFiles,chSampleInfo)
     lenght_fragment_dist_step2(chRfrag_plotFragDist,chFragDis,chSampleInfo)
 
     chBWFiles = bedGraphToBigWig(chChromSizes,chPeakFiles,chSampleInfo)

@@ -8,13 +8,13 @@ process enrichment {
   publishDir "$path_sample_peaks", mode : 'copy'
 
   input:
+  tuple val(sampleId),val(path_analysis),path(sampleBam)
   each path (chEnrichmentScript)
-  tuple path (sampleBam), val(_)
-  tuple val(sampleId), val(path),path(_), path(_)
+
 
   exec:
-  path_sample_peaks = path + "/peaks/" + sampleId
-  strCSV = sampleId + '_enrichment.csv'
+  path_sample_peaks = path_analysis + "/peaks/" + sampleId
+  strCSV = sampleId + '_enrichment_states.csv'
 
   output:
   path("*.csv")
