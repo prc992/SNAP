@@ -11,7 +11,7 @@ process peak_bed_graph{
   tuple val(sampleId),val(path_analysis),path(sampleBam)
 
   output:
-  tuple val(sampleId),val(path_analysis),path ('*treat_pileup.bdg'),path ('*narrowPeak')
+  tuple val(sampleId),val(path_analysis),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak')
 
   exec:
   path_sample_peaks = path_analysis + "/peaks/" + sampleId

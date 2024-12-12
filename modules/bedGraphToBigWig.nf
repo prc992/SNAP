@@ -8,14 +8,13 @@ process bedGraphToBigWig {
   publishDir "$path_sample_peaks", mode : 'copy'
 
   input:
-  path (RefGenSizes)
-  tuple val (_), path (bdgFiles)
-  tuple val(sampleId), val(path),path(_), path(_)
+  tuple val(sampleId),val(path_analysis),path (treat_pileup_bdg),path (control_lambda_bdg),path (_)
+  each path (RefGenSizes)
 
   exec:
-  path_sample_peaks = path + "/peaks/" + sampleId
-  bdgFile1 = bdgFiles.first()
-  bdgFile2 = bdgFiles.last()
+  path_sample_peaks = path_analysis + "/peaks/" + sampleId
+  bdgFile1 = treat_pileup_bdg
+  bdgFile2 = control_lambda_bdg
   bdgFile1_out = bdgFile1 + ".bw"
   bdgFile2_out = bdgFile2 + ".bw"
   //fileNameOutput = sampleId + "_treat_pileup.bdg.bw"
