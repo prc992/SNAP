@@ -24,6 +24,7 @@ process snp_footprint_clustering{
   //Rscript $chRSNPFootprint
   script:
   """
+  ls
   echo "Running snp_footprint_clustering"
   """
 
