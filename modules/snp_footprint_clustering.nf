@@ -26,4 +26,5 @@ process snp_footprint_clustering{
   """
   echo "Running snp_footprint_clustering"
   """
+  
 }

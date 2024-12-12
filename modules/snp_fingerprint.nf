@@ -20,7 +20,6 @@ process snp_fingerprint {
   output:
   tuple val(sampleId),val(path_analysis),path("*.vcf.gz")
 
-  //FASTA=`find -L ./ -name "*.fa"`
   script:
   """
   bcftools mpileup --threads $task.cpus -Ou -R $snps_ref -f $file_fa $sampleBam | bcftools call --threads $task.cpus -c | bgzip --threads $task.cpus > $strVCFgz
