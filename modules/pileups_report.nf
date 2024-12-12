@@ -18,7 +18,7 @@ process pileups_report{
   each path (genomeFile)
 
   exec:
-  path_sample_pile_ups = path + "/pile_ups/" + sampleId
+  path_sample_pile_ups = path_analysis + "/pile_ups/" + sampleId
 
   output:
   path ('*.pdf')
