@@ -12,7 +12,7 @@ process snp_footprint_clustering{
   //publishDir "$path_sample_snp_footprint", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(vcfGzFiles)
+  path(vcfGzFiles)
   //each path (chRSNPFootprint)
   
   exec:
@@ -26,5 +26,5 @@ process snp_footprint_clustering{
   """
   echo "Running snp_footprint_clustering"
   """
-  
+
 }
