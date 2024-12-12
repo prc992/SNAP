@@ -1,5 +1,5 @@
 process pileups_report{
-  errorStrategy 'ignore'
+  //errorStrategy 'ignore'
   //errorStrategy { sleep(Math.pow(2, task.attempt) * 200 as long); return 'retry' }
   //maxRetries 3
   label 'process_medium'
