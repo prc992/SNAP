@@ -9,7 +9,7 @@ process snp_footprint_clustering{
 
   //Docker Image
   container ='prc992/snp_dendrogram:v1.0'
-  publishDir "$path_sample_snp_footprint", mode : 'copy'
+  //publishDir "$path_sample_snp_footprint", mode : 'copy'
 
   input:
   tuple val(sampleId),val(path_analysis),path(vcfGzFiles)
@@ -18,8 +18,8 @@ process snp_footprint_clustering{
   exec:
   path_sample_snp_footprint = path_analysis + "/snp_fingerprint" 
 
-  output:
-  path ('*.pdf')
+  //output:
+  //path ('*.pdf')
 
   //Rscript $chRSNPFootprint
   script:
