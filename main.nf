@@ -272,10 +272,10 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    /*chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+    chPeakFiles = peak_bed_graph(chDACFilteredFiles)
     uropa(chPeakFiles,chGeneAnotation)
     chBedFiles = bam_to_bed(chDACFilteredFiles)
-    unique_frags(chBedFiles)*/
+    unique_frags(chBedFiles)
 
 
     // Processo de SNP Fingerprint
@@ -283,7 +283,7 @@ workflow {
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Processo SNP Footprint Clustering (executa apenas após a conclusão de snp_fingerprint para todas as amostras)
-    snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
+    //snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
 
     /*enrichment(chEnrichmentScript,chDedupFiles,chSampleInfo)
     chFragDis = lenght_fragment_dist_step1(chDedupFiles,chSampleInfo)
