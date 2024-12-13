@@ -313,7 +313,9 @@ workflow {
     lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
 
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
-    pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
+    
+    // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
+    //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
 
     // Collect files for MultiQC
     multiqc(chFastQC)
