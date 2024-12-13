@@ -21,6 +21,41 @@ chrom_sizes <- read.table(chrom_sizes_path, header = FALSE, sep="\t")
 
 gtrack <- GenomeAxisTrack() 
 
+# Function to attempt execution with retries
+execute_with_retries <- function(max_attempts = 3) {
+  attempts <- 0
+  success <- FALSE
+  result <- NULL
+  
+  while (!success && attempts < max_attempts) {
+    attempts <- attempts + 1
+    tryCatch({
+      # Main command
+      ucscGenes <- UcscTrack(
+        genome = gen, chromosome = chr, table = "ncbiRefSeq",
+        track = 'NCBI RefSeq', trackType = "GeneRegionTrack",
+        rstarts = "exonStarts", rends = "exonEnds", gene = "name",
+        symbol = 'name', transcript = "name", strand = "strand",
+        name = "RefSeq", stacking = 'pack', showID = TRUE,
+        geneSymbol = TRUE, transcriptAnnotation = "symbol"
+      )
+      success <- TRUE
+      result <- ucscGenes  # Store the result
+    }, error = function(e) {
+      # Print the error message and wait before retrying
+      message(paste("Attempt", attempts, "failed:", conditionMessage(e)))
+      Sys.sleep(2)  # Wait 2 seconds before retrying
+    })
+  }
+  
+  # If all attempts fail, raise a custom error
+  if (!success) {
+    stop("Error: site with too many requests. Please try again later.")
+  }
+  
+  return(result)
+}
+
 # go through each region in bed file
 while (TRUE) {
   # get region info
@@ -45,15 +80,12 @@ while (TRUE) {
   
   # set up tracks
   itrack <- IdeogramTrack(genome = gen, chromosome = chr)
+  #itrack <- IdeogramTrack(genome = "hg19", chromosome = chr)
   sample_dt <- DataTrack(range = sample_path, genome = gen, chromosome = chr)
   
   # NCBI RefSeq track
-  ucscGenes <- UcscTrack(genome=gen, chromosome = chr, table="ncbiRefSeq", 
-                         track = 'NCBI RefSeq', trackType="GeneRegionTrack", 
-                         rstarts = "exonStarts", rends = "exonEnds", gene = "name", 
-                         symbol = 'name', transcript = "name", strand = "strand", 
-                         name = "RefSeq", stacking = 'pack', showID = T, 
-                         geneSymbol = T, transcriptAnnotation="symbol")
+  ucscGenes <- execute_with_retries()
+  
   z <- ranges(ucscGenes)
   mcols(z)$symbol <- mapIds(org.Hs.eg.db, gsub("\\.[1-9]$", "", mcols(z)$symbol), "SYMBOL","REFSEQ")
   ucscGenes_named <- ucscGenes
@@ -72,4 +104,3 @@ while (TRUE) {
   
 }
 close(bed_con)
-
