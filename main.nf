@@ -316,7 +316,6 @@ workflow {
 
     // Collect files for MultiQC
     chMultiQCInputs = Channel.of(chFastQC,chSortedFiles, chTrimFiles, chAlignFiles, chDedupFiles) \
-        .flatten() \
         .collect()
 
     // Run MultiQC
