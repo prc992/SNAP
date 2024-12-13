@@ -41,7 +41,7 @@ process multiqc {
 
     script:
     """
-    multiqc -o . ${all_files}
+    multiqc . 
     """
 }
 
