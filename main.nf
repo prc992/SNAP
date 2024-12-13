@@ -23,6 +23,26 @@ include {pileups_report} from './modules/pileups_report'
 include {uropa} from './modules/uropa'
 include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
+process multiqc {
+    label 'low_cpu_low_mem'
+    container = 'quay.io/biocontainers/multiqc:1.25.2--pyhdfd78af_0'
+    publishDir "$path_sample_multiqc", mode : 'copy'
+    
+    input:
+    path qc_reports_dir
+
+    exec:
+    path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
+
+    output:
+    path "multiqc_report.html"
+
+    script:
+    """
+    multiqc ${qc_reports_dir} -o ./
+    """
+}
+
 process downloadGenome {
 
     label 'low_cpu_low_mem'
@@ -292,6 +312,18 @@ workflow {
 
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
     pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
+
+    // Collect QC reports from FastQC, Trimmed files, and other relevant steps
+    chAllQCFiles = Channel.from(
+        fastqc.out.collectFile(),
+        trim.out.collectFile(),
+        align.out.collectFile()
+        // Add other relevant QC output channels if applicable
+    )
+
+    // Pass the QC files to the MultiQC process
+    multiqc(chAllQCFiles)
+
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
