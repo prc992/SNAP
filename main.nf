@@ -29,17 +29,18 @@ process multiqc {
     publishDir "$path_sample_multiqc", mode : 'copy'
     
     input:
-    path qc_reports_dir
+    path all_files
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
 
     output:
-    path "multiqc_report.html"
+    file "multiqc_report.html"
+    file "multiqc_data/*"
 
     script:
     """
-    multiqc ${qc_reports_dir} -o ./
+    multiqc -o . ${all_files}
     """
 }
 
@@ -282,7 +283,7 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
 
-    fastqc(chSampleInfo)
+    chFastQC = fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
@@ -313,16 +314,13 @@ workflow {
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
     pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
 
-    // Collect QC reports from FastQC, Trimmed files, and other relevant steps
-    chAllQCFiles = Channel.from(
-        //fastqc.out.collect(),
-        chTrimFiles.collect(),
-        chAlignFiles.collect()
-        // Add other relevant QC output channels if applicable
-    )
+    // Collect files for MultiQC
+    chMultiQCInputs = Channel.of(chFastQC,chSortedFiles, chTrimFiles, chAlignFiles, chDedupFiles) \
+        .flatten() \
+        .collectFile(name: "multiqc_input", stageAs: "input_*")
 
-    // Pass the QC files to the MultiQC process
-    multiqc(chAllQCFiles)
+    // Run MultiQC
+    multiqc(chMultiQCInputs)
 
 
     /*//Collect all files output and the pass to me program that will merge then
