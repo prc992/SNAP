@@ -29,7 +29,8 @@ process multiqc {
     publishDir "$path_sample_multiqc", mode : 'copy'
     
     input:
-    path all_files
+    path ('*_fastqc.html')
+    path ('*_fastqc.zip')
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
@@ -315,12 +316,7 @@ workflow {
     pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
 
     // Collect files for MultiQC
-    chMultiQCInputs = Channel.of(chFastQC,chSortedFiles, chTrimFiles, chAlignFiles, chDedupFiles) \
-        .collect(name: "multiqc_input")
-
-    // Run MultiQC
-    multiqc(chMultiQCInputs)
-
+    multiqc(chFastQC)
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
