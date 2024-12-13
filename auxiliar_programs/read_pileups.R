@@ -22,7 +22,7 @@ chrom_sizes <- read.table(chrom_sizes_path, header = FALSE, sep="\t")
 gtrack <- GenomeAxisTrack() 
 
 # Function to attempt execution with retries
-execute_with_retries <- function(max_attempts = 3) {
+execute_with_retries <- function(max_attempts = 5) {
   attempts <- 0
   success <- FALSE
   result <- NULL
@@ -44,7 +44,7 @@ execute_with_retries <- function(max_attempts = 3) {
     }, error = function(e) {
       # Print the error message and wait before retrying
       message(paste("Attempt", attempts, "failed:", conditionMessage(e)))
-      Sys.sleep(2)  # Wait 2 seconds before retrying
+      Sys.sleep(4)  # Wait 2 seconds before retrying
     })
   }
   
