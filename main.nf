@@ -315,9 +315,9 @@ workflow {
 
     // Collect QC reports from FastQC, Trimmed files, and other relevant steps
     chAllQCFiles = Channel.from(
-        fastqc.out.collect(),
-        trim.out.collect(),
-        align.out.collect()
+        //fastqc.out.collect(),
+        chTrimFiles.out.collect(),
+        chAlignFiles.out.collect()
         // Add other relevant QC output channels if applicable
     )
 
