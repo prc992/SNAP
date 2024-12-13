@@ -31,6 +31,7 @@ process multiqc {
     input:
     path ('*_fastqc.html')
     path ('*_fastqc.zip')
+    tuple val(sampleId),val(path),path('*.fq.gz')
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
@@ -318,7 +319,7 @@ workflow {
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
 
     // Collect files for MultiQC
-    multiqc(chFastQC)
+    multiqc(chFastQC,chTrimFiles)
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
