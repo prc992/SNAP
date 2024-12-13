@@ -15,7 +15,7 @@ process pileups_report{
   each path (chChromSizes)
   each path (chBED)
   each path (chRPileups)
-  each path (genomeFile)
+  each val (genomeUSCS)
 
   exec:
   path_sample_pile_ups = path_analysis + "/pile_ups/" + sampleId
@@ -25,6 +25,6 @@ process pileups_report{
 
   script:
   """
-  Rscript $chRPileups $treat_pileup_bdg_bw $chBED $chChromSizes $genomeFile
+  Rscript $chRPileups $treat_pileup_bdg_bw $chBED $chChromSizes $genomeUSCS
   """
 }

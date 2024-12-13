@@ -291,7 +291,7 @@ workflow {
     lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
 
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
-    pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups,chGenome)
+    pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups,params.genome)
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
