@@ -34,6 +34,7 @@ process multiqc {
     val(_)
     tuple val(sampleId),path("*report.txt")
     tuple val(sampleId),path ("versions.yml")
+    tuple val(sampleId),val(path_analysis),path('*.bam')
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
@@ -289,8 +290,8 @@ workflow {
 
     chFastQC = fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-    /*chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
-    chSortedFiles = sort_bam(chAlignFiles)
+    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
+    /*chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
     chUniqueFiles = unique_sam(chSortedFiles)
     chDedupFiles = dedup(chUniqueFiles)
@@ -321,7 +322,7 @@ workflow {
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
 
     // Collect files for MultiQC
-    multiqc(chFastQC,chTrimFiles)
+    multiqc(chFastQC,chTrimFiles,chAlignFiles)
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
