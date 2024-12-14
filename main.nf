@@ -322,7 +322,9 @@ workflow {
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
 
     // Collect files for MultiQC
-    multiqc(chFastQC.collectFile(),chTrimFiles.collectFile(),chAlignFiles.collectFile())
+    multiqc(chFastQC.collect{it[1]}.ifEmpty([]),\
+            chTrimFiles.collect{it[1]}.ifEmpty([]),\
+            chAlignFiles.collect{it[1]}.ifEmpty([]))
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
