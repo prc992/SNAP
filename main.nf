@@ -56,7 +56,7 @@ process multiqc_v2 {
     
     input:
     val(_)
-    path('./analysis_results/')
+    path(analysis_results)
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
@@ -329,7 +329,7 @@ workflow {
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,params.output_dir)
+    multiqc_v2(chSnpFingerprintComplete,'./analysis_results/')
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
