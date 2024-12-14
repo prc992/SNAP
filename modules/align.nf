@@ -9,6 +9,8 @@ process align {
 
   input:
   tuple val(sampleId), val(path_analysis),path(trimmedFiles)
+  val(_)
+  val(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
