@@ -57,6 +57,7 @@ process multiqc_v2 {
     input:
     val(_)
     path (configFile)
+    path (configLogo)
     path (analysis_results)
 
     exec:
@@ -319,6 +320,7 @@ workflow {
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chSNPS_ref = Channel.fromPath("$params.snps_ref")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
+    chMultiQCLogo = Channel.fromPath("$params.multiqc_logo")
     
     // Create the genome directory if it doesn't exist
     """
@@ -363,7 +365,7 @@ workflow {
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,chMultiQCConfig,"${projectDir}/${params.output_dir}")
+    multiqc_v2(chSnpFingerprintComplete,chMultiQCConfig,chMultiQCLogo,"${projectDir}/${params.output_dir}")
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
