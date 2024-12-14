@@ -329,7 +329,7 @@ workflow {
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,'./analysis_results/')
+    multiqc_v2(chSnpFingerprintComplete,'/Users/prc992/Desktop/DFCI/2-SNAP/SNAP/analysis_results/')
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
