@@ -56,7 +56,8 @@ process multiqc_v2 {
     
     input:
     val(_)
-    path(analysis_results)
+    path (configFile)
+    path (analysis_results)
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
@@ -270,7 +271,7 @@ workflow {
     // Print the introductory message
     println asciiArt
     println "SNAP pipeline running, created by BacaLab. https://bacalab.dana-farber.org/"
-    println "SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma"
+    println "SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma."
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
 
@@ -281,11 +282,12 @@ workflow {
     chRComparison = Channel.fromPath("$params.pathRComparison")
     chRPileups= Channel.fromPath("$params.pathRPileups")
     chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
-    //chJson_file = Channel.fromPath("$params.pathJson_file")
+    
 
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chSNPS_ref = Channel.fromPath("$params.snps_ref")
+    chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     
     // Create the genome directory if it doesn't exist
     """
@@ -329,7 +331,7 @@ workflow {
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,"${projectDir}/${params.output_dir}")
+    multiqc_v2(chSnpFingerprintComplete,chMultiQCConfig,"${projectDir}/${params.output_dir}")
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
