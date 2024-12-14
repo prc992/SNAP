@@ -4,6 +4,7 @@ report_comment: >
   Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma.
   
 export_plots: true
+disable_version_detection: true
 
 # Run only these modules
 run_modules:
