@@ -37,6 +37,8 @@ extra_fn_clean_trim:
   - "_2"
   - "_1_val_1"
   - "_2_val_2"
+  - ".unique"
+  - "_lib_complexity"
 
 # Customise the module search patterns to speed up execution time
 sp:
