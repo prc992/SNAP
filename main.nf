@@ -317,9 +317,10 @@ workflow {
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
 
     // Collect all files needed for MultiQC
+    // Synchronize and collect all files needed for MultiQC
     chMultiQCInputs = Channel
-        .merge(chFastQC, chTrimFiles, chAlignFiles) // Merge the channels
-        .flatten()                                 // Flatten into a single stream of files
+        .combine(chFastQC, chTrimFiles, chAlignFiles) // Combine the channels to synchronize them
+        .flatMap { tuple -> tuple.flatten() }         // Flatten each tuple into individual files
         .filter { file -> file.name.endsWith('.html') || file.name.endsWith('.zip') } // Include only relevant files
 
 
