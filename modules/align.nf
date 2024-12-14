@@ -16,6 +16,7 @@ process align {
 
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam')
+  tuple val(sampleId),path ("align_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.bam'
@@ -25,5 +26,11 @@ process align {
   """
   bwa mem $genomeFile $trimmedFiles -t $task.cpus | \
    samtools view --threads $task.cpus -Sb -u > $strBam
+
+  cat <<-END_VERSIONS > align_mqc_versions.yml
+  "${task.process}":
+     bwa: \$( bwa 2>&1 | grep Version | sed -e "s/Version: //g" )
+     samtools: \$( samtools --version | sed -e "s/samtools //g" )
+  END_VERSIONS
   """
 }

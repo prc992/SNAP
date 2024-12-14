@@ -9,6 +9,7 @@ process sort_bam {
   
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam)
+  val(_)
   
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam')
