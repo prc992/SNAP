@@ -56,7 +56,7 @@ process multiqc_v2 {
     
     input:
     val(_)
-    path(allFiles)
+    path('./analysis_results/')
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
