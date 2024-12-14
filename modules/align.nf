@@ -30,7 +30,7 @@ process align {
   cat <<-END_VERSIONS > align_mqc_versions.yml
   "${task.process}":
      bwa: \$( bwa 2>&1 | grep Version | sed -e "s/Version: //g" )
-     samtools: \$( samtools --version | sed -e "s/samtools //g" )
+     samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
   END_VERSIONS
   """
 }
