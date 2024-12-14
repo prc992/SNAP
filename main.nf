@@ -253,6 +253,37 @@ process createSamplesheet {
     """
 }
 
+process createStatsSamtools {
+    label 'low_cpu_low_mem'
+    container = 'quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+    publishDir "$path_sample_align", mode : 'copy'
+    
+    tag "Sample - $sampleId" 
+
+    input:
+    tuple val(sampleId),val(path_analysis),path(sampleBam)
+
+    exec:
+    path_sample_align = path_analysis + "/align/" + sampleId
+
+    output:
+    path ('*.stats')
+    path ('*.idxstats')
+    path ('*.flagstat')
+
+    script:
+    """
+    # Generate stats file
+    samtools stats $sampleBam > ${sampleId}.stats
+
+    # Generate idxstats file
+    samtools idxstats $sampleBam > ${sampleId}.idxstats
+
+    # Generate flagstat file
+    samtools flagstat $sampleBam > ${sampleId}.flagstat
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -316,6 +347,7 @@ workflow {
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
+    chStatsSamtools = createStatsSamtools(chSortedFiles)
     lib_complex(chSortedFiles)
     chUniqueFiles = unique_sam(chSortedFiles)
     chDedupFiles = dedup(chUniqueFiles)
