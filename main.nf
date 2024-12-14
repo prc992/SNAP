@@ -31,7 +31,7 @@ process multiqc {
     input:
     path ('*_fastqc.html')
     path ('*_fastqc.zip')
-    tuple val(sampleId),val(path),path('*.fq.gz')
+    tuple val(sampleId),val(path),path('*.fq.gz'),path("*report.txt")
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
@@ -287,7 +287,7 @@ workflow {
 
     chFastQC = fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
+    /*chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
     chUniqueFiles = unique_sam(chSortedFiles)
@@ -316,7 +316,7 @@ workflow {
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
-    //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
+    //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
 
     // Collect files for MultiQC
     multiqc(chFastQC,chTrimFiles)
