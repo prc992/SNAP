@@ -31,7 +31,7 @@ process multiqc {
     input:
     path ('*_fastqc.html')
     path ('*_fastqc.zip')
-    tuple val(sampleId),val(path),path('*.fq.gz'),path("*report.txt")
+    tuple val(sampleId),val(path),path('*.fq.gz'),path("*report.txt"),path ("versions.yml")
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 

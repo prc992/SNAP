@@ -14,7 +14,7 @@ process trim {
   path_sample_trim = path + "/trim/" + sampleId
 
   output:
-  tuple val(sampleId),val(path),path('*.fq.gz'),path("*report.txt")
+  tuple val(sampleId),val(path),path('*.fq.gz'),path("*report.txt"),path ("versions.yml")
 
   script:
   """
@@ -25,5 +25,11 @@ process trim {
     # Paired-end
     trim_galore --paired $read1 $read2 --gzip --cores $task.cpus
   fi
+
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      trimgalore: \$(echo \$(trim_galore --version 2>&1) | sed 's/^.*version //; s/Last.*\$//')
+      cutadapt: \$(cutadapt --version)
+  END_VERSIONS
   """
 }
