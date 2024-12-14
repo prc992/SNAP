@@ -29,7 +29,13 @@ process multiqc {
     publishDir "$path_sample_multiqc", mode : 'copy'
     
     input:
-    path ('*.*')
+    path ('*_fastqc.html')
+    path ('*_fastqc.zip')
+    val(_)
+    tuple val(sampleId),path("*report.txt")
+    tuple val(sampleId),path ("versions.yml")
+    tuple val(sampleId),val(path_analysis),path('*.bam')
+
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
