@@ -312,7 +312,7 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
 
-    chFastQC = fastqc(chSampleInfo)
+    fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)

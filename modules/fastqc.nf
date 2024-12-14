@@ -16,6 +16,7 @@ process fastqc {
   output:
   path ('*_fastqc.html')
   path ('*_fastqc.zip')
+  tuple val(sampleId),path ("fastqc_mqc_versions.yml")
   
   script:
   """
@@ -26,5 +27,12 @@ process fastqc {
       # Paired-end
       fastqc --threads $task.cpus $read1 $read2
   fi
+
+  cat <<-END_VERSIONS > fastqc_mqc_versions.yml
+  "${task.process}":
+     fastqc: \$( fastqc --version | sed -e "s/FastQC v//g" )
+  END_VERSIONS
   """
+
+
 }
