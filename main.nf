@@ -316,21 +316,12 @@ workflow {
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
 
-    // Collect all files needed for MultiQC
-    // Synchronize and collect all files needed for MultiQC
-    chMultiQCInputs = Channel
-        .combine(chFastQC, chTrimFiles, chAlignFiles) // Combine the channels to synchronize them
-        .flatMap { tuple -> tuple.flatten() }         // Flatten each tuple into individual files
-        .filter { file -> file.name.endsWith('.html') || file.name.endsWith('.zip') } // Include only relevant files
 
 
-    // Run MultiQC
-    multiqc(chMultiQCInputs)
 
-    // Collect files for MultiQC
-    //multiqc(chFastQC.collect{it[1]}.ifEmpty([]),\
-    //        chTrimFiles.collect{it[1]}.ifEmpty([]),\
-    //        chAlignFiles.collect{it[1]}.ifEmpty([]))
+
+    //Collect files for MultiQC
+    multiqc(chFastQC,chTrimFiles,chAlignFiles)
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
