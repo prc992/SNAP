@@ -292,7 +292,7 @@ workflow {
     chFastQC = fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
-    /*chSortedFiles = sort_bam(chAlignFiles)
+    chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
     chUniqueFiles = unique_sam(chSortedFiles)
     chDedupFiles = dedup(chUniqueFiles)
@@ -322,12 +322,8 @@ workflow {
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
 
-
-
-
-
     //Collect files for MultiQC
-    multiqc(chFastQC,chTrimFiles,chAlignFiles).collect()
+    //multiqc(chFastQC,chTrimFiles,chAlignFiles).collect()
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
