@@ -11,10 +11,10 @@ process lib_complex {
   tuple val(sampleId),val(path_analysis),path(sortedBam)
 
   output:
-  path("*.csv")
+  path("*.metrics.txt")
 
   exec:
-  String strLib = sampleId + '_lib_complexity.csv'
+  String strLib = sampleId + '.LibComplexity.metrics.txt'
   path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
