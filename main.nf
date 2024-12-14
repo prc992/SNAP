@@ -318,9 +318,10 @@ workflow {
 
     // Collect all files needed for MultiQC
     chMultiQCInputs = Channel
-        .of(chFastQC, chTrimFiles, chAlignFiles) // Combine channels
-        .flatten()                              // Flatten into a single stream of files
+        .merge(chFastQC, chTrimFiles, chAlignFiles) // Merge the channels
+        .flatten()                                 // Flatten into a single stream of files
         .filter { file -> file.name.endsWith('.html') || file.name.endsWith('.zip') } // Include only relevant files
+
 
     // Run MultiQC
     multiqc(chMultiQCInputs)
