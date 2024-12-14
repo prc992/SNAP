@@ -49,6 +49,27 @@ process multiqc {
     multiqc . 
     """
 }
+process multiqc_v2 {
+    label 'low_cpu_low_mem'
+    container = 'quay.io/biocontainers/multiqc:1.25.2--pyhdfd78af_0'
+    publishDir "$path_sample_multiqc", mode : 'copy'
+    
+    input:
+    path(vcfGzFiles)
+    path(allFiles)
+
+    exec:
+    path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
+
+    output:
+    file "multiqc_report.html"
+    file "multiqc_data/*"
+
+    script:
+    """
+    multiqc . 
+    """
+}
 
 process downloadGenome {
 
@@ -307,6 +328,8 @@ workflow {
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
+    
+    multiqc_v2(chSnpFingerprintComplete,params.output_dir)
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
