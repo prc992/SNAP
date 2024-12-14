@@ -327,7 +327,7 @@ workflow {
 
 
     //Collect files for MultiQC
-    multiqc(chFastQC,chTrimFiles,chAlignFiles)
+    multiqc(chFastQC,chTrimFiles,chAlignFiles).collect()
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
