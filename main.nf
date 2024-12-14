@@ -55,7 +55,7 @@ process multiqc_v2 {
     publishDir "$path_sample_multiqc", mode : 'copy'
     
     input:
-    path(vcfGzFiles)
+    val(_)
     path(allFiles)
 
     exec:
@@ -328,7 +328,7 @@ workflow {
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
-    
+
     multiqc_v2(chSnpFingerprintComplete,params.output_dir)
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
