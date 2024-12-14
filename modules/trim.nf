@@ -28,7 +28,7 @@ process trim {
     trim_galore --paired $read1 $read2 --gzip --cores $task.cpus
   fi
 
-  cat <<-END_VERSIONS > versions.yml
+  cat <<-END_VERSIONS > trim_mqc_versions.yml
   "${task.process}":
       trimgalore: \$(echo \$(trim_galore --version 2>&1) | sed 's/^.*version //; s/Last.*\$//')
       cutadapt: \$(cutadapt --version)
