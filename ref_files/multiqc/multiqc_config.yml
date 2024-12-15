@@ -27,7 +27,7 @@ custom_data:
             namespace: 'Sequencing stats'
         headers:
             name:
-              description: 'name'	
+              description: 'name'
             mark:
                 description: 'mark'	
             on_bp:
