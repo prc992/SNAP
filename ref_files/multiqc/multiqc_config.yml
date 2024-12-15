@@ -17,3 +17,33 @@ extra_fn_clean_trim:
   - "_2_val_2"
   - ".unique"
   - ".LibComplexity.metrics"
+
+  custom_content:
+  - id: enrichment_states  # Unique identifier for this custom content
+    name: Enrichment States Table  # The name displayed in the report
+    description: |
+      This table summarizes the enrichment states for each sample.
+    file_format: csv
+    data_source: '*_enrichment_states.csv'  # Match files like "Sample_enrichment_states.csv"
+    content_type: table  # Specifies the content type as a table
+    table_columns:
+      # Define the columns to display in the table
+      - SampleID
+      - Mark
+      - on_bp
+      - off_bp
+      - on_reads
+      - off_reads
+      - enrichment
+    table_highlight:
+      # Optionally highlight specific values
+      Column6: 
+        - value: "Critical"
+          color: "#ff0000"  # Highlight 'Critical' in red
+      Column5:
+        - value: "Low"
+          color: "#ffa500"  # Highlight 'Low' in orange
+    pconfig:
+      table_title: Enrichment States Summary  # Title of the table
+      table_desc: |
+        Below is a detailed summary of enrichment states for all processed samples.
