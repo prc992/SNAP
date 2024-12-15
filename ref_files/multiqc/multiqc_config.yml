@@ -31,13 +31,13 @@ custom_data:
             mark:
                 description: 'mark'	
             on_bp:
-                description: 'on_bp'	
+              description: 'on_bp'	
             off_bp:
-                description: 'off_bp'
+              description: 'off_bp'
             on_reads:	
-                description: 'on_reads'
+              description: 'on_reads'
             off_reads	enrichment:
-                description: 'off_reads'
+              description: 'off_reads'
 sp:
     sequencing_stats:
         fn: '*enrichment_states.csv'
