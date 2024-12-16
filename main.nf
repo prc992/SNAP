@@ -285,6 +285,31 @@ process createStatsSamtools {
     """
 }
 
+process lib_complex_preseq {
+  label 'med_cpu_high_mem'
+
+  //Docker Image
+  container = "biocontainers/preseq:3.1.2--h445547b_2"
+
+  tag "Sample - $sampleId"  
+  publishDir "$path_sample_align", mode : 'copy'
+
+  input:
+  tuple val(sampleId),val(path_analysis),path(sortedBam)
+
+  output:
+  path("*.lc_extrap.txt")
+  path("*.log")
+
+  exec:
+  path_sample_align = path_analysis + "/align/" + sampleId
+
+  script:
+  """
+  preseq lc_extrap -B $sortedBam > ${sampleId}.lc_extrap.txt
+  """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -350,6 +375,7 @@ workflow {
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
+    lib_complex_preseq(chSortedFiles)
     chUniqueFiles = unique_sam(chSortedFiles)
     chStatsSamtools = createStatsSamtools(chUniqueFiles)
     chDedupFiles = dedup(chUniqueFiles)
