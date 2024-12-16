@@ -289,7 +289,7 @@ process lib_complex_preseq {
   label 'med_cpu_high_mem'
 
   //Docker Image
-  container = "biocontainers/preseq:3.1.2--h445547b_2"
+  container = "quay.io/biocontainers/preseq:2.0.2--gsl1.16_0"
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_align", mode : 'copy'
