@@ -6,6 +6,13 @@ report_comment: >
 export_plots: true
 disable_version_detection: true
 
+remove_sections:
+    - "samtools-idxstats-xy-counts"
+    - "samtools-stats"
+    - "samtools-flagstat"
+    - "samtools-idxstats"
+    - "fastqc_overrepresented_sequences"
+
 extra_fn_clean_trim:
   - "_1"
   - "_2"
