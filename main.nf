@@ -320,7 +320,7 @@ process calcFragsLength {
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  tuple val(_),val(_),path('*.bam')
+  tuple val(_),val(path_analysis),path('*.bam')
 
   output:
   path("calcFragsLengthBamFiles.txt")
