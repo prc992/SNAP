@@ -314,23 +314,23 @@ process calcFragsLength {
   label 'med_cpu_high_mem'
 
   //Docker Image
-  container = "quay.io/biocontainers/preseq:2.0.2--gsl1.16_0"
+  container = "quay.io/biocontainers/deeptools:2.2.2--py27_0"
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  tuple val(_),val(path_analysis),path('*.bam')
+  tuple val(sampleId),val(path_analysis),path(sampleBam),path (sampleBamIndex)
 
   output:
-  path("calcFragsLengthBamFiles.txt")
+  path("*fragment_sizes.txt")
 
   exec:
-  path_sample_align = path_analysis + "/align/"
+  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
-  ls > calcFragsLengthBamFiles.txt
+  bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt
   """
 }
 
@@ -404,10 +404,11 @@ workflow {
     chStatsSamtools = createStatsSamtools(chUniqueFiles)
     chDedupFiles = dedup(chUniqueFiles)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
-    chAllBamFiles = chDACFilteredFiles.collect()
-    calcFragsLength(chAllBamFiles)
+    //chAllBamFiles = chDACFilteredFiles.collect()
+    
 
     chIndexFiles = index_sam(chDACFilteredFiles)
+    chFragmentsSize = calcFragsLength(chIndexFiles)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
     uropa(chPeakFiles,chGeneAnotation)
