@@ -309,6 +309,31 @@ process lib_complex_preseq {
   """
 }
 
+process calcFragsLength {
+  debug true
+  label 'med_cpu_high_mem'
+
+  //Docker Image
+  container = "quay.io/biocontainers/preseq:2.0.2--gsl1.16_0"
+
+  tag "Sample - $sampleId"  
+  publishDir "$path_sample_align", mode : 'copy'
+
+  input:
+  tuple val(sampleId),val(path_analysis),path(sortedBam)
+
+  output:
+  path("calcFragsLengthBamFiles.txt")
+
+  exec:
+  path_sample_align = path_analysis + "/align/" + sampleId
+
+  script:
+  """
+  ls > calcFragsLengthBamFiles.txt
+  """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
