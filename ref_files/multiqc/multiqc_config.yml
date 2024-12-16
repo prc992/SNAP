@@ -24,6 +24,9 @@ table_columns_visible:
         treatment_redundant_rate: False
     samtools_alignment_scores_stats:
         non_primary_alignments: False
+        samtools_alignment_scores_stats-non_primary_alignments: False
+    samtools:
+        samtools_alignment_scores_stats-non_primary_alignments: False
 
 remove_sections:
     - "samtools-idxstats-xy-counts"
