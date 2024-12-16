@@ -379,6 +379,8 @@ workflow {
     chStatsSamtools = createStatsSamtools(chUniqueFiles)
     chDedupFiles = dedup(chUniqueFiles)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
+    chAllBamFiles = chDACFilteredFiles.collect()
+
     chIndexFiles = index_sam(chDACFilteredFiles)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
