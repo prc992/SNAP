@@ -311,7 +311,7 @@ process lib_complex_preseq {
 
 process calcFragsLength {
   debug true
-  label 'high_cpu_high_mem'
+  label 'med_cpu_med_mem'
 
   //Docker Image
   container = "quay.io/biocontainers/deeptools:2.2.2--py27_0"
