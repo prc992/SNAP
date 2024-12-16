@@ -405,6 +405,7 @@ workflow {
     chDedupFiles = dedup(chUniqueFiles)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
     chAllBamFiles = chDACFilteredFiles.collect()
+    calcFragsLength(chAllBamFiles)
 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
