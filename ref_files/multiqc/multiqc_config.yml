@@ -22,7 +22,7 @@ module_order:
 table_columns_visible:
     macs2:
         treatment_redundant_rate: False
-    Samtools: stats:
+    stats:
         samtools_alignment_scores_stats-non_primary_alignments: False
 
 remove_sections:
