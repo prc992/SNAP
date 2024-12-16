@@ -11,7 +11,8 @@ remove_sections:
     - "samtools-stats"
     - "samtools-flagstat"
     - "samtools-idxstats"
-    - "fastqc_overrepresented_sequences"
+    - "fastqc_top_overrepresented_sequences"
+    - "fastqc_per_base_sequence_content"
 
 extra_fn_clean_trim:
   - "_1"
