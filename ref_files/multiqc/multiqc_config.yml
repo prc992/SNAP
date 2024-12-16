@@ -28,6 +28,8 @@ table_columns_visible:
         non_primary_alignments: False
     general_stats_table_table:
         samtools_alignment_scores_stats-non_primary_alignments: False
+    Samtools alignment scores:
+        non_primary_alignments: False
         
 remove_sections:
     - "samtools-idxstats-xy-counts"
