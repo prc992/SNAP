@@ -6,6 +6,23 @@ report_comment: >
 export_plots: true
 disable_version_detection: true
 
+module_order:
+  - fastqc:
+      name: "FastQC (raw)"
+      info: "This section of the report shows FastQC results before adapter trimming."
+  - preseq:
+      name: "Library Complexity"
+  - picard:
+      name: "Picard duplication stats"
+  - samtools:
+      name: "Samtools alignment scores"
+  - cutadapt:
+      name: "Adapter trimming"
+
+table_columns_visible:
+    macs2:
+        treatment_redundant_rate: False
+
 remove_sections:
     - "samtools-idxstats-xy-counts"
     - "samtools-stats"
