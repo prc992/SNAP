@@ -299,7 +299,6 @@ process lib_complex_preseq {
 
   output:
   path("*.lc_extrap.txt")
-  path("*.log")
 
   exec:
   path_sample_align = path_analysis + "/align/" + sampleId
