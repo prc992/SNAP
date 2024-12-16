@@ -326,7 +326,7 @@ process calcFragsLength {
   path("calcFragsLengthBamFiles.txt")
 
   exec:
-  path_sample_align = path_analysis + "/align/" + sampleId
+  path_sample_align = path_analysis + "/align/"
 
   script:
   """
