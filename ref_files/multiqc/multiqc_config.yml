@@ -26,7 +26,7 @@ table_columns_visible:
         samtools_alignment_scores_stats-non_primary_alignments: False
     samtools_alignment_scores_stats:
         non_primary_alignments: False
-    samtools:
+    general_stats_table_table:
         samtools_alignment_scores_stats-non_primary_alignments: False
         
 remove_sections:
