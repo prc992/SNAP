@@ -57,7 +57,6 @@ process multiqc_v2 {
     input:
     val(_)
     path (configFile)
-    path (configLogo)
     path (analysis_results)
 
     exec:
@@ -446,7 +445,7 @@ workflow {
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,chMultiQCConfig,chMultiQCLogo,"${projectDir}/${params.output_dir}")
+    multiqc_v2(chSnpFingerprintComplete,chMultiQCConfig,"${projectDir}/${params.output_dir}")
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
