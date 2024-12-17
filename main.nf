@@ -330,7 +330,7 @@ process fragLenHist {
     script:
     """
     python calc_frag_hist.py \\
-        --frag_path "*len.txt" \\
+        --frag_path "*fragment_sizes.txt" \\
         --output frag_len_hist.txt
 
     cat $frag_len_header_multiqc frag_len_hist.txt > frag_len_mqc.yml
