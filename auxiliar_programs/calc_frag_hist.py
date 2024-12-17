@@ -64,7 +64,7 @@ dt_frag_list.sort()
 
 for i in list(range(len(dt_frag_list))):
     # Create dataframe from csv file for each file and save to a list of data frames
-    dt_frag_i = pd.read_csv(dt_frag_list[i], sep="\t", names=["Size", "Occurrences","Sample"],skiprows=1)
+    dt_frag_i = pd.read_csv(dt_frag_list[i], sep="\t", names=["Size", "Occurrences","Sample"],skiprows=2)
     #df = pd.read_csv("NEPCmlf010.fragment_sizes.txt", sep="\t", skiprows=1, names=["Size", "Occurrences", "Sample"])
     dt_frag_i = dt_frag_i.drop('Sample', axis=1)
     frag_base_i = os.path.basename(dt_frag_list[i])
