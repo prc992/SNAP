@@ -23,32 +23,6 @@ include {pileups_report} from './modules/pileups_report'
 include {uropa} from './modules/uropa'
 include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
-process multiqc {
-    label 'low_cpu_low_mem'
-    container = 'quay.io/biocontainers/multiqc:1.25.2--pyhdfd78af_0'
-    publishDir "$path_sample_multiqc", mode : 'copy'
-    
-    input:
-    path ('*_fastqc.html')
-    path ('*_fastqc.zip')
-    val(_)
-    tuple val(sampleId),path("*report.txt")
-    tuple val(sampleId),path ("versions.yml")
-    tuple val(sampleId),val(path_analysis),path('*.bam')
-
-
-    exec:
-    path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
-
-    output:
-    file "multiqc_report.html"
-    file "multiqc_data/*"
-
-    script:
-    """
-    multiqc . 
-    """
-}
 process multiqc_v2 {
     label 'low_cpu_low_mem'
     container = 'quay.io/biocontainers/multiqc:1.25.2--pyhdfd78af_0'
@@ -56,6 +30,7 @@ process multiqc_v2 {
     
     input:
     val(_)
+    tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
     path (configFile)
     path (analysis_results)
 
@@ -348,6 +323,9 @@ process fragLenHist {
     exec:
     path_sample_frags = "$param.output_dir" + "/frag/"
 
+    output:
+    tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
+
     script:
     """
     calc_frag_hist.py \\
@@ -445,7 +423,7 @@ workflow {
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,chMultiQCConfig,"${projectDir}/${params.output_dir}")
+    multiqc_v2(chSnpFingerprintComplete,chFragmentsSize,chMultiQCConfig,"${projectDir}/${params.output_dir}")
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
