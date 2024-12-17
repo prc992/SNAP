@@ -413,8 +413,8 @@ workflow {
     
 
     chIndexFiles = index_sam(chDACFilteredFiles)
-    chFragmentsSize = calcFragsLength(chIndexFiles).collect()
-    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chCalcFragHist)
+    chFragmentsSize = calcFragsLength(chIndexFiles)//.collect()
+    //chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chCalcFragHist)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
     uropa(chPeakFiles,chGeneAnotation)

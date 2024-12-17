@@ -10,3 +10,9 @@ hg19.DAC.bed
 .nextflow.log*
 *.gtf
 analysis_results/
+.nextflow/*
+analysis_results/*
+analysis_results_heinkoff/*
+analysis_results_heinkoff_small/*
+work/*
+.nextflow.log
