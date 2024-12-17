@@ -414,7 +414,10 @@ workflow {
 
     chIndexFiles = index_sam(chDACFilteredFiles)
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
+
+    //Verificar se é necessário pois o deepTools já faz isso
     chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chCalcFragHist)
+    //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
     uropa(chPeakFiles,chGeneAnotation)
@@ -433,8 +436,11 @@ workflow {
     //snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
 
     enrichment(chDACFilteredFiles,chEnrichmentScript)
+
+    //Verificar se é necessário pois o deepTools já faz isso
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
     lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
+    //************************************************************************
 
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
     

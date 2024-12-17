@@ -15,4 +15,3 @@ analysis_results/*
 analysis_results_heinkoff/*
 analysis_results_heinkoff_small/*
 work/*
-.nextflow.log
