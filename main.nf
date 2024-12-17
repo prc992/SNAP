@@ -314,7 +314,9 @@ process calcFragsLength {
   label 'med_cpu_med_mem'
 
   //Docker Image
-  container = "quay.io/biocontainers/deeptools:2.2.2--py27_0"
+  //docker pull mgibio/deeptools:3.5.3
+  //container = "quay.io/biocontainers/deeptools:2.2.2--py27_0"
+  container = "mgibio/deeptools:3.5.3"
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_align", mode : 'copy'
