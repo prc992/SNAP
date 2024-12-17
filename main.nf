@@ -319,6 +319,7 @@ process fragLenHist {
     input:
     path raw_fragments
     path frag_len_header_multiqc
+    path chCalcFragHist
 
     exec:
     path_sample_frags = "$params.output_dir" + "/frag/"
@@ -366,6 +367,7 @@ workflow {
     chRComparison = Channel.fromPath("$params.pathRComparison")
     chRPileups= Channel.fromPath("$params.pathRPileups")
     chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
+    chCalcFragHist = Channel.fromPath("$params.pathCalcFragHist")
     
 
     //Assets
@@ -412,7 +414,7 @@ workflow {
 
     chIndexFiles = index_sam(chDACFilteredFiles)
     chFragmentsSize = calcFragsLength(chIndexFiles).collectFile()
-    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader)
+    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chCalcFragHist)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
     uropa(chPeakFiles,chGeneAnotation)
