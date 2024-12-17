@@ -329,7 +329,7 @@ process fragLenHist {
 
     script:
     """
-    calc_frag_hist.py \\
+    python calc_frag_hist.py \\
         --frag_path "*len.txt" \\
         --output frag_len_hist.txt
 
