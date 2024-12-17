@@ -310,7 +310,6 @@ process lib_complex_preseq {
 }
 
 process calcFragsLength {
-  debug true
   label 'med_cpu_med_mem'
 
   //Docker Image
@@ -319,7 +318,7 @@ process calcFragsLength {
   container = "mgibio/deeptools:3.5.3"
 
   tag "Sample - $sampleId"  
-  publishDir "$path_sample_align", mode : 'copy'
+  publishDir "$path_sample_frags", mode : 'copy'
 
   input:
   tuple val(sampleId),val(path_analysis),path(sortedBam),path (sampleBamIndex)
@@ -328,12 +327,37 @@ process calcFragsLength {
   path("*fragment_sizes.txt")
 
   exec:
-  path_sample_align = path_analysis + "/align/" + sampleId
+  path_sample_frags = path_analysis + "/frag/" + sampleId
 
   script:
   """
   bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt
   """
+}
+
+process fragLenHist {
+    container = 'biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
+    label 'med_cpu_med_mem'
+    tag "Sample - $sampleId"
+
+    publishDir "$path_sample_frags", mode : 'copy'
+
+    input:
+    path raw_fragments
+    path frag_len_header_multiqc
+
+    exec:
+    path_sample_frags = "$param.output_dir" + "/frag/"
+
+    script:
+    """
+    calc_frag_hist.py \\
+        --frag_path "*len.txt" \\
+        --output frag_len_hist.txt
+
+    cat $frag_len_header_multiqc frag_len_hist.txt > frag_len_mqc.yml
+    """
+
 }
 
 workflow {
@@ -371,7 +395,7 @@ workflow {
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chSNPS_ref = Channel.fromPath("$params.snps_ref")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
-    chMultiQCLogo = Channel.fromPath("$params.multiqc_logo")
+    chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
     
     // Create the genome directory if it doesn't exist
     """
@@ -410,7 +434,8 @@ workflow {
     
 
     chIndexFiles = index_sam(chDACFilteredFiles)
-    chFragmentsSize = calcFragsLength(chIndexFiles)
+    chFragmentsSize = calcFragsLength(chIndexFiles).collectFile()
+    fragLenHist(chFragmentsSize,chMultiQCFragLenHeader)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
     uropa(chPeakFiles,chGeneAnotation)
