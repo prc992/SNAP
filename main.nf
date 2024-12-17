@@ -321,7 +321,7 @@ process fragLenHist {
     path frag_len_header_multiqc
 
     exec:
-    path_sample_frags = "$param.output_dir" + "/frag/"
+    path_sample_frags = "$params.output_dir" + "/frag/"
 
     output:
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
