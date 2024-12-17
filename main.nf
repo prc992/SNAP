@@ -30,6 +30,7 @@ process multiqc_v2 {
     
     input:
     val(_)
+    tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
     path (configFile)
     path (analysis_results)
 
@@ -412,8 +413,8 @@ workflow {
     
 
     chIndexFiles = index_sam(chDACFilteredFiles)
-    chFragmentsSize = calcFragsLength(chIndexFiles)//.collect()
-    //chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chCalcFragHist)
+    chFragmentsSize = calcFragsLength(chIndexFiles).collect()
+    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chCalcFragHist)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
     uropa(chPeakFiles,chGeneAnotation)
@@ -424,7 +425,7 @@ workflow {
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,chMultiQCConfig,"${projectDir}/${params.output_dir}")
+    multiqc_v2(chSnpFingerprintComplete,chfragHist,chMultiQCConfig,"${projectDir}/${params.output_dir}")
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois

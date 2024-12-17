@@ -1,42 +1,42 @@
-Dec-17 12:00:02.547 [main] DEBUG nextflow.cli.Launcher - $> nextflow run main.nf -profile local_mac --sample_dir /Users/prc992/Desktop/DFCI/1-SNAP-Git/raw_data_heinkoff_small --output_dir ./analysis_results_heinkoff_small --genome hg19
-Dec-17 12:00:02.595 [main] DEBUG nextflow.cli.CmdRun - N E X T F L O W  ~  version 24.10.2
-Dec-17 12:00:02.608 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/Users/prc992/.nextflow/plugins; core-plugins: nf-amazon@2.9.2,nf-azure@1.10.2,nf-cloudcache@0.4.2,nf-codecommit@0.2.2,nf-console@1.1.4,nf-google@1.15.2,nf-tower@1.9.3,nf-wave@1.7.4
-Dec-17 12:00:02.623 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
-Dec-17 12:00:02.623 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
-Dec-17 12:00:02.625 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.12.0 in 'deployment' mode
-Dec-17 12:00:02.632 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
-Dec-17 12:00:02.644 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/nextflow.config
-Dec-17 12:00:02.646 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/nextflow.config
-Dec-17 12:00:02.659 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /Users/prc992/.nextflow/secrets/store.json
-Dec-17 12:00:02.660 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@208e9ef6] - activable => nextflow.secret.LocalSecretsProvider@208e9ef6
-Dec-17 12:00:02.667 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `local_mac`
-Dec-17 12:00:02.981 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [singularity_lsf_high, local_mac, singularity_slurm_low, singularity_slurm_high, aws]
-Dec-17 12:00:02.997 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declaration
-Dec-17 12:00:03.008 [main] DEBUG nextflow.cli.CmdRun - Launching `main.nf` [thirsty_kalam] DSL2 - revision: c69a6b8a19
-Dec-17 12:00:03.008 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
-Dec-17 12:00:03.008 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
-Dec-17 12:00:03.037 [main] DEBUG nextflow.Session - Session UUID: 9870cab7-47f5-4a3a-8fb2-e0e1efe65e51
-Dec-17 12:00:03.037 [main] DEBUG nextflow.Session - Run name: thirsty_kalam
-Dec-17 12:00:03.037 [main] DEBUG nextflow.Session - Executor pool size: 10
-Dec-17 12:00:03.041 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
-Dec-17 12:00:03.044 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=30; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
-Dec-17 12:00:03.060 [main] DEBUG nextflow.cli.CmdRun - 
+Dec-17 12:25:02.711 [main] DEBUG nextflow.cli.Launcher - $> nextflow run main.nf -profile local_mac --sample_dir /Users/prc992/Desktop/DFCI/1-SNAP-Git/raw_data_heinkoff_small --output_dir ./analysis_results_heinkoff_small --genome hg19 -resume
+Dec-17 12:25:02.761 [main] DEBUG nextflow.cli.CmdRun - N E X T F L O W  ~  version 24.10.2
+Dec-17 12:25:02.774 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/Users/prc992/.nextflow/plugins; core-plugins: nf-amazon@2.9.2,nf-azure@1.10.2,nf-cloudcache@0.4.2,nf-codecommit@0.2.2,nf-console@1.1.4,nf-google@1.15.2,nf-tower@1.9.3,nf-wave@1.7.4
+Dec-17 12:25:02.789 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Dec-17 12:25:02.790 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Dec-17 12:25:02.791 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.12.0 in 'deployment' mode
+Dec-17 12:25:02.797 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Dec-17 12:25:02.808 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/nextflow.config
+Dec-17 12:25:02.809 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/nextflow.config
+Dec-17 12:25:02.822 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /Users/prc992/.nextflow/secrets/store.json
+Dec-17 12:25:02.824 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@208e9ef6] - activable => nextflow.secret.LocalSecretsProvider@208e9ef6
+Dec-17 12:25:02.831 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `local_mac`
+Dec-17 12:25:03.125 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [singularity_lsf_high, local_mac, singularity_slurm_low, singularity_slurm_high, aws]
+Dec-17 12:25:03.141 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declaration
+Dec-17 12:25:03.152 [main] DEBUG nextflow.cli.CmdRun - Launching `main.nf` [grave_baekeland] DSL2 - revision: 8059f7624e
+Dec-17 12:25:03.152 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Dec-17 12:25:03.152 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Dec-17 12:25:03.185 [main] DEBUG nextflow.Session - Session UUID: 9870cab7-47f5-4a3a-8fb2-e0e1efe65e51
+Dec-17 12:25:03.186 [main] DEBUG nextflow.Session - Run name: grave_baekeland
+Dec-17 12:25:03.186 [main] DEBUG nextflow.Session - Executor pool size: 10
+Dec-17 12:25:03.191 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Dec-17 12:25:03.194 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=30; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Dec-17 12:25:03.343 [main] DEBUG nextflow.cli.CmdRun - 
   Version: 24.10.2 build 5932
   Created: 27-11-2024 21:23 UTC (16:23 EDT)
   System: Mac OS X 15.1.1
   Runtime: Groovy 4.0.23 on Java HotSpot(TM) 64-Bit Server VM 20.0.1+9-29
   Encoding: UTF-8 (UTF-8)
-  Process: 66200@mac.dfci.harvard.edu [10.24.88.160]
-  CPUs: 10 - Mem: 16 GB (96.3 MB) - Swap: 8 GB (846.7 MB)
-Dec-17 12:00:03.069 [main] DEBUG nextflow.Session - Work-dir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work [Mac OS X]
-Dec-17 12:00:03.069 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/bin
-Dec-17 12:00:03.076 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
-Dec-17 12:00:03.081 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
-Dec-17 12:00:03.092 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
-Dec-17 12:00:03.097 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 11; maxThreads: 1000
-Dec-17 12:00:03.128 [main] DEBUG nextflow.Session - Session start
-Dec-17 12:00:03.554 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
-Dec-17 12:00:03.967 [main] INFO  nextflow.script.BaseScript - 
+  Process: 69026@mac.dfci.harvard.edu [10.24.35.13]
+  CPUs: 10 - Mem: 16 GB (83.5 MB) - Swap: 9 GB (1.3 GB)
+Dec-17 12:25:03.356 [main] DEBUG nextflow.Session - Work-dir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work [Mac OS X]
+Dec-17 12:25:03.356 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/bin
+Dec-17 12:25:03.364 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Dec-17 12:25:03.368 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Dec-17 12:25:03.380 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Dec-17 12:25:03.387 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 11; maxThreads: 1000
+Dec-17 12:25:03.441 [main] DEBUG nextflow.Session - Session start
+Dec-17 12:25:03.853 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Dec-17 12:25:04.265 [main] INFO  nextflow.script.BaseScript - 
       ███████╗ ███╗   ██╗ █████╗ ██████╗ 
       ██╔════╝ ████╗  ██║██╔══██╗██╔══██╗
       ███████╗ ██╔██╗ ██║███████║██████╔╝
@@ -44,151 +44,90 @@ Dec-17 12:00:03.967 [main] INFO  nextflow.script.BaseScript -
       ███████╗ ██║ ╚████║██║  ██║██║     
       ╚══════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     
     
-Dec-17 12:00:03.968 [main] INFO  nextflow.script.BaseScript - SNAP pipeline running, created by BacaLab. https://bacalab.dana-farber.org/
-Dec-17 12:00:03.968 [main] INFO  nextflow.script.BaseScript - SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma.
-Dec-17 12:00:03.968 [main] INFO  nextflow.script.BaseScript - GitHub repository: https://github.com/prc992/SNAP
-Dec-17 12:00:03.968 [main] INFO  nextflow.script.BaseScript - Release version: v1.0.15 - LOCAL 60 - 2024-12-10
-Dec-17 12:00:04.025 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name downloadGenome
-Dec-17 12:00:04.029 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.030 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.032 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
-Dec-17 12:00:04.036 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=10; memory=16 GB; capacity=10; pollInterval=100ms; dumpInterval=5m
-Dec-17 12:00:04.037 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
-Dec-17 12:00:04.065 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:high_cpu_high_mem` matches labels `high_cpu_high_mem` for process with name createGenomeIndex
-Dec-17 12:00:04.066 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.066 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.068 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name downloadGeneAnotation
-Dec-17 12:00:04.069 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.069 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.071 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name fetch_chrom_sizes
-Dec-17 12:00:04.071 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.071 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.073 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name downloadDACFile
-Dec-17 12:00:04.073 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.073 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.093 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name createSamplesheet
-Dec-17 12:00:04.093 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.093 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.122 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_med_mem` matches labels `med_cpu_med_mem` for process with name fastqc
-Dec-17 12:00:04.124 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.124 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.127 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_high_mem` matches labels `med_cpu_high_mem` for process with name trim
-Dec-17 12:00:04.127 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.127 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.131 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:high_cpu_high_mem` matches labels `high_cpu_high_mem` for process with name align
-Dec-17 12:00:04.136 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.136 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.136 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [3, 4]
-Dec-17 12:00:04.141 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_high_mem` matches labels `low_cpu_high_mem` for process with name sort_bam
-Dec-17 12:00:04.142 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.142 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.144 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_high_mem` matches labels `med_cpu_high_mem` for process with name lib_complex
-Dec-17 12:00:04.144 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.144 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.146 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_high_mem` matches labels `med_cpu_high_mem` for process with name lib_complex_preseq
-Dec-17 12:00:04.146 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.146 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.148 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name unique_sam
-Dec-17 12:00:04.149 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.149 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.150 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name createStatsSamtools
-Dec-17 12:00:04.151 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.151 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.153 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_med_mem` matches labels `med_cpu_med_mem` for process with name dedup
-Dec-17 12:00:04.153 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.153 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.155 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name dac_exclusion
-Dec-17 12:00:04.157 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.157 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.158 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1]
-Dec-17 12:00:04.159 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name index_sam
-Dec-17 12:00:04.160 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.160 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.161 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_med_mem` matches labels `med_cpu_med_mem` for process with name calcFragsLength
-Dec-17 12:00:04.162 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.162 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.166 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_med_mem` matches labels `med_cpu_med_mem` for process with name fragLenHist
-Dec-17 12:00:04.166 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.167 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.167 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1, 2]
-Dec-17 12:00:04.170 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name peak_bed_graph
-Dec-17 12:00:04.171 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.171 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.173 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name uropa
-Dec-17 12:00:04.174 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.174 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.174 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1]
-Dec-17 12:00:04.176 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name bam_to_bed
-Dec-17 12:00:04.177 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.177 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.179 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name unique_frags
-Dec-17 12:00:04.179 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.179 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.181 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name snp_fingerprint
-Dec-17 12:00:04.182 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.182 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.182 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1, 2]
-Dec-17 12:00:04.185 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name multiqc_v2
-Dec-17 12:00:04.185 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.185 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.188 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name enrichment
-Dec-17 12:00:04.188 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.188 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.189 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1]
-Dec-17 12:00:04.190 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name lenght_fragment_dist_step1
-Dec-17 12:00:04.191 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.191 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.193 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name lenght_fragment_dist_step2
-Dec-17 12:00:04.194 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.194 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.194 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1]
-Dec-17 12:00:04.196 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name bedGraphToBigWig
-Dec-17 12:00:04.197 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
-Dec-17 12:00:04.197 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Dec-17 12:00:04.198 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1]
-Dec-17 12:00:04.199 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: downloadGenome, createGenomeIndex, multiqc_v2, downloadDACFile, snp_fingerprint, uropa, fetch_chrom_sizes, lib_complex_preseq, align, createSamplesheet, enrichment, index_sam, trim, bam_to_bed, pileups_report, bedGraphToBigWig, unique_frags, snp_footprint_clustering, peak_bed_graph, unique_sam, dac_exclusion, dedup, lib_complex, createStatsSamtools, calcFragsLength, lenght_fragment_dist_step2, fastqc, lenght_fragment_dist_step1, downloadGeneAnotation, fragLenHist, sort_bam
-Dec-17 12:00:04.199 [main] DEBUG nextflow.Session - Igniting dataflow network (48)
-Dec-17 12:00:04.203 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > downloadGenome
-Dec-17 12:00:04.203 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > createGenomeIndex
-Dec-17 12:00:04.203 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > downloadGeneAnotation
-Dec-17 12:00:04.203 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > fetch_chrom_sizes
-Dec-17 12:00:04.203 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > downloadDACFile
-Dec-17 12:00:04.203 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > createSamplesheet
-Dec-17 12:00:04.203 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > fastqc
-Dec-17 12:00:04.204 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > trim
-Dec-17 12:00:04.204 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > align
-Dec-17 12:00:04.204 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > align
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > sort_bam
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > lib_complex
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > lib_complex_preseq
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > unique_sam
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > createStatsSamtools
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > dedup
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > dac_exclusion
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > dac_exclusion
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > index_sam
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > calcFragsLength
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > fragLenHist
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > fragLenHist
-Dec-17 12:00:04.205 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > peak_bed_graph
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > uropa
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > uropa
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > bam_to_bed
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > unique_frags
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > snp_fingerprint
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > snp_fingerprint
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > multiqc_v2
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > enrichment
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > enrichment
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > lenght_fragment_dist_step1
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > lenght_fragment_dist_step2
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > lenght_fragment_dist_step2
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > bedGraphToBigWig
-Dec-17 12:00:04.206 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > bedGraphToBigWig
-Dec-17 12:00:04.206 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+Dec-17 12:25:04.266 [main] INFO  nextflow.script.BaseScript - SNAP pipeline running, created by BacaLab. https://bacalab.dana-farber.org/
+Dec-17 12:25:04.266 [main] INFO  nextflow.script.BaseScript - SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma.
+Dec-17 12:25:04.266 [main] INFO  nextflow.script.BaseScript - GitHub repository: https://github.com/prc992/SNAP
+Dec-17 12:25:04.267 [main] INFO  nextflow.script.BaseScript - Release version: v1.0.15 - LOCAL 60 - 2024-12-10
+Dec-17 12:25:04.323 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name downloadGenome
+Dec-17 12:25:04.328 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.328 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.331 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Dec-17 12:25:04.334 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=10; memory=16 GB; capacity=10; pollInterval=100ms; dumpInterval=5m
+Dec-17 12:25:04.336 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Dec-17 12:25:04.364 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:high_cpu_high_mem` matches labels `high_cpu_high_mem` for process with name createGenomeIndex
+Dec-17 12:25:04.365 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.365 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.367 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name downloadGeneAnotation
+Dec-17 12:25:04.368 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.368 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.370 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name fetch_chrom_sizes
+Dec-17 12:25:04.370 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.370 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.372 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name downloadDACFile
+Dec-17 12:25:04.373 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.373 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.391 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name createSamplesheet
+Dec-17 12:25:04.392 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.392 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.414 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_med_mem` matches labels `med_cpu_med_mem` for process with name fastqc
+Dec-17 12:25:04.416 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.416 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.419 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_high_mem` matches labels `med_cpu_high_mem` for process with name trim
+Dec-17 12:25:04.419 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.420 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.423 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:high_cpu_high_mem` matches labels `high_cpu_high_mem` for process with name align
+Dec-17 12:25:04.428 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.428 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.429 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [3, 4]
+Dec-17 12:25:04.434 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_high_mem` matches labels `low_cpu_high_mem` for process with name sort_bam
+Dec-17 12:25:04.434 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.434 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.436 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_high_mem` matches labels `med_cpu_high_mem` for process with name lib_complex
+Dec-17 12:25:04.436 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.436 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.438 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_high_mem` matches labels `med_cpu_high_mem` for process with name lib_complex_preseq
+Dec-17 12:25:04.438 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.438 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.440 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name unique_sam
+Dec-17 12:25:04.441 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.441 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.443 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name createStatsSamtools
+Dec-17 12:25:04.443 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.443 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.445 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_med_mem` matches labels `med_cpu_med_mem` for process with name dedup
+Dec-17 12:25:04.445 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.446 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.448 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name dac_exclusion
+Dec-17 12:25:04.450 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.450 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.450 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1]
+Dec-17 12:25:04.452 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name index_sam
+Dec-17 12:25:04.453 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.453 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.454 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:med_cpu_med_mem` matches labels `med_cpu_med_mem` for process with name calcFragsLength
+Dec-17 12:25:04.455 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.455 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.458 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:low_cpu_low_mem` matches labels `low_cpu_low_mem` for process with name peak_bed_graph
+Dec-17 12:25:04.458 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.458 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.460 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name uropa
+Dec-17 12:25:04.461 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.461 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.461 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1]
+Dec-17 12:25:04.463 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name bam_to_bed
+Dec-17 12:25:04.463 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.463 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.465 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name unique_frags
+Dec-17 12:25:04.466 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.466 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.468 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name snp_fingerprint
+Dec-17 12:25:04.469 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Dec-17 12:25:04.469 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Dec-17 12:25:04.469 [main] DEBUG nextflow.processor.TaskProcessor - Creating *combiner* operator for each param(s) at index(es): [1, 2]
+Dec-17 12:25:04.475 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
   Script_92d421316501f4e4: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/uropa.nf
-  Script_98c5e71ad15a9391: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/bam_to_bed.nf
   Script_3e1ee7ce04d32012: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/fetch_chrom_sizes.nf
+  Script_98c5e71ad15a9391: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/bam_to_bed.nf
   Script_f89b639e3f28bf55: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/peak_bed_graph.nf
   Script_d132dff8e637e589: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/trim.nf
   Script_ad46212a10c8b2a4: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/lib_complex.nf
@@ -197,188 +136,361 @@ Dec-17 12:00:04.206 [main] DEBUG nextflow.script.ScriptRunner - Parsed script fi
   Script_e509828cfed300d4: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/snp_fingerprint.nf
   Script_9602bfe2d009035a: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/align.nf
   Script_8a11f3998982a8fa: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/dedup.nf
-  Script_4e85c780140c44f9: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/fastqc.nf
   Script_b15092efc5f48eaf: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/sort_bam.nf
+  Script_4e85c780140c44f9: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/fastqc.nf
   Script_cfd67ab8d244f8c8: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/enrichment.nf
   Script_0859b7046f46d02b: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/index_sam.nf
   Script_e0a100a92f397392: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/bedGraphToBigWig.nf
-  Script_6de1a26b521d9299: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/main.nf
   Script_8eb643ec404453e3: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/unique_sam.nf
   Script_12dc04e340ef057e: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/pileups_report.nf
   Script_4938cee83758fcf7: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/lenght_fragment_dist_step.nf
   Script_ae706ac3861c05a4: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/./modules/dac_exclusion.nf
-Dec-17 12:00:04.206 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
-Dec-17 12:00:04.206 [main] DEBUG nextflow.Session - Session await
-Dec-17 12:00:04.266 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:04.267 [Task submitter] INFO  nextflow.Session - [59/5011e1] Submitted process > createSamplesheet (Creating Samplesheet)
-Dec-17 12:00:04.275 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:04.275 [Task submitter] INFO  nextflow.Session - [5e/e131bf] Submitted process > fetch_chrom_sizes (Fetch Chrom Sizes - hg19)
-Dec-17 12:00:04.278 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:04.278 [Task submitter] INFO  nextflow.Session - [fd/050dbb] Submitted process > downloadDACFile (Dowloading DAC File - hg19)
-Dec-17 12:00:04.280 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:04.281 [Task submitter] INFO  nextflow.Session - [38/7f1310] Submitted process > downloadGeneAnotation (Dowloading Gene Anotation File - hg19)
-Dec-17 12:00:04.283 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:04.283 [Task submitter] INFO  nextflow.Session - [ba/d723b5] Submitted process > downloadGenome (Dowloading - hg19)
-Dec-17 12:00:04.398 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 3; name: createSamplesheet (Creating Samplesheet); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/59/5011e10d9285881c599e6154f079c2]
-Dec-17 12:00:04.398 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'TaskFinalizer' minSize=10; maxSize=30; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
-Dec-17 12:00:04.422 [TaskFinalizer-1] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'PublishDir' minSize=10; maxSize=30; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
-Dec-17 12:00:04.437 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:04.438 [Task submitter] INFO  nextflow.Session - [38/4c6ecc] Submitted process > fastqc (Sample - SRR11074254)
-Dec-17 12:00:04.441 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:04.442 [Task submitter] INFO  nextflow.Session - [c4/e846fb] Submitted process > fastqc (Sample - SRR11923224)
-Dec-17 12:00:05.280 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: downloadGeneAnotation (Dowloading Gene Anotation File - hg19); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/38/7f1310a5c851c4dc01fe30360af9b5]
-Dec-17 12:00:05.347 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 4; name: downloadDACFile (Dowloading DAC File - hg19); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/fd/050dbbf82e6b79c0345c0fc6aebfcf]
-Dec-17 12:00:05.377 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: downloadGenome (Dowloading - hg19); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/ba/d723b51e934cf988bdb63d904bc412]
-Dec-17 12:00:05.704 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 5; name: fetch_chrom_sizes (Fetch Chrom Sizes - hg19); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/5e/e131bfa8ca3d2f6eeb09ae9bbb4b67]
-Dec-17 12:00:05.708 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:05.708 [Task submitter] INFO  nextflow.Session - [29/fa8bb8] Submitted process > trim (Sample - SRR11923224)
-Dec-17 12:00:08.802 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 6; name: trim (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/29/fa8bb83245ed4448be4d19db8110af]
-Dec-17 12:00:08.806 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:08.807 [Task submitter] INFO  nextflow.Session - [23/e39010] Submitted process > trim (Sample - SRR11074254)
-Dec-17 12:00:11.390 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 9; name: fastqc (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/38/4c6ecc7789f06da088d6e79143636d]
-Dec-17 12:00:11.436 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 7; name: fastqc (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/c4/e846fbede830c08da13d1522f68cd5]
-Dec-17 12:00:11.813 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 8; name: trim (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/23/e39010cc2360cc6ffdb9be80b7a623]
-Dec-17 12:00:11.818 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:11.818 [Task submitter] INFO  nextflow.Session - [6d/4ed64d] Submitted process > createGenomeIndex (Creating Index - hg19)
-Dec-17 12:00:12.274 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 10; name: createGenomeIndex (Creating Index - hg19); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/6d/4ed64de7e8edaac96326cf4ee04187]
-Dec-17 12:00:12.308 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:12.308 [Task submitter] INFO  nextflow.Session - [b1/f18dd1] Submitted process > align (Sample - SRR11074254)
-Dec-17 12:00:49.144 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 12; name: align (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/b1/f18dd1c96deebce32b0151870d3fda]
-Dec-17 12:00:49.181 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:49.182 [Task submitter] INFO  nextflow.Session - [ad/eb6719] Submitted process > align (Sample - SRR11923224)
-Dec-17 12:00:49.211 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:49.211 [Task submitter] INFO  nextflow.Session - [e9/5f2c01] Submitted process > sort_bam (Sample - SRR11074254)
-Dec-17 12:00:51.163 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 13; name: sort_bam (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/e9/5f2c01c8eb1cf59d79b2e8a4b43a76]
-Dec-17 12:00:52.192 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:52.193 [Task submitter] INFO  nextflow.Session - [02/dd2c47] Submitted process > unique_sam (Sample - SRR11074254)
-Dec-17 12:00:53.641 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 16; name: unique_sam (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/02/dd2c4716cf745b4dde14f01f080da1]
-Dec-17 12:00:54.658 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:00:54.659 [Task submitter] INFO  nextflow.Session - [42/7685ae] Submitted process > dedup (Sample - SRR11074254)
-Dec-17 12:01:56.394 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 17; name: dedup (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/42/7685ae9ad1649d781371ecce3a78d8]
-Dec-17 12:01:56.574 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:01:56.575 [Task submitter] INFO  nextflow.Session - [1a/770a24] Submitted process > createStatsSamtools (Sample - SRR11074254)
-Dec-17 12:01:57.592 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:01:57.592 [Task submitter] INFO  nextflow.Session - [20/ecc6a7] Submitted process > dac_exclusion (Sample - SRR11074254)
-Dec-17 12:02:02.522 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 18; name: createStatsSamtools (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/1a/770a24b23a0436721846fb21f255df]
-Dec-17 12:02:03.766 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 19; name: dac_exclusion (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/20/ecc6a709390265e80e5fb913ad2c51]
-Dec-17 12:02:04.827 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:02:04.830 [Task submitter] INFO  nextflow.Session - [ca/c85a81] Submitted process > index_sam (Sample - SRR11074254)
-Dec-17 12:02:04.839 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:02:04.843 [Task submitter] INFO  nextflow.Session - [4d/f4a496] Submitted process > peak_bed_graph (Sample - SRR11074254)
-Dec-17 12:02:08.014 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 22; name: index_sam (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/ca/c85a81e30eea9874db6c463aea8311]
-Dec-17 12:02:25.348 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 23; name: peak_bed_graph (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/4d/f4a496803a5ce9890cd984db3956d2]
-Dec-17 12:02:25.421 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:02:25.428 [Task submitter] INFO  nextflow.Session - [9e/ae74da] Submitted process > calcFragsLength (Sample - SRR11074254)
-Dec-17 12:03:28.025 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 11; name: align (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/ad/eb6719c16c5c42f530d837f47880b1]
-Dec-17 12:03:28.085 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:03:28.088 [Task submitter] INFO  nextflow.Session - [5a/c29b58] Submitted process > lib_complex (Sample - SRR11074254)
-Dec-17 12:03:28.102 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:03:28.103 [Task submitter] INFO  nextflow.Session - [be/01d8c6] Submitted process > bam_to_bed (Sample - SRR11074254)
-Dec-17 12:03:29.696 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 21; name: bam_to_bed (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/be/01d8c6c9a2744e592b6c718233ea2c]
-Dec-17 12:03:29.701 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:03:29.703 [Task submitter] INFO  nextflow.Session - [af/bc972c] Submitted process > lenght_fragment_dist_step1 (Sample - SRR11074254)
-Dec-17 12:03:32.832 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 20; name: lenght_fragment_dist_step1 (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/af/bc972cfcf86430e1a1f399f2f26fb7]
-Dec-17 12:03:32.838 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:03:32.838 [Task submitter] INFO  nextflow.Session - [11/c354eb] Submitted process > enrichment (Sample - SRR11074254)
-Dec-17 12:03:34.993 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 24; name: enrichment (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/11/c354ebc19fe1eeb2db5fd48fd80b92]
-Dec-17 12:03:34.997 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:03:34.997 [Task submitter] INFO  nextflow.Session - [5b/549989] Submitted process > snp_fingerprint (Sample - SRR11074254)
-Dec-17 12:03:42.429 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 15; name: lib_complex (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/5a/c29b5813ae4539988dbfac42d8122a]
-Dec-17 12:03:42.454 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:03:42.454 [Task submitter] INFO  nextflow.Session - [d3/b7f2c4] Submitted process > lib_complex_preseq (Sample - SRR11074254)
-Dec-17 12:03:44.809 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 14; name: lib_complex_preseq (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/d3/b7f2c42a281defcb28897ab46d55d8]
-Dec-17 12:03:44.814 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:03:44.814 [Task submitter] INFO  nextflow.Session - [16/e59ece] Submitted process > uropa (Sample - SRR11074254)
-Dec-17 12:04:18.147 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 26; name: snp_fingerprint (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/5b/549989c52e95d39144ee8952e6c00b]
-Dec-17 12:04:18.187 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:18.188 [Task submitter] INFO  nextflow.Session - [30/f7216e] Submitted process > bedGraphToBigWig (Sample - SRR11074254)
-Dec-17 12:04:20.052 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 28; name: bedGraphToBigWig (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/30/f7216e2139629425121f9edda17d8a]
-Dec-17 12:04:20.061 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:20.062 [Task submitter] INFO  nextflow.Session - [a4/c2f952] Submitted process > sort_bam (Sample - SRR11923224)
-Dec-17 12:04:21.190 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 29; name: sort_bam (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/a4/c2f95286250672a0141fb01bbbc2bf]
-Dec-17 12:04:21.197 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:21.197 [Task submitter] INFO  nextflow.Session - [70/88f4af] Submitted process > unique_frags (Sample - SRR11074254)
-Dec-17 12:04:21.761 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 30; name: unique_frags (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/70/88f4afb10ed0c8ae3dcf2e9895632f]
-Dec-17 12:04:21.768 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:21.769 [Task submitter] INFO  nextflow.Session - [73/770498] Submitted process > lenght_fragment_dist_step2 (SRR11074254)
-Dec-17 12:04:24.312 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 31; name: lenght_fragment_dist_step2 (SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/73/770498060b2bdb13bfc550b39b079b]
-Dec-17 12:04:24.318 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:24.318 [Task submitter] INFO  nextflow.Session - [13/cb5949] Submitted process > lib_complex (Sample - SRR11923224)
-Dec-17 12:04:28.368 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 27; name: uropa (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/16/e59ecec4cd9a1cf96655fc938fe196]
-Dec-17 12:04:28.376 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:28.376 [Task submitter] INFO  nextflow.Session - [50/aae0b7] Submitted process > unique_sam (Sample - SRR11923224)
-Dec-17 12:04:29.289 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 33; name: unique_sam (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/50/aae0b7b0e2f39cd503904e70cb1d6b]
-Dec-17 12:04:30.301 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:30.302 [Task submitter] INFO  nextflow.Session - [4c/01d7e0] Submitted process > createStatsSamtools (Sample - SRR11923224)
-Dec-17 12:04:31.066 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 36; name: createStatsSamtools (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/4c/01d7e03dca0be4734476f8382c3fb1]
-Dec-17 12:04:31.071 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:31.071 [Task submitter] INFO  nextflow.Session - [22/db387d] Submitted process > dedup (Sample - SRR11923224)
-Dec-17 12:04:38.286 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 32; name: lib_complex (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/13/cb5949905f08c08e267ef7df8e7ee2]
-Dec-17 12:04:38.295 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:38.295 [Task submitter] INFO  nextflow.Session - [7b/5547ec] Submitted process > lib_complex_preseq (Sample - SRR11923224)
-Dec-17 12:04:40.858 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 34; name: lib_complex_preseq (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/7b/5547ec89c484df339e4a27bf6b602e]
-Dec-17 12:04:47.692 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 35; name: dedup (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/22/db387dbcb5083794d5cc44d7556fd5]
-Dec-17 12:04:47.743 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:47.744 [Task submitter] INFO  nextflow.Session - [d6/f8646e] Submitted process > dac_exclusion (Sample - SRR11923224)
-Dec-17 12:04:49.085 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 37; name: dac_exclusion (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/d6/f8646eb937ffea25e85bccfa08f527]
-Dec-17 12:04:49.102 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:49.103 [Task submitter] INFO  nextflow.Session - [7b/e528c0] Submitted process > bam_to_bed (Sample - SRR11923224)
-Dec-17 12:04:49.106 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:49.107 [Task submitter] INFO  nextflow.Session - [d3/31c454] Submitted process > lenght_fragment_dist_step1 (Sample - SRR11923224)
-Dec-17 12:04:52.395 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 41; name: lenght_fragment_dist_step1 (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/d3/31c4540b83bb1eea837215fe069feb]
-Dec-17 12:04:52.400 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:52.401 [Task submitter] INFO  nextflow.Session - [b9/1d005c] Submitted process > index_sam (Sample - SRR11923224)
-Dec-17 12:04:52.464 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:52.465 [Task submitter] INFO  nextflow.Session - [3f/2d844b] Submitted process > peak_bed_graph (Sample - SRR11923224)
-Dec-17 12:04:52.491 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 39; name: bam_to_bed (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/7b/e528c0bc1ac02af46e8bcec2b01eda]
-Dec-17 12:04:52.494 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:52.494 [Task submitter] INFO  nextflow.Session - [22/ceccc8] Submitted process > enrichment (Sample - SRR11923224)
-Dec-17 12:04:52.522 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:52.522 [Task submitter] INFO  nextflow.Session - [1f/180aab] Submitted process > unique_frags (Sample - SRR11923224)
-Dec-17 12:04:53.096 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 44; name: unique_frags (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/1f/180aab15cb0053b394ae4671579674]
-Dec-17 12:04:53.272 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 40; name: index_sam (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/b9/1d005cf732736bbf23bafcef5560f7]
-Dec-17 12:04:54.286 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:54.287 [Task submitter] INFO  nextflow.Session - [f0/eada18] Submitted process > calcFragsLength (Sample - SRR11923224)
-Dec-17 12:04:54.447 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 42; name: enrichment (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/22/ceccc88193fed8cdf5504c4a1e9d99]
-Dec-17 12:04:54.451 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:54.451 [Task submitter] INFO  nextflow.Session - [ab/255c24] Submitted process > lenght_fragment_dist_step2 (SRR11923224)
-Dec-17 12:04:56.519 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 43; name: lenght_fragment_dist_step2 (SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/ab/255c241c52912b772aab9acb2eabfc]
-Dec-17 12:04:56.534 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:04:56.534 [Task submitter] INFO  nextflow.Session - [27/d6b0a2] Submitted process > snp_fingerprint (Sample - SRR11923224)
-Dec-17 12:04:59.073 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 38; name: peak_bed_graph (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/3f/2d844b91e1a51e11812558917d5605]
-Dec-17 12:05:04.217 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 3 -- submitted tasks are shown below
-~> TaskHandler[id: 25; name: calcFragsLength (Sample - SRR11074254); status: RUNNING; exit: -; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/9e/ae74daa50f6415fabb5e37124d77d8]
-~> TaskHandler[id: 46; name: calcFragsLength (Sample - SRR11923224); status: RUNNING; exit: -; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/f0/eada18ea9e8022a3f4ea29270cbcd3]
-~> TaskHandler[id: 45; name: snp_fingerprint (Sample - SRR11923224); status: RUNNING; exit: -; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/27/d6b0a2663e82b53115baa562ccfd1e]
-Dec-17 12:05:05.130 [Task submitter] DEBUG n.processor.TaskPollingMonitor - %% executor local > tasks in the submission queue: 2 -- tasks to be submitted are shown below
-~> TaskHandler[id: 47; name: bedGraphToBigWig (Sample - SRR11923224); status: NEW; exit: -; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/4e/d148749b71d733d88a0ce0393144f5]
-~> TaskHandler[id: 48; name: uropa (Sample - SRR11923224); status: NEW; exit: -; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/37/89a0a3a58376a16a0a10e5542d8e3d]
-Dec-17 12:05:39.161 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 45; name: snp_fingerprint (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/27/d6b0a2663e82b53115baa562ccfd1e]
-Dec-17 12:05:39.197 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:05:39.199 [Task submitter] INFO  nextflow.Session - [4e/d14874] Submitted process > bedGraphToBigWig (Sample - SRR11923224)
-Dec-17 12:05:40.260 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 47; name: bedGraphToBigWig (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/4e/d148749b71d733d88a0ce0393144f5]
-Dec-17 12:05:40.264 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:05:40.264 [Task submitter] INFO  nextflow.Session - [37/89a0a3] Submitted process > uropa (Sample - SRR11923224)
-Dec-17 12:06:12.720 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 48; name: uropa (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/37/89a0a3a58376a16a0a10e5542d8e3d]
-Dec-17 12:10:04.310 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 2 -- submitted tasks are shown below
-~> TaskHandler[id: 25; name: calcFragsLength (Sample - SRR11074254); status: RUNNING; exit: -; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/9e/ae74daa50f6415fabb5e37124d77d8]
-~> TaskHandler[id: 46; name: calcFragsLength (Sample - SRR11923224); status: RUNNING; exit: -; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/f0/eada18ea9e8022a3f4ea29270cbcd3]
-Dec-17 12:11:16.945 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 25; name: calcFragsLength (Sample - SRR11074254); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/9e/ae74daa50f6415fabb5e37124d77d8]
-Dec-17 12:15:04.367 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- submitted tasks are shown below
-~> TaskHandler[id: 46; name: calcFragsLength (Sample - SRR11923224); status: RUNNING; exit: -; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/f0/eada18ea9e8022a3f4ea29270cbcd3]
-Dec-17 12:17:37.180 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 46; name: calcFragsLength (Sample - SRR11923224); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/f0/eada18ea9e8022a3f4ea29270cbcd3]
-Dec-17 12:17:37.266 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:17:37.266 [Task submitter] INFO  nextflow.Session - [ef/af5b05] Submitted process > fragLenHist (Sample - null)
-Dec-17 12:17:38.679 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 49; name: fragLenHist (Sample - null); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/ef/af5b05ec49930ab0dd2a4b2afcfcca]
-Dec-17 12:17:38.695 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Dec-17 12:17:38.695 [Task submitter] INFO  nextflow.Session - [97/707198] Submitted process > multiqc_v2 (1)
-Dec-17 12:17:43.642 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 50; name: multiqc_v2 (1); status: COMPLETED; exit: 0; error: -; workDir: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/work/97/707198b624d36d23ff84e0f86f0230]
-Dec-17 12:17:43.666 [main] DEBUG nextflow.Session - Session await > all processes finished
-Dec-17 12:17:43.752 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
-Dec-17 12:17:43.752 [main] DEBUG nextflow.Session - Session await > all barriers passed
-Dec-17 12:17:43.767 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'TaskFinalizer' shutdown completed (hard=false)
-Dec-17 12:17:43.767 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'PublishDir' shutdown completed (hard=false)
-Dec-17 12:17:43.781 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=50; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=1h 28m 12s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=6; peakCpus=10; peakMemory=16 GB; ]
-Dec-17 12:17:44.029 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
-Dec-17 12:17:44.106 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
-Dec-17 12:17:44.107 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
+  Script_3b0b2960fda57d23: /Users/prc992/Desktop/DFCI/2-SNAP/SNAP/main.nf
+Dec-17 12:25:04.475 [main] DEBUG nextflow.Session - Session aborted -- Cause: No such property: chfragHist for class: nextflow.script.WorkflowBinding
+Dec-17 12:25:04.485 [main] DEBUG nextflow.Session - The following nodes are still active:
+  [operator] splitCsv
+  [operator] map
+  [operator] collect
+
+Dec-17 12:25:04.487 [main] DEBUG nextflow.Session - 
+Thread[#8,Reference Handler,10,system]
+  java.base@20.0.1/java.lang.ref.Reference.waitForReferencePendingList(Native Method)
+  java.base@20.0.1/java.lang.ref.Reference.processPendingReferences(Reference.java:246)
+  java.base@20.0.1/java.lang.ref.Reference$ReferenceHandler.run(Reference.java:208)
+
+Thread[#34,Task monitor,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+  java.base@20.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1847)
+  app//nextflow.processor.TaskPollingMonitor$_await_closure5.doCall(TaskPollingMonitor.groovy:529)
+  app//nextflow.processor.TaskPollingMonitor$_await_closure5.call(TaskPollingMonitor.groovy)
+  app//nextflow.extension.Bolts.withLock(Bolts.groovy:337)
+  app//nextflow.extension.Bolts.withLock(Bolts.groovy)
+  app//nextflow.processor.TaskPollingMonitor.await(TaskPollingMonitor.groovy:528)
+  app//nextflow.processor.TaskPollingMonitor.pollLoop(TaskPollingMonitor.groovy:453)
+  java.base@20.0.1/java.lang.invoke.LambdaForm$DMH/0x00000008011a3400.invokeVirtual(LambdaForm$DMH)
+  java.base@20.0.1/java.lang.invoke.LambdaForm$MH/0x0000000801302400.invoke(LambdaForm$MH)
+  java.base@20.0.1/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@20.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:154)
+  java.base@20.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+  java.base@20.0.1/java.lang.reflect.Method.invoke(Method.java:578)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
+  app//org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
+  app//nextflow.processor.TaskPollingMonitor$_start_closure2.doCall(TaskPollingMonitor.groovy:318)
+  app//nextflow.processor.TaskPollingMonitor$_start_closure2.call(TaskPollingMonitor.groovy)
+  app//groovy.lang.Closure.run(Closure.java:505)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#36,Actor Thread 1,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#17,Common-Cleaner,8,InnocuousThreadGroup]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+  java.base@20.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1847)
+  java.base@20.0.1/java.lang.ref.ReferenceQueue.await(ReferenceQueue.java:71)
+  java.base@20.0.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:143)
+  java.base@20.0.1/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:218)
+  java.base@20.0.1/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:140)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+  java.base@20.0.1/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:186)
+
+Thread[#18,Notification Thread,9,system]
+
+Thread[#37,Actor Thread 2,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#35,Task submitter,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:519)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1707)
+  app//nextflow.processor.TaskPollingMonitor.awaitTasks(TaskPollingMonitor.groovy:388)
+  app//nextflow.processor.TaskPollingMonitor.submitLoop(TaskPollingMonitor.groovy:412)
+  java.base@20.0.1/java.lang.invoke.LambdaForm$DMH/0x00000008011a3400.invokeVirtual(LambdaForm$DMH)
+  java.base@20.0.1/java.lang.invoke.LambdaForm$MH/0x0000000801302400.invoke(LambdaForm$MH)
+  java.base@20.0.1/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@20.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:154)
+  java.base@20.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+  java.base@20.0.1/java.lang.reflect.Method.invoke(Method.java:578)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethodClosure(MetaClassImpl.java:1017)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1207)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//groovy.lang.Closure.call(Closure.java:433)
+  app//groovy.lang.Closure.call(Closure.java:412)
+  app//groovy.lang.Closure.run(Closure.java:505)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#44,Actor Thread 9,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#9,Finalizer,8,system]
+  java.base@20.0.1/java.lang.Object.wait0(Native Method)
+  java.base@20.0.1/java.lang.Object.wait(Object.java:366)
+  java.base@20.0.1/java.lang.Object.wait(Object.java:339)
+  java.base@20.0.1/java.lang.ref.NativeReferenceQueue.await(NativeReferenceQueue.java:48)
+  java.base@20.0.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:158)
+  java.base@20.0.1/java.lang.ref.NativeReferenceQueue.remove(NativeReferenceQueue.java:89)
+  java.base@20.0.1/java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:173)
+
+Thread[#39,Actor Thread 4,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#42,Actor Thread 7,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#1,main,5,main]
+  java.base@20.0.1/java.lang.Thread.dumpThreads(Native Method)
+  java.base@20.0.1/java.lang.Thread.getAllStackTraces(Thread.java:2585)
+  app//nextflow.util.SysHelper.dumpThreads(SysHelper.groovy:188)
+  app//nextflow.Session.abort(Session.groovy:800)
+  app//nextflow.script.ScriptRunner.execute(ScriptRunner.groovy:149)
+  app//nextflow.cli.CmdRun.run(CmdRun.groovy:376)
+  app//nextflow.cli.Launcher.run(Launcher.groovy:503)
+  app//nextflow.cli.Launcher.main(Launcher.groovy:658)
+
+Thread[#33,process reaper (pid 69061),10,InnocuousThreadGroup]
+  java.base@20.0.1/java.lang.ProcessHandleImpl.waitForProcessExit0(Native Method)
+  java.base@20.0.1/java.lang.ProcessHandleImpl$1.run(ProcessHandleImpl.java:163)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+  java.base@20.0.1/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:186)
+
+Thread[#10,Signal Dispatcher,9,system]
+
+Thread[#38,Actor Thread 3,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#41,Actor Thread 6,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#43,Actor Thread 8,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#40,Actor Thread 5,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3780)
+  java.base@20.0.1/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3725)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+  java.base@20.0.1/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+  java.base@20.0.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#31,Thread-1,5,main]
+  java.base@20.0.1/jdk.internal.misc.Unsafe.park(Native Method)
+  java.base@20.0.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+  java.base@20.0.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1758)
+  java.base@20.0.1/java.util.concurrent.LinkedBlockingDeque.pollFirst(LinkedBlockingDeque.java:515)
+  java.base@20.0.1/java.util.concurrent.LinkedBlockingDeque.poll(LinkedBlockingDeque.java:677)
+  app//nextflow.util.SimpleAgent.run(SimpleAgent.groovy:89)
+  java.base@20.0.1/java.lang.invoke.LambdaForm$DMH/0x00000008011a3400.invokeVirtual(LambdaForm$DMH)
+  java.base@20.0.1/java.lang.invoke.LambdaForm$MH/0x0000000801302400.invoke(LambdaForm$MH)
+  java.base@20.0.1/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@20.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:154)
+  java.base@20.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+  java.base@20.0.1/java.lang.reflect.Method.invoke(Method.java:578)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethodClosure(MetaClassImpl.java:1017)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1207)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//groovy.lang.Closure.call(Closure.java:433)
+  app//groovy.lang.Closure.call(Closure.java:412)
+  app//groovy.lang.Closure.run(Closure.java:505)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Thread[#32,AnsiLogObserver,5,main]
+  java.base@20.0.1/java.io.FileInputStream.readBytes(Native Method)
+  java.base@20.0.1/java.io.FileInputStream.read(FileInputStream.java:293)
+  java.base@20.0.1/java.io.BufferedInputStream.fill(BufferedInputStream.java:258)
+  java.base@20.0.1/java.io.BufferedInputStream.implRead(BufferedInputStream.java:292)
+  java.base@20.0.1/java.io.BufferedInputStream.read(BufferedInputStream.java:285)
+  app//jline.internal.TerminalLineSettings.exec(TerminalLineSettings.java:191)
+  app//jline.internal.TerminalLineSettings.exec(TerminalLineSettings.java:173)
+  app//jline.internal.TerminalLineSettings.stty(TerminalLineSettings.java:168)
+  app//jline.internal.TerminalLineSettings.get(TerminalLineSettings.java:72)
+  app//jline.internal.TerminalLineSettings.<init>(TerminalLineSettings.java:52)
+  app//jline.UnixTerminal.<init>(UnixTerminal.java:31)
+  java.base@20.0.1/java.lang.invoke.DirectMethodHandle$Holder.newInvokeSpecial(DirectMethodHandle$Holder)
+  java.base@20.0.1/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@20.0.1/jdk.internal.reflect.DirectConstructorHandleAccessor.invokeImpl(DirectConstructorHandleAccessor.java:91)
+  java.base@20.0.1/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:67)
+  java.base@20.0.1/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+  java.base@20.0.1/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:128)
+  java.base@20.0.1/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:304)
+  java.base@20.0.1/java.lang.Class.newInstance(Class.java:685)
+  app//jline.TerminalFactory.getFlavor(TerminalFactory.java:168)
+  app//jline.TerminalFactory.create(TerminalFactory.java:81)
+  app//jline.TerminalFactory.get(TerminalFactory.java:159)
+  app//nextflow.trace.AnsiLogObserver.renderProcesses(AnsiLogObserver.groovy:257)
+  app//nextflow.trace.AnsiLogObserver.renderProgress(AnsiLogObserver.groovy:312)
+  app//nextflow.trace.AnsiLogObserver.render0(AnsiLogObserver.groovy:183)
+  java.base@20.0.1/java.lang.invoke.DirectMethodHandle$Holder.invokeVirtual(DirectMethodHandle$Holder)
+  java.base@20.0.1/java.lang.invoke.LambdaForm$MH/0x00000008012b5400.invoke(LambdaForm$MH)
+  java.base@20.0.1/java.lang.invoke.Invokers$Holder.invokeExact_MT(Invokers$Holder)
+  java.base@20.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invokeImpl(DirectMethodHandleAccessor.java:155)
+  java.base@20.0.1/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+  java.base@20.0.1/java.lang.reflect.Method.invoke(Method.java:578)
+  app//org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+  app//groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethodClosure(MetaClassImpl.java:1017)
+  app//groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1207)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
+  app//groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+  app//groovy.lang.Closure.call(Closure.java:433)
+  app//groovy.lang.Closure.call(Closure.java:412)
+  app//groovy.lang.Closure.run(Closure.java:505)
+  java.base@20.0.1/java.lang.Thread.runWith(Thread.java:1636)
+  java.base@20.0.1/java.lang.Thread.run(Thread.java:1623)
+
+Dec-17 12:25:04.488 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Dec-17 12:25:04.489 [main] ERROR nextflow.cli.Launcher - @unknown
+groovy.lang.MissingPropertyException: No such property: chfragHist for class: nextflow.script.WorkflowBinding
+	at groovy.lang.Binding.getVariable(Binding.java:61)
+	at nextflow.script.WorkflowBinding.getVariable(WorkflowBinding.groovy:141)
+	at groovy.lang.Binding.getProperty(Binding.java:117)
+	at nextflow.script.WorkflowBinding.getProperty(WorkflowBinding.groovy:130)
+	at org.codehaus.groovy.runtime.InvokerHelper.getProperty(InvokerHelper.java:167)
+	at groovy.lang.Closure.getPropertyTryThese(Closure.java:325)
+	at groovy.lang.Closure.getPropertyDelegateFirst(Closure.java:315)
+	at groovy.lang.Closure.getProperty(Closure.java:301)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at Script_3b0b2960fda57d23$_runScript_closure11$_closure41.doCall(Script_3b0b2960fda57d23:428)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:279)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
+	at groovy.lang.Closure.call(Closure.java:433)
+	at groovy.lang.Closure.call(Closure.java:412)
+	at nextflow.script.WorkflowDef.run0(WorkflowDef.groovy:204)
+	at nextflow.script.WorkflowDef.run(WorkflowDef.groovy:188)
+	at nextflow.script.BindableDef.invoke_a(BindableDef.groovy:51)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.script.BaseScript.run0(BaseScript.groovy:198)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.script.BaseScript.run(BaseScript.groovy:209)
+	at nextflow.script.ScriptParser.runScript(ScriptParser.groovy:236)
+	at nextflow.script.ScriptRunner.run(ScriptRunner.groovy:243)
+	at nextflow.script.ScriptRunner.execute(ScriptRunner.groovy:138)
+	at nextflow.cli.CmdRun.run(CmdRun.groovy:376)
+	at nextflow.cli.Launcher.run(Launcher.groovy:503)
+	at nextflow.cli.Launcher.main(Launcher.groovy:658)
