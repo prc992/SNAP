@@ -318,8 +318,8 @@ process fragLenHist {
 
     input:
     path raw_fragments
-    path frag_len_header_multiqc
-    path chCalcFragHist
+    each path frag_len_header_multiqc
+    each path chCalcFragHist
 
     exec:
     path_sample_frags = "$params.output_dir" + "/frag/"
