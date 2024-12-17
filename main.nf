@@ -413,7 +413,7 @@ workflow {
     
 
     chIndexFiles = index_sam(chDACFilteredFiles)
-    chFragmentsSize = calcFragsLength(chIndexFiles).collectFile()
+    chFragmentsSize = calcFragsLength(chIndexFiles).collect()
     chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chCalcFragHist)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
