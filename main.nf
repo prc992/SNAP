@@ -420,10 +420,7 @@ workflow {
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
     chDACFileRef = downloadDACFile(params.genome,refDir)
     
-    // Create the output directory if it doesn't exist
-    """
-    mkdir -p ${projectDir}/${params.output_dir}
-    """.execute().waitFor()
+
 
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
@@ -442,13 +439,17 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
 
-    
 
     //Extract outputdir from the first row
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
 
     // Visualizar para depuração
     chOutputDir.view { "Valor de outputdir: $it" }
+
+    // Create the output directory if it doesn't exist
+    //"""
+    //mkdir -p ${projectDir}/${params.output_dir}
+    ///""".execute().waitFor()
     
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
