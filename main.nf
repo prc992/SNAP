@@ -32,6 +32,7 @@ process multiqc_v2 {
     val(_)
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
     path (chFragAndPeaks)
+    path (chEnrichmentFiles)
     path (configFile)
     path (chOutputDir)
 
@@ -522,11 +523,11 @@ workflow {
     // Processo SNP Footprint Clustering (executa apenas após a conclusão de snp_fingerprint para todas as amostras)
     //snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
 
-    chEnrichmentFilesReport = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
-    enrichmentReport(chSampleInfo,chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chReportEnrichment,chOutputDir)
+    chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
+    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chMultiQCEnrichmentHeader,chReportEnrichment,chOutputDir).collect()
 
 
-    /*multiqc_v2(chSnpFingerprintComplete,chfragHist,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
+    multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
 
     //Verificar se é necessário pois o deepTools já faz isso
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
