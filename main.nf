@@ -456,8 +456,12 @@ workflow {
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chPeakAllFiles = chPeakFiles.collect()
 
+    chPeakAllFiles.subscribe { collectedFiles ->
+    println "Arquivos coletados: $collectedFiles"
+}
+
     //FRAGMENTS AND PEAKS      ***************************************************
-    chFragAndPeaks = frags_and_peaks(chPeakAllFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
+    //chFragAndPeaks = frags_and_peaks(chPeakAllFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
     //****************************************************************************
 
     // Processo de SNP Fingerprint
