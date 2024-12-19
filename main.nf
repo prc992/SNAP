@@ -322,9 +322,10 @@ process fragLenHist {
     path raw_fragments
     each path (frag_len_header_multiqc)
     each path (chCalcFragHist)
+    val (chOutputDir)
 
     exec:
-    path_sample_frags = "$params.output_dir" + "/frag/"
+    path_sample_frags = "$chOutputDir" + "/frag/"
 
     output:
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
@@ -442,13 +443,14 @@ workflow {
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
 
     
-    // Extrair o primeiro valor da terceira variável e armazenar em um canal
+
+    //Extract outputdir from the first row
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
 
     // Visualizar para depuração
     chOutputDir.view { "Valor de outputdir: $it" }
     
-    /*fastqc(chSampleInfo)
+    fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
@@ -463,10 +465,10 @@ workflow {
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
 
     //Verificar se é necessário pois o deepTools já faz isso
-    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist)
+    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist,chOutputDir)
     //************************************************************************
 
-    chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+    /*chPeakFiles = peak_bed_graph(chDACFilteredFiles)
 
     
     uropa(chPeakFiles,chGeneAnotation)
