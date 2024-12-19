@@ -452,7 +452,7 @@ workflow {
     chDedupFiles = dedup(chUniqueFiles)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
 
-    /*chIndexFiles = index_sam(chDACFilteredFiles)
+    chIndexFiles = index_sam(chDACFilteredFiles)
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
 
     //Verificar se é necessário pois o deepTools já faz isso
