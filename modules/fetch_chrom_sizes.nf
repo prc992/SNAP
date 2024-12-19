@@ -11,14 +11,19 @@ process fetch_chrom_sizes{
   val genome
   path refDir
 
-  exec:
-  refGenomeFile = genome + '.chrom.sizes'
-
   output:
   path ('*.sizes')
   
   script:
+  def chromSizeFile = "${genome}.chrom.sizes"
   """
-  fetchChromSizes $genome > $refGenomeFile
+  if [ ! -f ${refDir}/${chromSizeFile} ]; then
+    fetchChromSizes $genome > $refGenomeFile
+  else
+    echo "File ${refDir}/${chromSizeFile} already exists. Skipping download."
+  fi
+  
+  ln -s ${refDir}/${chromSizeFile} ${chromSizeFile}
+  
   """
 }
