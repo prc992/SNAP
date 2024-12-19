@@ -367,6 +367,32 @@ process frags_and_peaks {
     """
 }
 
+process enrichmentReport {
+    container = 'quay.io/biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
+    label 'low_cpu_low_mem'
+    tag "All Samples"
+
+    publishDir "$path_sample_multiqc", mode : 'copy'
+
+    input:
+    tuple val(sampleId), val(enrichment_mark),val(path),path(read1), val(read2)
+    path(csvFiles)
+    each path (chMultiQCEnrichmentHeader)
+    each path (chReportEnrichment)
+    val (chOutputDir)
+
+    exec:
+    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
+
+    output:
+    path ("*mqc.csv")
+
+    script:
+    """
+    python $chReportEnrichment --mark ${enrichment_mark}
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -487,20 +513,23 @@ workflow {
 
 
     //FRAGMENTS AND PEAKS      ***************************************************
-    chFragAndPeaksFiles = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks,chOutputDir)
+    chFragAndPeaksFilesReport = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks,chOutputDir)
     //****************************************************************************
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,chfragHist,chFragAndPeaksFiles,chMultiQCConfig,chOutputDir)
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
     // Processo SNP Footprint Clustering (executa apenas após a conclusão de snp_fingerprint para todas as amostras)
     //snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
 
-    enrichment(chDACFilteredFiles,chEnrichmentScript)
+    chEnrichmentFilesReport = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
+    enrichmentReport(chSampleInfo,chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chReportEnrichment,chOutputDir)
+
+
+    /*multiqc_v2(chSnpFingerprintComplete,chfragHist,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
 
     //Verificar se é necessário pois o deepTools já faz isso
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
