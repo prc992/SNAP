@@ -346,7 +346,7 @@ process frags_and_peaks {
     publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
-    each tuple val(sampleId),val(path_analysis),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls")
+    each tuple val(_),val(_),val(_),path (_),path ('*narrowPeak'),path(_)
     path (chPeakAllFiles)
     path (chMultiQCFragPeaksHeader)
     path (chCalcFragPeaks)
