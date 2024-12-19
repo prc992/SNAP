@@ -346,10 +346,10 @@ process frags_and_peaks {
     publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
-    path (narrowPeakFile)
+    path (narrowPeakFiles)
     path (chPeakAllFiles)
-    path (chMultiQCFragPeaksHeader)
-    path (chCalcFragPeaks)
+    each path (chMultiQCFragPeaksHeader)
+    each path (chCalcFragPeaks)
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
