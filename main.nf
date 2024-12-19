@@ -31,6 +31,7 @@ process multiqc_v2 {
     input:
     val(_)
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
+    path (chFragAndPeaks)
     path (configFile)
     path (analysis_results)
 
@@ -455,25 +456,21 @@ workflow {
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chPeakAllFiles = chPeakFiles.collect()
 
-    // Filtrar apenas os arquivos que terminam em .narrowPeak
+    // Filter the narrowPeak files
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }}
-
-    
+    //In case you want to print the files
     //chNarrowPeakFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
-    chNarrowPeakInput = chNarrowPeakFiles.flatten()
-    // View the content of the flattened channel for debugging
-    chNarrowPeakInput.view { "Flattened channel content: $it" }
+
 
     //FRAGMENTS AND PEAKS      ***************************************************
     chFragAndPeaks = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
     //****************************************************************************
 
     // Processo de SNP Fingerprint
-    /*
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,chfragHist,chMultiQCConfig,"${projectDir}/${params.output_dir}")
+    multiqc_v2(chSnpFingerprintComplete,chfragHist,chFragAndPeaks,chMultiQCConfig,"${projectDir}/${params.output_dir}")
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
