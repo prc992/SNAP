@@ -426,10 +426,10 @@ workflow {
 
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
-        println "Using provided samplesheet: ${params.samplesheet}"
+        //println "Using provided samplesheet: ${params.samplesheet}"
         chSampleSheet = Channel.fromPath(params.samplesheet)
     } else {
-        println "Creating samplesheet because none was provided."
+        //println "Creating samplesheet because none was provided."
         chSampleSheet = createSamplesheet(
             params.sample_dir, 
             params.output_dir, 
@@ -443,7 +443,7 @@ workflow {
     
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
-    /*chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
+    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
     lib_complex_preseq(chSortedFiles)
@@ -451,10 +451,8 @@ workflow {
     chStatsSamtools = createStatsSamtools(chUniqueFiles)
     chDedupFiles = dedup(chUniqueFiles)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
-    //chAllBamFiles = chDACFilteredFiles.collect()
-    
 
-    chIndexFiles = index_sam(chDACFilteredFiles)
+    /*chIndexFiles = index_sam(chDACFilteredFiles)
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
 
     //Verificar se é necessário pois o deepTools já faz isso
