@@ -338,6 +338,32 @@ process fragLenHist {
 
 }
 
+process frags_and_peaks {
+    container = 'quay.io/biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
+    label 'low_cpu_low_mem'
+    tag "Sample - $sampleId"
+
+    publishDir "$path_sample_multiqc", mode : 'copy'
+
+    input:
+    tuple val(sampleId),val(path_analysis),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls")
+    path (chPeakAllFiles)
+    path (chMultiQCFragPeaksHeader)
+    path (chCalcFragPeaks)
+
+    exec:
+    path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
+
+    output:
+    path ("frags_and_peaks_mqc.csv")
+
+    script:
+    """
+    python frags_and_peaks.py
+    """
+
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -368,6 +394,7 @@ workflow {
     chRPileups= Channel.fromPath("$params.pathRPileups")
     chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
     chCalcFragHist = Channel.fromPath("$params.pathCalcFragHist")
+    chCalcFragPeaks = Channel.fromPath("$params.pathCalcFragPeaks")
     
 
     //Assets
@@ -375,6 +402,7 @@ workflow {
     chSNPS_ref = Channel.fromPath("$params.snps_ref")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
+    chMultiQCFragPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_peaks_header")
     
     // Create the genome directory if it doesn't exist
     """
@@ -420,10 +448,17 @@ workflow {
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+
+    
     uropa(chPeakFiles,chGeneAnotation)
     chBedFiles = bam_to_bed(chDACFilteredFiles)
-    unique_frags(chBedFiles)
+    
+    chUniqueFrags = unique_frags(chBedFiles).collect
+    chPeakAllFiles = chPeakFiles.collect()
 
+    //FRAGMENTS AND PEAKS      ***************************************************
+    chFragAndPeaks = frags_and_peaks(chPeakAllFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
+    //****************************************************************************
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
@@ -447,8 +482,6 @@ workflow {
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
 
-    //Collect files for MultiQC
-    //multiqc(chFastQC,chTrimFiles,chAlignFiles).collect()
 
     /*//Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()

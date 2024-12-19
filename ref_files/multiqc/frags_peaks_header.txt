@@ -1,0 +1,9 @@
+# id: "frags_peaks_plot"
+# section_name: "Total Fragments and Peaks"
+# description: "Number of fragments calculated using bamtobed and number of peaks calculated using macs2."
+# plot_type: 'bargraph'
+# pconfig:
+#     sort_samples: true
+#     title: "Total Fragments and Peak Plot"
+#     "tt_decimals": 0
+#     ylab: "Total number of fragments and peaks"
