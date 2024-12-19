@@ -452,8 +452,8 @@ workflow {
     
     uropa(chPeakFiles,chGeneAnotation)
     chBedFiles = bam_to_bed(chDACFilteredFiles)
-    
-    chUniqueFrags = unique_frags(chBedFiles).collect
+
+    chUniqueFrags = unique_frags(chBedFiles).collect()
     chPeakAllFiles = chPeakFiles.collect()
 
     //FRAGMENTS AND PEAKS      ***************************************************
