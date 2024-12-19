@@ -202,6 +202,7 @@ process createSamplesheet {
     input:
     val sample_dir
     val output_dir
+    val enrichment_mark
 
     output:
     path "snap-samplesheet-*.csv"
@@ -423,7 +424,7 @@ workflow {
     mkdir -p ${projectDir}/${params.output_dir}
     """.execute().waitFor()
 
-    chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir)
+    chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir,params.enrichment_mark)
 
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
