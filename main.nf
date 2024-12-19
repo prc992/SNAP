@@ -361,7 +361,6 @@ process frags_and_peaks {
     """
     python frags_and_peaks.py
     """
-
 }
 
 workflow {
@@ -461,8 +460,7 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }
 
     chNarrowPeakFiles.subscribe { collectedFiles ->
-    println "Arquivos coletados: $collectedFiles"
-}
+    println "Arquivos coletados: $collectedFiles"}
 
     //FRAGMENTS AND PEAKS      ***************************************************
     //chFragAndPeaks = frags_and_peaks(chPeakAllFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
