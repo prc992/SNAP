@@ -424,7 +424,8 @@ workflow {
     mkdir -p ${projectDir}/${params.output_dir}
     """.execute().waitFor()
 
-    chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir,params.enrichment_mark)
+    chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir,params.enrichment_mark?: 'no_enrichment_mark')
+    
 
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
