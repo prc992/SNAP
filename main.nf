@@ -210,7 +210,7 @@ process createSamplesheet {
     """
     now=\$(date +'%Y-%m-%d-%H-%M-%S')
     filename="snap-samplesheet-\$now.csv"
-    echo "sampleId,path,read1,read2" > \$filename
+    echo "sampleId,enrichment_mark,path,read1,read2" > \$filename
 
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
@@ -224,7 +224,7 @@ process createSamplesheet {
         if [ \${#files[@]} -gt 1 ]; then
             read2=\$(realpath \${files[1]})
         fi
-        echo "\$sampleId,${output_dir},\$read1,\$read2" >> \$filename
+        echo "\$sampleId,${enrichment_mark},${output_dir},\$read1,\$read2" >> \$filename
     done
     """
 }
@@ -427,8 +427,8 @@ workflow {
 
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
-        | map { row-> tuple(row.sampleId,"${projectDir}/${row.path}", row.read1, row.read2) }
-
+        | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
+    /*
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
