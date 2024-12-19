@@ -33,7 +33,7 @@ process multiqc_v2 {
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
     path (chFragAndPeaks)
     path (configFile)
-    val (chOutputDir)
+    path (chOutputDir)
 
     exec:
     path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
