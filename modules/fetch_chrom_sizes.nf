@@ -18,7 +18,7 @@ process fetch_chrom_sizes{
   def chromSizeFile = "${genome}.chrom.sizes"
   """
   if [ ! -f ${refDir}/${chromSizeFile} ]; then
-    fetchChromSizes $genome > $refGenomeFile
+    fetchChromSizes $genome > ${chromSizeFile}
   else
     echo "File ${refDir}/${chromSizeFile} already exists. Skipping download."
   fi
