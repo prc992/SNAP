@@ -353,9 +353,10 @@ process frags_and_peaks {
     path (chPeakAllFiles)
     each path (chMultiQCFragPeaksHeader)
     each path (chReportFragHist)
+    val (chOutputDir)
 
     exec:
-    path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
+    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
 
     output:
     path ("frags_and_peaks_mqc.csv")
@@ -486,7 +487,7 @@ workflow {
 
 
     //FRAGMENTS AND PEAKS      ***************************************************
-    chFragAndPeaksFiles = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks)
+    chFragAndPeaksFiles = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks,chOutputDir)
     //****************************************************************************
 
     // Processo de SNP Fingerprint
