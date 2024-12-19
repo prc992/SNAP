@@ -430,9 +430,9 @@ workflow {
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
-    /*
+    
     fastqc(chSampleInfo)
-    chTrimFiles = trim(chSampleInfo)
+    /*chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
