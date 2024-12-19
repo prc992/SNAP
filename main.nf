@@ -330,7 +330,7 @@ process fragLenHist {
 
     script:
     """
-    python calc_frag_hist.py \\
+    python report_calc_frag_hist.py \\
         --frag_path "*fragment_sizes.txt" \\
         --output frag_len_hist.txt
 
