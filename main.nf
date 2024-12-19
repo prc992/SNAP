@@ -440,8 +440,15 @@ workflow {
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
+
     
-    fastqc(chSampleInfo)
+    // Extrair o primeiro valor da terceira variável e armazenar em um canal
+    chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
+
+    // Visualizar para depuração
+    chOutputDir.view { "Valor de outputdir: $it" }
+    
+    /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
