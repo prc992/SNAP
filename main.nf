@@ -456,7 +456,11 @@ workflow {
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chPeakAllFiles = chPeakFiles.collect()
 
-    chPeakAllFiles.subscribe { collectedFiles ->
+    // Filtrar apenas os arquivos que terminam em .narrowPeak
+    chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }
+
+    chNarrowPeakFiles.subscribe { collectedFiles ->
     println "Arquivos coletados: $collectedFiles"
 }
 
