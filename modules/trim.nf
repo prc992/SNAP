@@ -8,7 +8,7 @@ process trim {
   publishDir "$path_sample_trim", mode: 'copy'
 
   input:
-  tuple val(sampleId), val(path),path(read1), val(read2)
+  tuple val(sampleId), val(enrichment_mark), val(path),path(read1), val(read2)
 
   exec:
   path_sample_trim = path + "/trim/" + sampleId

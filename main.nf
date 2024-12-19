@@ -424,15 +424,25 @@ workflow {
     mkdir -p ${projectDir}/${params.output_dir}
     """.execute().waitFor()
 
-    chSampleSheet = createSamplesheet(params.sample_dir, params.output_dir,params.enrichment_mark?: 'no_enrichment_mark')
+    // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
+    if (params.samplesheet) {
+        println "Using provided samplesheet: ${params.samplesheet}"
+        chSampleSheet = Channel.fromPath(params.samplesheet)
+    } else {
+        println "Creating samplesheet because none was provided."
+        chSampleSheet = createSamplesheet(
+            params.sample_dir, 
+            params.output_dir, 
+            params.enrichment_mark ?: 'no_enrichment_mark'
+        )
+    }
     
-
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
     
-    fastqc(chSampleInfo)
-    /*chTrimFiles = trim(chSampleInfo)
+    /*fastqc(chSampleInfo)
+    chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles)
