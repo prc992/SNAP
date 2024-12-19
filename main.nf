@@ -342,7 +342,7 @@ process fragLenHist {
 process frags_and_peaks {
     container = 'quay.io/biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
     label 'low_cpu_low_mem'
-    tag "Sample - $sampleId"
+    tag "All Samples"
 
     publishDir "$path_sample_multiqc", mode : 'copy'
 
