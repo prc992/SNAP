@@ -347,7 +347,7 @@ process frags_and_peaks {
 
     input:
     path (narrowPeakFiles)
-    path (chPeakAllFiles)
+    each path (chPeakAllFiles)
     each path (chMultiQCFragPeaksHeader)
     each path (chCalcFragPeaks)
 
