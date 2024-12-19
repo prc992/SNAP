@@ -62,7 +62,7 @@ def load_files_to_dataframe(file_list, mark,SampleName):
         combined_df['mark_upper'] = combined_df['mark'].str.upper()
         combined_df['name_upper'] = combined_df['name'].str.upper()
         combined_df = combined_df[(combined_df['mark_upper'] == mark.upper()) & (combined_df['name_upper'] == SampleName.upper())]
-        combined_df = combined_df.drop(columns=['mark_upper','name_upper', 'File Name', 'mark'], errors='ignore')
+        combined_df = combined_df.drop(columns=['mark_upper','name_upper', 'File Name'], errors='ignore')
         combined_df = combined_df.rename(columns={'name': 'SampleName'})
 
         return combined_df
