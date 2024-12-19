@@ -346,7 +346,7 @@ process frags_and_peaks {
     publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
-    each tuple val(_),val(_),val(_),path (_),path ('*narrowPeak'),path(_)
+    path (narrowPeakFile)
     path (chPeakAllFiles)
     path (chMultiQCFragPeaksHeader)
     path (chCalcFragPeaks)
@@ -464,7 +464,7 @@ workflow {
     chNarrowPeakInput = chNarrowPeakFiles.flatten()
 
     //FRAGMENTS AND PEAKS      ***************************************************
-    //chFragAndPeaks = frags_and_peaks(chPeakAllFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
+    chFragAndPeaks = frags_and_peaks(chNarrowPeakInput,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
     //****************************************************************************
 
     // Processo de SNP Fingerprint
