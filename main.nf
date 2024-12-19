@@ -360,7 +360,7 @@ process frags_and_peaks {
 
     script:
     """
-    python frags_and_peaks.py
+    python report_frags_and_peaks.py
     """
 }
 
@@ -449,7 +449,7 @@ workflow {
     chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist)
     //************************************************************************
 
-    /*chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+    chPeakFiles = peak_bed_graph(chDACFilteredFiles)
 
     
     uropa(chPeakFiles,chGeneAnotation)
@@ -469,7 +469,7 @@ workflow {
     chFragAndPeaksFiles = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks)
     //****************************************************************************
 
-    // Processo de SNP Fingerprint
+    /*// Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
     multiqc_v2(chSnpFingerprintComplete,chfragHist,chFragAndPeaksFiles,chMultiQCConfig,"${projectDir}/${params.output_dir}")
