@@ -416,7 +416,7 @@ workflow {
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
-    /*chDACFileRef = downloadDACFile(params.genome,refDir)
+    chDACFileRef = downloadDACFile(params.genome,refDir)
     
     // Create the output directory if it doesn't exist
     """
@@ -449,7 +449,7 @@ workflow {
     chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist)
     //************************************************************************
 
-    chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+    /*chPeakFiles = peak_bed_graph(chDACFilteredFiles)
 
     
     uropa(chPeakFiles,chGeneAnotation)
