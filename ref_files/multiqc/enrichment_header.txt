@@ -1,0 +1,15 @@
+# section_name: "Enrichment for <MARK> markers"
+# format: "csv"
+# plot_type: "table"
+# headers:
+#     SampleName:
+#     on_bp:
+#         format: '{:,.0f}'
+#     off_bp:
+#         format: '{:,.0f}'
+#     on_reads:
+#         format: '{:,.0f}'
+#     off_reads:
+#         format: '{:,.0f}'
+#     enrichment:
+#         format: '{:,.3f}'

@@ -350,7 +350,7 @@ process frags_and_peaks {
     path (narrowPeakFiles)
     path (chPeakAllFiles)
     each path (chMultiQCFragPeaksHeader)
-    each path (chCalcFragPeaks)
+    each path (chReportFragHist)
 
     exec:
     path_sample_multiqc =  params.output_dir + "/reports/multiqc/" 
@@ -393,8 +393,9 @@ workflow {
     chRComparison = Channel.fromPath("$params.pathRComparison")
     chRPileups= Channel.fromPath("$params.pathRPileups")
     chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
-    chCalcFragHist = Channel.fromPath("$params.pathCalcFragHist")
-    chCalcFragPeaks = Channel.fromPath("$params.pathCalcFragPeaks")
+    chReportFragHist = Channel.fromPath("$params.pathReportFragHist")
+    chReportFragPeaks = Channel.fromPath("$params.pathReportFragPeaks")
+    chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
     
 
     //Assets
@@ -403,6 +404,7 @@ workflow {
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
     chMultiQCFragPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_peaks_header")
+    chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
     
     // Create the genome directory if it doesn't exist
     """
@@ -444,7 +446,7 @@ workflow {
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
 
     //Verificar se é necessário pois o deepTools já faz isso
-    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chCalcFragHist)
+    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist)
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
@@ -464,13 +466,13 @@ workflow {
 
 
     //FRAGMENTS AND PEAKS      ***************************************************
-    chFragAndPeaks = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
+    chFragAndPeaksFiles = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks)
     //****************************************************************************
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
-    multiqc_v2(chSnpFingerprintComplete,chfragHist,chFragAndPeaks,chMultiQCConfig,"${projectDir}/${params.output_dir}")
+    multiqc_v2(chSnpFingerprintComplete,chfragHist,chFragAndPeaksFiles,chMultiQCConfig,"${projectDir}/${params.output_dir}")
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
     // Ver Depois
