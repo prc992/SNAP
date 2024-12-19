@@ -34,7 +34,7 @@ def read_file(str_path):
     return content
 
 
-def load_files_to_dataframe(file_list, mark):
+def load_files_to_dataframe(file_list, mark,SampleName):
     """
     Loads the content of multiple space-separated files into a DataFrame.
     Assumes the first line of each file contains column names.
@@ -60,8 +60,9 @@ def load_files_to_dataframe(file_list, mark):
     if dataframes:
         combined_df = pd.concat(dataframes, ignore_index=True)
         combined_df['mark_upper'] = combined_df['mark'].str.upper()
-        combined_df = combined_df[combined_df['mark_upper'] == mark.upper()]
-        combined_df = combined_df.drop(columns=['mark_upper', 'File Name', 'mark'], errors='ignore')
+        combined_df['name_upper'] = combined_df['name'].str.upper()
+        combined_df = combined_df[(combined_df['mark_upper'] == mark.upper()) & (combined_df['name_upper'] == SampleName.upper())]
+        combined_df = combined_df.drop(columns=['mark_upper','name_upper', 'File Name', 'mark'], errors='ignore')
         combined_df = combined_df.rename(columns={'name': 'SampleName'})
 
         return combined_df
@@ -73,9 +74,11 @@ def load_files_to_dataframe(file_list, mark):
 def main():
     parser = argparse.ArgumentParser(description="Process enrichment files with a specified mark.")
     parser.add_argument("--mark", required=True, help="Specify the mark to filter the enrichment files.")
+    parser.add_argument("--samplename", required=True, help="Specify the SampleName to filter the enrichment files.")
     args = parser.parse_args()
 
     mark = args.mark
+    samplename = args.samplename
 
     # Define the suffix and placeholders
     name_head_file = 'enrichment_header.txt'
@@ -93,7 +96,7 @@ def main():
     # Find and process enrichment files
     suffix_enrichment = '_enrichment_states.csv'
     enrichment_files = find_files_with_suffix(current_directory, suffix_enrichment)
-    df_enrichment = load_files_to_dataframe(enrichment_files, mark)
+    df_enrichment = load_files_to_dataframe(enrichment_files, mark, samplename)
 
     # Check if the DataFrame is empty after filtering
     if df_enrichment.empty:

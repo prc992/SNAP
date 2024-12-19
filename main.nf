@@ -389,7 +389,7 @@ process enrichmentReport {
 
     script:
     """
-    python $chReportEnrichment --mark ${enrichment_mark}
+    python $chReportEnrichment --mark ${enrichment_mark} --samplename ${sampleId}
     """
 }
 
