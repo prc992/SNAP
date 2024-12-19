@@ -416,7 +416,7 @@ workflow {
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
-    chDACFileRef = downloadDACFile(params.genome,refDir)
+    /*chDACFileRef = downloadDACFile(params.genome,refDir)
     
     // Create the output directory if it doesn't exist
     """
