@@ -360,7 +360,7 @@ process frags_and_peaks {
 
     script:
     """
-    python report_frags_and_peaks.py
+    python $chReportFragHist
     """
 }
 
