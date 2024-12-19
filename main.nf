@@ -466,7 +466,7 @@ workflow {
     chNarrowPeakInput.view { "Flattened channel content: $it" }
 
     //FRAGMENTS AND PEAKS      ***************************************************
-    chFragAndPeaks = frags_and_peaks(chNarrowPeakInput,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
+    chFragAndPeaks = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
     //****************************************************************************
 
     // Processo de SNP Fingerprint
