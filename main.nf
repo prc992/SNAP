@@ -459,15 +459,18 @@ workflow {
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }}
 
-    chNarrowPeakFiles.subscribe { collectedFiles ->
-    println "Arquivos coletados: $collectedFiles"}
+    
+    //chNarrowPeakFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
     chNarrowPeakInput = chNarrowPeakFiles.flatten()
+    // View the content of the flattened channel for debugging
+    chNarrowPeakInput.view { "Flattened channel content: $it" }
 
     //FRAGMENTS AND PEAKS      ***************************************************
     chFragAndPeaks = frags_and_peaks(chNarrowPeakInput,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
     //****************************************************************************
 
     // Processo de SNP Fingerprint
+    /*
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
     multiqc_v2(chSnpFingerprintComplete,chfragHist,chMultiQCConfig,"${projectDir}/${params.output_dir}")
