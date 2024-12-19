@@ -470,9 +470,6 @@ workflow {
     //Extract outputdir from the first row
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
 
-    // Visualizar para depuração
-    chOutputDir.view { "Valor de outputdir: $it" }
-
     // Create the output directory if it doesn't exist
     //"""
     //mkdir -p ${projectDir}/${params.output_dir}
