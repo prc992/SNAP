@@ -469,7 +469,7 @@ workflow {
     chFragAndPeaksFiles = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks)
     //****************************************************************************
 
-    /*// Processo de SNP Fingerprint
+    // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
 
     multiqc_v2(chSnpFingerprintComplete,chfragHist,chFragAndPeaksFiles,chMultiQCConfig,"${projectDir}/${params.output_dir}")
