@@ -461,6 +461,7 @@ workflow {
 
     chNarrowPeakFiles.subscribe { collectedFiles ->
     println "Arquivos coletados: $collectedFiles"}
+    chNarrowPeakInput = chNarrowPeakFiles.flatten()
 
     //FRAGMENTS AND PEAKS      ***************************************************
     //chFragAndPeaks = frags_and_peaks(chPeakAllFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chCalcFragPeaks)
