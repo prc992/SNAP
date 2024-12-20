@@ -427,8 +427,8 @@ process deeptoolsComputeMatrix{
     publishDir "$path_sample_peaks", mode : 'copy'
 
     input:
-    tuple val(sampleId),val(path_analysis),path (control_bw),path (treat_bw)
-    each path (bedFile)
+    path (treat_bw)
+    path (bedFile)
     
 
     exec:
@@ -579,17 +579,18 @@ workflow {
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chMultiQCEnrichmentHeader,chReportEnrichment,chOutputDir).collect()
 
-
-    
-
     //Verificar se é necessário pois o deepTools já faz isso
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
     lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
     //************************************************************************
 
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
+
     // DEEPTOOLS_COMPUTEMATRIX
-    chDeepToolsMatrix = deeptoolsComputeMatrix(chBWFiles,chBEDRandomFilesMultiqc)
+    chBWAllFiles = chBWFiles.collect()
+    chBWTreatFiles = chBWAllFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.treat_pileup.bdg.bw') }}
+    chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc)
 
     /*multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
