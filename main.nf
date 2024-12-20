@@ -589,10 +589,12 @@ workflow {
     // DEEPTOOLS_COMPUTEMATRIX
     chBWAllFiles = chBWFiles.collect()
 
-    chBWAllFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+    chBWAllFiles.subscribe { collectedFiles ->println "Arquivos coletados de chBWAllFiles: $collectedFiles"}
 
     chBWTreatFiles = chBWAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.treat_pileup.bdg.bw') }}
+    collectedFiles.findAll { it.toString().endsWith('treat_pileup.bdg.bw') }}
+
+    chBWTreatFiles.subscribe { collectedFiles ->println "Arquivos coletados de chBWTreatFiles: $collectedFiles"}
     
 
     /*chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc,chOutputDir)
