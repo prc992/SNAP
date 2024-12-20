@@ -435,7 +435,7 @@ process deeptoolsComputeMatrix{
     path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
 
     output:
-    tuple val(sampleId),val(path_analysis),path ("*computeMatrix.mat.gz"),path ("*computeMatrix.vals.mat.tab")
+    path ("*computeMatrix.mat.gz")
 
     script:
     """
@@ -445,6 +445,35 @@ process deeptoolsComputeMatrix{
         --outFileName AllSamples.computeMatrix.mat.gz \\
         --outFileNameMatrix AllSamples.computeMatrix.vals.mat.tab \\
         --numberOfProcessors $task.cpus
+    """
+}
+
+process deeptoolsPlotCorrelation{
+    container = 'mgibio/deeptools:3.5.3'
+    label 'med_cpu_med_mem'
+    tag "All Samples"  
+
+    publishDir "$path_sample_multiqc", mode : 'copy'
+
+    input:
+    path (computeMatrix)
+    path (chOutputDir)
+
+    exec:
+    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
+
+    output:
+    path ("*plotCorrelation.pdf")
+    path ("*plotCorrelation.mat.tab")
+
+    script:
+    """
+        plotCorrelation \\
+        --corData $computeMatrix \\
+        --corMethod spearman --whatToPlot heatmap \\
+        --plotFile AllSamples.plotCorrelation.pdf \\
+        --outFileCorMatrix AllSamples.plotCorrelation.mat.tab \\
+        --skipZeros
     """
 }
 
@@ -591,6 +620,9 @@ workflow {
     chBWTreatFiles = chBWAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('treat_pileup.bdg.bw') }}
     chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc,chOutputDir)
+
+    // DEEPTOOLS_PLOTCORRELATION
+    chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
 
     /*multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
