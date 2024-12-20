@@ -428,7 +428,7 @@ process deeptoolsComputeMatrix{
 
     input:
     tuple val(sampleId),val(path_analysis),path (control_bw),path (treat_bw)
-    each path bedFile
+    each path (bedFile)
     
 
     exec
