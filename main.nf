@@ -419,6 +419,35 @@ process createBEDRandomFilesMultiqc{
     """
 }
 
+process deeptoolsComputeMatrix{
+    container = 'mgibio/deeptools:3.5.3'
+    label 'med_cpu_med_mem'
+    tag "All Samples"
+
+    publishDir "$path_sample_peaks", mode : 'copy'
+
+    input:
+    tuple val(sampleId),val(path_analysis),path (control_bw),path (treat_bw)
+    each path bedFile
+    
+
+    exec
+    path_sample_peaks = path_analysis + "/peaks/" + sampleId
+
+    output:
+    tuple val(sampleId),val(path_analysis),path ("*computeMatrix.mat.gz"),path ("*computeMatrix.vals.mat.tab")
+
+    script:
+    """
+         computeMatrix \\
+        --regionsFileName $bedFile \\
+        --scoreFileName $treat_bw \\
+        --outFileName ${sampleId}.computeMatrix.mat.gz \\
+        --outFileNameMatrix ${sampleId}.computeMatrix.vals.mat.tab \\
+        --numberOfProcessors $task.cpus
+    """
+}
+
 
 
 workflow {
@@ -500,7 +529,7 @@ workflow {
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
     chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
     
-    /*fastqc(chSampleInfo)
+    fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
@@ -551,7 +580,7 @@ workflow {
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chMultiQCEnrichmentHeader,chReportEnrichment,chOutputDir).collect()
 
 
-    multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
+    
 
     //Verificar se é necessário pois o deepTools já faz isso
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
@@ -559,6 +588,10 @@ workflow {
     //************************************************************************
 
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
+    // DEEPTOOLS_COMPUTEMATRIX
+    chDeepToolsMatrix = deeptoolsComputeMatrix(chBWFiles,chBEDRandomFilesMultiqc)
+
+    /*multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
