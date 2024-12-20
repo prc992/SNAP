@@ -431,7 +431,7 @@ process deeptoolsComputeMatrix{
     each path (bedFile)
     
 
-    exec
+    exec:
     path_sample_peaks = path_analysis + "/peaks/" + sampleId
 
     output:
