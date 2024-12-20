@@ -590,7 +590,9 @@ workflow {
     chBWAllFiles = chBWFiles.collect()
     chBWTreatFiles = chBWAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.treat_pileup.bdg.bw') }}
-    chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc,chOutputDir)
+    chBWTreatFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+
+    /*chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc,chOutputDir)
 
     /*multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
