@@ -422,7 +422,7 @@ process createBEDRandomFilesMultiqc{
 process deeptoolsComputeMatrix{
     container = 'mgibio/deeptools:3.5.3'
     label 'high_cpu_high_mem'
-    tag "Sample - $sampleId"  
+    tag "All Samples"  
 
     publishDir "$path_sample_multiqc", mode : 'copy'
 
@@ -442,8 +442,8 @@ process deeptoolsComputeMatrix{
          computeMatrix scale-regions \\
         --regionsFileName $bedFile \\
         --scoreFileName $treat_bw \\
-        --outFileName ${sampleId}.computeMatrix.mat.gz \\
-        --outFileNameMatrix ${sampleId}.computeMatrix.vals.mat.tab \\
+        --outFileName AllSamples.computeMatrix.mat.gz \\
+        --outFileNameMatrix AllSamples.computeMatrix.vals.mat.tab \\
         --numberOfProcessors $task.cpus
     """
 }
