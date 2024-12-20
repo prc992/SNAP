@@ -424,15 +424,15 @@ process deeptoolsComputeMatrix{
     label 'high_cpu_high_mem'
     tag "Sample - $sampleId"  
 
-    publishDir "$path_sample_peaks", mode : 'copy'
+    publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
     path (treat_bw)
     path (bedFile)
-    
+    path (chOutputDir)
 
     exec:
-    path_sample_peaks = path_analysis + "/peaks/" + sampleId
+    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
 
     output:
     tuple val(sampleId),val(path_analysis),path ("*computeMatrix.mat.gz"),path ("*computeMatrix.vals.mat.tab")
@@ -590,7 +590,7 @@ workflow {
     chBWAllFiles = chBWFiles.collect()
     chBWTreatFiles = chBWAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.treat_pileup.bdg.bw') }}
-    chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc)
+    chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc,chOutputDir)
 
     /*multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
