@@ -16,3 +16,4 @@ analysis_results_heinkoff/*
 analysis_results_heinkoff_small/*
 work/*
 test_sample_sheet.csv
+*multiqc.random.regions.bed

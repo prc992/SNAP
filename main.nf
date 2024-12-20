@@ -399,7 +399,7 @@ process createBEDRandomFilesMultiqc{
     label 'low_cpu_low_mem'
     tag "$genome"
 
-    publishDir "$path_genome", mode : 'copy'
+    //publishDir "$path_genome", mode : 'copy'
 
     input:
     val genome
@@ -410,12 +410,12 @@ process createBEDRandomFilesMultiqc{
     path ("*random.regions.bed")
 
     exec:
-    path_genome = refDir + "/genome/"
-    nameFile = genome + "multiqc.random.regions.bed"
+    nameFile = genome + ".multiqc.random.regions.bed"
 
     script:
     """
     bedtools random -g $chromSizesFile -seed 42 > $nameFile
+    ln -s ${refDir}/${nameFile} ${nameFile}
     """
 }
 
