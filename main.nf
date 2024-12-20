@@ -394,6 +394,33 @@ process enrichmentReport {
     """
 }
 
+process createBEDRandomFilesMultiqc{
+    container = 'biocontainers/bedtools:v2.27.1dfsg-4-deb_cv1'
+    label 'low_cpu_low_mem'
+    tag "$genome"
+
+    publishDir "$path_genome", mode : 'copy'
+
+    input:
+    val genome
+    path chromSizesFile
+    path refDir
+
+    output:
+    path ("*random.regions.bed")
+
+    exec:
+    path_genome = refDir + "/genome/"
+    nameFile = genome + "multiqc.random.regions.bed"
+
+    script:
+    """
+    bedtools random -g $chromSizesFile -seed 42 > $nameFile
+    """
+}
+
+
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -447,6 +474,7 @@ workflow {
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
     chDACFileRef = downloadDACFile(params.genome,refDir)
+    chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,refDir)/*
     
 
 
