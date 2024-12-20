@@ -439,7 +439,7 @@ process deeptoolsComputeMatrix{
 
     script:
     """
-         computeMatrix \\
+         computeMatrix scale-regions \\
         --regionsFileName $bedFile \\
         --scoreFileName $treat_bw \\
         --outFileName ${sampleId}.computeMatrix.mat.gz \\
