@@ -500,7 +500,7 @@ workflow {
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
     chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
     
-    fastqc(chSampleInfo)
+    /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
