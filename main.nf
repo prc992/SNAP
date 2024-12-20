@@ -399,23 +399,23 @@ process createBEDRandomFilesMultiqc{
     label 'low_cpu_low_mem'
     tag "$genome"
 
-    //publishDir "$path_genome", mode : 'copy'
+    publishDir "$path_multiqc", mode : 'copy'
 
     input:
     val genome
     path chromSizesFile
-    path refDir
+    val chOutputDir
 
     output:
     path ("*random.regions.bed")
 
     exec:
+    path_multiqc =  chOutputDir + "/reports/multiqc/" 
     nameFile = genome + ".multiqc.random.regions.bed"
 
     script:
     """
     bedtools random -g $chromSizesFile -seed 42 > $nameFile
-    ln -s ${refDir}/${nameFile} ${nameFile}
     """
 }
 
@@ -474,7 +474,7 @@ workflow {
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
     chDACFileRef = downloadDACFile(params.genome,refDir)
-    chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,refDir)/*
+    
     
 
 
@@ -498,11 +498,7 @@ workflow {
 
     //Extract outputdir from the first row
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
-
-    // Create the output directory if it doesn't exist
-    //"""
-    //mkdir -p ${projectDir}/${params.output_dir}
-    ///""".execute().waitFor()
+    chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
     
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
