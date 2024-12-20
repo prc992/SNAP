@@ -421,7 +421,7 @@ process createBEDRandomFilesMultiqc{
 
 process deeptoolsComputeMatrix{
     container = 'mgibio/deeptools:3.5.3'
-    label 'med_cpu_med_mem'
+    label 'high_cpu_high_mem'
     tag "Sample - $sampleId"  
 
     publishDir "$path_sample_peaks", mode : 'copy'
