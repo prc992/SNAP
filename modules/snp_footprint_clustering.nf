@@ -16,7 +16,7 @@ process snp_footprint_clustering{
   path_sample_snp_footprint =  chOutputDir + "/reports/multiqc/" 
 
   output:
-  path ('*.pdf')
+  path ('*.jpg')
 
   script:
   """
