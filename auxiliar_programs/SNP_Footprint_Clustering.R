@@ -1,4 +1,3 @@
-
 library(vcfR)
 library(adegenet)
 library(factoextra)
@@ -57,23 +56,42 @@ genotype_matrix_samples[is.na(genotype_matrix_samples)] <- 0
 
 pca_result <- prcomp(genotype_matrix_samples)
 
-pc_matrix <- pca_result$x[, 1:10]  # Use first 10 PCs for clustering
+qty_samples <- length(pca_result$x[, 1])#
 
-# Compute the distance matrix on the PCs
-dist_matrix <- dist(pc_matrix)  
+if (qty_samples < 3) {
+  # Cria um PDF com a mensagem
+  pdf("Dendrogram_of_Samples_by_SNP_Profile.pdf", width = 4, height = 3)
+  
+  # Adiciona a mensagem ao PDF
+  plot.new()  # Cria uma nova tela de plot
+  text(0.5, 0.5, "Not enough samples for clustering", cex = 0.5, col = "black", font = 2)
+  
+  # Fecha o dispositivo PDF
+  dev.off()
+} else{
 
-# Perform hierarchical clustering
-hclust_result <- hclust(dist_matrix, method = "ward.D2")
+  min_value <- min(qty_samples, 10) # Use first 10 PCs for clustering
+  pc_matrix <- pca_result$x[, 1:min_value]  
+
+  # Compute the distance matrix on the PCs
+  dist_matrix <- dist(pc_matrix)  
+
+  # Perform hierarchical clustering
+  hclust_result <- hclust(dist_matrix, method = "ward.D2")
 
  # Get sample names
 
-# 4. Plot the dendrogram with Individual_ID labels
-pdf("Dendrogram_of_Samples_by_SNP_Profile.pdf", width = 16, height = 10)
+  # 4. Plot the dendrogram with Individual_ID labels
+  pdf("Dendrogram_of_Samples_by_SNP_Profile.pdf", width = 16, height = 10)
 
-# Plot the dendrogram directly into the PDF device
-plot(hclust_result, main = "Dendrogram of Samples by SNP Profile", 
+  # Plot the dendrogram directly into the PDF device
+  plot(hclust_result, main = "Dendrogram of Samples by SNP Profile", 
      xlab = "Height", ylab = "Samples", cex.lab = 1.2, cex.axis = 1, 
-     cex.main = 1.2)  
+     cex.main = 1.2)
+  
 
-# Close the PDF device
-dev.off()
+
+  # Close the PDF device
+  dev.off()
+}
+
