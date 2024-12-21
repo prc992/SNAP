@@ -65,7 +65,7 @@ if (qty_samples < 3) {
   
   # Adiciona a mensagem ao PDF
   plot.new()  # Cria uma nova tela de plot
-  text(0.5, 0.5, "Not enough samples for clustering", cex = 0.5, col = "black", font = 2)
+  text(0.5, 0.5, "Not enough samples for clustering", cex = 2, col = "black", font = 2)
   
   # Fecha o dispositivo PDF
   dev.off()
