@@ -26,6 +26,7 @@ module_order:
 custom_data:
   my_custom_content_image:
     section_name: "Dendrogram of Samples by SNP Profile"
+    order: 1000
 sp:
   my_custom_content_image:
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
