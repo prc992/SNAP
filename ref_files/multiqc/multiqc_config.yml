@@ -21,12 +21,11 @@ module_order:
       name: "Samtools alignment scores"
   - cutadapt:
       name: "Adapter trimming"
-  - my_custom_content_image:
+  - custom_data:
       name: "Dendrogram of Samples by SNP Profile"
 
 custom_data:
   my_custom_content_image:
-    id: "dendrogram_of_samples_by_snp_profile"
     section_name: "Dendrogram of Samples by SNP Profile"
 sp:
   my_custom_content_image:
