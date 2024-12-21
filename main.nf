@@ -394,6 +394,8 @@ process enrichmentReport {
     """
 }
 
+// RETIRAR ##########################
+/*
 process createBEDRandomFilesMultiqc{
     container = 'biocontainers/bedtools:v2.27.1dfsg-4-deb_cv1'
     label 'low_cpu_low_mem'
@@ -417,8 +419,10 @@ process createBEDRandomFilesMultiqc{
     """
     bedtools random -g $chromSizesFile -seed 42 > $nameFile
     """
-}
+}*/
 
+// RETIRAR ##########################
+/*
 process deeptoolsComputeMatrix{
     container = 'mgibio/deeptools:3.5.3'
     label 'high_cpu_high_mem'
@@ -446,8 +450,10 @@ process deeptoolsComputeMatrix{
         --outFileNameMatrix AllSamples.computeMatrix.vals.mat.tab \\
         --numberOfProcessors $task.cpus
     """
-}
+}*/
 
+// RETIRAR ##########################
+/*
 process deeptoolsPlotCorrelation{
     container = 'mgibio/deeptools:3.5.3'
     label 'med_cpu_med_mem'
@@ -475,7 +481,7 @@ process deeptoolsPlotCorrelation{
         --outFileCorMatrix AllSamples.plotCorrelation.mat.tab \\
         --skipZeros
     """
-}
+}*/
 
 
 
@@ -598,6 +604,9 @@ workflow {
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
+    chSnpFingerprintComplete.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+
+    /*
 
     //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
 
@@ -615,16 +624,18 @@ workflow {
 
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
+    // RETIRAR ##########################
     // DEEPTOOLS_COMPUTEMATRIX
-    chBWAllFiles = chBWFiles.collect()
-    chBWTreatFiles = chBWAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('treat_pileup.bdg.bw') }}
-    chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc,chOutputDir)
+    //chBWAllFiles = chBWFiles.collect()
+    //chBWTreatFiles = chBWAllFiles.map { collectedFiles ->
+    //collectedFiles.findAll { it.toString().endsWith('treat_pileup.bdg.bw') }}
+    //chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc,chOutputDir)
 
     // DEEPTOOLS_PLOTCORRELATION
-    chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
+    //chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
+    // RETIRAR ##########################
 
-    /*multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
+    multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
