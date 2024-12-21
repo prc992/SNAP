@@ -13,7 +13,7 @@ process snp_footprint_clustering{
 
   input:
   path(vcfGzFiles)
-  //each path (chRSNPFootprint)
+  path (chRSNPFootprint)
   
   //exec:
   //path_sample_snp_footprint = path_analysis + "/snp_fingerprint" 
