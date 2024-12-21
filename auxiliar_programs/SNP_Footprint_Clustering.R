@@ -60,7 +60,8 @@ qty_samples <- length(pca_result$x[, 1])#
 
 if (qty_samples < 3) {
   # Cria um PDF com a mensagem
-  pdf("Dendrogram_of_Samples_by_SNP_Profile.pdf", width = 4, height = 3)
+  #pdf("Dendrogram_of_Samples_by_SNP_Profile.pdf", width = 4, height = 3)
+  jpeg("Dendrogram_of_Samples_by_SNP_Profile.jpg", width = 800, height = 600, units = "px", quality = 100)
   
   # Adiciona a mensagem ao PDF
   plot.new()  # Cria uma nova tela de plot
@@ -82,14 +83,14 @@ if (qty_samples < 3) {
  # Get sample names
 
   # 4. Plot the dendrogram with Individual_ID labels
-  pdf("Dendrogram_of_Samples_by_SNP_Profile.pdf", width = 16, height = 10)
+  #pdf("Dendrogram_of_Samples_by_SNP_Profile.pdf", width = 16, height = 10)
+  jpeg("Dendrogram_of_Samples_by_SNP_Profile.jpg", width = 1600, height = 1000, units = "px", quality = 100)
+
 
   # Plot the dendrogram directly into the PDF device
   plot(hclust_result, main = "Dendrogram of Samples by SNP Profile", 
      xlab = "Height", ylab = "Samples", cex.lab = 1.2, cex.axis = 1, 
      cex.main = 1.2)
-  
-
 
   # Close the PDF device
   dev.off()

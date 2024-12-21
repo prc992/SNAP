@@ -31,6 +31,7 @@ process multiqc_v2 {
     input:
     val(_)
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
+    path (chFootPrintPDF)
     path (chFragAndPeaks)
     path (chEnrichmentFiles)
     path (configFile)
@@ -606,16 +607,10 @@ workflow {
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
-    snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chOutputDir)
+    chFootPrintPDF = snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chOutputDir)
 
-    /*
-
-    //chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome,chGenomeIndex).collect()
-
-    // Ver Depois
-    // Processo SNP Footprint Clustering (executa apenas após a conclusão de snp_fingerprint para todas as amostras)
-    //snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
-
+    
+    //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chMultiQCEnrichmentHeader,chReportEnrichment,chOutputDir).collect()
 
@@ -637,7 +632,8 @@ workflow {
     //chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
     // RETIRAR ##########################
 
-    multiqc_v2(chSnpFingerprintComplete,chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
+    multiqc_v2(chSnpFingerprintComplete,chFootPrintPDF,\
+        chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
