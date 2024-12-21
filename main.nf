@@ -632,8 +632,8 @@ workflow {
     //chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
     // RETIRAR ##########################
 
-    multiqc_v2(chSnpFingerprintComplete,chFootPrintPDF,\
-        chfragHist,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
+    multiqc_v2(chSnpFingerprintComplete,chfragHist,\
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
