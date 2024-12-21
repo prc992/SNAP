@@ -19,10 +19,9 @@ module_order:
       name: "Picard duplication stats"
   - samtools:
       name: "Samtools alignment scores"
-  - cutadapt:
-      name: "Adapter trimming"
-  - my_custom_content_image:
-      name: "Dendrogram of Samples by SNP Profile"
+  - custom_data:
+      name: "Dendrogram of Samples"
+      info: "Visual representation of SNP profile relationships among samples."
 
 custom_data:
   my_custom_content_image:
