@@ -562,7 +562,9 @@ workflow {
 
     //Extract outputdir from the first row
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
-    chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
+    
+    //RETIRAR
+    //chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
     
     fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
