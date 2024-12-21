@@ -8,7 +8,7 @@ process snp_footprint_clustering{
   tag "All Samples"   
 
   //Docker Image
-  container 'prc992/snp_dendrogram:v1.2'
+  container 'prc992/snp_dendrogram:v1.3'
   //publishDir "$path_sample_snp_footprint", mode : 'copy'
 
   input:
