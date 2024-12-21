@@ -606,8 +606,7 @@ workflow {
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
-    chSnpFingerprintComplete.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
-    snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint)
+    snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chOutputDir)
 
     /*
 
