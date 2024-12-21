@@ -13,7 +13,7 @@ process snp_footprint_clustering{
 
   input:
   path(vcfGzFiles)
-  each path (chRSNPFootprint)
+  //each path (chRSNPFootprint)
   
   //exec:
   //path_sample_snp_footprint = path_analysis + "/snp_fingerprint" 
@@ -23,8 +23,6 @@ process snp_footprint_clustering{
 
   //Rscript $chRSNPFootprint
 
-  //ls
-  //echo "Running snp_footprint_clustering"
   script:
   """
   Rscript $chRSNPFootprint

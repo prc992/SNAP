@@ -562,7 +562,7 @@ workflow {
 
     //Extract outputdir from the first row
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
-    
+
     //RETIRAR
     //chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
     
@@ -607,6 +607,7 @@ workflow {
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
     chSnpFingerprintComplete.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+    snp_footprint_clustering(chSnpFingerprintComplete)
 
     /*
 
