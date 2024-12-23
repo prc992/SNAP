@@ -11,19 +11,26 @@ module_order:
       name: "General Stats"
       info: "This section of the report shows general statistics about the samples."
   - custom_content:
+  - deepTools:
+      name: "DeepTools"
+      info: "This section of the report shows DeepTools results."
+  - preseq:
+      name: "Library Complexity"
   - fastqc:
       name: "FastQC (raw)"
       info: "This section of the report shows FastQC results before adapter trimming."
-  - preseq:
-      name: "Library Complexity"
   - picard:
       name: "Picard duplication stats"
   - samtools:
       name: "Samtools alignment scores"
+  - cutadapt:
+      name: "Adapter Trimming"
+      info: "This section of the report shows adapter trimming results."
 
 custom_content:
   order:
     - frags_peaks_plot
+    - fragment_lengths
 
 custom_data:
   my_custom_content_image:
