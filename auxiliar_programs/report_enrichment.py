@@ -79,19 +79,8 @@ def main():
 
     mark = args.mark
     samplename = args.samplename
-
-    # Define the suffix and placeholders
-    name_head_file = 'enrichment_header.txt'
-    mark_placeholder = '<MARK>'
+    
     current_directory = os.getcwd()
-
-    # Find and process the header file
-    head_files = find_files_with_suffix(current_directory, name_head_file)
-    if not head_files:
-        print(f"Error: Header file '{name_head_file}' not found in the current directory.")
-        return
-
-    head_file_content = read_file(head_files[0]).replace(mark_placeholder, mark)
 
     # Find and process enrichment files
     suffix_enrichment = '_enrichment_states.csv'
@@ -105,14 +94,9 @@ def main():
 
     # CSV file path
     csv_file = f"enrichment_{mark.upper()}_{samplename.upper()}_mqc.csv"
-
-    # Write header and DataFrame to the CSV file
-    with open(csv_file, 'w') as file:
-        # Write the header
-        file.write(head_file_content + "\n")
         
-        # Write the DataFrame content
-        df_enrichment.to_csv(file, index=False)
+    # Write the DataFrame content
+    df_enrichment.to_csv(file, index=False)
 
     print(f"CSV file successfully created at '{{csv_file}}'.")
 
