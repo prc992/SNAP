@@ -10,6 +10,7 @@ module_order:
   - general_stats:
       name: "General Stats"
       info: "This section of the report shows general statistics about the samples."
+  - custom_content:
   - fastqc:
       name: "FastQC (raw)"
       info: "This section of the report shows FastQC results before adapter trimming."
@@ -19,9 +20,10 @@ module_order:
       name: "Picard duplication stats"
   - samtools:
       name: "Samtools alignment scores"
-  - custom_data:
-      name: "Dendrogram of Samples"
-      info: "Visual representation of SNP profile relationships among samples."
+
+custom_content:
+  order:
+    - frags_peaks_plot
 
 custom_data:
   my_custom_content_image:
