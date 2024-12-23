@@ -29,7 +29,7 @@ def find_files_with_suffix(root_directory, suffix):
 
 current_directory = os.getcwd()
 
-list_files =  find_files_with_suffix(current_directory,'_mqc.csv')
+list_files =  find_files_with_suffix(current_directory,'_report.csv')
 
 data = {
     "File": list_files,
