@@ -79,7 +79,7 @@ def main():
 
     mark = args.mark
     samplename = args.samplename
-    
+
     current_directory = os.getcwd()
 
     # Find and process enrichment files
@@ -96,7 +96,7 @@ def main():
     csv_file = f"enrichment_{mark.upper()}_{samplename.upper()}_mqc.csv"
         
     # Write the DataFrame content
-    df_enrichment.to_csv(file, index=False)
+    df_enrichment.to_csv(csv_file, index=False)
 
     print(f"CSV file successfully created at '{{csv_file}}'.")
 
