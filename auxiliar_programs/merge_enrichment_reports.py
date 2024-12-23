@@ -48,10 +48,10 @@ for mark, group in df.groupby('Mark'):
     merged_data[mark] = pd.concat(dfs, ignore_index=True)
     merged_data[mark] = merged_data[mark].drop(columns=['mark'], errors='ignore')
     output_file = f"merged_enrichment_{mark}_mqc.csv"
+    header_content = header_content.replace('<MARK>',mark)
     
     # Write the header to the output file
     with open(output_file, 'w') as file:
-        header_content = header_content.replace('<MARK>',mark)
         file.write(header_content + '\n')  #Add the header at the begining
     
     merged_data[mark].to_csv(output_file, mode='a',index=False,header=True)
