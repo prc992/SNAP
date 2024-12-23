@@ -379,7 +379,6 @@ process enrichmentReport {
     input:
     tuple val(sampleId), val(enrichment_mark),val(path),path(read1), val(read2)
     path(csvFiles)
-    each path (chMultiQCEnrichmentHeader)
     each path (chReportEnrichment)
     val (chOutputDir)
 
@@ -387,11 +386,36 @@ process enrichmentReport {
     path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
 
     output:
-    path ("*mqc.csv")
+    path ("*_report.csv")
 
     script:
     """
     python $chReportEnrichment --mark ${enrichment_mark} --samplename ${sampleId}
+    """
+}
+
+process merge_enrichment_reports {
+    container = 'quay.io/biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
+    label 'low_cpu_low_mem'
+    tag "All Samples"
+
+    publishDir "$path_sample_multiqc", mode : 'copy'
+
+    input:
+    path (chEnrichmentFilesReport)
+    each path (chMultiQCEnrichmentHeader)
+    each path (chMergeReportEnrichment)
+    val (chOutputDir)
+
+    exec:
+    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
+
+    output:
+    path ("*_mqc.csv")
+
+    script:
+    """
+    python $chMultiQCEnrichmentHeader
     """
 }
 
@@ -518,7 +542,7 @@ workflow {
     chReportFragHist = Channel.fromPath("$params.pathReportFragHist")
     chReportFragPeaks = Channel.fromPath("$params.pathReportFragPeaks")
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
-    
+    chMergeReportEnrichment = Channel.fromPath("$params.pathMergeReportEnrichment")
 
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
@@ -612,8 +636,10 @@ workflow {
     
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
-    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chMultiQCEnrichmentHeader,chReportEnrichment,chOutputDir).collect()
-    chEnrichmentFilesReport.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment,chOutputDir).collect()
+    chEnrichmentFilesReport.subscribe { collectedFiles ->println "Arquivos coletados enrichmentReport: $collectedFiles"}
+    chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chOutputDir).collect()
+    chMergedEnrichmentReport.subscribe { collectedFiles ->println "Arquivos coletados MergedEnrichment: $collectedFiles"}
     /*
     //Verificar se é necessário pois o deepTools já faz isso
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)

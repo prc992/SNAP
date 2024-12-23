@@ -93,7 +93,7 @@ def main():
         return
 
     # CSV file path
-    csv_file = f"enrichment_{mark.upper()}_{samplename.upper()}_mqc.csv"
+    csv_file = f"enrichment_{mark.upper()}_{samplename.upper()}_report.csv"
         
     # Write the DataFrame content
     df_enrichment.to_csv(csv_file, index=False)
