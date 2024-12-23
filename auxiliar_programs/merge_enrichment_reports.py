@@ -9,7 +9,7 @@ header_file = 'enrichment_header.txt'
 
 # Read the content of the header file
 with open(header_file, 'r') as file:
-    header_content = file.read()
+    header_content_original = file.read()
 
 
 def find_files_with_suffix(root_directory, suffix):
@@ -48,7 +48,7 @@ for mark, group in df.groupby('Mark'):
     merged_data[mark] = pd.concat(dfs, ignore_index=True)
     merged_data[mark] = merged_data[mark].drop(columns=['mark'], errors='ignore')
     output_file = f"merged_enrichment_{mark}_mqc.csv"
-    header_content = header_content.replace('<MARK>',mark)
+    header_content = header_content_original.replace('<MARK>',mark)
     
     # Write the header to the output file
     with open(output_file, 'w') as file:
