@@ -415,7 +415,7 @@ process merge_enrichment_reports {
 
     script:
     """
-    python $chEnrichmentFilesReport
+    python $chMergeReportEnrichment
     """
 }
 
