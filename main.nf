@@ -613,7 +613,8 @@ workflow {
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chMultiQCEnrichmentHeader,chReportEnrichment,chOutputDir).collect()
-
+    chEnrichmentFilesReport.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+    /*
     //Verificar se é necessário pois o deepTools já faz isso
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
     lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
@@ -636,7 +637,7 @@ workflow {
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
-    //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
+    pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
 
 
     /*//Collect all files output and the pass to me program that will merge then
