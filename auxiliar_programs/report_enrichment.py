@@ -104,7 +104,7 @@ def main():
         return
 
     # CSV file path
-    csv_file = f"enrichment_{mark.upper()}_mqc.csv"
+    csv_file = f"enrichment_{mark.upper()}_{samplename.upper()}_mqc.csv"
 
     # Write header and DataFrame to the CSV file
     with open(csv_file, 'w') as file:
