@@ -94,7 +94,7 @@ process downloadGenome {
 process downloadSNPRef {
     label 'low_cpu_low_mem'
     tag "Dowloading - $genome" 
-    //publishDir "$genomeOut", mode : 'copy'
+    publishDir "$path_sample_multiqc", mode : 'copy'
 
     container = "quay.io/biocontainers/wget:1.21.4"
     
@@ -125,8 +125,8 @@ process downloadSNPRef {
     else
         echo "File ${path_sample_multiqc}/${snpFile} already exists. Skipping download."
     fi
-    ln -s ${path_sample_multiqc}/${snpFile} ${snpFile}
     """
+    //ln -s ${path_sample_multiqc}/${snpFile} ${snpFile}
 }
 
 process downloadDACFile {
