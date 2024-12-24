@@ -121,7 +121,7 @@ process downloadSNPRef {
     }
     """
     if [ ! -f ${path_sample_multiqc}/${snpFile} ]; then
-        wget -O ${path_sample_multiqc}/${snpFile} ${url}
+        wget -O ${snpFile} ${url}
     else
         echo "File ${path_sample_multiqc}/${snpFile} already exists. Skipping download."
     fi
