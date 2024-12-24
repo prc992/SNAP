@@ -92,8 +92,6 @@ process downloadGenome {
 }
 
 process downloadSNPRef {
-    debug true
-
     label 'low_cpu_low_mem'
     tag "Dowloading - $genome" 
     //publishDir "$genomeOut", mode : 'copy'
@@ -101,11 +99,11 @@ process downloadSNPRef {
     container = "quay.io/biocontainers/wget:1.21.4"
     
     exec:
-    genomeOut = refDir
+    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
 
     input:
     val genome
-    path refDir
+    path outputDir
 
     output:
     file "SNPs.1e5.${genome}.txt"
@@ -122,15 +120,12 @@ process downloadSNPRef {
         error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
     }
     """
-    if [ ! -f ${refDir}/${snpFile} ]; then
-        echo "Downloading file ${snpFile} from ${url}"
-        wget -O ${refDir}/${snpFile} ${url}
+    if [ ! -f ${path_sample_multiqc}/${snpFile} ]; then
+        wget -O ${path_sample_multiqc}/${snpFile} ${url}
     else
-        echo "File ${refDir}/${snpFile} already exists. Skipping download."
+        echo "File ${path_sample_multiqc}/${snpFile} already exists. Skipping download."
     fi
-    ln -s ${refDir}/${snpFile} ${snpFile}
-
-    cat ${refDir}/${snpFile}
+    ln -s ${path_sample_multiqc}/${snpFile} ${snpFile}
     """
 }
 
@@ -602,7 +597,6 @@ workflow {
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
-    chSNPS_ref = downloadSNPRef(params.genome,refDir)/*
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
@@ -631,6 +625,8 @@ workflow {
 
     //Extract outputdir from the first row
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
+
+    chSNPS_ref = downloadSNPRef(params.genome,chOutputDir)/*
 
     //RETIRAR
     //chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
@@ -675,7 +671,7 @@ workflow {
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
-    /*chFootPrintPDF = snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chOutputDir)
+    chFootPrintPDF = snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chOutputDir)
 
     
     //ENRICHMENT      ***************************************************
