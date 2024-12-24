@@ -52,8 +52,6 @@ genotype_matrix_samples <- t(combined_genotype_matrix)
 # Replace any missing values with 0 or an appropriate value
 genotype_matrix_samples[is.na(genotype_matrix_samples)] <- 0
 
-
-
 pca_result <- prcomp(genotype_matrix_samples)
 
 qty_samples <- length(pca_result$x[, 1])#
