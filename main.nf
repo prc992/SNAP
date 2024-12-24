@@ -103,7 +103,7 @@ process downloadSNPRef {
 
     input:
     val genome
-    path outputDir
+    path chOutputDir
 
     output:
     file "SNPs.1e5.${genome}.txt"
