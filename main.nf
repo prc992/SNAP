@@ -671,7 +671,7 @@ workflow {
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
-    chFootPrintPDF = snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chOutputDir)
+    /*chFootPrintPDF = snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chOutputDir)
 
     
     //ENRICHMENT      ***************************************************
