@@ -626,7 +626,7 @@ workflow {
     //Extract outputdir from the first row
     chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
 
-    chSNPS_ref = downloadSNPRef(params.genome,chOutputDir)/*
+    chSNPS_ref = downloadSNPRef(params.genome,chOutputDir)
 
     //RETIRAR
     //chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
