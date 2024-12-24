@@ -108,7 +108,6 @@ process downloadSNPRef {
     output:
     file "SNPs.1e5.${genome}.txt"
 
-    
     script:
     def snpFile = "SNPs.1e5.${genome}.txt"
     
@@ -120,11 +119,7 @@ process downloadSNPRef {
         error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
     }
     """
-    if [ ! -f ${path_sample_multiqc}/${snpFile} ]; then
-        wget -O ${snpFile} ${url}
-    else
-        echo "File ${path_sample_multiqc}/${snpFile} already exists. Skipping download."
-    fi
+    wget -O ${snpFile} ${url}
     """
     //ln -s ${path_sample_multiqc}/${snpFile} ${snpFile}
 }
