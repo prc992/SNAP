@@ -123,6 +123,7 @@ process downloadSNPRef {
     }
     """
     if [ ! -f ${refDir}/${snpFile} ]; then
+        echo "Downloading file ${snpFile} from ${url}"
         wget -O ${refDir}/${snpFile} ${url}
     else
         echo "File ${refDir}/${snpFile} already exists. Skipping download."
