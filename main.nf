@@ -91,6 +91,45 @@ process downloadGenome {
     """
 }
 
+process downloadSNPRef {
+
+    label 'low_cpu_low_mem'
+    tag "Dowloading - $genome" 
+    //publishDir "$genomeOut", mode : 'copy'
+
+    container = "quay.io/biocontainers/wget:1.21.4"
+    
+    exec:
+    genomeOut = refDir
+
+    input:
+    val genome
+    path refDir
+
+    output:
+    file "SNPs.1e5.${genome}.txt"
+
+    
+    script:
+    def snpFile = "SNPs.1e5.${genome}.txt"
+    
+    if (genome == 'hg19') {
+        url = params.hg19SNP
+    } else if (genome == 'hg38') {
+        url = params.hg38SNP
+    } else {
+        error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
+    }
+    """
+    if [ ! -f ${refDir}/${snpFile} ]; then
+        wget -O ${refDir}/${snpFile} ${url}
+    else
+        echo "File ${refDir}/${snpFile} already exists. Skipping download."
+    fi
+    ln -s ${refDir}/${snpFile} ${snpFile}
+    """
+}
+
 process downloadDACFile {
 
     label 'low_cpu_low_mem'
@@ -546,7 +585,7 @@ workflow {
 
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
-    chSNPS_ref = Channel.fromPath("$params.snps_ref")
+    //chSNPS_ref = Channel.fromPath("$params.snps_ref")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
     chMultiQCFragPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_peaks_header")
@@ -559,6 +598,8 @@ workflow {
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
+    chSNPS_ref = downloadSNPRef(params.genome,refDir)
+    /*
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
