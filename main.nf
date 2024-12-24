@@ -599,7 +599,6 @@ workflow {
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
     chGenome = downloadGenome(params.genome,refDir)
     chSNPS_ref = downloadSNPRef(params.genome,refDir)
-    /*
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
