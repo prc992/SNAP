@@ -22,7 +22,11 @@ module_order:
   - picard:
       name: "Picard duplication stats"
   - samtools:
-      name: "Samtools alignment scores"
+      name: "Samtools alignment scores (before filtering)"
+      path_filters:
+        - "*notFiltered.stats"
+        - "*notFiltered.idxstats"
+        - "*notFiltered.flagstat"
   - cutadapt:
       name: "Adapter Trimming"
       info: "This section of the report shows adapter trimming results."

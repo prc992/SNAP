@@ -286,13 +286,13 @@ process createStatsSamtools {
     script:
     """
     # Generate stats file
-    samtools stats $sampleBam > ${sampleId}.stats
+    samtools stats $sampleBam > ${sampleId}.notFiltered.stats
 
     # Generate idxstats file
-    samtools idxstats $sampleBam > ${sampleId}.idxstats
+    samtools idxstats $sampleBam > ${sampleId}.notFiltered.idxstats
 
     # Generate flagstat file
-    samtools flagstat $sampleBam > ${sampleId}.flagstat
+    samtools flagstat $sampleBam > ${sampleId}.notFiltered.flagstat
     """
 }
 
