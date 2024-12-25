@@ -296,6 +296,29 @@ process createStatsSamtools {
     """
 }
 
+process quality_filter {
+    label 'low_cpu_low_mem'
+    container = 'quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+    publishDir "$path_sample_align", mode : 'copy'
+    
+    tag "Sample - $sampleId" 
+
+    input:
+    tuple val(sampleId),val(path_analysis),path(sampleBam)
+
+    exec:
+    String strBam = sampleId + 'filtered.unique.sorted.bam'
+    path_sample_align = path_analysis + "/align/" + sampleId
+
+    output:
+    tuple val(sampleId),val(path_analysis),path('*.bam')
+
+    script:
+    """
+    samtools view -bh -f 3 -F 3844 -q 30 --threads $task.cpus $sampleBam > $strBam
+    """
+}
+
 process lib_complex_preseq {
   label 'med_cpu_high_mem'
 
@@ -597,9 +620,6 @@ workflow {
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
     chDACFileRef = downloadDACFile(params.genome,refDir)
     
-    
-
-
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
         //println "Using provided samplesheet: ${params.samplesheet}"
@@ -635,7 +655,8 @@ workflow {
     chUniqueFiles = unique_sam(chSortedFiles)
     chStatsSamtools = createStatsSamtools(chUniqueFiles)
     chDedupFiles = dedup(chUniqueFiles)
-    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
+    chFilteredFiles = quality_filter(chDedupFiles)
+    chDACFilteredFiles = dac_exclusion(chFilteredFiles,chDACFileRef)
 
     chIndexFiles = index_sam(chDACFilteredFiles)
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
