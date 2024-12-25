@@ -656,7 +656,7 @@ workflow {
     chStatsSamtools = createStatsSamtools(chUniqueFiles)
     chFilteredFiles = quality_filter(chUniqueFiles)
     chDedupFiles = dedup(chFilteredFiles)
-    chDACFilteredFiles = dac_exclusion(chFilteredFiles,chDACFileRef)
+    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
 
     chIndexFiles = index_sam(chDACFilteredFiles)
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
