@@ -307,7 +307,7 @@ process quality_filter {
     tuple val(sampleId),val(path_analysis),path(sampleBam)
 
     exec:
-    String strBam = sampleId + 'filtered.unique.sorted.bam'
+    String strBam = sampleId + '.filtered.unique.sorted.bam'
     path_sample_align = path_analysis + "/align/" + sampleId
 
     output:
