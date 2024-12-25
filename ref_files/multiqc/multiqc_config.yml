@@ -66,7 +66,7 @@ extra_fn_clean_trim:
   - ".unique"
   - ".LibComplexity.metrics"
   - ".notFiltered"
-  - "notFiltered.stats""
+  - ".notFiltered.stats"
   - ".notFiltered.idxstats"
   - ".notFiltered.flagstat"
   - ".filtered"
