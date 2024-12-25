@@ -65,3 +65,4 @@ extra_fn_clean_trim:
   - "_2_val_2"
   - ".unique"
   - ".LibComplexity.metrics"
+  - ".notFiltered"
