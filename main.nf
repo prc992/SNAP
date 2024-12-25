@@ -654,8 +654,8 @@ workflow {
     lib_complex_preseq(chSortedFiles)
     chUniqueFiles = unique_sam(chSortedFiles)
     chStatsSamtools = createStatsSamtools(chUniqueFiles)
-    chDedupFiles = dedup(chUniqueFiles)
-    chFilteredFiles = quality_filter(chDedupFiles)
+    chFilteredFiles = quality_filter(chUniqueFiles)
+    chDedupFiles = dedup(chFilteredFiles)
     chDACFilteredFiles = dac_exclusion(chFilteredFiles,chDACFileRef)
 
     chIndexFiles = index_sam(chDACFilteredFiles)
