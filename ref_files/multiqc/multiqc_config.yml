@@ -57,10 +57,6 @@ table_columns_visible:
 
         
 remove_sections:
-    - "samtools-idxstats-xy-counts"
-    - "samtools-stats"
-    - "samtools-flagstat"
-    - "samtools-idxstats"
     - "fastqc_top_overrepresented_sequences"
     - "fastqc_per_base_sequence_content"
 
