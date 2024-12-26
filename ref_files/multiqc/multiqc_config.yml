@@ -27,6 +27,12 @@ module_order:
         - "*notFiltered.stats"
         - "*notFiltered.idxstats"
         - "*notFiltered.flagstat"
+  - samtools:
+      name: "Samtools alignment scores (after filtering)"
+      path_filters:
+        - "*AfterFilter.stats"
+        - "*AfterFilter.idxstats"
+        - "*AfterFilter.flagstat"
   - cutadapt:
       name: "Adapter Trimming"
       info: "This section of the report shows adapter trimming results."
@@ -70,3 +76,6 @@ extra_fn_clean_trim:
   - ".notFiltered.idxstats"
   - ".notFiltered.flagstat"
   - ".filtered"
+  - ".AfterFilter.stats"
+  - ".AfterFilter.idxstats"
+  - ".AfterFilter.flagstat"

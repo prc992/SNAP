@@ -296,6 +296,37 @@ process createStatsSamtools {
     """
 }
 
+process createStatsSamtoolsfiltered {
+    label 'low_cpu_low_mem'
+    container = 'quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+    publishDir "$path_sample_align", mode : 'copy'
+    
+    tag "Sample - $sampleId" 
+
+    input:
+    tuple val(sampleId),val(path_analysis),path(sampleBam)
+
+    exec:
+    path_sample_align = path_analysis + "/align/" + sampleId
+
+    output:
+    path ('*.stats')
+    path ('*.idxstats')
+    path ('*.flagstat')
+
+    script:
+    """
+    # Generate stats file
+    samtools stats $sampleBam > ${sampleId}.AfterFilter.stats
+
+    # Generate idxstats file
+    samtools idxstats $sampleBam > ${sampleId}.AfterFilter.idxstats
+
+    # Generate flagstat file
+    samtools flagstat $sampleBam > ${sampleId}.AfterFilter.flagstat
+    """
+}
+
 process quality_filter {
     label 'low_cpu_low_mem'
     container = 'quay.io/biocontainers/samtools:1.15.1--h1170115_0'
@@ -655,6 +686,7 @@ workflow {
     chUniqueFiles = unique_sam(chSortedFiles)
     chStatsSamtools = createStatsSamtools(chUniqueFiles)
     chFilteredFiles = quality_filter(chUniqueFiles)
+    chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles)
     chDedupFiles = dedup(chFilteredFiles)
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
 
