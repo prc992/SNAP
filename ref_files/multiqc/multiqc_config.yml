@@ -75,6 +75,7 @@ extra_fn_clean_trim:
   - ".notFiltered.idxstats"
   - ".notFiltered.flagstat"
   - ".filtered"
+  - ".AfterFilter"
   - ".AfterFilter.stats"
   - ".AfterFilter.idxstats"
   - ".AfterFilter.flagstat"
