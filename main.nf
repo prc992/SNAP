@@ -292,7 +292,7 @@ process quality_filter {
 
     output:
     tuple val(sampleId),val(path_analysis),path('*.bam')
-    tuple val(sampleId),path ("samtools_filter_mqc_versions.yml")
+    tuple val(sampleId),path ("samtools_QualityFilter_mqc_versions.yml")
 
     script:
     """
