@@ -649,6 +649,8 @@ workflow {
     chGenomesSheet = Channel.fromPath(params.genomeInfoPaths)
     chGenomesInfo = chGenomesSheet \
         | splitCsv(header:true) \
+        | filter { row -> row.Genome == params.genome } \
+        | ifEmpty { error "No matching Genome found in the GenomePaths spreadsheet. Exiting workflow." }
         | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }\
         | view()
 
