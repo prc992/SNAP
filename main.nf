@@ -35,10 +35,10 @@ process multiqc_v2 {
     path (chFragAndPeaks)
     path (chEnrichmentFiles)
     path (configFile)
-    path (chOutputDir)
+    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 
     exec:
-    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     output:
     file "multiqc_report.html"
@@ -406,10 +406,10 @@ process enrichmentReport {
     tuple val(sampleId), val(enrichment_mark),val(path),path(read1), val(read2)
     path(csvFiles)
     each path (chReportEnrichment)
-    val (chOutputDir)
+    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 
     exec:
-    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     output:
     path ("*_report.csv")
@@ -431,10 +431,10 @@ process merge_enrichment_reports {
     path (chEnrichmentFilesReport)
     each path (chMultiQCEnrichmentHeader)
     each path (chMergeReportEnrichment)
-    val (chOutputDir)
+    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 
     exec:
-    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     output:
     path ("*_mqc.csv")
@@ -703,14 +703,14 @@ workflow {
 
     // Processo de SNP Fingerprint
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect()
-    chFootPrintPDF = snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chOutputDir)
+    chFootPrintPDF = snp_footprint_clustering(chSnpFingerprintComplete,chRSNPFootprint,chSampleInfo)
 
     
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
-    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment,chOutputDir).collect()
+    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment,chSampleInfo).collect()
     //chEnrichmentFilesReport.subscribe { collectedFiles ->println "Arquivos coletados enrichmentReport: $collectedFiles"}
-    chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chOutputDir).collect()
+    chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     //chMergedEnrichmentReport.subscribe { collectedFiles ->println "Arquivos coletados MergedEnrichment: $collectedFiles"}
 
     //Verificar se é necessário pois o deepTools já faz isso
@@ -732,7 +732,7 @@ workflow {
     // RETIRAR ##########################
 
     multiqc_v2(chSnpFingerprintComplete,chfragHist,\
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chOutputDir)
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/

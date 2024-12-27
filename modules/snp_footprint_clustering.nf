@@ -10,10 +10,10 @@ process snp_footprint_clustering{
   input:
   path(vcfGzFiles)
   path (chRSNPFootprint)
-  val (chOutputDir)
+  tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 
   exec:
-  path_sample_snp_footprint =  chOutputDir + "/reports/multiqc/" 
+  path_sample_snp_footprint =  path_analysis + "/reports/multiqc/" 
 
   output:
   path ('*.jpg')
