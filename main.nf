@@ -656,13 +656,9 @@ workflow {
 
     // Destructure and store each column into separate variables
     chGenomesInfo.map { genome, faGZFile, geneAnnotation, dacList, snp ->
-    [genome, faGZFile, geneAnnotation, dacList, snp]}.subscribe { genome, faGZFile, geneAnnotation, dacList, snp ->
-        println "Genome: ${genome}"
-        println "FASTA File URL: ${faGZFile}"
-        println "Gene Annotation URL: ${geneAnnotation}"
-        println "DAC List URL: ${dacList}"
-        println "SNP URL: ${snp}"
-    }
+    [genome, faGZFile, geneAnnotation, dacList, snp]}
+
+    println('Ok')
 
 
 
