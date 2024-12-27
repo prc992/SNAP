@@ -79,3 +79,4 @@ extra_fn_clean_trim:
   - ".AfterFilter.stats"
   - ".AfterFilter.idxstats"
   - ".AfterFilter.flagstat"
+  - ".lc_extrap"
