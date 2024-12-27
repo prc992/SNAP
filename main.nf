@@ -660,14 +660,8 @@ workflow {
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
 
 
-    
-    //Extract outputdir from the first row
-    //chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
-
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
-
-    
-    /*fastqc(chSampleInfo)
+    fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
