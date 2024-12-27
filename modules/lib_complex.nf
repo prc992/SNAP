@@ -13,6 +13,7 @@ process lib_complex {
 
   output:
   path("*.metrics.txt")
+  tuple val(sampleId),path ("picard_EstimateLibraryComplexity_mqc_versions.yml")
 
   exec:
   String strLib = sampleId + '.LibComplexity.metrics.txt'
@@ -21,5 +22,10 @@ process lib_complex {
   script:
   """
   picard EstimateLibraryComplexity I=$sortedBam  O=$strLib
+
+  cat <<-END_VERSIONS > picard_EstimateLibraryComplexity_mqc_versions.yml
+    "${task.process}":
+        picard: \$(echo \$(picard EstimateLibraryComplexity --version 2>&1) | grep -o 'Version:.*' | cut -f2- -d:)
+  END_VERSIONS
   """
 }

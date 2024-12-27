@@ -312,6 +312,11 @@ process lib_complex_preseq {
   script:
   """
   preseq lc_extrap -B $sortedBam > ${sampleId}.lc_extrap.txt
+
+  cat <<-END_VERSIONS > preseq_mqc_versions.yml
+  "${task.process}":
+    preseq: \$(echo \$(preseq 2>&1) | sed 's/^.*Version: //; s/Usage:.*\$//')
+  END_VERSIONS
   """
 }
 
