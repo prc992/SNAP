@@ -62,7 +62,7 @@ process downloadSNPRef {
     path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
 
     input:
-    val genome
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
     path chOutputDir
 
     output:
@@ -71,17 +71,9 @@ process downloadSNPRef {
     script:
     def snpFile = "SNPs.1e5.${genome}.txt"
     
-    if (genome == 'hg19') {
-        url = params.hg19SNP
-    } else if (genome == 'hg38') {
-        url = params.hg38SNP
-    } else {
-        error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
-    }
     """
-    wget -O ${snpFile} ${url}
+    wget -O ${snpFile} ${snp}
     """
-    //ln -s ${path_sample_multiqc}/${snpFile} ${snpFile}
 }
 
 process downloadDACFile {
@@ -93,7 +85,7 @@ process downloadDACFile {
     container = "quay.io/biocontainers/wget:1.21.4"
     
     input:
-    val genome
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
     path refDir
 
     output:
@@ -103,16 +95,9 @@ process downloadDACFile {
     def dacFile = "${genome}.DAC.bed"
     def dacFilegz = "${genome}.DAC.bed.gz"
     
-    if (genome == 'hg19') {
-        url = params.hg19DACListDownload
-    } else if (genome == 'hg38') {
-        url = params.hg38DACListDownload
-    } else {
-        error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
-    }
     """
     if [ ! -f ${refDir}/${dacFile} ]; then
-        wget -O ${refDir}/${dacFilegz} ${url}
+        wget -O ${refDir}/${dacFilegz} ${dacList}
         gunzip ${refDir}/${dacFilegz} 
     else
         echo "File ${refDir}/${dacFile} already exists. Skipping download."
@@ -130,7 +115,7 @@ process downloadGeneAnotation {
     container = "quay.io/biocontainers/wget:1.21.4"
     
     input:
-    val genome
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
     path refDir
 
     output:
@@ -140,16 +125,10 @@ process downloadGeneAnotation {
     def gtfFile = "${genome}.GeneAnotation.gtf"
     def gtfFilegz = "${genome}.GeneAnotation.gtf.gz"
     
-    if (genome == 'hg19') {
-        url = params.hg19GeneAnotationDownload
-    } else if (genome == 'hg38') {
-        url = params.hg38GeneAnotationDownload
-    } else {
-        error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
-    }
+
     """
     if [ ! -f ${refDir}/${gtfFile} ]; then
-        wget -O ${refDir}/${gtfFilegz} ${url}
+        wget -O ${refDir}/${gtfFilegz} ${geneAnnotation}
         gunzip ${refDir}/${gtfFilegz} 
     else
         echo "File ${refDir}/${gtfFile} already exists. Skipping download."
@@ -166,7 +145,7 @@ process createGenomeIndex {
     tag "Creating Index - $genome" 
 
     input:
-    val genome
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
     path genomeFile
     path refDir
 
@@ -657,11 +636,12 @@ workflow {
 
 
     chGenome = downloadGenome(chGenomesInfo,refDir)
-    /*chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
-    chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
-    chChromSizes = fetch_chrom_sizes(params.genome,refDir)
-    chDACFileRef = downloadDACFile(params.genome,refDir)
+    chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome,refDir)
+    chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir)
+    chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
+    chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
     
+    /*
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
         //println "Using provided samplesheet: ${params.samplesheet}"
