@@ -292,10 +292,16 @@ process quality_filter {
 
     output:
     tuple val(sampleId),val(path_analysis),path('*.bam')
+    tuple val(sampleId),path ("samtools_filter_mqc_versions.yml")
 
     script:
     """
     samtools view -bh -f 3 -F 3844 -q 30 --threads $task.cpus $sampleBam > $strBam
+
+    cat <<-END_VERSIONS > samtools_QualityFilter_mqc_versions.yml
+    "${task.process}":
+      samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+    END_VERSIONS
     """
 }
 
