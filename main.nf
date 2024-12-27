@@ -62,6 +62,7 @@ process downloadGenome {
     genomeOut = refDir
 
     input:
+    val urlfaGZFile
     val genome
     path refDir
 
@@ -73,16 +74,9 @@ process downloadGenome {
     def genomeFile = "${genome}.fa"
     def genomeFilegz = "${genome}.fa.gz"
     
-    if (genome == 'hg19') {
-        url = params.hg19GenomeDownload
-    } else if (genome == 'hg38') {
-        url = params.hg38GenomeDownload
-    } else {
-        error "Invalid genome parameter: ${genome}. Allowed values are: ${params.allowedGenomes.join(', ')}"
-    }
     """
     if [ ! -f ${refDir}/${genomeFile} ]; then
-        wget -O ${refDir}/${genomeFilegz} ${url}
+        wget -O ${refDir}/${genomeFilegz} ${urlfaGZFile}
         gunzip ${refDir}/${genomeFilegz} 
     else
         echo "File ${refDir}/${genomeFile} already exists. Skipping download."
@@ -658,12 +652,8 @@ workflow {
     chGenomesInfo.map { genome, faGZFile, geneAnnotation, dacList, snp ->
     [genome, faGZFile, geneAnnotation, dacList, snp]}
 
-    println('Ok')
-
-
-
-    /*chGenome = downloadGenome(params.genome,refDir)
-    chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
+    chGenome = downloadGenome(faGZFile,params.genome,refDir)
+    /*chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
     chDACFileRef = downloadDACFile(params.genome,refDir)
