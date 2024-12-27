@@ -350,10 +350,10 @@ process fragLenHist {
     path raw_fragments
     each path (frag_len_header_multiqc)
     each path (chCalcFragHist)
-    val (chOutputDir)
+   tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 
     exec:
-    path_sample_frags = "$chOutputDir" + "/frag/"
+    path_sample_frags = path_analysis + "/frag/"
 
     output:
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
@@ -678,7 +678,7 @@ workflow {
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
 
     //Verificar se é necessário pois o deepTools já faz isso
-    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist,chOutputDir)
+    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles)
