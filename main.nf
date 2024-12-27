@@ -649,10 +649,20 @@ workflow {
         | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }
 
     // Destructure and store each column into separate variables
-    chGenomesInfo.map { genome, faGZFile, geneAnnotation, dacList, snp ->
-    [genome, faGZFile, geneAnnotation, dacList, snp]}
+    chGenomesInfo
+        .map { genome, faGZFile, geneAnnotation, dacList, snp ->
+            [genome, faGZFile, geneAnnotation, dacList, snp]
+        }
+        .subscribe { genome, faGZFile, geneAnnotation, dacList, snp ->
+            // Store the variables for downstream usage
+            def genomeVar = genome
+            def faGZFileVar = faGZFile
+            def geneAnnotationVar = geneAnnotation
+            def dacListVar = dacList
+            def snpVar = snp
+        }
 
-    chGenome = downloadGenome(faGZFile,params.genome,refDir)
+    chGenome = downloadGenome(faGZFileVar,params.genome,refDir)
     /*chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
