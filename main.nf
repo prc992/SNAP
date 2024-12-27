@@ -645,6 +645,15 @@ workflow {
     """.execute().waitFor()
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
+
+    def chGenomesSheet = Channel.fromPath(params.genomeInfoPaths)
+    chGenomesInfo = chGenomesSheet \
+        | splitCsv(header:true) \
+        | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }\
+        | view()
+
+
+    /*
     chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
@@ -664,6 +673,10 @@ workflow {
         )
     }
     
+    chGenomeInfo =
+
+
+
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
