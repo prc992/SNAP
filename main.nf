@@ -301,6 +301,7 @@ process lib_complex_preseq {
 
   input:
   tuple val(sampleId),val(path_analysis),path(sortedBam)
+  val(_)
 
   output:
   path("*.lc_extrap.txt")

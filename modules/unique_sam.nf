@@ -9,6 +9,7 @@ process unique_sam {
   
   input:
   tuple val(sampleId),val(path_analysis),path(sortedBam)
+  val(_)
 
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam')

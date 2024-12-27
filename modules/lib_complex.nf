@@ -9,6 +9,7 @@ process lib_complex {
 
   input:
   tuple val(sampleId),val(path_analysis),path(sortedBam)
+  val(_)
 
   output:
   path("*.metrics.txt")

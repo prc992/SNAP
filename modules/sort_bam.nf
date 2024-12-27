@@ -11,8 +11,10 @@ process sort_bam {
   tuple val(sampleId),val(path_analysis),path(sampleBam)
   val(_)
   
+  
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam')
+  tuple val(sampleId),path ("fastqc_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.sorted.bam'
@@ -21,5 +23,10 @@ process sort_bam {
   script:
   """
   samtools sort -@ $task.cpus $sampleBam -o $strBam
+
+  cat <<-END_VERSIONS > samtools_sort_mqc_versions.yml
+  "${task.process}":
+      samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+  END_VERSIONS
   """
 }
