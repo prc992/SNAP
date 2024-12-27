@@ -23,10 +23,11 @@ include {pileups_report} from './modules/pileups_report'
 include {uropa} from './modules/uropa'
 include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
-process multiqc_v2 {
+process multiqc {
     label 'low_cpu_low_mem'
     container = 'quay.io/biocontainers/multiqc:1.25.2--pyhdfd78af_0'
     publishDir "$path_sample_multiqc", mode : 'copy'
+    tag "All Samples" 
     
     input:
     val(_)
@@ -35,7 +36,7 @@ process multiqc_v2 {
     path (chFragAndPeaks)
     path (chEnrichmentFiles)
     path (configFile)
-    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
+    tuple val(sampleId), val(enrichment_mark),path(path_analysis),val(read1), val(read2)
 
     exec:
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
@@ -731,7 +732,7 @@ workflow {
     //chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
     // RETIRAR ##########################
 
-    multiqc_v2(chSnpFingerprintComplete,chfragHist,\
+    multiqc(chSnpFingerprintComplete,chfragHist,\
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
