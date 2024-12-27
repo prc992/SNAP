@@ -305,6 +305,8 @@ process lib_complex_preseq {
 
   output:
   path("*.lc_extrap.txt")
+  tuple val(sampleId),path ("preseq_mqc_versions.yml")
+
 
   exec:
   path_sample_align = path_analysis + "/align/" + sampleId
