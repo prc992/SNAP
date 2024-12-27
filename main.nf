@@ -646,7 +646,7 @@ workflow {
 
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
 
-    def chGenomesSheet = Channel.fromPath(params.genomeInfoPaths)
+    chGenomesSheet = Channel.fromPath(params.genomeInfoPaths)
     chGenomesInfo = chGenomesSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }\
