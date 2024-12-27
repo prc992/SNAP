@@ -14,7 +14,7 @@ process sort_bam {
   
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam')
-  tuple val(sampleId),path ("fastqc_mqc_versions.yml")
+  tuple val(sampleId),path ("samtools_sort_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.sorted.bam'
