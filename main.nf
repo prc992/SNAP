@@ -647,16 +647,26 @@ workflow {
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
 
     chGenomesSheet = Channel.fromPath(params.genomeInfoPaths)
+
     chGenomesInfo = chGenomesSheet \
         | splitCsv(header:true) \
         | filter { row -> row.Genome == params.genome } \
         | ifEmpty { error "No matching Genome found in the GenomePaths spreadsheet. Exiting workflow." }
-        | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }\
-        | view()
+        | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }
+
+    // Destructure and store each column into separate variables
+    chGenomesInfo.map { genome, faGZFile, geneAnnotation, dacList, snp ->
+    [genome, faGZFile, geneAnnotation, dacList, snp]}.subscribe { genome, faGZFile, geneAnnotation, dacList, snp ->
+        println "Genome: ${genome}"
+        println "FASTA File URL: ${faGZFile}"
+        println "Gene Annotation URL: ${geneAnnotation}"
+        println "DAC List URL: ${dacList}"
+        println "SNP URL: ${snp}"
+    }
 
 
-    /*
-    chGenome = downloadGenome(params.genome,refDir)
+
+    /*chGenome = downloadGenome(params.genome,refDir)
     chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
