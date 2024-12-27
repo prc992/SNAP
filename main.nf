@@ -567,10 +567,7 @@ process downloadGenome {
     genomeOut = refDir
 
     input:
-    val genome
-    val faGZFile
-    val geneAnnotation
-    val dacList
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
     path refDir
 
     
