@@ -8,7 +8,7 @@ process fetch_chrom_sizes{
   //publishDir "$refDir/genome", mode : 'copy'
 
   input:
-  val genome
+  tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
   path refDir
 
   output:
