@@ -13,6 +13,7 @@ process unique_sam {
 
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam')
+  tuple val(sampleId),path ("samtools_unique_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.unique.sorted.bam'
@@ -21,5 +22,10 @@ process unique_sam {
   script:
   """
   samtools view --threads $task.cpus -b -q 1 $sortedBam > $strBam
+
+  cat <<-END_VERSIONS > samtools_unique_mqc_versions.yml
+  "${task.process}":
+      samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+  END_VERSIONS
   """
 }

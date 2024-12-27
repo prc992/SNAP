@@ -214,6 +214,7 @@ process createStatsSamtools {
 
     input:
     tuple val(sampleId),val(path_analysis),path(sampleBam)
+    val(_)
 
     exec:
     path_sample_align = path_analysis + "/align/" + sampleId
@@ -245,6 +246,7 @@ process createStatsSamtoolsfiltered {
 
     input:
     tuple val(sampleId),val(path_analysis),path(sampleBam)
+    val(_)
 
     exec:
     path_sample_align = path_analysis + "/align/" + sampleId
@@ -253,6 +255,7 @@ process createStatsSamtoolsfiltered {
     path ('*.stats')
     path ('*.idxstats')
     path ('*.flagstat')
+    path ("samtools_stats_mqc_versions.yml")
 
     script:
     """
@@ -264,6 +267,11 @@ process createStatsSamtoolsfiltered {
 
     # Generate flagstat file
     samtools flagstat $sampleBam > ${sampleId}.AfterFilter.flagstat
+
+    cat <<-END_VERSIONS > samtools_stats_mqc_versions.yml
+    "${task.process}":
+      samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+    END_VERSIONS
     """
 }
 
@@ -276,6 +284,7 @@ process quality_filter {
 
     input:
     tuple val(sampleId),val(path_analysis),path(sampleBam)
+    val(_)
 
     exec:
     String strBam = sampleId + '.filtered.unique.sorted.bam'

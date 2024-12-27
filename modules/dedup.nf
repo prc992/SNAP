@@ -9,6 +9,7 @@ process dedup {
 
   input:
   tuple val(sampleId),val(path_analysis),path(uniqueBam)
+  val(_)
 
   exec:
   path_sample_align = path_analysis + "/align/" + sampleId
