@@ -59,11 +59,11 @@ process downloadSNPRef {
     container = "quay.io/biocontainers/wget:1.21.4"
     
     exec:
-    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     input:
     tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
-    path chOutputDir
+    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 
     output:
     file "SNPs.1e5.${genome}.txt"
@@ -641,7 +641,7 @@ workflow {
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
     chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
     
-    /*
+    
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
         //println "Using provided samplesheet: ${params.samplesheet}"
@@ -655,24 +655,19 @@ workflow {
         )
     }
     
-    chGenomeInfo =
-
-
-
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
 
 
-    //Extract outputdir from the first row
-    chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
-
-    chSNPS_ref = downloadSNPRef(params.genome,chOutputDir)
-
-    //RETIRAR
-    //chBEDRandomFilesMultiqc = createBEDRandomFilesMultiqc(params.genome,chChromSizes,chOutputDir)
     
-    fastqc(chSampleInfo)
+    //Extract outputdir from the first row
+    //chOutputDir = chSampleInfo.first().map { firstItem -> firstItem[2] }
+
+    chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
+
+    
+    /*fastqc(chSampleInfo)
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
     chSortedFiles = sort_bam(chAlignFiles)
