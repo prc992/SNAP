@@ -50,40 +50,6 @@ process multiqc_v2 {
     """
 }
 
-process downloadGenome {
-
-    label 'low_cpu_low_mem'
-    tag "Dowloading - $genome" 
-    //publishDir "$genomeOut", mode : 'copy'
-
-    container = "quay.io/biocontainers/wget:1.21.4"
-    
-    exec:
-    genomeOut = refDir
-
-    input:
-    val urlfaGZFile
-    val genome
-    path refDir
-
-    output:
-    file "${genome}.fa"
-
-    
-    script:
-    def genomeFile = "${genome}.fa"
-    def genomeFilegz = "${genome}.fa.gz"
-    
-    """
-    if [ ! -f ${refDir}/${genomeFile} ]; then
-        wget -O ${refDir}/${genomeFilegz} ${urlfaGZFile}
-        gunzip ${refDir}/${genomeFilegz} 
-    else
-        echo "File ${refDir}/${genomeFile} already exists. Skipping download."
-    fi
-    ln -s ${refDir}/${genomeFile} ${genomeFile}
-    """
-}
 
 process downloadSNPRef {
     label 'low_cpu_low_mem'
@@ -589,6 +555,44 @@ process deeptoolsPlotCorrelation{
     """
 }*/
 
+process downloadGenome {
+
+    label 'low_cpu_low_mem'
+    tag "Dowloading - $genome" 
+    //publishDir "$genomeOut", mode : 'copy'
+
+    container = "quay.io/biocontainers/wget:1.21.4"
+    
+    exec:
+    genomeOut = refDir
+
+    input:
+    val genome
+    val faGZFile
+    val geneAnnotation
+    val dacList
+    path refDir
+
+    
+    output:
+    file "${genome}.fa"
+
+    
+    script:
+    def genomeFile = "${genome}.fa"
+    def genomeFilegz = "${genome}.fa.gz"
+    
+    """
+    if [ ! -f ${refDir}/${genomeFile} ]; then
+        wget -O ${refDir}/${genomeFilegz} ${faGZFile}
+        gunzip ${refDir}/${genomeFilegz} 
+    else
+        echo "File ${refDir}/${genomeFile} already exists. Skipping download."
+    fi
+    ln -s ${refDir}/${genomeFile} ${genomeFile}
+    """
+}
+
 
 
 workflow {
@@ -653,16 +657,9 @@ workflow {
         .map { genome, faGZFile, geneAnnotation, dacList, snp ->
             [genome, faGZFile, geneAnnotation, dacList, snp]
         }
-        .subscribe { genome, faGZFile, geneAnnotation, dacList, snp ->
-            // Store the variables for downstream usage
-            def genomeVar = genome
-            def faGZFileVar = faGZFile
-            def geneAnnotationVar = geneAnnotation
-            def dacListVar = dacList
-            def snpVar = snp
-        }
 
-    chGenome = downloadGenome(faGZFileVar,params.genome,refDir)
+
+    chGenome = downloadGenome(chGenomesInfo,refDir)
     /*chGenomeIndex = createGenomeIndex(params.genome,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(params.genome,refDir)
     chChromSizes = fetch_chrom_sizes(params.genome,refDir)
