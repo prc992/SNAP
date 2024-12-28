@@ -9,6 +9,7 @@ process peak_bed_graph{
 
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam)
+  val(_)
 
   output:
   tuple val(sampleId),val(path_analysis),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls")
