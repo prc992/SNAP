@@ -18,6 +18,7 @@ process dedup {
 
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam'),path("*.txt")
+  tuple val(sampleId),path ("picard_MarkDuplicates_mqc_versions.yml")
 
   script:
   """
@@ -28,5 +29,12 @@ process dedup {
   ASSUME_SORT_ORDER=coordinate \\
   VALIDATION_STRINGENCY=LENIENT \\
   METRICS_FILE=$strTxt
+
+  cat <<-END_VERSIONS > picard_MarkDuplicates_mqc_versions.yml
+    "${task.process}":
+        picard: \$(echo \$(picard MarkDuplicates --version 2>&1) | grep -o 'Version:.*' | cut -f2- -d:)
+  END_VERSIONS
 	"""
+
+  
 }

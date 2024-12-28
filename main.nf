@@ -685,17 +685,17 @@ workflow {
 
 
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
-    fastqc(chSampleInfo)
-    chTrimFiles = trim(chSampleInfo)
-    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex)    
-    chSortedFiles = sort_bam(chAlignFiles)
-    lib_complex(chSortedFiles)
-    lib_complex_preseq(chSortedFiles)
-    chUniqueFiles = unique_sam(chSortedFiles)
-    chStatsSamtools = createStatsSamtools(chUniqueFiles)
-    chFilteredFiles = quality_filter(chUniqueFiles)
-    chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles)
-    chDedupFiles = dedup(chFilteredFiles)
+    fastqc(chSampleInfo) // yaml ready
+    chTrimFiles = trim(chSampleInfo) // yaml ready
+    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) // yaml ready
+    chSortedFiles = sort_bam(chAlignFiles) // yaml ready
+    lib_complex(chSortedFiles) // yaml ready
+    lib_complex_preseq(chSortedFiles) // yaml ready
+    chUniqueFiles = unique_sam(chSortedFiles) // yaml ready
+    chStatsSamtools = createStatsSamtools(chUniqueFiles) // yaml ready
+    chFilteredFiles = quality_filter(chUniqueFiles) // yaml ready
+    chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) // yaml ready
+    chDedupFiles = dedup(chFilteredFiles) // yaml ready
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
 
     chIndexFiles = index_sam(chDACFilteredFiles)
