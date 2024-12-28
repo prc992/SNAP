@@ -9,6 +9,7 @@ process bam_to_bed {
   
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam)
+  val(_)
 
   exec:
   String strBed = sampleId + '.bed'
