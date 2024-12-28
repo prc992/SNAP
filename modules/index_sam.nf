@@ -15,8 +15,7 @@ process index_sam {
   path_sample_align = path_analysis + "/align/" + sampleId
 
   output:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),path ('*.bai')
-  tuple val(sampleId),path ("index_sam_mqc_versions.yml")
+  tuple val(sampleId),val(path_analysis),path(sampleBam),path ('*.bai'),path ("index_sam_mqc_versions.yml")
 
   script:
   """

@@ -8,7 +8,7 @@ process snp_fingerprint {
   publishDir "$path_sample_snp_fingerprint", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),path (sampleBai)
+  tuple val(sampleId),val(path_analysis),path(sampleBam),path (sampleBai),val(_)
   each path (snps_ref)
   each path (file_fa)
 
