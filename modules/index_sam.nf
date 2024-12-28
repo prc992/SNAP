@@ -9,6 +9,7 @@ process index_sam {
   
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam)
+  val(_)
 
   exec:
   path_sample_align = path_analysis + "/align/" + sampleId

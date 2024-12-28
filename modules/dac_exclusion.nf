@@ -18,9 +18,15 @@ process dac_exclusion {
 
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam')
+  tuple val(sampleId),path ("dac_exclusion_mqc_versions.yml")
 
   script:
   """
   bedtools intersect -v -abam $dedupBam -b $sampleDAC > $strBam
+
+  cat <<-END_VERSIONS > dac_exclusion_mqc_versions.yml
+    "${task.process}":
+        bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
+  END_VERSIONS
 	"""
 }

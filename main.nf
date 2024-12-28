@@ -696,7 +696,7 @@ workflow {
     chFilteredFiles = quality_filter(chUniqueFiles) // yaml ready
     chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) // yaml ready
     chDedupFiles = dedup(chFilteredFiles) // yaml ready
-    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
+    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) // yaml ready
 
     chIndexFiles = index_sam(chDACFilteredFiles)
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
