@@ -350,9 +350,11 @@ process calcFragsLength {
 
   input:
   tuple val(sampleId),val(path_analysis),path(sortedBam),path (sampleBamIndex)
+  val(_)
 
   output:
   path("*fragment_sizes.txt")
+  tuple val(sampleId),path ("bamPEFragmentSize_mqc_versions.yml")
 
   exec:
   path_sample_frags = path_analysis + "/frag/" + sampleId
@@ -360,6 +362,11 @@ process calcFragsLength {
   script:
   """
   bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt
+
+  cat <<-END_VERSIONS > bamPEFragmentSize_mqc_versions.yml
+    "${task.process}":
+    deeptools: \$(bamPEFragmentSize --version | sed -e "s/bamPEFragmentSize //g")
+  END_VERSIONS
   """
 }
 
@@ -372,9 +379,10 @@ process fragLenHist {
 
     input:
     path raw_fragments
+    val (_)
     each path (frag_len_header_multiqc)
     each path (chCalcFragHist)
-   tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
+    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 
     exec:
     path_sample_frags = path_analysis + "/frag/"
@@ -698,8 +706,8 @@ workflow {
     chDedupFiles = dedup(chFilteredFiles) // yaml ready
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) // yaml ready
 
-    chIndexFiles = index_sam(chDACFilteredFiles)
-    chFragmentsSize = calcFragsLength(chIndexFiles).collect()
+    chIndexFiles = index_sam(chDACFilteredFiles) // yaml ready
+    chFragmentsSize = calcFragsLength(chIndexFiles).collect() // yaml ready
 
     //Verificar se é necessário pois o deepTools já faz isso
     chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)

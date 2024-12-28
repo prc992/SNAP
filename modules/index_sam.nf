@@ -16,9 +16,15 @@ process index_sam {
 
   output:
   tuple val(sampleId),val(path_analysis),path(sampleBam),path ('*.bai')
+  tuple val(sampleId),path ("index_sam_mqc_versions.yml")
 
   script:
   """
   samtools index -@ $task.cpus $sampleBam
+
+  cat <<-END_VERSIONS > index_sam_mqc_versions.yml
+  "${task.process}":
+      samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+  END_VERSIONS
   """
 }
