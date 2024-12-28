@@ -9,6 +9,7 @@ process lenght_fragment_dist_step1{
 
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam)
+  val(_)
 
   exec:
   path_sample_frag = path_analysis + "/frag/" + sampleId
