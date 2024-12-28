@@ -349,8 +349,7 @@ process calcFragsLength {
   publishDir "$path_sample_frags", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sortedBam),path (sampleBamIndex)
-  val(_)
+  tuple val(sampleId),val(path_analysis),path(sortedBam),path (sampleBamIndex),val(_)
 
   output:
   tuple path("*fragment_sizes.txt"), path ("bamPEFragmentSize_mqc_versions.yml")
