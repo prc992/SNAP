@@ -9,6 +9,7 @@ process enrichment {
 
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam)
+  val(_)
   each path (chEnrichmentScript)
 
 
