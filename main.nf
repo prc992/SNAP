@@ -353,8 +353,7 @@ process calcFragsLength {
   val(_)
 
   output:
-  path("*fragment_sizes.txt")
-  tuple val(sampleId),path ("bamPEFragmentSize_mqc_versions.yml")
+  tuple path("*fragment_sizes.txt"), path ("bamPEFragmentSize_mqc_versions.yml")
 
   exec:
   path_sample_frags = path_analysis + "/frag/" + sampleId
@@ -378,8 +377,7 @@ process fragLenHist {
     publishDir "$path_sample_frags", mode : 'copy'
 
     input:
-    path raw_fragments
-    val (_)
+    path raw_fragments, val (_)
     each path (frag_len_header_multiqc)
     each path (chCalcFragHist)
     tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
