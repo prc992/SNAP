@@ -710,7 +710,7 @@ workflow {
     chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
     //************************************************************************
 
-    chPeakFiles = peak_bed_graph(chDACFilteredFiles)
+    chPeakFiles = peak_bed_graph(chDACFilteredFiles) // yaml ready
 
     
     uropa(chPeakFiles,chGeneAnotation)
