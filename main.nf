@@ -376,7 +376,7 @@ process fragLenHist {
     publishDir "$path_sample_frags", mode : 'copy'
 
     input:
-    tuple path (raw_fragments), val (_)
+    tuple path (raw_fragments)
     each path (frag_len_header_multiqc)
     each path (chCalcFragHist)
     tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
