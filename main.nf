@@ -713,7 +713,7 @@ workflow {
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) // yaml ready
 
     
-    uropa(chPeakFiles,chGeneAnotation)
+    uropa(chPeakFiles,chGeneAnotation) // yaml ready
     chBedFiles = bam_to_bed(chDACFilteredFiles)
 
     chUniqueFrags = unique_frags(chBedFiles).collect()

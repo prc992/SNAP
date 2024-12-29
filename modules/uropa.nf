@@ -26,5 +26,10 @@ process uropa {
   echo '"bed": "$narrowPeakFile"}' >> cfchip.json
 
   uropa -i cfchip.json -t $task.cpus --summary
+
+  cat <<-END_VERSIONS > uropa_mqc_versions.yml
+    "${task.process}":
+        uropa: \$(uropa --version | sed -e "s/uropa //g")
+  END_VERSIONS
   """
 }
