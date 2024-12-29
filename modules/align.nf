@@ -8,7 +8,7 @@ process align {
   publishDir "$path_sample_align", mode: 'copy'
 
   input:
-  tuple val(sampleId),val(path),path('*.fq.gz'),val(_),val(_)
+  tuple val(sampleId),val(path_analysis),path('*.fq.gz'),val(_),val(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
