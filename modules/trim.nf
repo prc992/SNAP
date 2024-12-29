@@ -14,9 +14,7 @@ process trim {
   path_sample_trim = path + "/trim/" + sampleId
 
   output:
-  tuple val(sampleId),val(path),path('*.fq.gz')
-  tuple val(sampleId),path("*report.txt")
-  tuple val(sampleId),path ("trim_mqc_versions.yml")
+  tuple val(sampleId),val(path),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")
 
   script:
   """
