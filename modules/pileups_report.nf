@@ -11,7 +11,7 @@ process pileups_report{
   publishDir "$path_sample_pile_ups", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path (control_lambda_bdg_bw),path (treat_pileup_bdg_bw)
+  tuple val(sampleId),val(path_analysis),path (control_lambda_bdg_bw),path (treat_pileup_bdg_bw),val(_)
   each path (chChromSizes)
   each path (chBED)
   each path (chRPileups)
