@@ -363,7 +363,7 @@ process calcFragsLength {
 
   cat <<-END_VERSIONS > bamPEFragmentSize_mqc_versions.yml
     "${task.process}":
-    deeptools: \$(bamPEFragmentSize --version | sed -e "s/bamPEFragmentSize //g")
+    bamPEFragmentSize: \$(bamPEFragmentSize --version | sed -e "s/bamPEFragmentSize //g")
   END_VERSIONS
   """
 }
