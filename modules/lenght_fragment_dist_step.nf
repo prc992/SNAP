@@ -8,8 +8,7 @@ process lenght_fragment_dist_step1{
   publishDir "$path_sample_frag", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam)
-  val(_)
+  tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
 
   exec:
   path_sample_frag = path_analysis + "/frag/" + sampleId
