@@ -696,23 +696,22 @@ workflow {
     chDedupFiles = dedup(chFilteredFiles) 
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
 
-    chIndexFiles = index_sam(chDACFilteredFiles) // yaml ready
+    chIndexFiles = index_sam(chDACFilteredFiles)
 
 
     //Verificar se é necessário pois o deepTools já faz isso
-    chFragmentsSize = calcFragsLength(chIndexFiles) // yaml ready
+    chFragmentsSize = calcFragsLength(chIndexFiles)
     chFragmentAllFiles = chFragmentsSize.collect()
     chFragstxtFiles = chFragmentAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.txt') }}
     chfragHist = fragLenHist(chFragstxtFiles,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
     //************************************************************************
 
-    chPeakFiles = peak_bed_graph(chDACFilteredFiles) // yaml ready
+    chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
 
     
-    uropa(chPeakFiles,chGeneAnotation) // yaml ready
-    chBedFiles = bam_to_bed(chDACFilteredFiles) // yaml ready
-
+    uropa(chPeakFiles,chGeneAnotation) 
+    chBedFiles = bam_to_bed(chDACFilteredFiles) 
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chPeakAllFiles = chPeakFiles.collect()
 
@@ -727,7 +726,7 @@ workflow {
     chFragAndPeaksFilesReport = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks,chSampleInfo)
     //****************************************************************************
 
-    // SNP Fingerprint and plot process // yaml ready
+    // SNP Fingerprint and plot process 
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect() 
     chSnpFingerprintCompleteAllfiles = chSnpFingerprintComplete.collect()
     // Filter the vcf files
@@ -742,7 +741,7 @@ workflow {
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
 
-    //Verificar se é necessário pois o deepTools já faz isso // yaml ready
+    //Verificar se é necessário pois o deepTools já faz isso 
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
     lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
     //************************************************************************
@@ -764,7 +763,7 @@ workflow {
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
-    //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)*/
+    pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
 
 
     /*//Collect all files output and the pass to me program that will merge then
