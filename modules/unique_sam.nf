@@ -8,8 +8,7 @@ process unique_sam {
   publishDir "$path_sample_align", mode : 'copy'
   
   input:
-  tuple val(sampleId),val(path_analysis),path(sortedBam)
-  val(_)
+  tuple val(sampleId),val(path_analysis),path(sortedBam),val(_)
 
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam')
