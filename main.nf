@@ -689,7 +689,7 @@ workflow {
 
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
 
-    fastqc(chSampleInfo) // yaml ready
+    fastqc(chSampleInfo) 
     chTrimFiles = trim(chSampleInfo) // yaml ready
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) // yaml ready
     chSortedFiles = sort_bam(chAlignFiles) // yaml ready
