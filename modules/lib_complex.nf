@@ -8,12 +8,10 @@ process lib_complex {
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sortedBam)
-  val(_)
+  tuple val(sampleId),val(path_analysis),path(sortedBam),val(_)
 
   output:
-  path("*.metrics.txt")
-  tuple val(sampleId),path ("picard_EstimateLibraryComplexity_mqc_versions.yml")
+  tuple val(sampleId),path("*.metrics.txt"),path ("picard_EstimateLibraryComplexity_mqc_versions.yml")
 
   exec:
   String strLib = sampleId + '.LibComplexity.metrics.txt'

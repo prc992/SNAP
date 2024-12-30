@@ -13,8 +13,7 @@ process align {
   each path (genomeIndexFiles)
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bam')
-  tuple val(sampleId),path ("align_mqc_versions.yml")
+  tuple val(sampleId),val(path_analysis),path('*.bam'),path ("align_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.bam'

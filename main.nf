@@ -690,10 +690,10 @@ workflow {
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
 
     fastqc(chSampleInfo) 
-    chTrimFiles = trim(chSampleInfo) // yaml ready
-    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) // yaml ready
-    chSortedFiles = sort_bam(chAlignFiles) // yaml ready
-    lib_complex(chSortedFiles) // yaml ready
+    chTrimFiles = trim(chSampleInfo)
+    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
+    chSortedFiles = sort_bam(chAlignFiles)
+    lib_complex(chSortedFiles) 
     lib_complex_preseq(chSortedFiles) // yaml ready
     chUniqueFiles = unique_sam(chSortedFiles) // yaml ready
     chStatsSamtools = createStatsSamtools(chUniqueFiles) // yaml ready
