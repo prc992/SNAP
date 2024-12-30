@@ -29,7 +29,7 @@ process uropa {
 
   cat <<-END_VERSIONS > uropa_mqc_versions.yml
     "${task.process}":
-        uropa: \$(uropa --version | sed -e "s/uropa //g")
+        uropa: \$(uropa --version)
   END_VERSIONS
   """
 }

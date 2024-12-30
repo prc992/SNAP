@@ -6,7 +6,7 @@ process unique_frags {
   publishDir "$path_sample_peaks", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path (sampleBed)
+  tuple val(sampleId),val(path_analysis),path (sampleBed),val(_)
 
   output:
   path ('*.csv')
