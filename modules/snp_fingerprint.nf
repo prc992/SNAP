@@ -25,8 +25,8 @@ process snp_fingerprint {
   bcftools mpileup --threads $task.cpus -Ou -R $snps_ref -f $file_fa $sampleBam | bcftools call --threads $task.cpus -c | bgzip --threads $task.cpus > $strVCFgz
 
   cat <<-END_VERSIONS > snp_fingerprint_mqc_versions.yml
-    "${task.process}":
-        bcftools: \$(bcftools --version | sed -e "s/bcftools v//g")
+  "${task.process}":
+    bcftools: \$(bcftools --version | sed -n '1s/bcftools //p')
   END_VERSIONS
   """
 
