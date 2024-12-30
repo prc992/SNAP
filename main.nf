@@ -730,24 +730,22 @@ workflow {
     chFragAndPeaksFilesReport = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks,chSampleInfo)
     //****************************************************************************
 
-    // Processo de SNP Fingerprint
-    chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect() // yaml ready
+    // SNP Fingerprint and plot process // yaml ready
+    chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect() 
     chSnpFingerprintCompleteAllfiles = chSnpFingerprintComplete.collect()
     // Filter the vcf files
     chVCFGZFiles = chSnpFingerprintCompleteAllfiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.vcf.gz') }}
-
     chFootPrintPDF = snp_footprint_clustering(chVCFGZFiles,chRSNPFootprint,chSampleInfo)
 
     
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment,chSampleInfo).collect()
-    //chEnrichmentFilesReport.subscribe { collectedFiles ->println "Arquivos coletados enrichmentReport: $collectedFiles"}
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
-    //chMergedEnrichmentReport.subscribe { collectedFiles ->println "Arquivos coletados MergedEnrichment: $collectedFiles"}
+    
 
-    //Verificar se é necessário pois o deepTools já faz isso
+    //Verificar se é necessário pois o deepTools já faz isso // yaml ready
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
     lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
     //************************************************************************

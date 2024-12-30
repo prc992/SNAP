@@ -15,7 +15,7 @@ process lenght_fragment_dist_step1{
   path_sample_frag = path_analysis + "/frag/" + sampleId
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.txt')
+  tuple val(sampleId),val(path_analysis),path('*.txt'),path ("lenght_fragment_dist_mqc_versions.yml")
 
   exec:
   strtxt = sampleId + '_fragment_lengths.txt'
@@ -23,6 +23,11 @@ process lenght_fragment_dist_step1{
   script:
   """
   samtools view --threads $task.cpus $sampleBam | cut -f 9 | awk ' \$1 <= 1000 && \$1 > 0 ' > $strtxt
+
+  cat <<-END_VERSIONS > lenght_fragment_dist_mqc_versions.yml
+  "${task.process}":
+      samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+  END_VERSIONS
   """
 
 }
@@ -40,7 +45,7 @@ process lenght_fragment_dist_step2{
   path ('*.png')
 
   input:
-  tuple val(sampleId),val(path_analysis),path(fragLeng)
+  tuple val(sampleId),val(path_analysis),path(fragLeng),val(_)
   each path (chRfrag_plotFragDist)
 
   exec:
