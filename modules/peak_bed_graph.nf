@@ -8,8 +8,7 @@ process peak_bed_graph{
   publishDir "$path_sample_peaks", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam)
-  val(_)
+  tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
 
   output:
   tuple val(sampleId),val(path_analysis),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls"),path("macs2_mqc_versions.yml")
