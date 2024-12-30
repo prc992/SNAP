@@ -14,9 +14,7 @@ process fastqc {
   path_sample_fastqc = path + "/fastqc/" + sampleId
 
   output:
-  path ('*_fastqc.html')
-  path ('*_fastqc.zip')
-  tuple val(sampleId),path ("fastqc_mqc_versions.yml")
+  tuple val(sampleId), path ('*_fastqc.html'),path ('*_fastqc.zip'),path ("fastqc_mqc_versions.yml")
   
   script:
   """

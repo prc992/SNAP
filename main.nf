@@ -637,7 +637,6 @@ workflow {
 
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
-    //chSNPS_ref = Channel.fromPath("$params.snps_ref")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
     chMultiQCFragPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_peaks_header")
@@ -647,24 +646,22 @@ workflow {
     """
     mkdir -p ${projectDir}/ref_files/genome
     """.execute().waitFor()
-
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
 
+    // Read the GenomePaths spreadsheet and filter the row that matches the genome parameter
     chGenomesSheet = Channel.fromPath(params.genomeInfoPaths)
-
     chGenomesInfo = chGenomesSheet \
         | splitCsv(header:true) \
         | filter { row -> row.Genome == params.genome } \
         | ifEmpty { error "No matching Genome found in the GenomePaths spreadsheet. Exiting workflow." }
         | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }
-
     // Destructure and store each column into separate variables
     chGenomesInfo
         .map { genome, faGZFile, geneAnnotation, dacList, snp ->
             [genome, faGZFile, geneAnnotation, dacList, snp]
         }
 
-
+    // Download the genome, gene annotation, and DAC file
     chGenome = downloadGenome(chGenomesInfo,refDir)
     chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir)
@@ -684,13 +681,14 @@ workflow {
             params.enrichment_mark ?: 'no_enrichment_mark'
         )
     }
-    
+
+    // Read the SampleSheet provided by the user or created by the pipeline
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
 
-
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
+
     fastqc(chSampleInfo) // yaml ready
     chTrimFiles = trim(chSampleInfo) // yaml ready
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) // yaml ready
@@ -710,9 +708,9 @@ workflow {
     //Verificar se é necessário pois o deepTools já faz isso
     chFragmentsSize = calcFragsLength(chIndexFiles) // yaml ready
     chFragmentAllFiles = chFragmentsSize.collect()
-    chFragsFiles = chFragmentAllFiles.map { collectedFiles ->
+    chFragstxtFiles = chFragmentAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.txt') }}
-    chfragHist = fragLenHist(chFragsFiles,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
+    chfragHist = fragLenHist(chFragstxtFiles,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) // yaml ready
