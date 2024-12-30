@@ -376,7 +376,7 @@ process fragLenHist {
     publishDir "$path_sample_frags", mode : 'copy'
 
     input:
-    tuple path (raw_fragments)
+    path (raw_fragments)
     each path (frag_len_header_multiqc)
     each path (chCalcFragHist)
     tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
@@ -704,10 +704,14 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) // yaml ready
 
     chIndexFiles = index_sam(chDACFilteredFiles) // yaml ready
-    chFragmentsSize = calcFragsLength(chIndexFiles).collect() // yaml ready
+
 
     //Verificar se é necessário pois o deepTools já faz isso
-    chfragHist = fragLenHist(chFragmentsSize,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
+    chFragmentsSize = calcFragsLength(chIndexFiles) // yaml ready
+    chFragmentAllFiles = chFragmentsSize.collect()
+    chFragsFiles = chFragmentAllFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.txt') }}
+    chfragHist = fragLenHist(chFragsFiles,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) // yaml ready
