@@ -18,11 +18,16 @@ process snp_fingerprint {
   strVCFgz = sampleId + '.vcf.gz'
 
   output:
-  path("*.vcf.gz")
+  tuple val(sampleId),path("*.vcf.gz"),path ("snp_fingerprint_mqc_versions.yml")
 
   script:
   """
   bcftools mpileup --threads $task.cpus -Ou -R $snps_ref -f $file_fa $sampleBam | bcftools call --threads $task.cpus -c | bgzip --threads $task.cpus > $strVCFgz
+
+  cat <<-END_VERSIONS > snp_fingerprint_mqc_versions.yml
+    "${task.process}":
+        bcftools: \$(bcftools --version | sed -e "s/bcftools v//g")
+  END_VERSIONS
   """
 
 }

@@ -8,7 +8,7 @@ process snp_footprint_clustering{
   publishDir "$path_sample_snp_footprint", mode : 'copy'
 
   input:
-  path(vcfGzFiles)
+  tuple val(sampleId),path(vcfGzFiles),val (_)
   path (chRSNPFootprint)
   tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 
