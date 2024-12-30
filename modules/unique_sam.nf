@@ -11,8 +11,7 @@ process unique_sam {
   tuple val(sampleId),val(path_analysis),path(sortedBam),val(_)
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bam')
-  tuple val(sampleId),path ("samtools_unique_mqc_versions.yml")
+  tuple val(sampleId),val(path_analysis),path('*.bam'),path ("samtools_unique_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.unique.sorted.bam'

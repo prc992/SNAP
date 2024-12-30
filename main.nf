@@ -214,16 +214,13 @@ process createStatsSamtools {
     tag "Sample - $sampleId" 
 
     input:
-    tuple val(sampleId),val(path_analysis),path(sampleBam)
-    val(_)
+    tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
 
     exec:
     path_sample_align = path_analysis + "/align/" + sampleId
 
     output:
-    path ('*.stats')
-    path ('*.idxstats')
-    path ('*.flagstat')
+    tuple val(sampleId),path ('*.stats'),path ('*.idxstats'),path ('*.flagstat'),path ("samtools_stats_mqc_versions.yml")
 
     script:
     """
@@ -235,6 +232,11 @@ process createStatsSamtools {
 
     # Generate flagstat file
     samtools flagstat $sampleBam > ${sampleId}.notFiltered.flagstat
+
+    cat <<-END_VERSIONS > samtools_stats_mqc_versions.yml
+    "${task.process}":
+      samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+    END_VERSIONS
     """
 }
 
@@ -246,17 +248,13 @@ process createStatsSamtoolsfiltered {
     tag "Sample - $sampleId" 
 
     input:
-    tuple val(sampleId),val(path_analysis),path(sampleBam)
-    val(_)
+    tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
 
     exec:
     path_sample_align = path_analysis + "/align/" + sampleId
 
     output:
-    path ('*.stats')
-    path ('*.idxstats')
-    path ('*.flagstat')
-    path ("samtools_stats_mqc_versions.yml")
+    tuple val(sampleId),path ('*.stats'),path ('*.idxstats'),path ('*.flagstat'),path ("samtools_stats_filtered_mqc_versions.yml")
 
     script:
     """
@@ -269,7 +267,7 @@ process createStatsSamtoolsfiltered {
     # Generate flagstat file
     samtools flagstat $sampleBam > ${sampleId}.AfterFilter.flagstat
 
-    cat <<-END_VERSIONS > samtools_stats_mqc_versions.yml
+    cat <<-END_VERSIONS > samtools_stats_filtered_mqc_versions.yml
     "${task.process}":
       samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
     END_VERSIONS
@@ -284,16 +282,14 @@ process quality_filter {
     tag "Sample - $sampleId" 
 
     input:
-    tuple val(sampleId),val(path_analysis),path(sampleBam)
-    val(_)
+    tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
 
     exec:
     String strBam = sampleId + '.filtered.unique.sorted.bam'
     path_sample_align = path_analysis + "/align/" + sampleId
 
     output:
-    tuple val(sampleId),val(path_analysis),path('*.bam')
-    tuple val(sampleId),path ("samtools_QualityFilter_mqc_versions.yml")
+    tuple val(sampleId),val(path_analysis),path('*.bam'),path ("samtools_QualityFilter_mqc_versions.yml")
 
     script:
     """
@@ -319,8 +315,7 @@ process lib_complex_preseq {
   tuple val(sampleId),val(path_analysis),path(sortedBam),val(_)
 
   output:
-  path("*.lc_extrap.txt")
-  tuple val(sampleId),path ("preseq_mqc_versions.yml")
+  tuple val(sampleId),path("*.lc_extrap.txt"),path ("preseq_mqc_versions.yml")
 
 
   exec:
@@ -693,13 +688,13 @@ workflow {
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles) 
-    lib_complex_preseq(chSortedFiles) // yaml ready
-    chUniqueFiles = unique_sam(chSortedFiles) // yaml ready
-    chStatsSamtools = createStatsSamtools(chUniqueFiles) // yaml ready
-    chFilteredFiles = quality_filter(chUniqueFiles) // yaml ready
-    chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) // yaml ready
-    chDedupFiles = dedup(chFilteredFiles) // yaml ready
-    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) // yaml ready
+    lib_complex_preseq(chSortedFiles) 
+    chUniqueFiles = unique_sam(chSortedFiles) 
+    chStatsSamtools = createStatsSamtools(chUniqueFiles)
+    chFilteredFiles = quality_filter(chUniqueFiles) 
+    chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) 
+    chDedupFiles = dedup(chFilteredFiles) 
+    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
 
     chIndexFiles = index_sam(chDACFilteredFiles) // yaml ready
 

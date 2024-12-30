@@ -8,8 +8,7 @@ process dac_exclusion {
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(dedupBam),val(_)
-  val(_)
+  tuple val(sampleId),val(path_analysis),path(dedupBam),val(_),val(_)
   each path (sampleDAC)
 
   exec:
@@ -17,8 +16,7 @@ process dac_exclusion {
   strBam = sampleId + '.dac_filtered.dedup.unique.sorted.bam'
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bam')
-  tuple val(sampleId),path ("dac_exclusion_mqc_versions.yml")
+  tuple val(sampleId),val(path_analysis),path('*.bam'),path ("dac_exclusion_mqc_versions.yml")
 
   script:
   """

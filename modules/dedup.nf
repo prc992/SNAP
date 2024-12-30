@@ -8,8 +8,7 @@ process dedup {
   publishDir "$path_sample_align", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(uniqueBam)
-  val(_)
+  tuple val(sampleId),val(path_analysis),path(uniqueBam),val(_)
 
   exec:
   path_sample_align = path_analysis + "/align/" + sampleId
@@ -17,9 +16,8 @@ process dedup {
   strTxt = sampleId + '-MarkDuplicates.metrics.txt'
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bam'),path("*.txt")
-  tuple val(sampleId),path ("picard_MarkDuplicates_mqc_versions.yml")
-
+  tuple val(sampleId),val(path_analysis),path('*.bam'),path("*.txt"),path ("picard_MarkDuplicates_mqc_versions.yml")
+  
   script:
   """
   picard MarkDuplicates \\
