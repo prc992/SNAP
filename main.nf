@@ -30,6 +30,7 @@ process multiqc {
     tag "All Samples" 
     
     input:
+    tuple val(_),val(_),val (_),val (_),path (bedGraphToBigWig_mqc_versions)
     val(_)
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
     path (chFootPrintPDF)
@@ -767,7 +768,7 @@ workflow {
     //chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
     // RETIRAR ##########################
 
-    multiqc(chSnpFingerprintComplete,chfragHist,\
+    multiqc(chBWFiles,chSnpFingerprintComplete,chfragHist,\
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
