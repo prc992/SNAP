@@ -629,7 +629,7 @@ process igv_reports {
     label 'high_cpu_high_mem'
     tag "All Samples"
 
-    publishDir "$path_sample_frags", mode : 'copy'
+    publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
     path (bedgraphs)
