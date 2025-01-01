@@ -594,6 +594,35 @@ process downloadGenome {
 }
 
 
+process bam_to_bedgraph {
+  label 'med_cpu_med_mem'
+
+  //Docker Image
+  container ='quay.io/biocontainers/bedtools:2.30.0--hc088bd4_0'
+
+  tag "Sample - $sampleId"  
+  publishDir "$path_sample_peaks", mode : 'copy'
+
+  input:
+  tuple val(sampleId),val(path_analysis),path(sampleBam),path (indexBam),path ("bam_to_bedgraph_mqc_versions.yml")
+  
+  exec:
+  path_sample_peaks = path_analysis + "/peaks/" + sampleId
+  strWig = sampleId + '.wig'
+
+  output:
+  tuple val(sampleId),val(path_analysis),path('*.wig'),path ("bam_to_bedgraph_mqc_versions.yml")
+
+  script:
+  """
+  bedtools genomecov -ibam $sampleBam -bg > $strWig
+
+  cat <<-END_VERSIONS > bam_to_bedgraph_mqc_versions.yml
+    "${task.process}":
+        bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
+  END_VERSIONS
+  """
+}
 
 workflow {
     // Static information about the pipeline
@@ -695,9 +724,13 @@ workflow {
     chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) 
     chDedupFiles = dedup(chFilteredFiles) 
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
-
     chIndexFiles = index_sam(chDACFilteredFiles)
+    
+    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
+    chAllBedGraphFiles = chBedGraphFiles.collect()
+    chAllBedGraphFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
 
+    /*
 
     //Verificar se é necessário pois o deepTools já faz isso
     chFragmentsSize = calcFragsLength(chIndexFiles)
@@ -766,7 +799,7 @@ workflow {
     pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
 
 
-    /*//Collect all files output and the pass to me program that will merge then
+    ///Collect all files output and the pass to me program that will merge then
     //chAllFiles = chBWFiles.collectFile()
     //pileups_report_comp(chSampleDirPileUps,chChromSizes,chAllFiles,chPileUpBED,chRComparison)*/
 }
