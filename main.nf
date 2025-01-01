@@ -605,7 +605,7 @@ process bam_to_bedgraph {
 
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam),path (indexBam),path ("bam_to_bedgraph_mqc_versions.yml")
-  
+
   exec:
   path_sample_peaks = path_analysis + "/peaks/" + sampleId
   strbedgraph = sampleId + '.bedgraph'
@@ -753,7 +753,7 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    chBedGraphFiles = bam_to_bedgraph(chIndexFiles,chPileUpBED,chGenome,chGenomeIndex)
+    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chAllBedGraphFiles = chBedGraphFiles.collect()
     chIGVReport = igv_reports(chAllBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
 
