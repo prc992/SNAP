@@ -608,7 +608,7 @@ process bam_to_bedgraph {
   
   exec:
   path_sample_peaks = path_analysis + "/peaks/" + sampleId
-  strWig = sampleId + '.wig'
+  strWig = sampleId + '.bedgraph'
 
   output:
   tuple val(sampleId),val(path_analysis),path('*.wig'),path ("bam_to_bedgraph_mqc_versions.yml")
@@ -725,10 +725,12 @@ workflow {
     chDedupFiles = dedup(chFilteredFiles) 
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
-    
+
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chAllBedGraphFiles = chBedGraphFiles.collect()
-    chAllBedGraphFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+    chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
+    chOnlyBedGraphFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
 
     /*
 
