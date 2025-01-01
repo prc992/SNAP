@@ -755,11 +755,10 @@ workflow {
 
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chAllBedGraphFiles = chBedGraphFiles.collect()
-    chIGVReport = igv_reports(chAllBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
-
-    //chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
-    //collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
+    chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
     //chOnlyBedGraphFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+    chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
 
     /*
 
