@@ -608,14 +608,14 @@ process bam_to_bedgraph {
   
   exec:
   path_sample_peaks = path_analysis + "/peaks/" + sampleId
-  strWig = sampleId + '.bedgraph'
+  strbedgraph = sampleId + '.bedgraph'
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.wig'),path ("bam_to_bedgraph_mqc_versions.yml")
+  tuple val(sampleId),val(path_analysis),path('*.bedgraph'),path ("bam_to_bedgraph_mqc_versions.yml")
 
   script:
   """
-  bedtools genomecov -ibam $sampleBam -bg > $strWig
+  bedtools genomecov -ibam $sampleBam -bg > $strbedgraph
 
   cat <<-END_VERSIONS > bam_to_bedgraph_mqc_versions.yml
     "${task.process}":
