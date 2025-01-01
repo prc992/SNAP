@@ -624,6 +624,33 @@ process bam_to_bedgraph {
   """
 }
 
+process igv_reports {
+    container = 'staphb/igv-reports:1.12.0'
+    label 'high_cpu_high_mem'
+    tag "All Samples"
+
+    publishDir "$path_sample_frags", mode : 'copy'
+
+    input:
+    path (bedgraphs)
+    path (house_keeping_genes)
+    path (genomeFile)
+    path (genomeIndexFiles)
+    tuple val(_), val(_),val(path_analysis),val(_), val(_)
+
+    exec:
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
+    htmlFile = "IGV_housekeeping_genes_mqc.html"
+
+    output:
+    path ("IGV_housekeeping_genes_mqc.html")
+
+    script:
+    """
+    create_report $house_keeping_genes --fasta $genomeFile --tracks $bedgraphs --output $htmlFile
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -726,11 +753,13 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
+    chBedGraphFiles = bam_to_bedgraph(chIndexFiles,chPileUpBED,chGenome,chGenomeIndex)
     chAllBedGraphFiles = chBedGraphFiles.collect()
-    chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
-    chOnlyBedGraphFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
+    chIGVReport = igv_reports(chAllBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
+
+    //chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
+    //collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
+    //chOnlyBedGraphFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
 
     /*
 
