@@ -31,6 +31,7 @@ process multiqc {
     
     input:
     tuple val(_),val(_),val (_),val (_),path (bedGraphToBigWig_mqc_versions)
+    path (chIGVReport)
     val(_)
     tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
     path (chFootPrintPDF)
@@ -757,10 +758,7 @@ workflow {
     chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
-    //chOnlyBedGraphFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
     chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
-
-    /*
 
     //Verificar se é necessário pois o deepTools já faz isso
     chFragmentsSize = calcFragsLength(chIndexFiles)
@@ -822,11 +820,11 @@ workflow {
     //chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
     // RETIRAR ##########################
 
-    multiqc(chBWFiles,chSnpFingerprintComplete,chfragHist,\
+    multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
-    pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
+    //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
 
 
     ///Collect all files output and the pass to me program that will merge then
