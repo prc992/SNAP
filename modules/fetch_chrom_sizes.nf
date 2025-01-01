@@ -18,12 +18,24 @@ process fetch_chrom_sizes{
   def chromSizeFile = "${genome}.chrom.sizes"
   """
   if [ ! -f ${refDir}/${chromSizeFile} ]; then
+    echo "Downloading chrom sizes for $genome using fetchChromSizes..."
+    fetchChromSizes $genome > ${refDir}/${chromSizeFile}
+  else
+    echo "File ${refDir}/${chromSizeFile} already exists. Skipping download."
+  fi
+
+  if [ ! -L ${chromSizeFile} ]; then
+    ln -s ${refDir}/${chromSizeFile} ${chromSizeFile}
+  else
+    echo "Symbolic link ${chromSizeFile} already exists. Skipping link creation."
+  fi
+  """
+
+  /*if [ ! -f ${refDir}/${chromSizeFile} ]; then
     fetchChromSizes $genome > ${chromSizeFile}
   else
     echo "File ${refDir}/${chromSizeFile} already exists. Skipping download."
   fi
   
-  ln -s ${refDir}/${chromSizeFile} ${chromSizeFile}
-  
-  """
+  ln -s ${refDir}/${chromSizeFile} ${chromSizeFile}*/
 }
