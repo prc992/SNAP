@@ -38,6 +38,7 @@ process multiqc {
     path (chFragAndPeaks)
     path (chEnrichmentFiles)
     path (configFile)
+    path (chMultiQCHousekeepingReport)
     tuple val(sampleId), val(enrichment_mark),path(path_analysis),val(read1), val(read2)
 
     exec:
@@ -641,10 +642,10 @@ process igv_reports {
 
     exec:
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
-    htmlFile = "IGV_housekeeping_genes_mqc.html"
+    htmlFile = "igv_housekeeping_genes_report.html"
 
     output:
-    path ("IGV_housekeeping_genes_mqc.html")
+    path ("igv_housekeeping_genes_report.html")
 
     script:
     """
@@ -689,6 +690,7 @@ workflow {
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
+    chMultiQCHousekeepingReport = Channel.fromPath("$params.multiqc_housekeeping_report")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
     chMultiQCFragPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
@@ -821,7 +823,7 @@ workflow {
     // RETIRAR ##########################
 
     multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
     
     // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
     //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
