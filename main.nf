@@ -43,6 +43,19 @@ include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
 include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
 include {igv_reports} from './modules/igv_reports'
 
+process del_yaml {
+    label 'low_cpu_low_mem'
+    tag "Deleting YAML files"
+ 
+    input:
+    tuple val(_),val(path_analysis),val(_)
+
+    script:
+    """
+    find $path_analysis -type f -name '*mqc_versions.yml' -delete
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -135,6 +148,8 @@ workflow {
     fastqc(chSampleInfo) 
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
+    del_yaml(chAlignFiles)
+
     /*chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles) 
     lib_complex_preseq(chSortedFiles) 
