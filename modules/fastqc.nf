@@ -1,8 +1,7 @@
 process fastqc {
   label 'med_cpu_med_mem'
-    
-  //Docker Image
-  container = 'quay.io/biocontainers/fastqc:0.11.9--0'
+
+  container = params.containers.fastqc
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_fastqc", mode : 'copy'

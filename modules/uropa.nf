@@ -1,7 +1,6 @@
 process uropa {
   label 'process_medium'
-  //Docker Image
-  container = "quay.io/biocontainers/uropa:4.0.3--pyhdfd78af_0"
+  container = params.containers.uropa
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_peaks", mode : 'copy'

@@ -1,8 +1,7 @@
 process index_sam {
   label 'low_cpu_low_mem'
 
-  //Docker Image
-  container ='quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+  container = params.containers.samtools
 
   tag "Sample - $sampleId"   
   publishDir "$path_sample_align", mode : 'copy'

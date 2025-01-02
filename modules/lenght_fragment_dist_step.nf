@@ -1,8 +1,7 @@
 process lenght_fragment_dist_step1{
   label 'process_medium'
 
-  //Docker Image
-  container ='quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+  container = params.containers.samtools
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_frag", mode : 'copy'
@@ -34,8 +33,7 @@ process lenght_fragment_dist_step1{
 process lenght_fragment_dist_step2{
   label 'process_medium'
 
-  //Docker Image
-  container ='pegi3s/r_data-analysis'
+  container = params.containers.r_data_analysis
 
   tag "$sampleId" 
   publishDir "$path_sample_frag", mode : 'copy'

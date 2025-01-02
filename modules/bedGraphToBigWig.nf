@@ -1,10 +1,6 @@
 process bedGraphToBigWig {
   label 'process_medium'
-
-  //Docker Image
-  // WARN: Version information not provided by tool on CLI. Please update version string below when bumping container versions.
-  container = "quay.io/biocontainers/ucsc-bedgraphtobigwig:445--h954228d_0"
-  //container = "quay.io/biocontainers/ucsc-bedgraphtobigwig:377--h446ed27_1"
+  container = params.containers.bedgraphtobigwig
 
 
   tag "Sample - $sampleId"  
@@ -26,14 +22,13 @@ process bedGraphToBigWig {
   tuple val(sampleId),val(path_analysis),path ("*control_lambda.bdg.bw"),path ("*treat_pileup.bdg.bw"),path ("bedGraphToBigWig_mqc_versions.yml")
 
   script:
-  def VERSION = '445' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
   """
   bedGraphToBigWig $bdgFile1 $RefGenSizes $bdgFile1_out &&
   bedGraphToBigWig $bdgFile2 $RefGenSizes $bdgFile2_out
 
   cat <<-END_VERSIONS > bedGraphToBigWig_mqc_versions.yml
     "${task.process}":
-        ucsc: $VERSION
+        ucsc: $params.containers.bedgraphtobigwig_version
   END_VERSIONS
   """
 

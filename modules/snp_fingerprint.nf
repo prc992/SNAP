@@ -2,7 +2,7 @@ process snp_fingerprint {
   label 'process_medium'
   
   //Docker Image
-  container = 'quay.io/mcrotti1/bcftools'
+  container = params.containers.bcftools
 
   tag "Sample - $sampleId" 
   publishDir "$path_sample_snp_fingerprint", mode : 'copy'

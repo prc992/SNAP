@@ -1,8 +1,6 @@
 process lib_complex {
   label 'med_cpu_high_mem'
-
-  //Docker Image
-  container = "quay.io/biocontainers/picard:2.27.4--hdfd78af_0"
+  container = params.containers.picard
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_align", mode : 'copy'
