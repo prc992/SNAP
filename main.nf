@@ -50,16 +50,11 @@ process del_yaml {
     input:
     tuple val(_), val(path_analysis), val(_)
 
-    publishDir "${path_analysis}/software_versions", mode: 'move'
-
-    output:
-    path "${path_analysis}/software_versions/*" 
-
     script:
     """
     mkdir -p ${path_analysis}/software_versions
     echo "Moving mqc_versions.yml files to ${path_analysis}/software_versions"
-    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} ${path_analysis}/software_versions \;
+    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} ${path_analysis}/software_versions/ \;
     """
 }
 
