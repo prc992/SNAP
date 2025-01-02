@@ -696,16 +696,8 @@ workflow {
     chFootPrintPDF = snp_footprint_clustering(chVCFGZFiles,chRSNPFootprint,chSampleInfo)
 
     //ENRICHMENT      ***************************************************
-    chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript)
-    chEnrichmentAllFilesCSV = chEnrichmentFilesCSV.collect()
-    chEnrichmentAllFilesCSV.subscribe { collectedFiles ->
-        println "Collected enrichment files: ${collectedFiles}"
-        }
-    /*
-
-    chOnlyEnrichmentFilesCSV = chEnrichmentAllFilesCSV.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.csv') }} // Filter the csv files
-    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chOnlyEnrichmentFilesCSV,chReportEnrichment).collect()
+    chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
+    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
 
