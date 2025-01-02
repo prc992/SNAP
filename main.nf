@@ -53,7 +53,7 @@ process del_yaml {
     publishDir "${path_analysis}/software_versions", mode: 'move'
 
     output:
-    path "${path_analysis}/software_versions/*" into yaml_files_channel
+    path "${path_analysis}/software_versions/*" 
 
     script:
     """
