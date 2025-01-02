@@ -51,7 +51,7 @@ process del_yaml {
     tuple val(_),val(path_analysis),val(_)
 
     exec:
-    path_soft_versions = path_analysis + "/software_versions/"
+    String path_soft_versions = path_analysis + "/software_versions/"
 
     script:
     """
