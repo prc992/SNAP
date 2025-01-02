@@ -25,7 +25,7 @@ include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
 process multiqc {
     label 'low_cpu_low_mem'
-    container = 'quay.io/biocontainers/multiqc:1.25.2--pyhdfd78af_0'
+    container = params.containers.multiqc 
     publishDir "$path_sample_multiqc", mode : 'copy'
     tag "All Samples" 
     
@@ -468,7 +468,7 @@ process downloadGenome {
     tag "Dowloading - $genome" 
     //publishDir "$genomeOut", mode : 'copy'
 
-    container = "quay.io/biocontainers/wget:1.21.4"
+    container = params.containers.wget
     
     exec:
     genomeOut = refDir
@@ -617,7 +617,7 @@ workflow {
         }
 
     // Download the genome, gene annotation, and DAC file
-    chGenome = downloadGenome(chGenomesInfo,refDir)
+    chGenome = downloadGenome(chGenomesInfo,refDir)/*
     chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir)
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
@@ -709,6 +709,6 @@ workflow {
 
     //Final Report
     multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)*/
 }
 
