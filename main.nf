@@ -48,15 +48,18 @@ process del_yaml {
     tag "Deleting YAML files"
  
     input:
-    tuple val(_),val(path_analysis),val(_)
+    tuple val(_), val(path_analysis), val(_)
 
-    exec:
-    String path_soft_versions = path_analysis + "/software_versions/"
+    output:
+    path "${path_analysis}/software_versions/*" into yaml_files_channel
 
     script:
+    String path_soft_versions = "${path_analysis}/software_versions"
+
     """
     mkdir -p $path_soft_versions
-    find . -type f -name '*mqc_versions.yml' -exec mv {} $path_soft_versions
+    echo "Moving mqc_versions.yml files to $path_soft_versions"
+    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} $path_soft_versions \;
     """
 }
 
