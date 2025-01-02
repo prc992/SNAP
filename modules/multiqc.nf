@@ -26,6 +26,6 @@ process multiqc {
     script:
     """
     multiqc . 
-    find . -type f -name '*mqc_versions.yml' -delete
+    find $path_analysis -type f -name '*mqc_versions.yml' -delete
     """
 }
