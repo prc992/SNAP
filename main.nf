@@ -26,7 +26,7 @@ include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 process multiqc {
     label 'low_cpu_low_mem'
     container = params.containers.multiqc 
-    publishDir "$path_analysis/reports/multiqc/", mode : 'copy'
+    publishDir "$path_sample_multiqc", mode : 'copy'
     tag "All Samples" 
     
     input:
@@ -40,6 +40,9 @@ process multiqc {
     path (configFile)
     path (chMultiQCHousekeepingReport)
     tuple val(sampleId), val(enrichment_mark),path(path_analysis),val(read1), val(read2)
+
+    exec:
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     output:
     file "multiqc_report.html"
@@ -55,9 +58,12 @@ process multiqc {
 process downloadSNPRef {
     label 'low_cpu_low_mem'
     tag "Dowloading - $genome" 
-    publishDir "$path_analysis/reports/multiqc/", mode : 'copy'
+    publishDir "$path_sample_multiqc", mode : 'copy'
 
     container = params.containers.wget
+    
+    exec:
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     input:
     tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
@@ -206,12 +212,15 @@ process createSamplesheet {
 process createStatsSamtools {
     label 'low_cpu_low_mem'
     container = params.containers.samtools
-    publishDir "$path_sample_align/align/$sampleId", mode : 'copy'
+    publishDir "$path_sample_align", mode : 'copy'
     
     tag "Sample - $sampleId" 
 
     input:
     tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
+
+    exec:
+    path_sample_align = path_analysis + "/align/" + sampleId
 
     output:
     tuple val(sampleId),path ('*.stats'),path ('*.idxstats'),path ('*.flagstat'),path ("samtools_stats_mqc_versions.yml")
@@ -237,12 +246,15 @@ process createStatsSamtools {
 process createStatsSamtoolsfiltered {
     label 'low_cpu_low_mem'
     container = params.containers.samtools
-    publishDir "$path_sample_align/align/$sampleId", mode : 'copy'
+    publishDir "$path_sample_align", mode : 'copy'
     
     tag "Sample - $sampleId" 
 
     input:
     tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
+
+    exec:
+    path_sample_align = path_analysis + "/align/" + sampleId
 
     output:
     tuple val(sampleId),path ('*.stats'),path ('*.idxstats'),path ('*.flagstat'),path ("samtools_stats_filtered_mqc_versions.yml")
@@ -268,7 +280,7 @@ process createStatsSamtoolsfiltered {
 process quality_filter {
     label 'low_cpu_low_mem'
     container = params.containers.samtools
-    publishDir "$path_sample_align/align/$sampleId", mode : 'copy'
+    publishDir "$path_sample_align", mode : 'copy'
     
     tag "Sample - $sampleId" 
 
@@ -277,6 +289,7 @@ process quality_filter {
 
     exec:
     String strBam = sampleId + '.filtered.unique.sorted.bam'
+    path_sample_align = path_analysis + "/align/" + sampleId
 
     output:
     tuple val(sampleId),val(path_analysis),path('*.bam'),path ("samtools_QualityFilter_mqc_versions.yml")
@@ -297,13 +310,17 @@ process lib_complex_preseq {
   container = params.containers.preseq
 
   tag "Sample - $sampleId"  
-  publishDir "$path_sample_align/align/$sampleId", mode : 'copy'
+  publishDir "$path_sample_align", mode : 'copy'
 
   input:
   tuple val(sampleId),val(path_analysis),path(sortedBam),val(_)
 
   output:
   tuple val(sampleId),path("*.lc_extrap.txt"),path ("preseq_mqc_versions.yml")
+
+
+  exec:
+  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
