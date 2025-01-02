@@ -20,7 +20,6 @@ process downloadSNPRef {
     
     """
     wget -O ${snpFile} ${snp}
-    find ${projectDir} -type f -name '*mqc_versions.yml' -delete
     """
 }
 
