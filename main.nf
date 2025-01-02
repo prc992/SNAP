@@ -52,11 +52,11 @@ process del_yaml {
 
     exec:
     String path_soft_versions = path_analysis + "/software_versions/"
-
+    //find . -type f -name '*mqc_versions.yml' -exec mv {} $path_soft_versions/ \;
     script:
     """
     mkdir -p $path_soft_versions
-    find . -type f -name '*mqc_versions.yml' -exec mv {} $path_soft_versions/ \
+    
     """
 }
 
