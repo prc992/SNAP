@@ -9,8 +9,8 @@ process align {
   input:
   tuple val(sampleId),val(path_analysis),path(trimmedFiles),val(_),val(_)
   each path (genomeFile)
-  tuple path (genomeIndexFiles),val(_)
-  
+  each path (genomeIndexFiles)
+
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam'),path ("align_mqc_versions.yml")
 

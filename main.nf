@@ -151,7 +151,7 @@ process createGenomeIndex {
     path refDir
 
     output:
-    tuple path ("${genome}.fa.*"),path ("index_creation_mqc_versions.yml")
+    path ("${genome}.fa.*")
 
     script:
     def genomeFilePac = "${genome}.fa.pac"
@@ -541,7 +541,7 @@ process igv_reports {
     path (bedgraphs)
     path (house_keeping_genes)
     path (genomeFile)
-    tuple path (genomeIndexFiles),val(_)
+    path (genomeIndexFiles)
     tuple val(_), val(_),val(path_analysis),val(_), val(_)
 
     exec:
