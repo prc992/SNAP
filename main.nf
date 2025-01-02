@@ -424,10 +424,10 @@ process enrichmentReport {
     publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
-    tuple val(sampleId), val(enrichment_mark),val(path),path(read1), val(read2)
+    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(_), val(_)
     path(csvFiles)
     each path (chReportEnrichment)
-    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
+
 
     exec:
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
@@ -697,7 +697,7 @@ workflow {
 
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
-    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment,chSampleInfo).collect()
+    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
 
