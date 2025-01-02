@@ -698,6 +698,11 @@ workflow {
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript)
     chEnrichmentAllFilesCSV = chEnrichmentFilesCSV.collect()
+    chEnrichmentAllFilesCSV.subscribe { collectedFiles ->
+        println "Collected enrichment files: ${collectedFiles}"
+        }
+    /*
+
     chOnlyEnrichmentFilesCSV = chEnrichmentAllFilesCSV.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.csv') }} // Filter the csv files
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chOnlyEnrichmentFilesCSV,chReportEnrichment).collect()
@@ -714,6 +719,6 @@ workflow {
 
     //Final Report
     multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)*/
 }
 
