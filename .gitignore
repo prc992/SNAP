@@ -19,3 +19,4 @@ work/*
 test_sample_sheet.csv
 *multiqc.random.regions.bed
 /ref_files/genome/SNP*.txt
+*.chrom.sizes
