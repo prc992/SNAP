@@ -16,7 +16,7 @@ process enrichment {
   strCSV = sampleId + '_enrichment_states.csv'
 
   output:
-  path("*.csv")
+  tuple val(sampleId),path("*.csv")
 
   script:
   """
