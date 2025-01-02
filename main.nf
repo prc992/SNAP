@@ -151,7 +151,7 @@ process createGenomeIndex {
     path refDir
 
     output:
-    tuple path ("${genome}.fa.*"),path ("align_mqc_versions.yml")
+    tuple path ("${genome}.fa.*"),path ("index_creation_mqc_versions.yml")
 
     script:
     def genomeFilePac = "${genome}.fa.pac"
