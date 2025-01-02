@@ -20,7 +20,7 @@ process downloadSNPRef {
     
     """
     wget -O ${snpFile} ${snp}
-    find $path_analysis -type f -name '*mqc_versions.yml' -delete
+    find ${projectDir} -type f -name '*mqc_versions.yml' -delete
     """
 }
 
