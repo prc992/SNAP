@@ -60,7 +60,7 @@ process downloadSNPRef {
     tag "Dowloading - $genome" 
     publishDir "$path_sample_multiqc", mode : 'copy'
 
-    container = "quay.io/biocontainers/wget:1.21.4"
+    container = params.containers.wget
     
     exec:
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
@@ -85,7 +85,7 @@ process downloadDACFile {
     label 'low_cpu_low_mem'
     tag "Dowloading DAC File - $genome" 
 
-    container = "quay.io/biocontainers/wget:1.21.4"
+    container = params.containers.wget
     
     input:
     tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
@@ -114,7 +114,7 @@ process downloadGeneAnotation {
     label 'low_cpu_low_mem'
     tag "Dowloading Gene Anotation File - $genome" 
 
-    container = "quay.io/biocontainers/wget:1.21.4"
+    container = params.containers.wget
     
     input:
     tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
@@ -141,7 +141,7 @@ process downloadGeneAnotation {
 
 process createGenomeIndex {
     label 'high_cpu_high_mem'
-    container = 'quay.io/biocontainers/bwa:0.7.18--he4a0461_1'
+    container = params.containers.bwa
 
     tag "Creating Index - $genome" 
 
@@ -206,7 +206,7 @@ process createSamplesheet {
 
 process createStatsSamtools {
     label 'low_cpu_low_mem'
-    container = 'quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+    container = params.containers.samtools
     publishDir "$path_sample_align", mode : 'copy'
     
     tag "Sample - $sampleId" 
@@ -240,7 +240,7 @@ process createStatsSamtools {
 
 process createStatsSamtoolsfiltered {
     label 'low_cpu_low_mem'
-    container = 'quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+    container = params.containers.samtools
     publishDir "$path_sample_align", mode : 'copy'
     
     tag "Sample - $sampleId" 
@@ -274,7 +274,7 @@ process createStatsSamtoolsfiltered {
 
 process quality_filter {
     label 'low_cpu_low_mem'
-    container = 'quay.io/biocontainers/samtools:1.15.1--h1170115_0'
+    container = params.containers.samtools
     publishDir "$path_sample_align", mode : 'copy'
     
     tag "Sample - $sampleId" 
@@ -302,8 +302,7 @@ process quality_filter {
 
 process lib_complex_preseq {
   label 'med_cpu_high_mem'
-
-  container = "quay.io/biocontainers/preseq:2.0.2--gsl1.16_0"
+  container = params.containers.preseq
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_align", mode : 'copy'
@@ -331,7 +330,7 @@ process lib_complex_preseq {
 
 process calcFragsLength {
   label 'med_cpu_med_mem'
-  container = "mgibio/deeptools:3.5.3"
+  container = params.containers.deeptools
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_frags", mode : 'copy'
@@ -357,8 +356,8 @@ process calcFragsLength {
 }
 
 process fragLenHist {
-    container = 'quay.io/biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
     label 'med_cpu_med_mem'
+    container = params.containers.python
     tag "All Samples"
 
     publishDir "$path_sample_frags", mode : 'copy'
@@ -387,8 +386,8 @@ process fragLenHist {
 }
 
 process frags_and_peaks {
-    container = 'quay.io/biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
     label 'low_cpu_low_mem'
+    container = params.containers.python
     tag "All Samples"
 
     publishDir "$path_sample_multiqc", mode : 'copy'
@@ -413,8 +412,8 @@ process frags_and_peaks {
 }
 
 process enrichmentReport {
-    container = 'quay.io/biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
     label 'low_cpu_low_mem'
+    container = params.containers.python
     tag "All Samples"
 
     publishDir "$path_sample_multiqc", mode : 'copy'
@@ -438,8 +437,8 @@ process enrichmentReport {
 }
 
 process merge_enrichment_reports {
-    container = 'quay.io/biocontainers/mulled-v2-f42a44964bca5225c7860882e231a7b5488b5485:47ef981087c59f79fdbcab4d9d7316e9ac2e688d-0'
     label 'low_cpu_low_mem'
+    container = params.containers.python
     tag "All Samples"
 
     publishDir "$path_sample_multiqc", mode : 'copy'
@@ -500,9 +499,7 @@ process downloadGenome {
 
 process bam_to_bedgraph {
   label 'med_cpu_med_mem'
-
-  //Docker Image
-  container ='quay.io/biocontainers/bedtools:2.30.0--hc088bd4_0'
+  container = params.containers.bedtools
 
   tag "Sample - $sampleId"  
   publishDir "$path_sample_peaks", mode : 'copy'
@@ -529,8 +526,8 @@ process bam_to_bedgraph {
 }
 
 process igv_reports {
-    container = 'staphb/igv-reports:1.12.0'
     label 'high_cpu_high_mem'
+    container = params.containers.igv_reports
     tag "All Samples"
 
     publishDir "$path_sample_multiqc", mode : 'copy'
