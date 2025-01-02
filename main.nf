@@ -84,7 +84,6 @@ process downloadDACFile {
 
     label 'low_cpu_low_mem'
     tag "Dowloading DAC File - $genome" 
-    //publishDir "$refDir", mode : 'copy'
 
     container = "quay.io/biocontainers/wget:1.21.4"
     
@@ -114,7 +113,6 @@ process downloadGeneAnotation {
 
     label 'low_cpu_low_mem'
     tag "Dowloading Gene Anotation File - $genome" 
-    //publishDir "$refDir", mode : 'copy'
 
     container = "quay.io/biocontainers/wget:1.21.4"
     
@@ -144,7 +142,6 @@ process downloadGeneAnotation {
 process createGenomeIndex {
     label 'high_cpu_high_mem'
     container = 'quay.io/biocontainers/bwa:0.7.18--he4a0461_1'
-    //publishDir "$refDir", mode : 'copy'
 
     tag "Creating Index - $genome" 
 
@@ -172,7 +169,6 @@ process createGenomeIndex {
 
 process createSamplesheet {
     label 'low_cpu_low_mem'
-    //container = "quay.io/biocontainers/wget:1.21.4"
     tag "Creating Samplesheet" 
 
     publishDir "$projectDir/$output_dir", mode : 'copy'
@@ -307,7 +303,6 @@ process quality_filter {
 process lib_complex_preseq {
   label 'med_cpu_high_mem'
 
-  //Docker Image
   container = "quay.io/biocontainers/preseq:2.0.2--gsl1.16_0"
 
   tag "Sample - $sampleId"  
@@ -336,10 +331,6 @@ process lib_complex_preseq {
 
 process calcFragsLength {
   label 'med_cpu_med_mem'
-
-  //Docker Image
-  //docker pull mgibio/deeptools:3.5.3
-  //container = "quay.io/biocontainers/deeptools:2.2.2--py27_0"
   container = "mgibio/deeptools:3.5.3"
 
   tag "Sample - $sampleId"  
@@ -470,95 +461,6 @@ process merge_enrichment_reports {
     python $chMergeReportEnrichment
     """
 }
-
-// RETIRAR ##########################
-/*
-process createBEDRandomFilesMultiqc{
-    container = 'biocontainers/bedtools:v2.27.1dfsg-4-deb_cv1'
-    label 'low_cpu_low_mem'
-    tag "$genome"
-
-    publishDir "$path_multiqc", mode : 'copy'
-
-    input:
-    val genome
-    path chromSizesFile
-    val chOutputDir
-
-    output:
-    path ("*random.regions.bed")
-
-    exec:
-    path_multiqc =  chOutputDir + "/reports/multiqc/" 
-    nameFile = genome + ".multiqc.random.regions.bed"
-
-    script:
-    """
-    bedtools random -g $chromSizesFile -seed 42 > $nameFile
-    """
-}*/
-
-// RETIRAR ##########################
-/*
-process deeptoolsComputeMatrix{
-    container = 'mgibio/deeptools:3.5.3'
-    label 'high_cpu_high_mem'
-    tag "All Samples"  
-
-    publishDir "$path_sample_multiqc", mode : 'copy'
-
-    input:
-    path (treat_bw)
-    path (bedFile)
-    path (chOutputDir)
-
-    exec:
-    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
-
-    output:
-    path ("*computeMatrix.mat.gz")
-
-    script:
-    """
-         computeMatrix scale-regions \\
-        --regionsFileName $bedFile \\
-        --scoreFileName $treat_bw \\
-        --outFileName AllSamples.computeMatrix.mat.gz \\
-        --outFileNameMatrix AllSamples.computeMatrix.vals.mat.tab \\
-        --numberOfProcessors $task.cpus
-    """
-}*/
-
-// RETIRAR ##########################
-/*
-process deeptoolsPlotCorrelation{
-    container = 'mgibio/deeptools:3.5.3'
-    label 'med_cpu_med_mem'
-    tag "All Samples"  
-
-    publishDir "$path_sample_multiqc", mode : 'copy'
-
-    input:
-    path (computeMatrix)
-    path (chOutputDir)
-
-    exec:
-    path_sample_multiqc =  chOutputDir + "/reports/multiqc/" 
-
-    output:
-    path ("*plotCorrelation.pdf")
-    path ("*plotCorrelation.mat.tab")
-
-    script:
-    """
-        plotCorrelation \\
-        --corData $computeMatrix \\
-        --corMethod spearman --whatToPlot heatmap \\
-        --plotFile AllSamples.plotCorrelation.pdf \\
-        --outFileCorMatrix AllSamples.plotCorrelation.mat.tab \\
-        --skipZeros
-    """
-}*/
 
 process downloadGenome {
 
@@ -762,7 +664,7 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
     chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
 
-    //Verificar se é necessário pois o deepTools já faz isso
+    //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles)
     chFragmentAllFiles = chFragmentsSize.collect()
     chFragstxtFiles = chFragmentAllFiles.map { collectedFiles ->
@@ -773,64 +675,40 @@ workflow {
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
 
     
-    uropa(chPeakFiles,chGeneAnotation) 
+    uropa(chPeakFiles,chGeneAnotation) //Verify if it is necessary if its helpful
     chBedFiles = bam_to_bed(chDACFilteredFiles) 
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chPeakAllFiles = chPeakFiles.collect()
 
-    // Filter the narrowPeak files
+    //Fragments and peaks Plot *******************************************************
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }}
-    //In case you want to print the files
-    //chNarrowPeakFiles.subscribe { collectedFiles ->println "Arquivos coletados: $collectedFiles"}
-
-
-    //FRAGMENTS AND PEAKS      ***************************************************
+    collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
     chFragAndPeaksFilesReport = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks,chSampleInfo)
-    //****************************************************************************
+    //*********************************************************************************
 
-    // SNP Fingerprint and plot process 
+    // SNP Fingerprint and plot process ***************************************************
     chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect() 
     chSnpFingerprintCompleteAllfiles = chSnpFingerprintComplete.collect()
-    // Filter the vcf files
     chVCFGZFiles = chSnpFingerprintCompleteAllfiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.vcf.gz') }}
+    collectedFiles.findAll { it.toString().endsWith('.vcf.gz') }} // Filter the vcf files
     chFootPrintPDF = snp_footprint_clustering(chVCFGZFiles,chRSNPFootprint,chSampleInfo)
 
-    
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment,chSampleInfo).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
 
-    //Verificar se é necessário pois o deepTools já faz isso 
+    //Verify if it is necessary
     chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
     lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
-    //************************************************************************
 
+    // Create the BigWig files 
+    // Check if it is necessary because I'm using already bam_to_bedgraph
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
-    // RETIRAR ##########################
-    // DEEPTOOLS_COMPUTEMATRIX
-    //chBWAllFiles = chBWFiles.collect()
-    //chBWTreatFiles = chBWAllFiles.map { collectedFiles ->
-    //collectedFiles.findAll { it.toString().endsWith('treat_pileup.bdg.bw') }}
-    //chDeepToolsMatrix = deeptoolsComputeMatrix(chBWTreatFiles,chBEDRandomFilesMultiqc,chOutputDir)
-
-    // DEEPTOOLS_PLOTCORRELATION
-    //chPlotCorrelation = deeptoolsPlotCorrelation(chDeepToolsMatrix,chOutputDir)
-    // RETIRAR ##########################
-
+    //Final Report
     multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
-    
-    // COLOCANDO COMO COMENTÁRIO POIS ESTÁ DANDO ERRO POR FALTA DE CONEXÃO
-    //pileups_report(chBWFiles,chChromSizes,chPileUpBED,chRPileups)
-
-
-    ///Collect all files output and the pass to me program that will merge then
-    //chAllFiles = chBWFiles.collectFile()
-    //pileups_report_comp(chSampleDirPileUps,chChromSizes,chAllFiles,chPileUpBED,chRComparison)*/
 }
 
