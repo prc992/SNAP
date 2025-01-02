@@ -46,20 +46,20 @@ include {igv_reports} from './modules/igv_reports'
 process del_yaml {
     label 'low_cpu_low_mem'
     tag "Deleting YAML files"
- 
+
     input:
     tuple val(_), val(path_analysis), val(_)
 
+    publishDir "${path_analysis}/software_versions", mode: 'move'
+
     output:
-    path "${path_analysis}/software_versions/*" 
+    path "${path_analysis}/software_versions/*" into yaml_files_channel
 
     script:
-    String path_soft_versions = "${path_analysis}/software_versions"
-
     """
-    mkdir -p $path_soft_versions
-    echo "Moving mqc_versions.yml files to $path_soft_versions"
-    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} $path_soft_versions \;
+    mkdir -p ${path_analysis}/software_versions
+    echo "Moving mqc_versions.yml files to ${path_analysis}/software_versions"
+    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} ${path_analysis}/software_versions \;
     """
 }
 
