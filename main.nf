@@ -614,7 +614,7 @@ workflow {
         }
 
     // Download the genome, gene annotation, and DAC file
-    chGenome = downloadGenome(chGenomesInfo,refDir)/*
+    chGenome = downloadGenome(chGenomesInfo,refDir)
     chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome,refDir)
     chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir)
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
@@ -706,6 +706,6 @@ workflow {
 
     //Final Report
     multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)*/
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
 }
 
