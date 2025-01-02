@@ -21,40 +21,8 @@ include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
 include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
 include {pileups_report} from './modules/pileups_report'
 include {uropa} from './modules/uropa'
+include {multiqc} from './modules/multiqc'
 include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
-
-process multiqc {
-    label 'low_cpu_low_mem'
-    container = params.containers.multiqc 
-    publishDir "$path_sample_multiqc", mode : 'copy'
-    tag "All Samples" 
-    
-    input:
-    tuple val(_),val(_),val (_),val (_),path (bedGraphToBigWig_mqc_versions)
-    path (chIGVReport)
-    val(_)
-    tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
-    path (chFootPrintPDF)
-    path (chFragAndPeaks)
-    path (chEnrichmentFiles)
-    path (configFile)
-    path (chMultiQCHousekeepingReport)
-    tuple val(sampleId), val(enrichment_mark),path(path_analysis),val(read1), val(read2)
-
-    exec:
-    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
-
-    output:
-    file "multiqc_report.html"
-    file "multiqc_data/*"
-
-    script:
-    """
-    multiqc . 
-    find . -type f -name '*mqc_versions.yml' -delete
-    """
-}
-
 
 process downloadSNPRef {
     label 'low_cpu_low_mem'
