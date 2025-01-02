@@ -711,6 +711,6 @@ workflow {
 
     //Final Report
     multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)*/
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
 }
 
