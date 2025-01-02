@@ -1,7 +1,7 @@
 process enrichmentReport {
     label 'low_cpu_low_mem'
     container = params.containers.python
-    tag "All Samples"
+    tag "Sample - $sampleId" 
 
     publishDir "$path_sample_multiqc", mode : 'copy'
 
