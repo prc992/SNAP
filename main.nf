@@ -50,9 +50,13 @@ process del_yaml {
     input:
     tuple val(_),val(path_analysis),val(_)
 
+    exec:
+    path_soft_versions = path_analysis + "/software_versions/"
+
     script:
     """
-    find $path_analysis -type f -name '*mqc_versions.yml' -delete
+    mkdir -p $path_soft_versions
+    find . -type f -name '*mqc_versions.yml' -exec mv {} $path_soft_versions/ \;
     """
 }
 
