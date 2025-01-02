@@ -1,8 +1,7 @@
 process align {
   label 'high_cpu_high_mem'
 
-  // Docker Image
-  container = 'quay.io/biocontainers/mulled-v2-fe8faa35dbf6dc65a0f7f5d4ea12e31a79f73e40:8110a70be2bfe7f75a2ea7f2a89cda4cc7732095-0'
+  container = params.containers.bwa_and_samtools
 
   tag "Sample - $sampleId"
   publishDir "$path_sample_align", mode: 'copy'
@@ -10,8 +9,8 @@ process align {
   input:
   tuple val(sampleId),val(path_analysis),path(trimmedFiles),val(_),val(_)
   each path (genomeFile)
-  each path (genomeIndexFiles)
-
+  tuple path (genomeIndexFiles),val(_)
+  
   output:
   tuple val(sampleId),val(path_analysis),path('*.bam'),path ("align_mqc_versions.yml")
 

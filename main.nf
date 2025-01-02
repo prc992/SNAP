@@ -151,7 +151,7 @@ process createGenomeIndex {
     path refDir
 
     output:
-    path "${genome}.fa.*"
+    tuple path "${genome}.fa.*",path ("align_mqc_versions.yml")
 
     script:
     def genomeFilePac = "${genome}.fa.pac"
@@ -164,6 +164,11 @@ process createGenomeIndex {
         echo "Creating symlinks to index files."
     fi
     ln -s ${refDir}/${genome}.fa.* .
+
+    cat <<-END_VERSIONS > index_creation_mqc_versions.yml
+    "${task.process}":
+        bwa: \$( bwa 2>&1 | grep Version | sed -e "s/Version: //g" )
+    END_VERSIONS
     """
 }
 
@@ -536,7 +541,7 @@ process igv_reports {
     path (bedgraphs)
     path (house_keeping_genes)
     path (genomeFile)
-    path (genomeIndexFiles)
+    tuple path (genomeIndexFiles),val(_)
     tuple val(_), val(_),val(path_analysis),val(_), val(_)
 
     exec:
