@@ -43,6 +43,23 @@ include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
 include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
 include {igv_reports} from './modules/igv_reports'
 
+process moveSoftFiles {
+    label 'low_cpu_low_mem'
+    
+    input:
+    tuple val(_), val(_), val(path_analysis),val(_), val(_)
+    val (_)
+    val (_)
+    
+
+    script:
+    """
+    mkdir -p ${path_analysis}/software_versions
+    echo "Moving mqc_versions.yml files to ${path_analysis}/software_versions"
+    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} ${path_analysis}/software_versions/ \\;
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -161,7 +178,6 @@ workflow {
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
-
     
     uropa(chPeakFiles,chGeneAnotation) //Verify if it is necessary if its helpful
     chBedFiles = bam_to_bed(chDACFilteredFiles) 
@@ -195,7 +211,9 @@ workflow {
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
     //Final Report
-    multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
+    chFinalReport = multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
+    
+    moveSoftFiles(chFinalReport,chSampleInfo)
 }
 

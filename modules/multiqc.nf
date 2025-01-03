@@ -26,9 +26,5 @@ process multiqc {
     script:
     """
     multiqc . 
-    
-    mkdir -p ${path_analysis}/software_versions
-    echo "Moving mqc_versions.yml files to ${path_analysis}/software_versions"
-    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} ${path_analysis}/software_versions/ \\;
     """
 }
