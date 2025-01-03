@@ -47,7 +47,8 @@ process moveSoftFiles {
     label 'low_cpu_low_mem'
     
     input:
-    val(chIGVReport)
+    val(fileHtml)
+    val(files)
     tuple val(_), val(_), val(path_analysis),val(_), val(_)
     
     script:
@@ -166,7 +167,6 @@ workflow {
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
     chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
-    moveSoftFiles(chIGVReport,chSampleInfo)/*
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles)
@@ -211,7 +211,9 @@ workflow {
 
     //Final Report
     chFinalReport = multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)*/
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
+
+    moveSoftFiles(chFinalReport,chSampleInfo)
     
     
 }
