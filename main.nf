@@ -42,27 +42,12 @@ include {enrichmentReport} from './modules/enrichmentReport'
 include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
 include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
 include {igv_reports} from './modules/igv_reports'
-
-process moveSoftFiles {
-    label 'low_cpu_low_mem'
-    
-    input:
-    val(fileHtml)
-    val(files)
-    tuple val(_), val(_), val(path_analysis),val(_), val(_)
-    
-    script:
-    """
-    mkdir -p ${path_analysis}/software_versions
-    echo "Moving mqc_versions.yml files to ${path_analysis}/software_versions"
-    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} ${path_analysis}/software_versions/ \\;
-    """
-}
+include {moveSoftFiles} from './modules/moveSoftFiles'
 
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.0.15 - LOCAL 60 - 2024-12-10"
+    def releaseVersion = "v1.0.16"
 
     // ASCII art for SNAP
     def asciiArt = """
