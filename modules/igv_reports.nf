@@ -1,5 +1,5 @@
 process igv_reports {
-    label 'high_cpu_high_mem'
+    label 'high_cpu_high_plus_mem'
     container = params.containers.igv_reports
     tag "All Samples"
 
