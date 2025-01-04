@@ -21,6 +21,6 @@ process igv_reports {
 
     script:
     """
-    create_report $house_keeping_genes --fasta $genomeFile --tracks $bedgraphs --output $htmlFile
+    create_report $house_keeping_genes --fasta $genomeFile --tracks $bedgraphs --output $htmlFile --flanking 100
     """
 }
