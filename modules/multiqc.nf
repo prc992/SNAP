@@ -20,8 +20,7 @@ process multiqc {
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     output:
-    path ("multiqc_report.html")
-    path ("multiqc_data/*")
+    tuple path ("multiqc_report.html"),path ("multiqc_data/*"),path ("multiqc_plots/*")
 
     script:
     """
