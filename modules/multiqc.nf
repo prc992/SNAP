@@ -1,5 +1,5 @@
 process multiqc {
-    label 'low_cpu_low_mem'
+    label 'med_cpu_high_mem'
     container = params.containers.multiqc 
     publishDir "$path_sample_multiqc", mode : 'copy'
     tag "All Samples" 
