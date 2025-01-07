@@ -155,10 +155,10 @@ workflow {
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles)
-    chFragmentAllFiles = chFragmentsSize.collect()
-    chFragstxtFiles = chFragmentAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.txt') }}
-    chfragHist = fragLenHist(chFragstxtFiles,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
+    //chFragmentAllFiles = chFragmentsSize.collect()
+    //chFragstxtFiles = chFragmentAllFiles.map { collectedFiles ->
+    //collectedFiles.findAll { it.toString().endsWith('.txt') }}
+    //chfragHist = fragLenHist(chFragstxtFiles,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
@@ -187,8 +187,8 @@ workflow {
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
     //Verify if it is necessary
-    chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
-    lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
+    //chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
+    //lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
 
     // Create the BigWig files 
     // Check if it is necessary because I'm using already bam_to_bedgraph
