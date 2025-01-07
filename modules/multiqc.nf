@@ -8,7 +8,7 @@ process multiqc {
     tuple val(_),val(_),val (_),val (_),path (bedGraphToBigWig_mqc_versions)
     path (chIGVReport)
     val(_)
-    tuple path ("frag_len_hist.txt"),path ("frag_len_mqc.yml")
+    path (chFragmentsSize)
     path (chFootPrintPDF)
     path (chFragAndPeaks)
     path (chEnrichmentFiles)

@@ -195,7 +195,7 @@ workflow {
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
     //Final Report
-    chFinalReport = multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chfragHist,\
+    chFinalReport = multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chFragmentsSize,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
 
     moveSoftFiles(chFinalReport,chSampleInfo)
