@@ -3,7 +3,7 @@ process moveSoftFiles {
     tag "All Samples"
     
     input:
-    tuple val(fileHtml), val(files_data), val(files_plots)
+    val(_)
     tuple val(_), val(_), val(path_analysis),val(_), val(_)
     
     script:
