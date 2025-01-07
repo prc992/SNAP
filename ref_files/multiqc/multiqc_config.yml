@@ -12,8 +12,11 @@ module_order:
       info: "This section of the report shows general statistics about the samples."
   - custom_content:
   - deepTools:
-      name: "DeepTools"
-      info: "This section of the report shows DeepTools results."
+      name: "Fragment size distribution - Deeptools"
+      title: "My Title"
+      subtitle: "A subtitle to go underneath in grey"
+      intro_text: "MultiQC reports summarise analysis results."
+      report_comment: "This is a comment about this report."
   - preseq:
       name: "Library Complexity"
   - fastqc:
