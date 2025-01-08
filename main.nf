@@ -140,7 +140,7 @@ workflow {
     lib_complex(chSortedFiles) 
     lib_complex_preseq(chSortedFiles) 
     chUniqueFiles = unique_sam(chSortedFiles) 
-    chStatsSamtools = createStatsSamtools(chUniqueFiles)
+    //chStatsSamtools = createStatsSamtools(chUniqueFiles)
     chFilteredFiles = quality_filter(chUniqueFiles) 
     chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) 
     chDedupFiles = dedup(chFilteredFiles) 

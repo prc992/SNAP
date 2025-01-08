@@ -8,10 +8,10 @@ disable_version_detection: true
 
 module_order:
   - general_stats:
-      name: "General Stats"
+      name: "General Stats (HAY)"
       info: "This section of the report shows general statistics about the samples."
   - custom_content:
-  - deepttools:
+  - deeptools:
       name: "Fragment Size Distribution"
   - preseq:
       name: "Library Complexity"
@@ -51,14 +51,26 @@ sp:
 ignore_images: false
 
 table_columns_visible:
-    macs2:
-        treatment_redundant_rate: False
+    macs2-treatment_redundant_rate: False
+    samtools_alignment_scores_after_filtering_flagstat-mapped_passed : False
+    samtools_alignment_scores_after_filtering_stats-raw_total_sequences: False
+    samtools_alignment_scores_after_filtering_stats-reads_properly_paired_percent: False
+    samtools_alignment_scores_after_filtering_stats-reads_mapped_percent: False
+    samtools_alignment_scores_after_filtering_stats-reads_mapped: False
+    samtools_alignment_scores_after_filtering_stats-non_primary_alignments: False
+    samtools_alignment_scores_before_filtering_stats-non_primary_alignments: False
+    samtools_alignment_scores_before_filtering_flagstat-mapped_passed: False
+    samtools_alignment_scores_before_filtering_stats-raw_total_sequences: False
+
 
         
 remove_sections:
     - "samtools-idxstats-xy-counts"
     - "samtools-flagstat"
     - "samtools-idxstats"
+    - "samtools-stats"
+    - "cutadapt_filtered_reads"
+    - "cutadapt_trimmed_sequences_3"
     - "fastqc_top_overrepresented_sequences"
     - "fastqc_per_base_sequence_content"
 
