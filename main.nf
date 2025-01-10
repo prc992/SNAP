@@ -52,11 +52,10 @@ process igv_sample_reports {
     publishDir "$path_sample_peaks", mode : 'copy'
 
     input:
-    path (bedgraph)
+    tuple val(sampleId),val(path_analysis),path(bedgraph),val (_)
     path (house_keeping_genes)
     path (genomeFile)
     path (genomeIndexFiles)
-    tuple val(sampleId), val(_),val(path_analysis),val(_), val(_)
 
     exec:
     path_sample_peaks = path_analysis + "/peaks/" + sampleId
@@ -175,7 +174,7 @@ workflow {
     chIndexFiles = index_sam(chDACFilteredFiles)
 
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
-    igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
+    igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex)
 
     /*chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
