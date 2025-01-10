@@ -140,7 +140,7 @@ workflow {
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
-    chMultiQCHousekeepingReport = Channel.fromPath("$params.multiqc_housekeeping_report")
+    //chMultiQCHousekeepingReport = Channel.fromPath("$params.multiqc_housekeeping_report")
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
     chMultiQCFragPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_peaks_header")
@@ -258,8 +258,8 @@ workflow {
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
     //Final Report
-    chFinalReport = multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chFragmentsSize,
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chIGVReportMerged,chSampleInfo)
+    chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSize,
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
     moveSoftFiles(chFinalReport,chSampleInfo)
     

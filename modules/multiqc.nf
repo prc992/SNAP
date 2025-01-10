@@ -13,7 +13,7 @@ process multiqc {
     path (chFragAndPeaks)
     path (chEnrichmentFiles)
     path (configFile)
-    path (chMultiQCHousekeepingReport)
+    //path (chMultiQCHousekeepingReport)
     tuple val(sampleId), val(enrichment_mark),path(path_analysis),val(read1), val(read2)
 
     exec:
