@@ -49,7 +49,7 @@ process igv_sample_reports {
     container = params.containers.igv_reports
     tag "All Samples"
 
-    publishDir "$path_sample_peaks", mode : 'copy'
+    publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
     tuple val(sampleId),val(path_analysis),path(bedgraph),val (_)
@@ -58,7 +58,7 @@ process igv_sample_reports {
     path (genomeIndexFiles)
 
     exec:
-    path_sample_peaks = path_analysis + "/peaks/" + sampleId
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
     htmlFile = sampleId + "_igv_housekeeping_genes_report.html"
 
     output:
