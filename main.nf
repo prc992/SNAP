@@ -56,7 +56,7 @@ process igv_sample_reports {
     path (house_keeping_genes)
     path (genomeFile)
     path (genomeIndexFiles)
-    tuple val(sampleId),val(path_analysis),val(_),val(_)
+    tuple val(sampleId), val(_),val(path_analysis),val(_), val(_)
 
     exec:
     path_sample_peaks = path_analysis + "/peaks/" + sampleId
