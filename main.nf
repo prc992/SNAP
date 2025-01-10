@@ -91,7 +91,13 @@ process igv_consolidate_report {
 
     script:
     """
+    # Define the output HTML file
     cat $house_keeping_header > $htmlFile
+
+    # Append HTML links for matching files to the consolidated HTML file
+    for file in *_igv_housekeeping_genes_report.html; do
+        echo "<a href='\${file}' target='_blank' class='btn btn-primary'>Open in a new window</a> </p>" >> $htmlFile
+    done
     """
 }
 
