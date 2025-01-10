@@ -217,7 +217,7 @@ workflow {
     chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)*/
 
     //Fragment Length Distribution ************************************************
-    chFragmentsSize = calcFragsLength(chIndexFiles)
+    chFragmentsSize = calcFragsLength(chIndexFiles).collect()
     //chFragmentAllFiles = chFragmentsSize.collect()
     //chFragstxtFiles = chFragmentAllFiles.map { collectedFiles ->
     //collectedFiles.findAll { it.toString().endsWith('.txt') }}
