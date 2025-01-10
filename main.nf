@@ -218,6 +218,9 @@ workflow {
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
+    chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
+
     //chFragmentAllFiles = chFragmentsSize.collect()
     //chFragstxtFiles = chFragmentAllFiles.map { collectedFiles ->
     //collectedFiles.findAll { it.toString().endsWith('.txt') }}
@@ -258,7 +261,7 @@ workflow {
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
     //Final Report
-    chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSize,
+    chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
     moveSoftFiles(chFinalReport,chSampleInfo)
