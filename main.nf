@@ -78,9 +78,9 @@ process igv_consolidate_report {
     publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
-    tuple val(sampleId),val(path_analysis),val(_),val (_)
+    tuple val(_),val(_),val(path_analysis),val(_),val (_)
     path (samples_report)
-    each path (house_keeping_header)
+    path (house_keeping_header)
 
     exec:
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
