@@ -44,6 +44,33 @@ include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
 include {igv_reports} from './modules/igv_reports'
 include {moveSoftFiles} from './modules/moveSoftFiles'
 
+process igv_sample_reports {
+    label 'high_cpu_high_plus_mem'
+    container = params.containers.igv_reports
+    tag "All Samples"
+
+    publishDir "$path_sample_peaks", mode : 'copy'
+
+    input:
+    path (bedgraph)
+    path (house_keeping_genes)
+    path (genomeFile)
+    path (genomeIndexFiles)
+    tuple val(sampleId),val(path_analysis),val(_),val(_)
+
+    exec:
+    path_sample_peaks = path_analysis + "/peaks/" + sampleId
+    htmlFile = sampleId + "_igv_housekeeping_genes_report.html"
+
+    output:
+    path ("*.html")
+
+    script:
+    """
+    create_report $house_keeping_genes --fasta $genomeFile --tracks $bedgraph --output $htmlFile 
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -148,7 +175,9 @@ workflow {
     chIndexFiles = index_sam(chDACFilteredFiles)
 
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
-    chAllBedGraphFiles = chBedGraphFiles.collect()
+    igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
+
+    /*chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
     chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
@@ -198,7 +227,7 @@ workflow {
     chFinalReport = multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chFragmentsSize,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)
+    moveSoftFiles(chFinalReport,chSampleInfo)*/
     
     
 }
