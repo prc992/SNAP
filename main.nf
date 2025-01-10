@@ -53,9 +53,9 @@ process igv_sample_reports {
 
     input:
     tuple val(sampleId),val(path_analysis),path(bedgraph),val (_)
-    path (house_keeping_genes)
-    path (genomeFile)
-    path (genomeIndexFiles)
+    each path (house_keeping_genes)
+    each path (genomeFile)
+    each path (genomeIndexFiles)
 
     exec:
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
