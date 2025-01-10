@@ -96,7 +96,9 @@ process igv_consolidate_report {
 
     # Append HTML links for matching files to the consolidated HTML file
     for file in *_igv_housekeeping_genes_report.html; do
-        echo "<a href='\${file}' target='_blank' class='btn btn-primary'>Open in a new window</a> </p>" >> $htmlFile
+        # Extract the string before '_igv_housekeeping_genes_report.html'
+        link_text=\$(basename "\$file" "_igv_housekeeping_genes_report.html")
+        echo "<a href='\${file}' target='_blank' class='btn btn-primary'>\${link_text}</a> </p>" >> $htmlFile
     done
     """
 }
