@@ -78,6 +78,7 @@ process igv_consolidate_report {
     publishDir "$path_sample_multiqc", mode : 'copy'
 
     input:
+    tuple val(sampleId),val(path_analysis),val(_),val (_)
     path (samples_report)
     each path (house_keeping_header)
 
@@ -200,7 +201,7 @@ workflow {
 
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
-    igv_consolidate_report(chIGVReportsHtml,chMultiQCHousekeepingHeader)
+    igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
     /*chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
