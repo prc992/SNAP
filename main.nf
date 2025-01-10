@@ -98,7 +98,7 @@ process igv_consolidate_report {
     for file in *_igv_housekeeping_genes_report.html; do
         # Extract the string before '_igv_housekeeping_genes_report.html'
         link_text=\$(basename "\$file" "_igv_housekeeping_genes_report.html")
-        echo "<a href='\${file}' target='_blank' class='btn btn-primary'>\${link_text}</a> </p>" >> $htmlFile
+        echo "<a href='\${file}' target='_blank' class='btn btn-primary'>\${link_text}</a>" >> $htmlFile
     done
     """
 }
