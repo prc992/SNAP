@@ -209,12 +209,12 @@ workflow {
 
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
-    igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
+    chIGVReportMerged = igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
     /*chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
-    chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
+    chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)*/
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles)
@@ -259,9 +259,9 @@ workflow {
 
     //Final Report
     chFinalReport = multiqc(chBWFiles,chIGVReport,chSnpFingerprintComplete,chFragmentsSize,
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chMultiQCHousekeepingReport,chSampleInfo)
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chIGVReportMerged,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)*/
+    moveSoftFiles(chFinalReport,chSampleInfo)
     
     
 }
