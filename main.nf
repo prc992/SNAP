@@ -47,7 +47,7 @@ include {moveSoftFiles} from './modules/moveSoftFiles'
 process igv_sample_reports {
     label 'high_cpu_high_plus_mem'
     container = params.containers.igv_reports
-    tag "All Samples"
+    tag "Sample - $sampleId"
 
     publishDir "$path_sample_multiqc", mode : 'copy'
 
@@ -67,6 +67,30 @@ process igv_sample_reports {
     script:
     """
     create_report $house_keeping_genes --fasta $genomeFile --tracks $bedgraph --output $htmlFile 
+    """
+}
+
+process igv_consolidate_report {
+    label 'low_cpu_low_plus_mem'
+    container = params.containers.ubuntu
+    tag "All Samples"
+
+    publishDir "$path_sample_multiqc", mode : 'copy'
+
+    input:
+    path (samples_report)
+    each path (house_keeping_header)
+
+    exec:
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
+    htmlFile = "igv_housekeeping_genes_mqc.html"
+
+    output:
+    path ("*.html")
+
+    script:
+    """
+    cat $house_keeping_header > $htmlFile
     """
 }
 
@@ -108,6 +132,7 @@ workflow {
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     chMultiQCHousekeepingReport = Channel.fromPath("$params.multiqc_housekeeping_report")
+    chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
     chMultiQCFragPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
@@ -174,7 +199,8 @@ workflow {
     chIndexFiles = index_sam(chDACFilteredFiles)
 
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
-    igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex)
+    chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
+    igv_consolidate_report(chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
     /*chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
