@@ -247,10 +247,11 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }} // Filter the bedgraph files
     chIGVSession = igv_session(chSampleInfo,chBedGraphOnlyBedGraph,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
+
     /*chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
-    chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)*/
+    chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
@@ -300,7 +301,7 @@ workflow {
     chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)
+    moveSoftFiles(chFinalReport,chSampleInfo)*/
     
     
 }
