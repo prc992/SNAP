@@ -128,6 +128,7 @@ process igv_session {
     script:
     """
     python $chIGVFilestoSessions $fileOut $house_keeping_genes $genome
+    cp *.bedgraph $path_sample_igv
     """
 
 }
