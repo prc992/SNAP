@@ -123,6 +123,7 @@ process igv_session {
 
     output:
     path ("IGV_Session.xml")
+    path ("*.bedgraph")
 
     script:
     """
