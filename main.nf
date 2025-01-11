@@ -103,6 +103,33 @@ process igv_consolidate_report {
     """
 }
 
+process igv_session {
+    label 'med_cpu_med_mem'
+    container = params.containers.python
+    tag "All Samples"
+
+    publishDir "$path_sample_igv", mode : 'copy'
+
+    input:
+    path (bedgraph)
+    path (chIGVFilestoSessions)
+    tuple val(genome), val(_), val(_), val(_), val(_)
+    path (house_keeping_genes)
+
+    exec:
+    path_sample_igv = path_analysis + "/igv_session/"
+    fileOut = "IGV_Session.xml"
+
+    output:
+    path ("IGV_Session.xml")
+
+    script:
+    """
+    python $chIGVFilestoSessions $fileOut $house_keeping_genes $genome
+    """
+
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -136,6 +163,7 @@ workflow {
     chReportFragPeaks = Channel.fromPath("$params.pathReportFragPeaks")
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
     chMergeReportEnrichment = Channel.fromPath("$params.pathMergeReportEnrichment")
+    chIGVFilestoSessions = Channel.fromPath("$params.pathIGVFilestoSessions")
 
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
@@ -210,6 +238,11 @@ workflow {
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
     chIGVReportMerged = igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
+
+    chBedGraphAllFiles = chBedGraphFiles.collect()
+    chBedGraphOnlyBedGraph = chBedGraphAllFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.bedgraph') }} // Filter the bedgraph files
+    chIGVSession = igv_session(chBedGraphOnlyBedGraph,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
     /*chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
