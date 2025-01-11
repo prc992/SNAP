@@ -45,7 +45,7 @@ include {igv_reports} from './modules/igv_reports'
 include {igv_sample_reports} from './modules/igv_reports'
 include {igv_consolidate_report} from './modules/igv_reports'
 include {igv_session} from './modules/igv_reports'
-include {moveSoftFiles} from './modules/igv_reports'
+include {moveSoftFiles} from './modules/moveSoftFiles'
 
 workflow {
     // Static information about the pipeline
