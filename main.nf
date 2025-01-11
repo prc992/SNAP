@@ -122,15 +122,11 @@ process igv_session {
     fileOut = "IGV_Session.xml"
 
     output:
-    path ("IGV_Session.xml")
-    path ("*.bedgraph")
+    path ("*.*")
 
     script:
     """
     python $chIGVFilestoSessions $fileOut $house_keeping_genes $genome
-    for file in *.bedgraph; do
-        touch \$file
-    done
     """
 
 }
