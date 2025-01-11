@@ -44,8 +44,8 @@ include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
 include {igv_reports} from './modules/igv_reports'
 include {igv_sample_reports} from './modules/igv_reports'
 include {igv_consolidate_report} from './modules/igv_reports'
-include {igv_session} from './modules/igv_session'
-include {moveSoftFiles} from './modules/moveSoftFiles'
+include {igv_session} from './modules/igv_reports'
+include {moveSoftFiles} from './modules/igv_reports'
 
 workflow {
     // Static information about the pipeline
