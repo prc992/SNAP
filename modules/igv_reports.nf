@@ -99,7 +99,7 @@ process igv_session {
     path (house_keeping_genes)
 
     exec:
-    path_sample_igv = path_analysis + "/igv_session/"
+    path_sample_igv = path_analysis + "/reports/igv_session/"
     fileOut = "IGV_Session.xml"
 
     output:
