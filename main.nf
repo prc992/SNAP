@@ -111,6 +111,7 @@ process igv_session {
     publishDir "$path_sample_igv", mode : 'copy'
 
     input:
+    tuple val(_),val(_),val(path_analysis),val(_),val (_)
     path (bedgraph)
     path (chIGVFilestoSessions)
     tuple val(genome), val(_), val(_), val(_), val(_)
@@ -242,7 +243,7 @@ workflow {
     chBedGraphAllFiles = chBedGraphFiles.collect()
     chBedGraphOnlyBedGraph = chBedGraphAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }} // Filter the bedgraph files
-    chIGVSession = igv_session(chBedGraphOnlyBedGraph,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
+    chIGVSession = igv_session(chSampleInfo,chBedGraphOnlyBedGraph,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
     /*chAllBedGraphFiles = chBedGraphFiles.collect()
     chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
