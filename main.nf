@@ -130,6 +130,7 @@ process igv_session {
     python $chIGVFilestoSessions $fileOut $house_keeping_genes $genome
     for file in *.bedgraph; do
         touch \$file
+    done
     """
 
 }
