@@ -217,7 +217,7 @@ workflow {
     chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)*/
+    moveSoftFiles(chFinalReport,chSampleInfo)
     
 }
 
