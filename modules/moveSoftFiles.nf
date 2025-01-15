@@ -4,6 +4,8 @@ process moveSoftFiles {
     
     input:
     val(_)
+    val(_)
+    val(_)
     tuple val(_), val(_), val(path_analysis),val(_), val(_)
     
     script:
