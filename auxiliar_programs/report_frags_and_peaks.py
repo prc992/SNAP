@@ -124,4 +124,4 @@ with open(csv_file_peaks, 'w') as file:
     # Write the DataFrame content
     df_peaks.to_csv(file, index=False)
 
-print(f"CSV files successfully created at '{csv_file}'.")
+print(f"CSV files successfully created at.")
