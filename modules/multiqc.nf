@@ -22,8 +22,8 @@ process multiqc {
 
     output:
     path ("multiqc_report.html")
-    path ("multiqc_data/*")
-    path ("multiqc_plots/*")
+    path ("multiqc_data/*.*")
+    path ("multiqc_plots/*.*")
 
     script:
     """
