@@ -4,5 +4,5 @@
 # plot_type: 'bargraph'
 # pconfig:
 #     sort_samples: true
-#     title: "Total Fragments and Peak Plot"
+#     title: "Total Fragments Plot"
 #     "tt_decimals": 0

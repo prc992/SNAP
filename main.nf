@@ -190,7 +190,7 @@ workflow {
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
     chFragAndPeaksFilesReport = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,\
-    chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)/*
+    chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)
     //*********************************************************************************
 
     // SNP Fingerprint and plot process ***************************************************
