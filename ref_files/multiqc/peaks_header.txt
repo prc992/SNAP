@@ -1,0 +1,11 @@
+# id: "peaks_plot"
+# section_name: "Number of Peaks"
+# description: "Number of peaks calculated using macs2."
+# plot_type: 'bargraph'
+# categories:
+#   Peaks:
+#       color: "#2ca02c"  # green
+# pconfig:
+#     sort_samples: true
+#     title: "Number of Peaks called"
+#     "tt_decimals": 0

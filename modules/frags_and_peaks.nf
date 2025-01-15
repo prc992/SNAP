@@ -8,7 +8,8 @@ process frags_and_peaks {
     input:
     path (narrowPeakFiles)
     path (chPeakAllFiles)
-    each path (chMultiQCFragPeaksHeader)
+    each path (chMultiQCFragsHeader)
+    each path (chMultiQCPeaksHeader)
     each path (chReportFragHist)
     tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
 

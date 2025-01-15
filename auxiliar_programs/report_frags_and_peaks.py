@@ -55,13 +55,20 @@ def read_file(str_path):
 # Define the suffix
 suffix_frags = '_unique_frags.csv'
 suffix_peak = '_peaks.narrowPeak'
-name_head_file = 'frags_peaks_header.txt'
-output_file = "fragspeaks_mqc.txt"
+
+name_head_file_frags = 'frags_header.txt'
+name_head_file_peaks = 'peaks_header.txt'
+
+output_file_frags = "frags_mqc.txt"
+output_file_peaks = "peaks_mqc.txt"
 
 current_directory = os.getcwd()
 
-head_file = find_files_with_suffix(current_directory, name_head_file)[0]
-head_file_content = read_file(head_file)
+head_file_frags = find_files_with_suffix(current_directory, name_head_file_frags)[0]
+head_file_content_frags = read_file(head_file_frags)
+
+head_file_peaks = find_files_with_suffix(current_directory, name_head_file_peaks)[0]
+head_file_content_peaks = read_file(head_file_peaks)
 
 frags_files = find_files_with_suffix(current_directory, suffix_frags)    
 peak_files = find_files_with_suffix(current_directory, suffix_peak) 
@@ -97,17 +104,24 @@ def create_dataframe_from_content_files(file_list,sufix,nameColumn,read_content=
 
 df_frags = create_dataframe_from_content_files(frags_files,suffix_frags,'Fragments',True)
 df_peaks = create_dataframe_from_content_files(peak_files,suffix_peak,'Peaks',False)
-merged_df = pd.merge(df_frags, df_peaks, on='SampleName', how='inner')
+#merged_df = pd.merge(df_frags, df_peaks, on='SampleName', how='inner')
 
 # CSV file path
-csv_file = "frags_and_peaks_mqc.csv"
+csv_file_frags = "frags_mqc.csv"
+csv_file_peaks = "peaks_mqc.csv"
 
 # Write header and DataFrame to the CSV file
-with open(csv_file, 'w') as file:
+with open(csv_file_frags, 'w') as file:
     # Write the header
-    file.write(head_file_content + "\n")
-    
+    file.write(head_file_content_frags + "\n")
     # Write the DataFrame content
-    merged_df.to_csv(file, index=False)
+    df_frags.to_csv(file, index=False)
 
-print(f"CSV file successfully created at '{csv_file}'.")
+# Write header and DataFrame to the CSV file
+with open(csv_file_peaks, 'w') as file:
+    # Write the header
+    file.write(head_file_content_peaks + "\n")
+    # Write the DataFrame content
+    df_peaks.to_csv(file, index=False)
+
+print(f"CSV files successfully created at '{csv_file}'.")

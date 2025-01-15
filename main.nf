@@ -88,7 +88,8 @@ workflow {
     //chMultiQCHousekeepingReport = Channel.fromPath("$params.multiqc_housekeeping_report")
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
-    chMultiQCFragPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_peaks_header")
+    chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
+    chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
     
     // Create the genome directory if it doesn't exist
@@ -188,7 +189,8 @@ workflow {
     //Fragments and peaks Plot *******************************************************
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
-    chFragAndPeaksFilesReport = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,chMultiQCFragPeaksHeader,chReportFragPeaks,chSampleInfo)
+    chFragAndPeaksFilesReport = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,\
+    chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)/*
     //*********************************************************************************
 
     // SNP Fingerprint and plot process ***************************************************
@@ -215,7 +217,7 @@ workflow {
     chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)
+    moveSoftFiles(chFinalReport,chSampleInfo)*/
     
 }
 
