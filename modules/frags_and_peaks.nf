@@ -17,7 +17,7 @@ process frags_and_peaks {
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     output:
-    path ("frags_and_peaks_mqc.csv")
+    path ("*_mqc.csv")
 
     script:
     """
