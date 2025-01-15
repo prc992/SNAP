@@ -38,8 +38,12 @@ module_order:
 
 custom_content:
   order:
+    - frags_plot
+    - peaks_plot
+    - igv_housekeeping_genes
     - frags_peaks_plot
     - fragment_lengths
+    - my_custom_content_image
 
 custom_data:
   my_custom_content_image:
