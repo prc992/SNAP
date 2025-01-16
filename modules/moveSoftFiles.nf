@@ -24,5 +24,6 @@ process moveSoftFiles {
     find ${path_analysis} -type f -name 'SNPs*' -exec mv {} ${path_analysis}/stats_files/ \\;
     find ${path_analysis} -type f -name 'Dendrogram*' -exec mv {} ${path_analysis}/stats_files/ \\;
     find ${path_analysis} -type f -name '*_mqc.csv' -exec mv {} ${path_analysis}/stats_files/ \\;
+    find ${path_analysis}/reports/multiqc/  -type f ! -name "*.html" -exec mv {} ${path_analysis}/stats_files/ \\;
     """
 }
