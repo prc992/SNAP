@@ -41,7 +41,9 @@ custom_content:
     - frags_plot
     - peaks_plot
     - igv_housekeeping_genes
-    - frags_peaks_plot
+    - merged_enrichment_MEDIP
+    - merged_enrichment_H3K4ME3
+    - merged_enrichment_H3K27AC
     - fragment_lengths
     - my_custom_content_image
 
