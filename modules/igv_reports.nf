@@ -104,12 +104,11 @@ process igv_session {
 
     output:
     path ("*.xml")
-    path ("*.bedgraph")
+    path (bedgraph)
 
     script:
     """
     python $chIGVFilestoSessions $fileOut $house_keeping_genes $genome
-    ls -lh
     """
 
 }
