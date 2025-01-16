@@ -103,8 +103,7 @@ process igv_session {
     fileOut = "IGV_Session.xml"
 
     output:
-    path ("*.xml")
-    path (bedgraph)
+    tuple path ("*.xml"),path (bedgraph)
 
     script:
     """
