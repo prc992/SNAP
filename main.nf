@@ -182,16 +182,16 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    chTDFFiles = bam_to_tdf(chIndexFiles,chGenomesInfo)/*
+    chTDFFiles = bam_to_tdf(chIndexFiles,chGenomesInfo)
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
     chIGVReportMerged = igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
-    chBedGraphAllFiles = chBedGraphFiles.collect()
-    chBedGraphOnlyBedGraph = chBedGraphAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.bedgraph') }} // Filter the bedgraph files
-    chIGVSession = igv_session(chSampleInfo,chBedGraphOnlyBedGraph,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)    
+    chTDFAllFiles = chTDFFiles.collect()
+    chTDFOnlyFiles = chTDFAllFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.tdf') }} // Filter the tdf files
+    chIGVSession = igv_session(chSampleInfo,chTDFOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)/*    
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()

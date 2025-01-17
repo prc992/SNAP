@@ -93,7 +93,7 @@ process igv_session {
 
     input:
     tuple val(_),val(_),val(path_analysis),val(_),val (_)
-    path (bedgraph)
+    path (tdf)
     path (chIGVFilestoSessions)
     tuple val(genome), val(_), val(_), val(_), val(_)
     path (house_keeping_genes)

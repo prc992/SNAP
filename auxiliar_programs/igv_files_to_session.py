@@ -15,7 +15,7 @@ import argparse
 ############################################
 ############################################
 
-Description = 'Create IGV session file from a bedgraph files on the current folder and a set of genes.'
+Description = 'Create IGV session file from a tdf files on the current folder and a set of genes.'
 Epilog = """Example usage: python igv_files_to_session.py <XML_OUT> <LIST_GENES> <GENOME>"""
 
 argParser = argparse.ArgumentParser(description=Description, epilog=Epilog)
@@ -53,7 +53,7 @@ def igv_files_to_session(XMLOut,ListGenes,Genome,PathPrefix=''):
     makedir(os.path.dirname(XMLOut))
 
     # Define the file extension to search for
-    file_extension = ".bedgraph"
+    file_extension = ".tdf"
     # Get the current working directory
     current_directory = os.getcwd()
     # Find all files with the specified extension in the current directory
@@ -64,7 +64,7 @@ def igv_files_to_session(XMLOut,ListGenes,Genome,PathPrefix=''):
     XMLStr += '<Session genome="%s">\n' % (Genome)
     XMLStr += '\t<Resources>\n'
     for ifile in fileList:
-        XMLStr += '\t\t<Resource path="%s" type="bedgraph"/>\n' % (ifile)
+        XMLStr += '\t\t<Resource path="%s" type="tdf"/>\n' % (ifile)
     XMLStr += '\t</Resources>\n'
 
     ## ADD PANEL SECTION
