@@ -47,6 +47,35 @@ include {igv_consolidate_report} from './modules/igv_reports'
 include {igv_session} from './modules/igv_reports'
 include {moveSoftFiles} from './modules/moveSoftFiles'
 
+process bam_to_tdf {
+  label 'med_cpu_med_mem'
+  container = params.containers.igv
+
+  tag "Sample - $sampleId"  
+  publishDir "$path_sample_peaks", mode : 'copy'
+
+  input:
+  tuple val(sampleId),val(path_analysis),path(sampleBam),path (indexBam),val (_)
+  tuple val(genome), val(_), val(_), val(_), val(_)
+
+  exec:
+  path_sample_peaks = path_analysis + "/peaks/" + sampleId
+  str_tdf = sampleId + '.tdf'
+
+  output:
+  tuple val(sampleId),val(path_analysis),path('*.tdf'),path ("bam_to_tdf_mqc_versions.yml")
+
+  script:
+  """
+  igvtools count $sampleBam $str_tdf $genome
+
+  cat <<-END_VERSIONS > bam_to_tdf_mqc_versions.yml
+    "${task.process}":
+        igvtools: \$(igvtools --version | sed -e "s/igvtools v//g")
+  END_VERSIONS
+  """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -153,32 +182,21 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
+    chTDFFiles = bam_to_tdf(chIndexFiles,chGenomesInfo)/*
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
+    
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
     chIGVReportMerged = igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
     chBedGraphAllFiles = chBedGraphFiles.collect()
     chBedGraphOnlyBedGraph = chBedGraphAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bedgraph') }} // Filter the bedgraph files
-    chIGVSession = igv_session(chSampleInfo,chBedGraphOnlyBedGraph,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
-
-
-    /*chAllBedGraphFiles = chBedGraphFiles.collect()
-    chOnlyBedGraphFiles = chAllBedGraphFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.bedgraph') }}
-    chIGVReport = igv_reports(chOnlyBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex,chSampleInfo)*/
-
-    
+    chIGVSession = igv_session(chSampleInfo,chBedGraphOnlyBedGraph,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)    
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
-
-    //chFragmentAllFiles = chFragmentsSize.collect()
-    //chFragstxtFiles = chFragmentAllFiles.map { collectedFiles ->
-    //collectedFiles.findAll { it.toString().endsWith('.txt') }}
-    //chfragHist = fragLenHist(chFragstxtFiles,chMultiQCFragLenHeader,chReportFragHist,chSampleInfo)
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
@@ -207,9 +225,6 @@ workflow {
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
-    //Verify if it is necessary
-    //chFragDis = lenght_fragment_dist_step1(chDACFilteredFiles)
-    //lenght_fragment_dist_step2(chFragDis,chRfrag_plotFragDist)
 
     // Create the BigWig files 
     // Check if it is necessary because I'm using already bam_to_bedgraph
@@ -219,7 +234,7 @@ workflow {
     chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)
+    moveSoftFiles(chFinalReport,chSampleInfo)*/
     
 }
 
