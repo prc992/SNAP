@@ -9,12 +9,10 @@ process multiqc {
     path (chIGVReport)
     val(_)
     path (chFragmentsSizeFiles)
-    //tuple path(chFragmentsSize), val (_)
     path (chFootPrintPDF)
     path (chFragAndPeaks)
     path (chEnrichmentFiles)
     path (configFile)
-    //path (chMultiQCHousekeepingReport)
     tuple val(sampleId), val(enrichment_mark),path(path_analysis),val(read1), val(read2)
 
     exec:
