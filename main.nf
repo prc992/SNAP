@@ -41,40 +41,12 @@ include {frags_and_peaks} from './modules/frags_and_peaks'
 include {enrichmentReport} from './modules/enrichmentReport'
 include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
 include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
+include {bam_to_tdf} from './modules/bam_to_tdf'
 include {igv_reports} from './modules/igv_reports'
 include {igv_sample_reports} from './modules/igv_reports'
 include {igv_consolidate_report} from './modules/igv_reports'
 include {igv_session} from './modules/igv_reports'
 include {moveSoftFiles} from './modules/moveSoftFiles'
-
-process bam_to_tdf {
-  label 'med_cpu_med_mem'
-  container = params.containers.igv
-
-  tag "Sample - $sampleId"  
-  publishDir "$path_sample_peaks", mode : 'copy'
-
-  input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),path (indexBam),val (_)
-  each path(genome)
-
-  exec:
-  path_sample_peaks = path_analysis + "/peaks/" + sampleId
-  str_tdf = sampleId + '.tdf'
-
-  output:
-  tuple val(sampleId),val(path_analysis),path('*.tdf'),path ("bam_to_tdf_mqc_versions.yml")
-
-  script:
-  """
-  igvtools count $sampleBam $str_tdf $genome
-
-  cat <<-END_VERSIONS > bam_to_tdf_mqc_versions.yml
-    "${task.process}":
-        igvtools: \$(igvtools --version | sed -e "s/igvtools v//g")
-  END_VERSIONS
-  """
-}
 
 workflow {
     // Static information about the pipeline
@@ -114,7 +86,6 @@ workflow {
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
-    //chMultiQCHousekeepingReport = Channel.fromPath("$params.multiqc_housekeeping_report")
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
@@ -146,7 +117,6 @@ workflow {
     chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir)
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
     chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
-    
     
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
@@ -191,7 +161,7 @@ workflow {
     chTDFAllFiles = chTDFFiles.collect()
     chTDFOnlyFiles = chTDFAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.tdf') }} // Filter the tdf files
-    chIGVSession = igv_session(chSampleInfo,chTDFOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)/*    
+    chIGVSession = igv_session(chSampleInfo,chTDFOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)    
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
@@ -227,14 +197,13 @@ workflow {
     
 
     // Create the BigWig files 
-    // Check if it is necessary because I'm using already bam_to_bedgraph
     chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
     //Final Report
     chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)*/
+    moveSoftFiles(chFinalReport,chSampleInfo)
     
 }
 
