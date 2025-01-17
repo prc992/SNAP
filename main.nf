@@ -152,7 +152,7 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    chTDFFiles = bam_to_tdf(chIndexFiles,chGenome)/*
+    chTDFFiles = bam_to_tdf(chIndexFiles,chGenome)
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
@@ -203,7 +203,7 @@ workflow {
     chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)*/
+    moveSoftFiles(chFinalReport,chSampleInfo)
     
 }
 
