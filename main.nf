@@ -56,7 +56,7 @@ process bam_to_tdf {
 
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam),path (indexBam),val (_)
-  tuple val(genome), val(_), val(_), val(_), val(_)
+  each path(genome)
 
   exec:
   path_sample_peaks = path_analysis + "/peaks/" + sampleId
@@ -182,7 +182,7 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    chTDFFiles = bam_to_tdf(chIndexFiles,chGenomesInfo)
+    chTDFFiles = bam_to_tdf(chIndexFiles,chGenome)
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
