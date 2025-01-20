@@ -18,6 +18,9 @@ process enrichmentReport {
 
     script:
     """
+    # Print the value of path_sample_multiqc process enrichmentReport 
+    echo "The path for MultiQC reports is: ${path_sample_multiqc}"
+
     python $chReportEnrichment --mark ${enrichment_mark} --samplename ${sampleId}
     """
 }

@@ -23,6 +23,9 @@ process multiqc {
 
     script:
     """
+    # Print the value of path_sample_multiqc process multiqc
+    echo "The path for MultiQC reports is: ${path_sample_multiqc}"
+
     multiqc . 
     """
 }
