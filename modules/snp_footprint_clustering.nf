@@ -1,8 +1,6 @@
 process snp_footprint_clustering{
   label 'process_medium'
-
   tag "All Samples"   
-
   container = params.containers.snp_dendrogram
   publishDir "$path_sample_snp_footprint", mode : 'copy'
 

@@ -1,8 +1,8 @@
 process multiqc {
-    label 'med_cpu_high_mem'
+    label 'process_medium'
+    tag "All Samples" 
     container = params.containers.multiqc 
     publishDir "$path_sample_multiqc", mode : 'copy'
-    tag "All Samples" 
     
     input:
     tuple val(_),val(_),val (_),val (_),path (bedGraphToBigWig_mqc_versions)
