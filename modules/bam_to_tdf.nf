@@ -23,9 +23,14 @@ process bam_to_tdf {
 
   cat <<-END_VERSIONS > bam_to_tdf_mqc_versions.yml
     "${task.process}":
-        igvtools: "\$(igvtools help 2>/dev/null | grep 'IGV Version' | awk '{print \$5}')"
+        igvtools: "0.0.1"
   END_VERSIONS
   """
+  /*
+    cat <<-END_VERSIONS > bam_to_tdf_mqc_versions.yml
+    "${task.process}":
+        igvtools: "\$(igvtools help 2>/dev/null | grep 'IGV Version' | awk '{print \$5}')"
+  END_VERSIONS*/
 
   
 }
