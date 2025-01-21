@@ -8,6 +8,7 @@ process bam_to_tdf {
   input:
   tuple val(sampleId),val(path_analysis),path(sampleBam),path (indexBam),val (_)
   each path(genome)
+  each path(genomeIndex)
 
   exec:
   path_sample_peaks = path_analysis + "/peaks/" + sampleId

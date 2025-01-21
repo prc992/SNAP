@@ -152,7 +152,7 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    chTDFFiles = bam_to_tdf(chIndexFiles,chGenome)
+    chTDFFiles = bam_to_tdf(chIndexFiles,chGenome,chGenomeIndex)
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
