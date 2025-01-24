@@ -1,5 +1,5 @@
 process bam_to_tdf {
-  label 'med_cpu_med_mem'
+  label 'high_cpu_high_mem'
   container = params.containers.igv
 
   tag "Sample - $sampleId"  
@@ -23,14 +23,8 @@ process bam_to_tdf {
 
   cat <<-END_VERSIONS > bam_to_tdf_mqc_versions.yml
     "${task.process}":
-        igvtools: "0.0.1"
+        igvtools: "\$(igvtools help 2>/dev/null | grep 'IGV Version' | awk '{print \$5}')"
   END_VERSIONS
   """
-  /*
-    cat <<-END_VERSIONS > bam_to_tdf_mqc_versions.yml
-    "${task.process}":
-        igvtools: "\$(igvtools help 2>/dev/null | grep 'IGV Version' | awk '{print \$5}')"
-  END_VERSIONS*/
-
   
 }
