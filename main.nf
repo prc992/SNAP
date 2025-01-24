@@ -48,6 +48,29 @@ include {igv_consolidate_report} from './modules/igv_reports'
 include {igv_session} from './modules/igv_reports'
 include {moveSoftFiles} from './modules/moveSoftFiles'
 
+process bedgraph_to_bigwig {
+    // Define os arquivos de entrada e saída
+
+    container = 'dukegcb/bedgraphtobigwig:287'
+    publishDir "$path_sample_peaks", mode : 'copy'
+
+    input:
+    tuple val(sampleId),val(path_analysis),path(chbedgraph),val (_)
+    each path (chrom_sizes)
+
+    output:
+    path ("*.bw")
+
+    exec:
+    str_bw = sampleId + '.bw'
+    path_sample_peaks = path_analysis + "/peaks/" + sampleId
+
+    script:
+    """
+    bedGraphToBigWig $chbedgraph $chrom_sizes $str_bw
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -152,9 +175,12 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    chTDFFiles = bam_to_tdf(chIndexFiles,chGenome,chGenomeIndex)
+    //chTDFFiles = bam_to_tdf(chIndexFiles,chGenome,chGenomeIndex)
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
+    chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
+
     
+    /*
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
     chIGVReportMerged = igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
@@ -203,7 +229,7 @@ workflow {
     chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)
+    moveSoftFiles(chFinalReport,chSampleInfo)*/
     
 }
 
