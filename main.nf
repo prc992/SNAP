@@ -51,7 +51,7 @@ include {moveSoftFiles} from './modules/moveSoftFiles'
 process bedgraph_to_bigwig {
     // Define os arquivos de entrada e saída
 
-    container = 'dukegcb/bedgraphtobigwig:287'
+    container = '4dndcic/4dn-bedgraphtobigwig:v6'
     publishDir "$path_sample_peaks", mode : 'copy'
 
     input:
@@ -180,14 +180,15 @@ workflow {
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
     
-    /*
+    //Pileups ****************************************************************
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
     chIGVReportMerged = igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
-    chTDFAllFiles = chTDFFiles.collect()
-    chTDFOnlyFiles = chTDFAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.tdf') }} // Filter the tdf files
-    chIGVSession = igv_session(chSampleInfo,chTDFOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)    
+    chBigWigAllFiles = chBigWig.collect()
+    chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the tdf files
+    chIGVSession = igv_session(chSampleInfo,chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
+    /*    
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
