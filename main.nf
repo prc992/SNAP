@@ -58,7 +58,7 @@ process bedgraph_to_bigwig {
     each path (chrom_sizes)
 
     output:
-    path ("*.bw")
+    tuple path ("*.bw"),path ("bedgraph_to_bigwig_mqc_versions.yml")
 
     exec:
     str_bw = sampleId + '.bw'
@@ -67,6 +67,11 @@ process bedgraph_to_bigwig {
     script:
     """
     bedGraphToBigWig $chbedgraph $chrom_sizes $str_bw
+
+    cat <<-END_VERSIONS > bedgraph_to_bigwig_mqc_versions.yml
+    "${task.process}":
+        ucsc: $params.containers.bedgraphtobigwig_version
+    END_VERSIONS
     """
 }
 
@@ -223,10 +228,10 @@ workflow {
     
 
     // Create the BigWig files 
-    chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
+    //chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
     //Final Report
-    chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
+    chFinalReport = multiqc(chBigWig,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
     moveSoftFiles(chFinalReport,chSampleInfo)

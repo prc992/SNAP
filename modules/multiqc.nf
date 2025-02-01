@@ -5,7 +5,7 @@ process multiqc {
     publishDir "$path_sample_multiqc", mode : 'copy'
     
     input:
-    tuple val(_),val(_),val (_),val (_),path (bedGraphToBigWig_mqc_versions)
+    tuple val (_),path (bedgraph_to_bigwig_mqc_versions)
     path (chIGVReport)
     val(_)
     path (chFragmentsSizeFiles)
