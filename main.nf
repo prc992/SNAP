@@ -41,7 +41,6 @@ include {frags_and_peaks} from './modules/frags_and_peaks'
 include {enrichmentReport} from './modules/enrichmentReport'
 include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
 include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
-include {bam_to_tdf} from './modules/bam_to_tdf'
 include {igv_reports} from './modules/igv_reports'
 include {igv_sample_reports} from './modules/igv_reports'
 include {igv_consolidate_report} from './modules/igv_reports'
@@ -188,7 +187,7 @@ workflow {
     chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the tdf files
     chIGVSession = igv_session(chSampleInfo,chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
-    /*    
+        
 
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
@@ -230,7 +229,7 @@ workflow {
     chFinalReport = multiqc(chBWFiles,chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)*/
+    moveSoftFiles(chFinalReport,chSampleInfo)
     
 }
 
