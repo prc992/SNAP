@@ -163,8 +163,6 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
 
-    chSampleInfo.subscribe { item -> println "Sample Info: ${item}" }
-
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
 
     fastqc(chSampleInfo) 
