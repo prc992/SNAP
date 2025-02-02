@@ -163,7 +163,7 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark,"${projectDir}/${row.path}", row.read1, row.read2) }
 
-    chSampleInfo.subscribe { item -> println "Sample Info: ${item}" }/*
+    chSampleInfo.subscribe { item -> println "Sample Info: ${item}" }
 
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
 
@@ -236,7 +236,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)*/
+    moveSoftFiles(chFinalReport,chSampleInfo)
     
 }
 
