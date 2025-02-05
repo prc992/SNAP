@@ -4,15 +4,15 @@ process enrichment {
   container = params.containers.samtools
 
   tag "Sample - $sampleId"   
-  publishDir "$path_sample_peaks", mode : 'copy'
+
+  publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
+  tuple val(sampleId),path(sampleBam),val(_)
   each path (chEnrichmentScript)
 
 
   exec:
-  path_sample_peaks = path_analysis + "/peaks/" + sampleId
   strCSV = sampleId + '_enrichment_states.csv'
 
   output:

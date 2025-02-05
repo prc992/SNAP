@@ -173,10 +173,11 @@ workflow {
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
     
     uropa(chPeakFiles,chGeneAnotation) //Verify if it is necessary if its helpful
-    /*chBedFiles = bam_to_bed(chDACFilteredFiles) 
-    chUniqueFrags = unique_frags(chBedFiles).collect()
-    chPeakAllFiles = chPeakFiles.collect()
+    chBedFiles = bam_to_bed(chDACFilteredFiles) //
+    chUniqueFrags = unique_frags(chBedFiles).collect() //
+    chPeakAllFiles = chPeakFiles.collect() //
 
+    
     //Fragments and peaks Plot *******************************************************
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
@@ -201,7 +202,7 @@ workflow {
     //chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
 
     //Final Report
-    chFinalReport = multiqc(chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
+    /*chFinalReport = multiqc(chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
     moveSoftFiles(chFinalReport,chSampleInfo)*/

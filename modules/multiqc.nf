@@ -2,7 +2,8 @@ process multiqc {
     label 'process_medium'
     tag "All Samples" 
     container = params.containers.multiqc 
-    publishDir "$path_sample_multiqc", mode : 'copy'
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
     
     input:
     path (chIGVReport)

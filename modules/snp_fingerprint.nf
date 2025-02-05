@@ -5,16 +5,17 @@ process snp_fingerprint {
   container = params.containers.bcftools
 
   tag "Sample - $sampleId" 
-  publishDir "$path_sample_snp_fingerprint", mode : 'copy'
+
+  publishDir "${workflow.projectDir}/${params.outputFolder}/snp_fingerprint/${sampleId}", mode : 'copy'
+  
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),path (sampleBai),val(_)
+  tuple val(sampleId),path(sampleBam),path (sampleBai),val(_)
   each path (snps_ref)
   each path (file_fa)
 
 
   exec:
-  path_sample_snp_fingerprint = path_analysis + "/snp_fingerprint/" + sampleId
   strVCFgz = sampleId + '.vcf.gz'
 
   output:

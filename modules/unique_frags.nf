@@ -4,16 +4,15 @@ process unique_frags {
   container = params.containers.ubuntu
 
   tag "Sample - $sampleId" 
-  publishDir "$path_sample_peaks", mode : 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path (sampleBed),val(_)
+  tuple val(sampleId),path (sampleBed),val(_)
 
   output:
   path ('*.csv')
 
   exec:
-  path_sample_peaks = path_analysis + "/peaks/" + sampleId
   strCSV = sampleId + '_unique_frags.csv'
   
   script:
