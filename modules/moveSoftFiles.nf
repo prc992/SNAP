@@ -4,23 +4,22 @@ process moveSoftFiles {
     
     input:
     val(_)
-    tuple val(_), val(_), val(path_analysis),val(_), val(_)
     
     script:
     """
-    mkdir -p ${path_analysis}/software_versions
-    mkdir -p ${path_analysis}/stats_files
+    mkdir -p ${workflow.projectDir}/${params.outputFolder}/software_versions
+    mkdir -p ${workflow.projectDir}/${params.outputFolder}/stats_files
 
-    echo "Moving mqc_versions.yml files to ${path_analysis}/software_versions"
-    find ${path_analysis} -type f -name '*mqc_versions.yml' -exec mv {} ${path_analysis}/software_versions/ \\;
-    find ${path_analysis} -type f -name '*AfterFilter*' -exec mv {} ${path_analysis}/stats_files/ \\;
-    find ${path_analysis} -type f -name '*lc_extrap*' -exec mv {} ${path_analysis}/stats_files/ \\;
-    find ${path_analysis} -type f -name '*flagstat' -exec mv {} ${path_analysis}/stats_files/ \\;
-    find ${path_analysis} -type f -name '*idxstats' -exec mv {} ${path_analysis}/stats_files/ \\;
-    find ${path_analysis} -type f -name '*stats' -exec mv {} ${path_analysis}/stats_files/ \\;
-    find ${path_analysis} -type f -name '*metrics.txt' -exec mv {} ${path_analysis}/stats_files/ \\;
-    find ${path_analysis}/reports/multiqc/  -type f ! -name "*.html" -exec mv {} ${path_analysis}/stats_files/ \\;
-    find ${path_analysis} -type f -name '*gz_trimming_report.txt' -exec mv {} ${path_analysis}/stats_files/ \\;
+    echo "Moving mqc_versions.yml files to ${workflow.projectDir}/${params.outputFolder}/software_versions"
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name '*mqc_versions.yml' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/software_versions/ \\;
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name '*AfterFilter*' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name '*lc_extrap*' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name '*flagstat' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name '*idxstats' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name '*stats' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name '*metrics.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
+    find ${workflow.projectDir}/${params.outputFolder}/reports/multiqc/  -type f ! -name "*.html" -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name '*gz_trimming_report.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
     """
-    // find ${path_analysis}/reports/multiqc/  -type f ! -name "*_mqc.html" -exec mv {} ${path_analysis}/stats_files/ \\;
+    // find ${workflow.projectDir}/${params.outputFolder}/reports/multiqc/  -type f ! -name "*_mqc.html" -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
 }
