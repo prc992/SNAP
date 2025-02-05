@@ -2,11 +2,10 @@ process createSamplesheet {
     label 'low_cpu_low_mem'
     tag "Creating Samplesheet" 
 
-    publishDir "$projectDir/$output_dir", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}", mode : 'copy'
 
     input:
     val sample_dir
-    val output_dir
     val enrichment_mark
 
     output:
@@ -16,7 +15,7 @@ process createSamplesheet {
     """
     now=\$(date +'%Y-%m-%d-%H-%M-%S')
     filename="snap-samplesheet-\$now.csv"
-    echo "sampleId,enrichment_mark,path,read1,read2" > \$filename
+    echo "sampleId,enrichment_mark,read1,read2" > \$filename
 
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
@@ -30,7 +29,7 @@ process createSamplesheet {
         if [ \${#files[@]} -gt 1 ]; then
             read2=\$(realpath \${files[1]})
         fi
-        echo "\$sampleId,${enrichment_mark},${output_dir},\$read1,\$read2" >> \$filename
+        echo "\$sampleId,${enrichment_mark},\$read1,\$read2" >> \$filename
     done
     """
 }

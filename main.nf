@@ -153,11 +153,10 @@ workflow {
         //println "Creating samplesheet because none was provided."
         chSampleSheet = createSamplesheet(
             params.sample_dir, 
-            params.output_dir, 
             params.enrichment_mark ?: 'no_enrichment_mark'
         )
     }
-
+    /**
     // Read the SampleSheet provided by the user or created by the pipeline
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
@@ -166,7 +165,7 @@ workflow {
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
 
     fastqc(chSampleInfo) 
-    /*chTrimFiles = trim(chSampleInfo)
+    chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles) 
