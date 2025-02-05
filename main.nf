@@ -198,14 +198,15 @@ workflow {
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
 
-    // Create the BigWig files 
-    //chBWFiles = bedGraphToBigWig(chPeakFiles,chChromSizes)
-
     //Final Report
-    /*chFinalReport = multiqc(chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)*/
+    // Definir o caminho de entrada
+    chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
+
+    chFinalReport = multiqc(chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
+        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
+
+    /*moveSoftFiles(chFinalReport,chSampleInfo)*/
     
 }
 

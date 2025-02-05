@@ -13,7 +13,8 @@ process multiqc {
     path (chFragAndPeaks)
     path (chEnrichmentFiles)
     path (configFile)
-    tuple val(sampleId), val(enrichment_mark),path(path_analysis),val(read1), val(read2)
+    path (chAllPreviousFiles)
+    
 
     exec:
     path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
@@ -23,9 +24,6 @@ process multiqc {
 
     script:
     """
-    # Print the value of path_sample_multiqc process multiqc
-    echo "The path for MultiQC reports is: ${path_sample_multiqc}"
-
     multiqc . 
     """
 }
