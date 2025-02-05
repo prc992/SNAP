@@ -3,17 +3,17 @@ process bam_to_bedgraph {
   container = params.containers.bedtools
 
   tag "Sample - $sampleId"  
-  publishDir "$path_sample_peaks", mode : 'copy'
+
+  publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),path (indexBam),path ("bam_to_bedgraph_mqc_versions.yml")
+  tuple val(sampleId),path(sampleBam),path (indexBam),path ("bam_to_bedgraph_mqc_versions.yml")
 
   exec:
-  path_sample_peaks = path_analysis + "/peaks/" + sampleId
   strbedgraph = sampleId + '.bedgraph'
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bedgraph'),path ("bam_to_bedgraph_mqc_versions.yml")
+  tuple val(sampleId),path('*.bedgraph'),path ("bam_to_bedgraph_mqc_versions.yml")
 
   script:
   """

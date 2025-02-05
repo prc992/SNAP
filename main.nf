@@ -16,7 +16,7 @@ include {bam_to_bed} from './modules/bam_to_bed'
 include {unique_frags} from './modules/unique_frags'
 include {trim} from './modules/trim'
 include {snp_fingerprint} from './modules/snp_fingerprint'
-include {bedGraphToBigWig} from './modules/bedGraphToBigWig'
+include {bedgraph_to_bigwig} from './modules/bedgraph_to_bigwig'
 include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
 include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
 include {pileups_report} from './modules/pileups_report'
@@ -46,34 +46,6 @@ include {igv_sample_reports} from './modules/igv_reports'
 include {igv_consolidate_report} from './modules/igv_reports'
 include {igv_session} from './modules/igv_reports'
 include {moveSoftFiles} from './modules/moveSoftFiles'
-
-process bedgraph_to_bigwig {
-    // Define os arquivos de entrada e saída
-
-    container = '4dndcic/4dn-bedgraphtobigwig:v6'
-    publishDir "$path_sample_peaks", mode : 'copy'
-
-    input:
-    tuple val(sampleId),val(path_analysis),path(chbedgraph),val (_)
-    each path (chrom_sizes)
-
-    output:
-    tuple path ("*.bw"),path ("bedgraph_to_bigwig_mqc_versions.yml")
-
-    exec:
-    str_bw = sampleId + '.bw'
-    path_sample_peaks = path_analysis + "/peaks/" + sampleId
-
-    script:
-    """
-    bedGraphToBigWig $chbedgraph $chrom_sizes $str_bw
-
-    cat <<-END_VERSIONS > bedgraph_to_bigwig_mqc_versions.yml
-    "${task.process}":
-        ucsc: $params.containers.bedgraphtobigwig_version
-    END_VERSIONS
-    """
-}
 
 workflow {
     // Static information about the pipeline
@@ -177,13 +149,11 @@ workflow {
     chDedupFiles = dedup(chFilteredFiles) 
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
-    
-    /*
-    //chTDFFiles = bam_to_tdf(chIndexFiles,chGenome,chGenomeIndex)
+
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
-    
+    /*
     //Pileups ****************************************************************
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
     chIGVReportMerged = igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
