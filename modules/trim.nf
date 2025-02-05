@@ -4,13 +4,10 @@ process trim {
   container = params.containers.trim_galore
 
   tag "Sample - $sampleId"
-  publishDir "$path_sample_trim", mode: 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/trim/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId), val(enrichment_mark), val(path),path(read1), val(read2)
-
-  exec:
-  path_sample_trim = path + "/trim/" + sampleId
+  tuple val(sampleId), val(enrichment_mark),path(read1), val(read2)
 
   output:
   tuple val(sampleId),val(path),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")

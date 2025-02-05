@@ -4,19 +4,18 @@ process align {
   container = params.containers.bwa_and_samtools
 
   tag "Sample - $sampleId"
-  publishDir "$path_sample_align", mode: 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(trimmedFiles),val(_),val(_)
+  tuple val(sampleId),path(trimmedFiles),val(_),val(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bam'),path ("align_mqc_versions.yml")
+  tuple val(sampleId),path('*.bam'),path ("align_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.bam'
-  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
