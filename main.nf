@@ -153,17 +153,17 @@ workflow {
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
-    /*
+    
     //Pileups ****************************************************************
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
-    chIGVReportMerged = igv_consolidate_report(chSampleInfo,chIGVReportsHtml,chMultiQCHousekeepingHeader)
+    chIGVReportMerged = igv_consolidate_report(chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
     chBigWigAllFiles = chBigWig.collect()
     chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the tdf files
-    chIGVSession = igv_session(chSampleInfo,chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
+    chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
         
-
+    /*
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->

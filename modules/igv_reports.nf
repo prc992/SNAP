@@ -30,16 +30,15 @@ process igv_sample_reports {
     container = params.containers.igv_reports
     tag "Sample - $sampleId"
 
-    publishDir "$path_sample_multiqc", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
 
     input:
-    tuple val(sampleId),val(path_analysis),path(bedgraph),val (_)
+    tuple val(sampleId),path(bedgraph),val (_)
     each path (house_keeping_genes)
     each path (genomeFile)
     each path (genomeIndexFiles)
 
     exec:
-    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
     htmlFile = sampleId + "_igv_housekeeping_genes_report.html"
 
     output:
@@ -56,15 +55,13 @@ process igv_consolidate_report {
     container = params.containers.ubuntu
     tag "All Samples"
 
-    publishDir "$path_sample_multiqc", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
 
     input:
-    tuple val(_),val(_),val(path_analysis),val(_),val (_)
     path (samples_report)
     path (house_keeping_header)
 
     exec:
-    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
     htmlFile = "igv_housekeeping_genes_mqc.html"
 
     output:
@@ -89,17 +86,15 @@ process igv_session {
     container = params.containers.python
     tag "All Samples"
 
-    publishDir "$path_sample_igv", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/igv_session/", mode : 'copy'
 
     input:
-    tuple val(_),val(_),val(path_analysis),val(_),val (_)
     path (bw)
     path (chIGVFilestoSessions)
     tuple val(genome), val(_), val(_), val(_), val(_)
     path (house_keeping_genes)
 
     exec:
-    path_sample_igv = path_analysis + "/reports/igv_session/"
     fileOut = "IGV_Session.xml"
 
     output:
