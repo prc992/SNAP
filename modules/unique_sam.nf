@@ -4,18 +4,17 @@ process unique_sam {
   container = params.containers.samtools
 
   tag "Sample - $sampleId" 
-  publishDir "$path_sample_align", mode : 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),val(path_analysis),path(sortedBam),val(_)
+  tuple val(sampleId),path(sortedBam),val(_)
 
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bam'),path ("samtools_unique_mqc_versions.yml")
+  tuple val(sampleId),path('*.bam'),path ("samtools_unique_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.unique.sorted.bam'
-  path_sample_align = path_analysis + "/align/" + sampleId
-
+  
   script:
   """
   samtools view --threads $task.cpus -b -q 1 $sortedBam > $strBam

@@ -3,16 +3,14 @@ process lib_complex_preseq {
   container = params.containers.preseq
 
   tag "Sample - $sampleId"  
-  publishDir "$path_sample_align", mode : 'copy'
+
+  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sortedBam),val(_)
+  tuple val(sampleId),path(sortedBam),val(_)
 
   output:
   tuple val(sampleId),path("*.lc_extrap.txt"),path ("preseq_mqc_versions.yml")
-
-  exec:
-  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """

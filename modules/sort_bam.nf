@@ -4,17 +4,16 @@ process sort_bam {
   container = params.containers.samtools
 
   tag "Sample - $sampleId" 
-  publishDir "$path_sample_align", mode : 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
+  tuple val(sampleId),path(sampleBam),val(_)
   
   output:
-  tuple val(sampleId),val(path_analysis),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
+  tuple val(sampleId),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.sorted.bam'
-  path_sample_align = path_analysis + "/align/" + sampleId
 
   script:
   """
