@@ -14,10 +14,7 @@ process multiqc {
     path (chEnrichmentFiles)
     path (configFile)
     path (chAllPreviousFiles)
-    
 
-    exec:
-    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     output:
     path ("*.*")
