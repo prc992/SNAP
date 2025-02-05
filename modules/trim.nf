@@ -10,7 +10,7 @@ process trim {
   tuple val(sampleId), val(enrichment_mark),path(read1), val(read2)
 
   output:
-  tuple val(sampleId),val(path),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")
+  tuple val(sampleId),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")
 
   script:
   """
