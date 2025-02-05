@@ -1,16 +1,13 @@
 process downloadSNPRef {
     label 'low_cpu_low_mem'
-    tag "Dowloading - $genome" 
-    publishDir "$path_sample_multiqc", mode : 'copy'
+    tag "Dowloading - $genome"
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
 
     container = params.containers.wget
-    
-    exec:
-    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
 
     input:
     tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
-    tuple val(sampleId), val(enrichment_mark),val(path_analysis),val(read1), val(read2)
+    tuple val(sampleId), val(enrichment_mark),val(read1), val(read2)
 
     output:
     file "SNPs.1e5.${genome}.txt"
