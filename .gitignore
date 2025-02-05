@@ -12,6 +12,7 @@
 *.gtf.gz
 .nextflow/*
 analysis_results*/*
+analysis_*/*
 work/*
 *_sample_sheet.csv
 *multiqc.random.regions.bed

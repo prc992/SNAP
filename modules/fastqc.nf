@@ -4,13 +4,13 @@ process fastqc {
   container = params.containers.fastqc
 
   tag "Sample - $sampleId"  
-  publishDir "$path_sample_fastqc", mode : 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/fastqc/${sampleId}", mode : 'copy'
   
   input:
   tuple val(sampleId), val(enrichment_mark),val(path),path(read1), path(read2)
 
-  exec:
-  path_sample_fastqc = "${workflow.projectDir}/${params.outputFolder}/fastqc/" + sampleId
+  //exec:
+  //path_sample_fastqc = 
 
   output:
   tuple val(sampleId), path ('*_fastqc.html'),path ('*_fastqc.zip'),path ("fastqc_mqc_versions.yml")
