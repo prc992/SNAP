@@ -20,6 +20,7 @@ process moveSoftFiles {
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*metrics.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
     find ${workflow.projectDir}/${params.outputFolder}/reports/multiqc/  -type f ! -name "*.html" -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*gz_trimming_report.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name 'igv_housekeeping_genes_mqc.html' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
     """
     // find ${workflow.projectDir}/${params.outputFolder}/reports/multiqc/  -type f ! -name "*_mqc.html" -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
 }
