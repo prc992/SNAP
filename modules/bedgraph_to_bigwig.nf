@@ -1,7 +1,8 @@
 process bedgraph_to_bigwig {
-    // Define os arquivos de entrada e saída
+    label 'med_cpu_med_mem'
+    tag "Sample - $sampleId"  
 
-    container = '4dndcic/4dn-bedgraphtobigwig:v6'
+    container = params.containers.bedgraphtobigwig
 
     publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
