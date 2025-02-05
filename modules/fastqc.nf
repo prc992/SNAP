@@ -7,7 +7,7 @@ process fastqc {
   publishDir "${workflow.projectDir}/${params.outputFolder}/fastqc/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId), val(enrichment_mark),val(path),path(read1), path(read2)
+  tuple val(sampleId), val(enrichment_mark),path(read1), path(read2)
 
   output:
   tuple val(sampleId), path ('*_fastqc.html'),path ('*_fastqc.zip'),path ("fastqc_mqc_versions.yml")
