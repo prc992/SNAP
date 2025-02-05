@@ -10,7 +10,7 @@ process fastqc {
   tuple val(sampleId), val(enrichment_mark),val(path),path(read1), path(read2)
 
   exec:
-  path_sample_fastqc = path + "/fastqc/" + sampleId
+  path_sample_fastqc = "${workflow.projectDir}/${params.outputFolder}/fastqc/" + sampleId
 
   output:
   tuple val(sampleId), path ('*_fastqc.html'),path ('*_fastqc.zip'),path ("fastqc_mqc_versions.yml")

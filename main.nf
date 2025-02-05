@@ -166,7 +166,7 @@ workflow {
     chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
 
     fastqc(chSampleInfo) 
-    chTrimFiles = trim(chSampleInfo)
+    /*chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
     chSortedFiles = sort_bam(chAlignFiles)
     lib_complex(chSortedFiles) 
@@ -234,7 +234,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chSampleInfo)
 
-    moveSoftFiles(chFinalReport,chSampleInfo)
+    moveSoftFiles(chFinalReport,chSampleInfo)*/
     
 }
 
