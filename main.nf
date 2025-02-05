@@ -163,7 +163,7 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the tdf files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
         
-    /*
+    
     //Fragment Length Distribution ************************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
@@ -173,7 +173,7 @@ workflow {
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
     
     uropa(chPeakFiles,chGeneAnotation) //Verify if it is necessary if its helpful
-    chBedFiles = bam_to_bed(chDACFilteredFiles) 
+    /*chBedFiles = bam_to_bed(chDACFilteredFiles) 
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chPeakAllFiles = chPeakFiles.collect()
 

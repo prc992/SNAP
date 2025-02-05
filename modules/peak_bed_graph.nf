@@ -4,16 +4,14 @@ process peak_bed_graph{
   container = params.containers.macs2
 
   tag "Sample - $sampleId"   
-  publishDir "$path_sample_peaks", mode : 'copy'
+  
+  publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
+  tuple val(sampleId),path(sampleBam),val(_)
 
   output:
-  tuple val(sampleId),val(path_analysis),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls"),path("macs2_mqc_versions.yml")
-
-  exec:
-  path_sample_peaks = path_analysis + "/peaks/" + sampleId
+  tuple val(sampleId),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls"),path("macs2_mqc_versions.yml")
   
   script:
   """

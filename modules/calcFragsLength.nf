@@ -3,16 +3,13 @@ process calcFragsLength {
   container = params.containers.deeptools
 
   tag "Sample - $sampleId"  
-  publishDir "$path_sample_frags", mode : 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/frag/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(path_analysis),path(sortedBam),path (sampleBamIndex),val(_)
+  tuple val(sampleId),path(sortedBam),path (sampleBamIndex),val(_)
 
   output:
   tuple path("*fragment_sizes.txt"), path ("bamPEFragmentSize_mqc_versions.yml")
-
-  exec:
-  path_sample_frags = path_analysis + "/frag/" + sampleId
 
   script:
   """
