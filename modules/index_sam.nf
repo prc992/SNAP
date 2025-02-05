@@ -4,16 +4,14 @@ process index_sam {
   container = params.containers.samtools
 
   tag "Sample - $sampleId"   
-  publishDir "$path_sample_align", mode : 'copy'
+
+  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
-
-  exec:
-  path_sample_align = path_analysis + "/align/" + sampleId
+  tuple val(sampleId),path(sampleBam),val(_)
 
   output:
-  tuple val(sampleId),val(path_analysis),path(sampleBam),path ('*.bai'),path ("index_sam_mqc_versions.yml")
+  tuple val(sampleId),path(sampleBam),path ('*.bai'),path ("index_sam_mqc_versions.yml")
 
   script:
   """

@@ -31,8 +31,8 @@ include {downloadGenome} from './modules/download'
 
 include {createGenomeIndex} from './modules/createGenomeIndex'
 include {createSamplesheet} from './modules/createSamplesheet'
-include {createStatsSamtools} from './modules/createStatsSamtools'
-include {createStatsSamtoolsfiltered} from './modules/createStatsSamtools'
+
+include {createStatsSamtoolsfiltered} from './modules/createStatsSamtoolsfiltered'
 include {quality_filter} from './modules/quality_filter'
 include {lib_complex_preseq} from './modules/lib_complex_preseq'
 include {calcFragsLength} from './modules/calcFragsLength'
@@ -172,12 +172,13 @@ workflow {
     lib_complex_preseq(chSortedFiles) 
     chUniqueFiles = unique_sam(chSortedFiles) 
 
-    /*chFilteredFiles = quality_filter(chUniqueFiles) 
+    chFilteredFiles = quality_filter(chUniqueFiles) 
     chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) 
     chDedupFiles = dedup(chFilteredFiles) 
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
-
+    
+    /*
     //chTDFFiles = bam_to_tdf(chIndexFiles,chGenome,chGenomeIndex)
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)

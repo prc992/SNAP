@@ -1,19 +1,20 @@
 process quality_filter {
     label 'low_cpu_low_mem'
     container = params.containers.samtools
-    publishDir "$path_sample_align", mode : 'copy'
+  
+    publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
     
     tag "Sample - $sampleId" 
 
     input:
-    tuple val(sampleId),val(path_analysis),path(sampleBam),val(_)
+    tuple val(sampleId),path(sampleBam),val(_)
 
     exec:
     String strBam = sampleId + '.filtered.unique.sorted.bam'
-    path_sample_align = path_analysis + "/align/" + sampleId
+  
 
     output:
-    tuple val(sampleId),val(path_analysis),path('*.bam'),path ("samtools_QualityFilter_mqc_versions.yml")
+    tuple val(sampleId),path('*.bam'),path ("samtools_QualityFilter_mqc_versions.yml")
 
     script:
     """
