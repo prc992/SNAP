@@ -1,6 +1,6 @@
 process multiqc {
     label 'process_medium'
-    tag "All Samples" 
+    tag "All Samples-" 
     container = params.containers.multiqc 
 
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
