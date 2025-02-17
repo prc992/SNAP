@@ -62,7 +62,7 @@ process createSMaSHFingerPrint{
     path (chBamAndBai)
 
     output:
-    path('*.txt')
+    path('pval_out.txt')
 
     script:
     """
