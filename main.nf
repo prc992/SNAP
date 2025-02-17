@@ -52,7 +52,7 @@ process createSMaSHFingerPrint{
 
     container = params.containers.python
 
-    tag "Sample - $sampleId"   
+    tag "All Samples"   
 
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/SMaSH/", mode : 'copy'
     
