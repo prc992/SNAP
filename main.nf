@@ -47,6 +47,29 @@ include {igv_consolidate_report} from './modules/igv_reports'
 include {igv_session} from './modules/igv_reports'
 include {moveSoftFiles} from './modules/moveSoftFiles'
 
+process createSMaSHFingerPrint{
+    label 'med_cpu_med_mem'
+
+    container = params.containers.python
+
+    tag "Sample - $sampleId"   
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/SMaSH/", mode : 'copy'
+    
+    input:
+    path (chSNPSMaSH)
+    tuple val(sampleId),path(sampleBam),path (indexBam),val (_)
+    path (chSNPS_ref)
+
+    output:
+    path('*.*')
+
+    script:
+    """
+    python3 $chSNPSMaSH All
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -75,7 +98,8 @@ workflow {
     chRfrag_plotFragDist = Channel.fromPath("$params.pathRfrag_plotFragDist")
     chRComparison = Channel.fromPath("$params.pathRComparison")
     chRPileups= Channel.fromPath("$params.pathRPileups")
-    chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
+    //chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
+    chSNPSMaSH = Channel.fromPath("$params.pathSNPSMaSH")
     chReportFragHist = Channel.fromPath("$params.pathReportFragHist")
     chReportFragPeaks = Channel.fromPath("$params.pathReportFragPeaks")
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
@@ -134,7 +158,8 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
 
-    chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
+    //chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
+    chSNPS_ref = downloadSNPRef(chGenomesInfo)
 
     fastqc(chSampleInfo) 
     chTrimFiles = trim(chSampleInfo)
@@ -150,7 +175,12 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
-    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
+    
+    chAllIndexFiles = chIndexFiles.collect()
+
+    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chAllIndexFiles,chSNPS_ref)
+
+    /*chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
     
@@ -206,7 +236,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
         chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)
+    moveSoftFiles(chFinalReport)*/
     
 }
 

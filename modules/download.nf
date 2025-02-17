@@ -6,14 +6,14 @@ process downloadSNPRef {
     container = params.containers.wget
 
     input:
-    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
-    tuple val(sampleId), val(enrichment_mark),val(read1), val(read2)
+    tuple val(genome), val(_), val(_), val(_), val(snp)
+    //tuple val(sampleId), val(enrichment_mark),val(read1), val(read2)
 
     output:
-    file "SNPs.1e5.${genome}.txt"
+    file "snps_${genome}.vcf"
 
     script:
-    def snpFile = "SNPs.1e5.${genome}.txt"
+    def snpFile = "snps_${genome}.vcf"
     
     """
     wget -O ${snpFile} ${snp}
