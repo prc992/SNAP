@@ -59,9 +59,7 @@ process createSMaSHFingerPrint{
     input:
     path (chSNPSMaSH)
     path (chSNPS_ref)
-    path (sampleBam)
-    path (indexBam)
-
+    path (chBamAndBai)
 
     output:
     path('*.*')
