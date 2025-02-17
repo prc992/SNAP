@@ -177,9 +177,9 @@ elif len(bam_comma_list)>0:
 	eprint("-bam[",bam_comma_list, "]is not valid.  use 'ALL' or a comma-separated list of BAM/SAM files.")
 	sys.exit (1)
 
-if len(bams) < 2:  
-	eprint ('Not enough bams specified. ')
-	sys.exit (1)
+if len(bams) < 2:
+    eprint(f"Error: Only {len(bams)} BAM file(s) specified. At least 2 are required.")
+    sys.exit(1)
 
 
 def dd():
