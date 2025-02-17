@@ -66,7 +66,7 @@ process createSMaSHFingerPrint{
 
     script:
     """
-    python3 $chSNPSMaSH All
+    python3 $chSNPSMaSH ALL
     """
 }
 
