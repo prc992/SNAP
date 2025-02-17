@@ -178,7 +178,7 @@ elif len(bam_comma_list)>0:
 	sys.exit (1)
 
 if len(bams) < 2:
-    eprint(f"Error: Only {len(bams)} BAM file(s) specified. At least 2 are required.")
+    eprint(f"Error: Only {len(bams)} BAM file(s) specified. At least 2 are required. Bams: {bams}")
     sys.exit(1)
 
 
