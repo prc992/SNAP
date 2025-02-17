@@ -62,11 +62,33 @@ process createSMaSHFingerPrint{
     path (chBamAndBai)
 
     output:
-    path('*.*')
+    path('*.txt')
 
     script:
     """
     python3 $chSNPSMaSH -i $chSNPS_ref ALL
+    """
+}
+
+process createSMaSHFingerPrintPlot{
+    label 'med_cpu_med_mem'
+
+    container = params.containers.snp_smash_plot
+
+    tag "All Samples"   
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/SMaSH/", mode : 'copy'
+    
+    input:
+    path (chSMaSHOutout)
+    path (chSNPSMaSHPyPlot)
+
+    output:
+    path('*.jpg')
+
+    script:
+    """
+    python3 $chSNPSMaSHPyPlot -i $chSMaSHOutout -o heatmap.jpg
     """
 }
 
@@ -100,6 +122,7 @@ workflow {
     chRPileups= Channel.fromPath("$params.pathRPileups")
     //chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
     chSNPSMaSH = Channel.fromPath("$params.pathSNPSMaSH")
+    chSNPSMaSHPyPlot = Channel.fromPath("$params.pathSNPSMaSHPlot")
     chReportFragHist = Channel.fromPath("$params.pathReportFragHist")
     chReportFragPeaks = Channel.fromPath("$params.pathReportFragPeaks")
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
@@ -181,6 +204,7 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
 
     chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
+    chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
 
     /*chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
