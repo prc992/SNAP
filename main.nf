@@ -58,8 +58,10 @@ process createSMaSHFingerPrint{
     
     input:
     path (chSNPSMaSH)
-    tuple val(sampleId),path(sampleBam),path (indexBam),val (_)
     path (chSNPS_ref)
+    path (sampleBam)
+    path (indexBam)
+
 
     output:
     path('*.*')
@@ -177,8 +179,10 @@ workflow {
 
     
     chAllIndexFiles = chIndexFiles.collect()
+    chAllBAMandBAIIndexFiles = chAllIndexFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
 
-    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chAllIndexFiles,chSNPS_ref)
+    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
 
     /*chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
