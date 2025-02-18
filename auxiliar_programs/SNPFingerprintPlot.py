@@ -57,7 +57,7 @@ def plot_pvalue_heatmap_sorted_dend(df_original, output_path="heatmap.jpg"):
     cbar = g.ax_heatmap.collections[0].colorbar
     cbar.set_label('-log10(p-value)', rotation=270, labelpad=15)
     
-    g.ax_heatmap.set_title("P-value Similarity Heatmap with Clustering", fontsize=14, pad=20)
+    #g.ax_heatmap.set_title("P-value Similarity Heatmap with Clustering", fontsize=14, pad=20)
     
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
