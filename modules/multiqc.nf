@@ -7,7 +7,6 @@ process multiqc {
     
     input:
     path (chIGVReport)
-    val(_)
     path (chFragmentsSizeFiles)
     path (chFootPrintPDF)
     path (chFragAndPeaks)
