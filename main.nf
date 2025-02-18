@@ -88,7 +88,7 @@ process createSMaSHFingerPrintPlot{
 
     script:
     """
-    python3 $chSNPSMaSHPyPlot -i $chSMaSHOutout -o heatmap.jpg
+    python3 $chSNPSMaSHPyPlot -i $chSMaSHOutout -o Dendrogram_of_Samples_by_SNP_Profile.jpg
     """
 }
 
@@ -206,7 +206,7 @@ workflow {
     chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
 
-    /*chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
+    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
     
@@ -242,11 +242,11 @@ workflow {
     //*********************************************************************************
 
     // SNP Fingerprint and plot process ***************************************************
-    chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect() 
+    /*chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect() 
     chSnpFingerprintCompleteAllfiles = chSnpFingerprintComplete.collect()
     chVCFGZFiles = chSnpFingerprintCompleteAllfiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.vcf.gz') }} // Filter the vcf files
-    chFootPrintPDF = snp_footprint_clustering(chVCFGZFiles,chRSNPFootprint,chSampleInfo)
+    chFootPrintPDF = snp_footprint_clustering(chVCFGZFiles,chRSNPFootprint,chSampleInfo)*/
 
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
@@ -259,10 +259,10 @@ workflow {
     // Definir o caminho de entrada
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
 
-    chFinalReport = multiqc(chIGVReportMerged,chSnpFingerprintComplete,chFragmentsSizeFiles,
-        chFootPrintPDF,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
+    chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
+        chSNPSMaSHPlot,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)*/
+    moveSoftFiles(chFinalReport)
     
 }
 
