@@ -20,7 +20,6 @@ include {bedgraph_to_bigwig} from './modules/bedgraph_to_bigwig'
 include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
 include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
 include {pileups_report} from './modules/pileups_report'
-include {uropa} from './modules/uropa'
 include {multiqc} from './modules/multiqc'
 include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
@@ -227,8 +226,6 @@ workflow {
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
-    
-    uropa(chPeakFiles,chGeneAnotation) //Verify if it is necessary if its helpful
     chBedFiles = bam_to_bed(chDACFilteredFiles) //
     chUniqueFrags = unique_frags(chBedFiles).collect() //
     chPeakAllFiles = chPeakFiles.collect() //
