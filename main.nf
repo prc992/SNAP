@@ -241,13 +241,6 @@ workflow {
     chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)
     //*********************************************************************************
 
-    // SNP Fingerprint and plot process ***************************************************
-    /*chSnpFingerprintComplete = snp_fingerprint(chIndexFiles, chSNPS_ref, chGenome).collect() 
-    chSnpFingerprintCompleteAllfiles = chSnpFingerprintComplete.collect()
-    chVCFGZFiles = chSnpFingerprintCompleteAllfiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.vcf.gz') }} // Filter the vcf files
-    chFootPrintPDF = snp_footprint_clustering(chVCFGZFiles,chRSNPFootprint,chSampleInfo)*/
-
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
