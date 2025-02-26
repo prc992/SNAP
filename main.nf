@@ -5,6 +5,7 @@ include {lib_complex} from './modules/lib_complex'
 include {fastqc} from './modules/fastqc'
 include {align} from './modules/align'
 include {sort_bam} from './modules/sort_bam'
+include {sort_readname_bam} from './modules/sort_bam'
 include {unique_sam} from './modules/unique_sam'
 include {enrichment} from './modules/enrichment'
 include {index_sam} from './modules/index_sam'
@@ -102,8 +103,7 @@ process createMotifGCfile {
   publishDir "${workflow.projectDir}/${params.outputFolder}/motifs/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),path(sampleBam)
-  //tuple val(sampleId),path(sampleBam),val(_)
+  tuple val(sampleId),path(sampleBam),val(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
@@ -309,9 +309,12 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
 
+    // Create a channel with a tuple containing a string ID, the BAM file, and an additional string
     chBamTest = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam')
-                    .map { file -> tuple('sample_test', file) }
-    createMotifGCfile(chBamTest, chGenome, chGenomeIndex)
+                    .map { file -> tuple('sample_test', file, 'alo') }
+
+    chNameSortedFiles = sort_readname_bam(chBamTest)
+    createMotifGCfile(chNameSortedFiles, chGenome, chGenomeIndex)
     //createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
