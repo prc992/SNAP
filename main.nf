@@ -227,7 +227,8 @@ workflow {
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
     chBedFiles = bam_to_bed(chDACFilteredFiles) //
-    chUniqueFrags = unique_frags(chBedFiles).collect() //
+    
+    /*chUniqueFrags = unique_frags(chBedFiles).collect() //
     chPeakAllFiles = chPeakFiles.collect() //
 
     
@@ -252,7 +253,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)
+    moveSoftFiles(chFinalReport)*/
     
 }
 
