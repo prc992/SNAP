@@ -104,8 +104,6 @@ process createMotifGCfile {
   
   input:
   tuple val(sampleId),path(sampleBam),val(_)
-  path (filter)
-  path (gap)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
@@ -136,8 +134,6 @@ process createMotifGCfile {
   #Get GC content
   awk 'OFS = "\t" {print \$1, \$2, \$6, \$7, \$11}' $strBedPE | \\
   sort -k1,1 -k2,2n | \\
-  bedtools subtract -a - -b $filter -A | \\
-  bedtools subtract -a - -b $gap -A | \\
   bedtools nuc -fi $genomeFile -bed - | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$7}' > $strBed
 
@@ -319,9 +315,6 @@ workflow {
     // Create a channel with a tuple containing a string ID, the BAM file, and an additional string
     chBamTest = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam')
                     .map { file -> tuple('sample_test', file, 'alo') }
-
-    chFilter = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/hg19-blacklist.v2.bed')
-    chGap = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/gaps.hg19.bed')
 
     chNameSortedFiles = sort_readname_bam(chBamTest)
     createMotifGCfile(chNameSortedFiles,chFilter,chGap,chGenome,chGenomeIndex)
