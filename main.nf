@@ -107,7 +107,6 @@ process createMotifGCfile {
   each path (genomeIndexFiles)
 
   exec:
-  String strBamTest = "/Users/prc992/Downloads/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam"
   String strBed = sampleId + '_frags_gc.bed.bed'
   String strBedPE = sampleId + '.bedpe'
   String strBedFilterPE = sampleId + '_filtered.bedpe'
@@ -126,7 +125,7 @@ process createMotifGCfile {
   """
   #Generate BEDPE files
   bedtools bamtobed -i \\
-  $strBamTest -bedpe 2> /dev/null | \\
+  $sampleBam -bedpe 2> /dev/null | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
   
   #Get GC content
@@ -289,7 +288,9 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
 
-    createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
+    chBamTest = Channel.fromPath("/Users/prc992/Downloads/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam")
+    createMotifGCfile(chBamTest, chGenome, chGenomeIndex)
+    //createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
     chBedFiles = bam_to_bed(chDACFilteredFiles) //
