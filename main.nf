@@ -111,11 +111,11 @@ process createMotifGCfile {
   String strBed = sampleId + '_frags_gc.bed.bed'
   String strBedPE = sampleId + '.bedpe'
   String strBedFilterPE = sampleId + '_filtered.bedpe'
-  String strBPr1 = sampleId + '_' + nmer + '_bp_r1.bed'
-  String strBPr2 = sampleId + '_' + nmer + '_bp_r2.bed'
-  String strBPr1FA = sampleId + '_' + nmer + 'NMER_bp_r1.fa.bed'
-  String strBPr2FA = sampleId + '_' + nmer + 'NMER_bp_r2.fa.bed'
-  String strBPmotif = sampleId + '_' + nmer + 'NMER_bp_motif.bed'
+  String strBPr1 = sampleId + '_' + params.nmer + '_bp_r1.bed'
+  String strBPr2 = sampleId + '_' + params.nmer + '_bp_r2.bed'
+  String strBPr1FA = sampleId + '_' + params.nmer + 'NMER_bp_r1.fa.bed'
+  String strBPr2FA = sampleId + '_' + params.nmer + 'NMER_bp_r2.fa.bed'
+  String strBPmotif = sampleId + '_' + params.nmer + 'NMER_bp_motif.bed'
   
   output:
   path ('*bp_motif.bed')
