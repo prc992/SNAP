@@ -1,5 +1,6 @@
 .DS_Store
 *.fa
+*.fa.fai
 *.fa.amb
 *.fa.ann
 *.fa.bwt
