@@ -120,7 +120,7 @@ process createMotifGCfile {
   $sampleBam -bedpe 2> /dev/null | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
 
-  cat <<-END_VERSIONS > bam_to_bed_mqc_versions.yml
+  cat <<-END_VERSIONS > createMotifGCfile_mqc_versions.yml
     "${task.process}":
         bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
   END_VERSIONS
