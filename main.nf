@@ -312,11 +312,7 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
 
-    // Create a channel with a tuple containing a string ID, the BAM file, and an additional string
-    chBamTest = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam')
-                    .map { file -> tuple('sample_test', file, 'alo') }
-
-    chNameSortedFiles = sort_readname_bam(chBamTest)
+    chNameSortedFiles = sort_readname_bam(chDACFilteredFiles)
     createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
 
