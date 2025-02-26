@@ -27,7 +27,7 @@ process bam_to_bed {
 
   bedtools bamtobed -i \\
   $sampleBam -bedpe 2> /dev/null | \\
-  awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '$11 >=0' > $strBedPE
+  awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
 
   cat <<-END_VERSIONS > bam_to_bed_mqc_versions.yml
     "${task.process}":
