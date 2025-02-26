@@ -102,7 +102,7 @@ process createMotifGCfile {
   publishDir "${workflow.projectDir}/${params.outputFolder}/motifs/${sampleId}", mode : 'copy'
   
   input:
-  path(sampleBam)
+  tuple val(sampleId),path(sampleBam)
   //tuple val(sampleId),path(sampleBam),val(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
@@ -289,7 +289,8 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
 
-    chBamTest = Channel.fromPath("/Users/prc992/Downloads/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam")
+    chBamTest = Channel.fromPath('/Users/prc992/Downloads/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam')
+                    .map { file -> tuple('sample_test', file) }
     createMotifGCfile(chBamTest, chGenome, chGenomeIndex)
     //createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
 
