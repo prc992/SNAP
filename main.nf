@@ -119,8 +119,7 @@ process createMotifGCfile {
   String strBPmotif = sampleId + '_' + nmer + 'NMER_bp_motif.bed'
   
   output:
-  path ('*.*')
-  path (sampleBam)
+  path ('*.bp_motif.bed')
   //tuple val(sampleId),path ('*.bedpe'),path ("createMotifGCfile_mqc_versions.yml")
 
   script:
