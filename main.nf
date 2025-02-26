@@ -91,6 +91,43 @@ process createSMaSHFingerPrintPlot{
     """
 }
 
+process createMotifGCfile {
+  label 'process_medium'
+
+  //Docker Image
+  container = params.containers.bedtools
+
+  tag "Sample - $sampleId"  
+
+  publishDir "${workflow.projectDir}/${params.outputFolder}/motifs/${sampleId}", mode : 'copy'
+  
+  input:
+  tuple val(sampleId),path(sampleBam),val(_)
+  each path (genomeFile)
+  each path (genomeIndexFiles)
+
+  exec:
+  String strBed = sampleId + '.bed'
+  String strBedPE = sampleId + '.bedpe'
+
+
+  output:
+  tuple val(sampleId),path ('*.bed'),path ("createMotifGCfile_mqc_versions.yml")
+
+  script:
+  """
+  bedtools bamtobed -i \\
+  $sampleBam -bedpe 2> /dev/null | \\
+  awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
+
+  cat <<-END_VERSIONS > bam_to_bed_mqc_versions.yml
+    "${task.process}":
+        bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
+  END_VERSIONS
+  """
+}
+
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -224,6 +261,8 @@ workflow {
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
+
+    createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
     chBedFiles = bam_to_bed(chDACFilteredFiles) //
