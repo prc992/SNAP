@@ -107,18 +107,22 @@ process createMotifGCfile {
   each path (genomeIndexFiles)
 
   exec:
-  String strBed = sampleId + '.bed'
+  String strBed = sampleId + '_frags_gc.bed.bed'
   String strBedPE = sampleId + '.bedpe'
 
 
   output:
-  tuple val(sampleId),path ('*.bedpe'),path ("createMotifGCfile_mqc_versions.yml")
+  path ('*.*')
+  //tuple val(sampleId),path ('*.bedpe'),path ("createMotifGCfile_mqc_versions.yml")
 
   script:
   """
   bedtools bamtobed -i \\
   $sampleBam -bedpe 2> /dev/null | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
+
+  awk 'OFS = "\t" {print \$1, \$2, \$6, \$7, \$11}' $strBedPE |sort -k1,1 -k2,2n | bedtools nuc -fi $genomeFile -bed - | awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$7}' > $strBed
+
 
   cat <<-END_VERSIONS > createMotifGCfile_mqc_versions.yml
     "${task.process}":
