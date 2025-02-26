@@ -138,8 +138,8 @@ process createMotifGCfile {
   $strBed $strBedPE> $strBedFilterPE
 
   #Generate 4 mer by collapsing paired reads into 5' nmer and then getting nucleotides from fasta files
-  awk -v nmer="$params.nmer" 'OFS="\t" {print \$1, \$2, \$2+$params.nmer, \$7, \$8, \$9, \$11, \$12, \$1, \$2, \$6}' $strBedFilterPE > $strBPr1
-  awk -v nmer="$params.nmer" 'OFS="\t" {print \$4, \$6-$params.nmer, \$6, \$7, \$8, \$10, \$11, \$12, \$1, \$2, \$6}' $strBedFilterPE > $strBPr2
+  awk -v nmer="${params.nmer}" 'OFS="\t" {print \$1, \$2, \$2+${params.nmer}, \$7, \$8, \$9, \$11, \$12, \$1, \$2, \$6}' $strBedFilterPE > $strBPr1
+  awk -v nmer="${params.nmer}" 'OFS="\t" {print \$4, \$6-${params.nmer}, \$6, \$7, \$8, \$10, \$11, \$12, \$1, \$2, \$6}' $strBedFilterPE > $strBPr2
   bedtools getfasta -fi $genomeFile -bed $strBPr1 -s -bedOut -fo | awk 'OFS="\t" {print \$1, \$10, \$11, \$6, \$7, \$8, toupper(\$12)}' - > $strBPr1FA
   bedtools getfasta -fi $genomeFile -bed $strBPr2 -s -bedOut -fo | awk 'OFS="\t" {print toupper(\$12)}' - > $strBPr2FA
 
