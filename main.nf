@@ -136,7 +136,7 @@ process createMotifGCfile {
 
   #Filter bedfiles for GC content
   awk 'BEGIN {FS=OFS="\t"} FNR==NR {arr[\$4]=\$6;next} (\$7 in arr) {print \$0, arr[\$7]}' \\
-  $strBedPE > $strBedFilterPE
+  $strBed $strBedPE> $strBedFilterPE
 
   #Generate 4 mer by collapsing paired reads into 5' nmer and then getting nucleotides from fasta files
   awk -v nmer="$nmer" 'OFS="\t" {print \$1, \$2, \$2+$nmer, \$7, \$8, \$9, \$11, \$12, \$1, \$2, \$6}' $strBedFilterPE > $strBPr1
