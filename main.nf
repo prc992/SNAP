@@ -125,13 +125,19 @@ process createMotifGCfile {
 
   script:
   """
+  export filter="/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/hg19-blacklist.v2.bed"
+  export gap="/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/gaps.hg19.bed"
+
   #Generate BEDPE files
   bedtools bamtobed -bedpe -i $sampleBam | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
 
   #Get GC content
   awk 'OFS = "\t" {print \$1, \$2, \$6, \$7, \$11}' $strBedPE | \\
-  sort -k1,1 -k2,2n | bedtools nuc -fi $genomeFile -bed - | \\
+  sort -k1,1 -k2,2n | \\
+  bedtools subtract -a - -b "$filter" -A | \\
+  bedtools subtract -a - -b "$gap" -A | \\
+  bedtools nuc -fi $genomeFile -bed - | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$7}' > $strBed
 
   #Filter bedfiles for GC content
