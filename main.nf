@@ -107,6 +107,7 @@ process createMotifGCfile {
   each path (genomeIndexFiles)
 
   exec:
+  String strBamTest = "/Users/prc992/Downloads/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam"
   String strBed = sampleId + '_frags_gc.bed.bed'
   String strBedPE = sampleId + '.bedpe'
   String strBedFilterPE = sampleId + '_filtered.bedpe'
@@ -125,7 +126,7 @@ process createMotifGCfile {
   """
   #Generate BEDPE files
   bedtools bamtobed -i \\
-  $sampleBam -bedpe 2> /dev/null | \\
+  $strBamTest -bedpe 2> /dev/null | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
   
   #Get GC content
