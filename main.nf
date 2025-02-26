@@ -104,6 +104,8 @@ process createMotifGCfile {
   
   input:
   tuple val(sampleId),path(sampleBam),val(_)
+  path (filter)
+  path (gap)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
@@ -117,9 +119,6 @@ process createMotifGCfile {
   String strBPr1FA = sampleId + '_' + nmer + 'NMER_bp_r1.fa.bed'
   String strBPr2FA = sampleId + '_' + nmer + 'NMER_bp_r2.fa.bed'
   String strBPmotif = sampleId + '_' + nmer + 'NMER_bp_motif.bed'
-
-  String filter= "/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/hg19-blacklist.v2.bed"
-  String gap= "/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/gaps.hg19.bed"
   
   output:
   path ('*.*')
@@ -321,8 +320,11 @@ workflow {
     chBamTest = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam')
                     .map { file -> tuple('sample_test', file, 'alo') }
 
+    chFilter = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/hg19-blacklist.v2.bed')
+    chGap = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/gaps.hg19.bed')
+
     chNameSortedFiles = sort_readname_bam(chBamTest)
-    createMotifGCfile(chNameSortedFiles, chGenome, chGenomeIndex)
+    createMotifGCfile(chNameSortedFiles,chFilter,chGap,chGenome,chGenomeIndex)
     //createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
