@@ -145,7 +145,7 @@ process createMotifGCfile {
   bedtools getfasta -fi $genomeFile -bed $strBPr2 -s -bedOut -fo | awk 'OFS="\t" {print toupper(\$12)}' - > $strBPr2FA
 
   #Put it all together
-  awk '{getline line < f2; print $\0 "\t" line}' f2="$strBPr2FA" "$strBPr1FA" > "$strBPmotif"
+  awk '{getline line < f2; print \$0 "\t" line}' f2="$strBPr2FA" "$strBPr1FA" > "$strBPmotif"
 
   cat <<-END_VERSIONS > createMotifGCfile_mqc_versions.yml
     "${task.process}":
