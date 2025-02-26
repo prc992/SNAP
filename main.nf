@@ -126,10 +126,16 @@ process createMotifGCfile {
   script:
   """
   #Generate BEDPE files
-  samtools sort -n $sampleBam -@ $task.cpus | \\
-  bedtools bamtobed -bedpe 2> /dev/null | \\
+  bedtools bamtobed -bedpe -i $sampleBam | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
   
+  cat <<-END_VERSIONS > createMotifGCfile_mqc_versions.yml
+    "${task.process}":
+        bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
+  END_VERSIONS
+  """
+
+  /*
   #Get GC content
   awk 'OFS = "\t" {print \$1, \$2, \$6, \$7, \$11}' $strBedPE | \\
   sort -k1,1 -k2,2n | bedtools nuc -fi $genomeFile -bed - | \\
@@ -147,13 +153,7 @@ process createMotifGCfile {
 
   #Put it all together
   awk '{getline line < f2; print \$0 "\t" line}' f2="$strBPr2FA" "$strBPr1FA" > "$strBPmotif"
-
-  cat <<-END_VERSIONS > createMotifGCfile_mqc_versions.yml
-    "${task.process}":
-        bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
-  END_VERSIONS
-  """
-  //  awk '{getline f2 < ARGV[2]; print \$0 "\t" f2}' $strBPr1FA $strBPr2FA > $strBPmotif
+  */
 }
 
 
