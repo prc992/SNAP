@@ -117,6 +117,9 @@ process createMotifGCfile {
   String strBPr1FA = sampleId + '_' + nmer + 'NMER_bp_r1.fa.bed'
   String strBPr2FA = sampleId + '_' + nmer + 'NMER_bp_r2.fa.bed'
   String strBPmotif = sampleId + '_' + nmer + 'NMER_bp_motif.bed'
+
+  String filter= "/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/hg19-blacklist.v2.bed"
+  String gap= "/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/gaps.hg19.bed"
   
   output:
   path ('*.*')
@@ -125,8 +128,7 @@ process createMotifGCfile {
 
   script:
   """
-  export filter="/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/hg19-blacklist.v2.bed"
-  export gap="/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/gaps.hg19.bed"
+ 
 
   #Generate BEDPE files
   bedtools bamtobed -bedpe -i $sampleBam | \\
@@ -135,8 +137,8 @@ process createMotifGCfile {
   #Get GC content
   awk 'OFS = "\t" {print \$1, \$2, \$6, \$7, \$11}' $strBedPE | \\
   sort -k1,1 -k2,2n | \\
-  bedtools subtract -a - -b "$filter" -A | \\
-  bedtools subtract -a - -b "$gap" -A | \\
+  bedtools subtract -a - -b $filter -A | \\
+  bedtools subtract -a - -b $gap -A | \\
   bedtools nuc -fi $genomeFile -bed - | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$7}' > $strBed
 
