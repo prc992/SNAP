@@ -120,6 +120,7 @@ process createMotifGCfile {
   
   output:
   path ('*.*')
+  path (sampleBam)
   //tuple val(sampleId),path ('*.bedpe'),path ("createMotifGCfile_mqc_versions.yml")
 
   script:
