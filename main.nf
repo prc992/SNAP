@@ -317,7 +317,7 @@ workflow {
                     .map { file -> tuple('sample_test', file, 'alo') }
 
     chNameSortedFiles = sort_readname_bam(chBamTest)
-    createMotifGCfile(chNameSortedFiles,chFilter,chGap,chGenome,chGenomeIndex)
+    createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
