@@ -290,7 +290,7 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
 
-    chBamTest = Channel.fromPath('/Users/prc992/Downloads/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam')
+    chBamTest = Channel.fromPath('/Users/prc992/Desktop/DFCI/2-SNAP/9-MotifGunTest/HS_cK20_AM_MH_unique_sorted_deduped_filtered.bam')
                     .map { file -> tuple('sample_test', file) }
     createMotifGCfile(chBamTest, chGenome, chGenomeIndex)
     //createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
