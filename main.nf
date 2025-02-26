@@ -117,11 +117,15 @@ process createMotifGCfile {
 
   script:
   """
+  #Generate BEDPE files
   bedtools bamtobed -i \\
   $sampleBam -bedpe 2> /dev/null | \\
   awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, \$8, \$9, \$10, \$6-\$2}' | awk '\$11 >=0' > $strBedPE
-
-  awk 'OFS = "\t" {print \$1, \$2, \$6, \$7, \$11}' $strBedPE |sort -k1,1 -k2,2n | bedtools nuc -fi $genomeFile -bed - | awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$7}' > $strBed
+  
+  #Get GC content
+  awk 'OFS = "\t" {print \$1, \$2, \$6, \$7, \$11}' $strBedPE \\
+  |sort -k1,1 -k2,2n | bedtools nuc -fi $genomeFile -bed - | \\
+  awk 'OFS = "\t" {print \$1, \$2, \$3, \$4, \$5, \$7}' > $strBed
 
 
   cat <<-END_VERSIONS > createMotifGCfile_mqc_versions.yml
