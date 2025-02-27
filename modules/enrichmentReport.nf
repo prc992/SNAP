@@ -16,6 +16,7 @@ process enrichmentReport {
 
     script:
     """
+    touch ${sampleId}_report.csv
     python $chReportEnrichment --mark ${enrichment_mark} --samplename ${sampleId}
     """
 }

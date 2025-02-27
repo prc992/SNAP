@@ -206,16 +206,10 @@ workflow {
     chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)
     //*********************************************************************************
 
-    if (params.enrichment_states_ref && params.samplesheet) {
-        //ENRICHMENT      ***************************************************
-        chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
-        chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
-        chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
-    } else {
-        //No enrichment_states_ref or samplesheet provided. Skipping enrichment analysis.
-        chEnrichmentFilesReport = Channel.empty()
-        
-    }
+    //ENRICHMENT      ***************************************************
+    chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
+    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
+    chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
     //Final Report
 
