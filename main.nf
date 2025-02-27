@@ -206,12 +206,13 @@ workflow {
     chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)
     //*********************************************************************************
 
-    //ENRICHMENT      ***************************************************
-    chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
-    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
-    chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
+    if (params.enrichment_states_ref) {
+        //ENRICHMENT      ***************************************************
+        chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
+        chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
+        chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
+    } 
     
-
     //Final Report
 
     // Definir o caminho de entrada
