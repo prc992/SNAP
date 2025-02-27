@@ -45,10 +45,10 @@ include {igv_consolidate_report} from './modules/igv_reports'
 include {igv_session} from './modules/igv_reports'
 include {moveSoftFiles} from './modules/moveSoftFiles'
 
-include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint.nf'
-include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint.nf'
+include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
+include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
 
-include {createMotifGCfile} from './modules/end_motif_gc.nf.nf'
+include {createMotifGCfile} from './modules/end_motif_gc'
 
 
 workflow {
