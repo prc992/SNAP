@@ -16,13 +16,11 @@ include {peak_bed_graph} from './modules/peak_bed_graph'
 include {bam_to_bed} from './modules/bam_to_bed'
 include {unique_frags} from './modules/unique_frags'
 include {trim} from './modules/trim'
-include {snp_fingerprint} from './modules/snp_fingerprint'
 include {bedgraph_to_bigwig} from './modules/bedgraph_to_bigwig'
 include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
 include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
 include {pileups_report} from './modules/pileups_report'
 include {multiqc} from './modules/multiqc'
-include {snp_footprint_clustering} from './modules/snp_footprint_clustering'
 
 include {downloadSNPRef} from './modules/download'
 include {downloadDACFile} from './modules/download'
@@ -243,7 +241,6 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
 
-    //chSNPS_ref = downloadSNPRef(chGenomesInfo,chSampleInfo)
     chSNPS_ref = downloadSNPRef(chGenomesInfo)
 
     fastqc(chSampleInfo) 
@@ -265,8 +262,10 @@ workflow {
     chAllBAMandBAIIndexFiles = chAllIndexFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
 
+    //SNP Fingerprint using SMaSH ************************************************
     chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
+    //*****************************************************************************
 
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
@@ -280,22 +279,24 @@ workflow {
     chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the tdf files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
+    //************************************************************************
         
     
-    //Fragment Length Distribution ************************************************
+    //Fragment Length Distribution *******************************************
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
 
+    //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chDACFilteredFiles)
     createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
-    //createMotifGCfile(chDACFilteredFiles, chGenome, chGenomeIndex)
+    //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
     chBedFiles = bam_to_bed(chDACFilteredFiles) //
     
-    /*chUniqueFrags = unique_frags(chBedFiles).collect() //
+    chUniqueFrags = unique_frags(chBedFiles).collect() //
     chPeakAllFiles = chPeakFiles.collect() //
 
     
