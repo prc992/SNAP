@@ -206,7 +206,7 @@ workflow {
     chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)
     //*********************************************************************************
 
-    if (params.enrichment_states_ref) {
+    if (params.enrichment_states_ref && params.samplesheet) {
         //ENRICHMENT      ***************************************************
         chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
         chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
