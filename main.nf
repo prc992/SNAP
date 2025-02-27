@@ -209,7 +209,7 @@ workflow {
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
-    chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
+    //chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
     //Final Report
 
