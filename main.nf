@@ -146,8 +146,8 @@ workflow {
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
     chSortedFiles = sort_bam(chAlignFiles)
-    lib_complex(chSortedFiles) 
-    lib_complex_preseq(chSortedFiles) 
+    //lib_complex(chSortedFiles) 
+    //lib_complex_preseq(chSortedFiles) 
     chUniqueFiles = unique_sam(chSortedFiles) 
 
     chFilteredFiles = quality_filter(chUniqueFiles) 
