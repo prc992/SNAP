@@ -40,18 +40,40 @@ df = pd.DataFrame(data)
 
 merged_data = {}
 
-for mark, group in df.groupby('Mark'):
-    # Load the files belonging to each mark
-    dfs = [pd.read_csv(file) for file in group['File']]
+import os
+import pandas as pd
 
-    # Concatenate all DataFrames
+merged_data = {}
+
+for mark, group in df.groupby('Mark'):
+    print(f"Processing files for mark: {mark}")
+
+    # Load only non-empty files
+    dfs = []
+    for file in group['File']:
+        if os.path.getsize(file) > 0:  # Ensure file is not empty
+            try:
+                df_temp = pd.read_csv(file)
+                dfs.append(df_temp)
+            except pd.errors.EmptyDataError:
+                print(f"Warning: {file} is empty. Skipping.")
+        else:
+            print(f"Warning: {file} is empty. Skipping.")
+
+    if not dfs:  # Skip if no valid data
+        print(f"Skipping mark {mark} due to no valid data.")
+        continue
+
+    # Concatenate all valid DataFrames
     merged_data[mark] = pd.concat(dfs, ignore_index=True)
     merged_data[mark] = merged_data[mark].drop(columns=['mark'], errors='ignore')
+
     output_file = f"merged_enrichment_{mark}_mqc.csv"
-    header_content = header_content_original.replace('<MARK>',mark)
-    
-    # Write the header to the output file
+    header_content = header_content_original.replace('<MARK>', mark)
+
+    # Write header
     with open(output_file, 'w') as file:
-        file.write(header_content + '\n')  #Add the header at the begining
-    
-    merged_data[mark].to_csv(output_file, mode='a',index=False,header=True)
+        file.write(header_content + '\n')
+
+    # Write merged data
+    merged_data[mark].to_csv(output_file, mode='a', index=False, header=True)
