@@ -11,9 +11,11 @@ process calcFragsLength {
   output:
   tuple path("*fragment_sizes.txt"), path ("bamPEFragmentSize_mqc_versions.yml")
 
+  //bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt
+
   script:
   """
-  bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt
+  touch ${sampleId}.fragment_sizes.txt
 
   cat <<-END_VERSIONS > bamPEFragmentSize_mqc_versions.yml
     "${task.process}":
