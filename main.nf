@@ -156,6 +156,11 @@ workflow {
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
+    //End Motif and GC content ***********************************************
+    chNameSortedFiles = sort_readname_bam(chDACFilteredFiles)
+    createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
+    //************************************************************************
+
     
     chAllIndexFiles = chIndexFiles.collect()
     chAllBAMandBAIIndexFiles = chAllIndexFiles.map { collectedFiles ->
@@ -185,11 +190,6 @@ workflow {
     chFragmentsSize = calcFragsLength(chIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
-    //************************************************************************
-
-    //End Motif and GC content ***********************************************
-    chNameSortedFiles = sort_readname_bam(chDACFilteredFiles)
-    createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
 
     chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
