@@ -17,5 +17,10 @@ process merge_enrichment_reports {
     script:
     """
     python $chMergeReportEnrichment
+    
+    # If no file *_mqc.csv was created create an empty one
+    if ! ls *_mqc.csv 1> /dev/null 2>&1; then
+        touch ${sampleId}.csv
+    fi
     """
 }
