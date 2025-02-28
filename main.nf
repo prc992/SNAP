@@ -54,7 +54,7 @@ include {createMotifGCfile} from './modules/end_motif_gc'
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.0.16"
+    def releaseVersion = "v1.0.17"
 
     // ASCII art for SNAP
     def asciiArt = """
