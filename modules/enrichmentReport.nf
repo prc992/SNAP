@@ -3,21 +3,22 @@ process enrichmentReport {
     container = params.containers.python
     tag "Sample - $sampleId" 
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode: 'copy'
 
     input:
-    tuple val(sampleId), val(enrichment_mark),val(_), val(_)
+    tuple val(sampleId), val(enrichment_mark), val(_), val(_)
     path(csvFiles)
-    each path (chReportEnrichment)
-
+    each path(chReportEnrichment)
 
     output:
     path ("*_report.csv")
 
-    // touch ${sampleId}_report.csv
     script:
     """
-    echo "$enrichment_mark"
-    python $chReportEnrichment --mark ${enrichment_mark} --samplename ${sampleId}
+    if [[ -z "$enrichment_mark" ]]; then
+        touch ${sampleId}_report.csv
+    else
+        python $chReportEnrichment --mark ${enrichment_mark} --samplename ${sampleId}
+    fi
     """
 }
