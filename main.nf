@@ -119,8 +119,8 @@ workflow {
     // Download the genome, gene annotation, and DAC file
     chGenome = downloadGenome(chGenomesInfo,refDir)
     chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome,refDir)
-    chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir)
-    chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
+    //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely
+    //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
     chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
     
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
@@ -140,9 +140,9 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
 
-    chSNPS_ref = downloadSNPRef(chGenomesInfo)
+    //chSNPS_ref = downloadSNPRef(chGenomesInfo)
 
-    fastqc(chSampleInfo) 
+    //fastqc(chSampleInfo) 
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
     chSortedFiles = sort_bam(chAlignFiles)
@@ -151,7 +151,7 @@ workflow {
     chUniqueFiles = unique_sam(chSortedFiles) 
 
     chFilteredFiles = quality_filter(chUniqueFiles) 
-    chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) 
+    //chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) 
     chDedupFiles = dedup(chFilteredFiles) 
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
