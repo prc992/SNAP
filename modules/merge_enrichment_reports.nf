@@ -12,15 +12,10 @@ process merge_enrichment_reports {
     tuple val(sampleId), val(enrichment_mark), val(read1), val(read2)
 
     output:
-    path ("*_mqc.csv")
+    path ("*.*")
 
     script:
     """
     python $chMergeReportEnrichment
-    
-    # If no file *_mqc.csv was created create an empty one
-    if ! ls *_mqc.csv 1> /dev/null 2>&1; then
-        touch ${sampleId}_mqc.csv
-    fi
     """
 }
