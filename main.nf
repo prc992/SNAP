@@ -161,7 +161,6 @@ workflow {
     createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
 
-    
     chAllIndexFiles = chIndexFiles.collect()
     chAllBAMandBAIIndexFiles = chAllIndexFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
