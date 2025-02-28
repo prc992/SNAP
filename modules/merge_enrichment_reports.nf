@@ -3,13 +3,13 @@ process merge_enrichment_reports {
     container = params.containers.python
     tag "Sample - $sampleId"
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode: 'copy'
 
     input:
     path (chEnrichmentFilesReport)
     each path (chMultiQCEnrichmentHeader)
     each path (chMergeReportEnrichment)
-    tuple val(sampleId), val(enrichment_mark),val(read1), val(read2)
+    tuple val(sampleId), val(enrichment_mark), val(read1), val(read2)
 
     output:
     path ("*_mqc.csv")
@@ -17,5 +17,10 @@ process merge_enrichment_reports {
     script:
     """
     python $chMergeReportEnrichment
+    
+    # If no file *_mqc.csv was created create an empty one
+    if ! ls *_mqc.csv 1> /dev/null 2>&1; then
+        touch ${sampleId}_mqc.csv
+    fi
     """
 }
