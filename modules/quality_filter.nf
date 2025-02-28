@@ -18,7 +18,7 @@ process quality_filter {
 
     script:
     """
-    samtools view -bh -f 3 -F 3844 -q 30 --threads $task.cpus $sampleBam > $strBam
+    samtools view -bh -f $params.filter_samtools.inclusion_flag -F $params.filter_samtools.exclusion_flag -q $params.filter_samtools.min_qc --threads $task.cpus $sampleBam > $strBam
 
     cat <<-END_VERSIONS > samtools_QualityFilter_mqc_versions.yml
     "${task.process}":

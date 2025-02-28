@@ -146,8 +146,8 @@ workflow {
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
     chSortedFiles = sort_bam(chAlignFiles)
-    //lib_complex(chSortedFiles) 
-    //lib_complex_preseq(chSortedFiles) 
+    //lib_complex(chSortedFiles) Ver pq está dando erro
+    //lib_complex_preseq(chSortedFiles) Ver pq está dando erro
     chUniqueFiles = unique_sam(chSortedFiles) 
 
     chFilteredFiles = quality_filter(chUniqueFiles) 
@@ -209,6 +209,7 @@ workflow {
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
+    //Ver pq está dando erro quando não tem enrichment
     //chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
     //Final Report
