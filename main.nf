@@ -1,7 +1,6 @@
  #! /usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-
 include {fastqc} from './modules/fastqc'
 include {align} from './modules/align'
 include {sort_bam} from './modules/sort_bam'
@@ -21,15 +20,12 @@ include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
 include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
 include {pileups_report} from './modules/pileups_report'
 include {multiqc} from './modules/multiqc'
-
 include {downloadSNPRef} from './modules/download'
 include {downloadDACFile} from './modules/download'
 include {downloadGeneAnotation} from './modules/download'
 include {downloadGenome} from './modules/download'
-
 include {createGenomeIndex} from './modules/createGenomeIndex'
 include {createSamplesheet} from './modules/createSamplesheet'
-
 include {createStatsSamtoolsfiltered} from './modules/createStatsSamtoolsfiltered'
 include {quality_filter} from './modules/quality_filter'
 include {lib_complex_preseq} from './modules/lib_complex_preseq'
@@ -44,12 +40,9 @@ include {igv_sample_reports} from './modules/igv_reports'
 include {igv_consolidate_report} from './modules/igv_reports'
 include {igv_session} from './modules/igv_reports'
 include {moveSoftFiles} from './modules/moveSoftFiles'
-
 include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
-
 include {createMotifGCfile} from './modules/end_motif_gc'
-
 
 workflow {
     // Static information about the pipeline
@@ -165,8 +158,6 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
 
     chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
-    
-
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
     //*****************************************************************************
     
