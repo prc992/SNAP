@@ -17,6 +17,7 @@ process createSMaSHFingerPrint{
 
     script:
     """
+    #check if there are more than one BAM file if not create an empty pval_out.txt
     num_bams=\$(ls *.bam 2>/dev/null | wc -l)
 
     if [[ "\$num_bams" -gt 1 ]]; then
