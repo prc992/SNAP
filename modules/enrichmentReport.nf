@@ -18,6 +18,7 @@ process enrichmentReport {
     if [[ -z "$enrichment_mark" ]]; then
         touch ${sampleId}_report.csv
     else
+        touch ${sampleId}_report.csv
         python $chReportEnrichment --mark ${enrichment_mark} --samplename ${sampleId}
     fi
     """
