@@ -46,6 +46,11 @@ process createSMaSHFingerPrintPlot{
 
     script:
     """
-    python3 $chSNPSMaSHPyPlot -i $chSMaSHOutout -o Dendrogram_of_Samples_by_SNP_Profile.jpg
+    #Empty input detected. Create an empty JPG.
+    if [[ ! -s "$chSMaSHOutout" ]]; then
+        touch Dendrogram_of_Samples_by_SNP_Profile.jpg
+    else
+        python3 $chSNPSMaSHPyPlot -i $chSMaSHOutout -o Dendrogram_of_Samples_by_SNP_Profile.jpg
+    fi
     """
 }
