@@ -6,7 +6,7 @@ include { downloadGenome } from '../../modules/local/download'
 include { createGenomeIndex } from '../../modules/local/createGenomeIndex'
 
 workflow download_references {
-    input:
+    take:
         tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
         path refDir
 
