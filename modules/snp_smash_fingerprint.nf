@@ -17,7 +17,14 @@ process createSMaSHFingerPrint{
 
     script:
     """
-    python3 $chSNPSMaSH -i $chSNPS_ref ALL
+    num_bams=\$(ls *.bam 2>/dev/null | wc -l)
+
+    if [[ "\$num_bams" -gt 1 ]]; then
+        python3 $chSNPSMaSH -i $chSNPS_ref ALL
+    else
+        echo "Only one BAM file detected, creating empty pval_out.txt."
+        touch pval_out.txt
+    fi
     """
 }
 
