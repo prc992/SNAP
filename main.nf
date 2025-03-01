@@ -165,16 +165,8 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
 
     //SNP Fingerprint using SMaSH ************************************************
-    //chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
-    //chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
-
-    // Conta a quantidade de arquivos BAM
-    chBAMCount = chAllBAMandBAIIndexFiles.map { files -> files.count { it.toString().endsWith('.bam') }}
-    // Filtra e mantém apenas os casos onde há mais de 1 arquivo BAM
-    chFilteredBAMFiles = chAllBAMandBAIIndexFiles.combine(chBAMCount).filter { files, count -> count > 1 }.map { it[0] } // Mantém apenas a lista de arquivos
-    // SNP Fingerprint usando SMaSH (executado apenas se houver >1 BAM)
-    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH, chSNPS_ref, chFilteredBAMFiles)
-    chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout, chSNPSMaSHPyPlot)
+    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
+    chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
     //*****************************************************************************
 
     
