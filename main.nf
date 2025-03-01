@@ -23,8 +23,8 @@ include {multiqc} from './modules/multiqc'
 include {downloadSNPRef} from './modules/download'
 include {downloadDACFile} from './modules/download'
 include {downloadGeneAnotation} from './modules/download'
-include {downloadGenome} from './modules/download'
-include {createGenomeIndex} from './modules/createGenomeIndex'
+//include {downloadGenome} from './modules/download'
+//include {createGenomeIndex} from './modules/createGenomeIndex'
 include {createSamplesheet} from './modules/createSamplesheet'
 include {createStatsSamtoolsfiltered} from './modules/createStatsSamtoolsfiltered'
 include {quality_filter} from './modules/quality_filter'
@@ -43,6 +43,8 @@ include {moveSoftFiles} from './modules/moveSoftFiles'
 include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
 include {createMotifGCfile} from './modules/end_motif_gc'
+
+include { download_references } from './subworkflows/local/download_references'
 
 workflow {
     // Static information about the pipeline
@@ -109,8 +111,7 @@ workflow {
         }
 
     // Download the genome, gene annotation, and DAC file
-    chGenome = downloadGenome(chGenomesInfo,refDir)
-    chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome,refDir)
+    chGenomeAndIndex = download_references(chGenomesInfo,refDir)
 
     /*
     //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely
