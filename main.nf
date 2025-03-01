@@ -169,11 +169,10 @@ workflow {
     // Apenas enviar arquivos BAM se houver pelo menos 2
     chFilteredBAMFiles = chAllBAMandBAIIndexFiles.filter { it.count { f -> f.toString().endsWith('.bam') } > 1 }
     chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chFilteredBAMFiles)
-    /*
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
     //*****************************************************************************
 
-    
+    /*
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
