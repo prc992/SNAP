@@ -1,8 +1,8 @@
 nextflow.enable.dsl=2
 
 // Import the required processes from the modules
-include { downloadGenome } from '../modules/local/download'
-include { createGenomeIndex } from '../modules/local/createGenomeIndex'
+include { downloadGenome } from './modules/local/download'
+include { createGenomeIndex } from './modules/local/createGenomeIndex'
 
 subworkflow download_references {
     input:
