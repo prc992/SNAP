@@ -1,7 +1,8 @@
 nextflow.enable.dsl=2
 
 // Import the required processes from the modules
-include { downloadGenome } from './modules/local/download.nf'
+//include { downloadGenome } from './modules/local/download.nf'
+include { downloadGenome } from '/Users/prc992/Desktop/DFCI/2-SNAP/SNAP/modules/local'
 include { createGenomeIndex } from './modules/local/createGenomeIndex'
 
 subworkflow download_references {
