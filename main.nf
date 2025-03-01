@@ -159,16 +159,12 @@ workflow {
     createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
 
-
+    //SNP Fingerprint using SMaSH ************************************************
     chAllIndexFiles = chIndexFiles.collect()
     chAllBAMandBAIIndexFiles = chAllIndexFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
 
-    //SNP Fingerprint using SMaSH ************************************************
-
-    // Apenas enviar arquivos BAM se houver pelo menos 2
-    chFilteredBAMFiles = chAllBAMandBAIIndexFiles.filter { it.count { f -> f.toString().endsWith('.bam') } > 1 }
-    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chFilteredBAMFiles)
+    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
     //*****************************************************************************
 
