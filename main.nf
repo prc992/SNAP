@@ -44,7 +44,7 @@ include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
 include {createMotifGCfile} from './modules/end_motif_gc'
 
-include { download_references } from 'subworkflows/local/download_references'
+include { download_references } from './subworkflows/local/download_references'
 
 workflow {
     // Static information about the pipeline
