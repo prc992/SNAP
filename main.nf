@@ -171,7 +171,7 @@ workflow {
 
     chBigWigAllFiles = chBigWig.collect()
     chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the tdf files
+    collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
     //************************************************************************
         
