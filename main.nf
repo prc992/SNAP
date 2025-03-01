@@ -1,7 +1,7 @@
  #! /usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-include {lib_complex} from './modules/lib_complex'
+
 include {fastqc} from './modules/fastqc'
 include {align} from './modules/align'
 include {sort_bam} from './modules/sort_bam'
@@ -79,7 +79,6 @@ workflow {
     chRfrag_plotFragDist = Channel.fromPath("$params.pathRfrag_plotFragDist")
     chRComparison = Channel.fromPath("$params.pathRComparison")
     chRPileups= Channel.fromPath("$params.pathRPileups")
-    //chRSNPFootprint = Channel.fromPath("$params.pathSNPFootprint")
     chSNPSMaSH = Channel.fromPath("$params.pathSNPSMaSH")
     chSNPSMaSHPyPlot = Channel.fromPath("$params.pathSNPSMaSHPlot")
     chReportFragHist = Channel.fromPath("$params.pathReportFragHist")
@@ -119,7 +118,7 @@ workflow {
     // Download the genome, gene annotation, and DAC file
     chGenome = downloadGenome(chGenomesInfo,refDir)
     chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome,refDir)
-    //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely
+    chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
     chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
     
@@ -146,7 +145,6 @@ workflow {
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
     chSortedFiles = sort_bam(chAlignFiles)
-    //lib_complex(chSortedFiles) Ver pq está dando erro
     lib_complex_preseq(chSortedFiles) //Ver pq está dando erro
     chUniqueFiles = unique_sam(chSortedFiles) 
 
@@ -209,13 +207,11 @@ workflow {
     //ENRICHMENT      ***************************************************
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
-    //Ver pq está dando erro quando não tem enrichment
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
 
     //Final Report
 
-    // Definir o caminho de entrada
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
 
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
