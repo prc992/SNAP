@@ -165,6 +165,8 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
 
     chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
+    
+    /*
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
     //*****************************************************************************
 
@@ -216,7 +218,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)
+    moveSoftFiles(chFinalReport)*/
     
 }
 
