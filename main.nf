@@ -165,7 +165,11 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
 
     //SNP Fingerprint using SMaSH ************************************************
-    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
+
+    // Apenas enviar arquivos BAM se houver pelo menos 2
+    chFilteredBAMFiles = chAllBAMandBAIIndexFiles.filter { it.count { f -> f.toString().endsWith('.bam') } > 1 }
+    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chFilteredBAMFiles)
+    /*
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
     //*****************************************************************************
 
@@ -217,7 +221,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)
+    moveSoftFiles(chFinalReport)*/
     
 }
 
