@@ -111,6 +111,8 @@ workflow {
     // Download the genome, gene annotation, and DAC file
     chGenome = downloadGenome(chGenomesInfo,refDir)
     chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome,refDir)
+
+    /*
     //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
     chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
@@ -207,7 +209,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)
+    moveSoftFiles(chFinalReport)*/
     
 }
 
