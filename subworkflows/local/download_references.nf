@@ -5,7 +5,7 @@ nextflow.enable.dsl=2
 include { downloadGenome } from '../../modules/local/download'
 include { createGenomeIndex } from '../../modules/local/createGenomeIndex'
 
-subworkflow download_references {
+workflow download_references {
     input:
         tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
         path refDir
