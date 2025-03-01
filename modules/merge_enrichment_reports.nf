@@ -3,7 +3,7 @@ process merge_enrichment_reports {
     container = params.containers.python
     tag "Sample - $sampleId"
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode: 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/enrichment/", mode: 'copy'
 
     input:
     path (chEnrichmentFilesReport)
