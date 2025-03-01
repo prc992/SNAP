@@ -212,7 +212,7 @@ workflow {
     //Ver pq está dando erro quando não tem enrichment
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
-    /*
+
     //Final Report
 
     // Definir o caminho de entrada
@@ -221,7 +221,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)*/
+    moveSoftFiles(chFinalReport)
     
 }
 
