@@ -111,11 +111,7 @@ workflow {
         }
 
     // Download the genome, gene annotation, and DAC file
-    chGenomeAndIndex = download_references(chGenomesInfo.genome2,\
-                                            chGenomesInfo.faGZFile,\
-                                            chGenomesInfo.dacList,\
-                                            chGenomesInfo.snp,\
-                                            refDir)
+    chGenomeAndIndex = download_references(chGenomesInfo,refDir)
 
     /*
     //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely
