@@ -6,8 +6,8 @@ include { createGenomeIndex } from '../../modules/local/createGenomeIndex'
 
 workflow download_references {
     take:
-    chGenome
-    chGenomeIndex
+    chGenomesInfo
+    refDir
 
 
     //tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
