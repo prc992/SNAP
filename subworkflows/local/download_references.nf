@@ -13,11 +13,10 @@ workflow download_references {
         path "${genome}.fa", emit: genome
         path "${genome}.fa.*", emit: genome_index
 
-    workflow {
-        chGenome = downloadGenome(genome, faGZFile, geneAnnotation, dacList, snp, refDir)
-        chGenomeIndex = createGenomeIndex(genome, faGZFile, geneAnnotation, dacList, snp, chGenome, refDir)
+    chGenome = downloadGenome(genome, faGZFile, geneAnnotation, dacList, snp, refDir)
+    chGenomeIndex = createGenomeIndex(genome, faGZFile, geneAnnotation, dacList, snp, chGenome, refDir)
 
-        emit: genome = chGenome
-        emit: genome_index = chGenomeIndex
-    }
+    emit: genome = chGenome
+    emit: genome_index = chGenomeIndex
+
 }
