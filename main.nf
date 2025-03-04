@@ -9,7 +9,6 @@ include {fastqc} from './modules/fastqc'
 include {enrichment} from './modules/enrichment'
 
 
-include {peak_bed_graph} from './modules/peak_bed_graph'
 include {bam_to_bed} from './modules/bam_to_bed'
 include {unique_frags} from './modules/unique_frags'
 
@@ -47,6 +46,7 @@ include {multiqc} from './modules/multiqc'
 //include {igv_sample_reports} from './modules/igv_reports'
 //include {igv_consolidate_report} from './modules/igv_reports'
 //include {igv_session} from './modules/igv_reports'
+//include {peak_bed_graph} from './modules/peak_bed_graph'
 
 
 include {calcFragsLength} from './modules/calcFragsLength'
