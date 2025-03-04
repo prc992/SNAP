@@ -19,7 +19,7 @@ workflow BAM_PROCESSING {
     main:
 
     chTrim = trim(chSampleInfo)
-    chAlign = align(chTrim, chGenomeIndex)
+    chAlign = align(chTrim,chGenome,chGenomeIndex)
     chSortBam = sort_bam(chAlign)
     chLibComplexPreseq = lib_complex_preseq(chSortBam)
     chUniqueSam = unique_sam(chLibComplexPreseq)
