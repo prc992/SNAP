@@ -118,6 +118,7 @@ workflow {
     chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
     chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
     chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
+    chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
     
     //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely, do not include in the workflow
     //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir) // remove definitely
@@ -139,6 +140,8 @@ workflow {
     chSampleInfo = chSampleSheet \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
+
+    /*
 
     chSNPS_ref = downloadSNPRef(chGenomesInfo)
 

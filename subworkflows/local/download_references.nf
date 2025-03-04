@@ -19,9 +19,27 @@ workflow DOWNLOAD_REFERENCES {
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,chrefDir)
     chDACFileRef = downloadDACFile(chGenomesInfo,chrefDir)
 
+     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
+    if (params.samplesheet) {
+        //println "Using provided samplesheet: ${params.samplesheet}"
+        chSampleSheet = Channel.fromPath(params.samplesheet)
+    } else {
+        //println "Creating samplesheet because none was provided."
+        chSampleSheet = createSamplesheet(
+            params.sample_dir, 
+            params.enrichment_mark ?: 'no_enrichment_mark'
+        )
+    }
+
+    // Read the SampleSheet provided by the user or created by the pipeline
+    chSampleInfo = chSampleSheet \
+        | splitCsv(header:true) \
+        | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
+
     emit: genome = chGenome
     emit: genome_index = chGenomeIndex
     emit: chrom_sizes = chChromSizes
     emit: dac_file_ref = chDACFileRef
+    emit: sample_info = chSampleInfo
 
 }
