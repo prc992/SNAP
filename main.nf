@@ -7,7 +7,6 @@ include {fastqc} from './modules/fastqc'
 //include {sort_readname_bam} from './modules/sort_bam'
 
 include {enrichment} from './modules/enrichment'
-include {index_sam} from './modules/index_sam'
 
 include {dac_exclusion} from './modules/dac_exclusion'
 include {peak_bed_graph} from './modules/peak_bed_graph'
@@ -24,7 +23,7 @@ include {unique_frags} from './modules/unique_frags'
 //include {createStatsSamtoolsfiltered} from './modules/createStatsSamtoolsfiltered'
 //include {dedup} from './modules/dedup'
 
-include {bedgraph_to_bigwig} from './modules/bedgraph_to_bigwig'
+
 include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
 include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
 include {pileups_report} from './modules/pileups_report'
@@ -39,6 +38,14 @@ include {multiqc} from './modules/multiqc'
 //include {createSamplesheet} from './modules/createSamplesheet'
 //include {fetch_chrom_sizes} from './modules/fetch_chrom_sizes'
 
+/// BAM SIGNAL PROCESSING
+//include {index_sam} from './modules/index_sam'
+//include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
+//include {bedgraph_to_bigwig} from './modules/bedgraph_to_bigwig'
+//include {igv_reports} from './modules/igv_reports'
+//include {igv_sample_reports} from './modules/igv_reports'
+//include {igv_consolidate_report} from './modules/igv_reports'
+//include {igv_session} from './modules/igv_reports'
 
 
 include {calcFragsLength} from './modules/calcFragsLength'
@@ -46,11 +53,8 @@ include {fragLenHist} from './modules/fragLenHist'
 include {frags_and_peaks} from './modules/frags_and_peaks'
 include {enrichmentReport} from './modules/enrichmentReport'
 include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
-include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
-include {igv_reports} from './modules/igv_reports'
-include {igv_sample_reports} from './modules/igv_reports'
-include {igv_consolidate_report} from './modules/igv_reports'
-include {igv_session} from './modules/igv_reports'
+
+
 include {moveSoftFiles} from './modules/moveSoftFiles'
 include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
@@ -58,6 +62,7 @@ include {createMotifGCfile} from './modules/end_motif_gc'
 
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
 include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
+include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 
 workflow {
     // Static information about the pipeline
@@ -145,6 +150,12 @@ workflow {
     // Filter the DAC files
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
 
+    // Process the BAM signal
+    BAM_SIGNAL_PROCESSING(chDACFilteredFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
+                            chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo)
+
+
+
     //************************************************************************
     //DOWNLOAD_REFERENCES
     //************************************************************************
@@ -196,7 +207,27 @@ workflow {
 
 
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
+
+    //************************************************************************
+    //BAM_SIGNAL_PROCESSING
+    //************************************************************************
+
     chIndexFiles = index_sam(chDACFilteredFiles)
+    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
+    chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
+
+    //Pileups ****************************************************************
+    chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
+    chIGVReportMerged = igv_consolidate_report(chIGVReportsHtml,chMultiQCHousekeepingHeader)
+
+    chBigWigAllFiles = chBigWig.collect()
+    chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
+    chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
+    //************************************************************************
+    //************************************************************************
+    //************************************************************************
+
 
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chDACFilteredFiles)
@@ -213,18 +244,7 @@ workflow {
     //*****************************************************************************
     
     
-    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
-    chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
-
-    //Pileups ****************************************************************
-    chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
-    chIGVReportMerged = igv_consolidate_report(chIGVReportsHtml,chMultiQCHousekeepingHeader)
-
-    chBigWigAllFiles = chBigWig.collect()
-    chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
-    chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
-    //************************************************************************
+    
         
     
     //Fragment Length Distribution *******************************************
