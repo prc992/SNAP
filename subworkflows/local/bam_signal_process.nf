@@ -1,6 +1,5 @@
 nextflow.enable.dsl=2
 
-include {index_sam} from '../../modules/local/index_sam'
 include {bam_to_bedgraph} from '../../modules/local/bam_to_bedgraph'
 include {bedgraph_to_bigwig} from '../../modules/local/bedgraph_to_bigwig'
 include {igv_reports} from '../../modules/local/igv_reports'
@@ -12,6 +11,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     take:
     chDACFilteredFiles
+    chIndexFiles
     chChromSizes
     chPileUpBED
     chGenome
@@ -22,7 +22,6 @@ workflow BAM_SIGNAL_PROCESSING {
 
     main:
 
-    chIndexFiles = index_sam(chDACFilteredFiles)
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 

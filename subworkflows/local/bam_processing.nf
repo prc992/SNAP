@@ -9,6 +9,7 @@ include {quality_filter} from '../../modules/local/quality_filter'
 include {createStatsSamtoolsfiltered} from '../../modules/local/createStatsSamtoolsfiltered'
 include {dedup} from '../../modules/local/dedup'
 include {dac_exclusion} from '../../modules/local/dac_exclusion'
+include {index_sam} from '../../modules/local/index_sam'
 
 workflow BAM_PROCESSING {
 
@@ -37,5 +38,8 @@ workflow BAM_PROCESSING {
         chDACFilteredFiles = chDedup
     }
 
+    chIndexFiles = index_sam(chDACFilteredFiles)
+
     emit: bam_processed = chDACFilteredFiles
+    emit: bam_processed_index = chIndexFiles
 }

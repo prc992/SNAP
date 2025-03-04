@@ -147,9 +147,10 @@ workflow {
     BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef)
 
     chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
+    chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
 
     // Process the BAM signal
-    BAM_SIGNAL_PROCESSING(chBAMProcessedFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
+    BAM_SIGNAL_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
                             chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo)
 
 
