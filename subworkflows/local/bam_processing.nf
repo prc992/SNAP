@@ -23,7 +23,7 @@ workflow BAM_PROCESSING {
     chAlign = align(chTrim,chGenome,chGenomeIndex)
     chSortBam = sort_bam(chAlign)
     chLibComplexPreseq = lib_complex_preseq(chSortBam)
-    chUniqueSam = unique_sam(chLibComplexPreseq)
+    chUniqueSam = unique_sam(chSortBam)
     chQualityFilter = quality_filter(chUniqueSam)
     chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chQualityFilter)
     chDedup = dedup(chCreateStatsSamtoolsfiltered)
