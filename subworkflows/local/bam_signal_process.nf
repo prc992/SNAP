@@ -1,6 +1,7 @@
 nextflow.enable.dsl=2
 
 include {call_peaks} from '../../modules/local/call_peaks'
+include {bam_to_bedgraph} from '../../modules/local/bam_to_bedgraph'
 include {bedgraph_to_bigwig} from '../../modules/local/bedgraph_to_bigwig'
 include {igv_reports} from '../../modules/local/igv_reports'
 include {igv_sample_reports} from '../../modules/local/igv_reports'
