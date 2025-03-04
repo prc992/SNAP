@@ -4,31 +4,16 @@ nextflow.enable.dsl=2
 include { downloadGenome } from '../../modules/local/download'
 include { createGenomeIndex } from '../../modules/local/createGenomeIndex'
 
-workflow download_references {
+workflow DOWNLOAD_REFERENCES {
 
     take:
     chGenomesInfo
-    refDir
-
-
-    //tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
-    //path refDir
-    
-    //tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
-    //path refDir
-
-    //output:
-    //    path "${genome}.fa", emit: genome
-    //    path "${genome}.fa.*", emit: genome_index
+    chrefDir
 
     main:
-    combined_ch = pops_annot_ch
-            .merge(gene_rarevar_ch)
-            .map { pops_annot, gene_rarevar -> tuple(pops_annot, gene_rarevar)
-        }
 
-    chGenome = downloadGenome(genome, faGZFile, geneAnnotation, dacList, snp, refDir)
-    chGenomeIndex = createGenomeIndex(genome, faGZFile, geneAnnotation, dacList, snp, chGenome, refDir)
+    chGenome = downloadGenome(chGenomesInfo, chrefDir)
+    chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome, chrefDir)
 
     emit: genome = chGenome
     emit: genome_index = chGenomeIndex
