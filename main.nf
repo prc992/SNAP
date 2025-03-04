@@ -114,8 +114,8 @@ workflow {
     // Download the genome, gene annotation, and DAC file
     DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
 
-    chGenome = DOWNLOAD_REFERENCES.out[0]
-    chGenomeIndex = DOWNLOAD_REFERENCES.out[1]
+    chGenome = DOWNLOAD_REFERENCES.out.genome
+    chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
 
 
     /*
