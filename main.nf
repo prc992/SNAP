@@ -2,33 +2,45 @@
 nextflow.enable.dsl=2
 
 include {fastqc} from './modules/fastqc'
-include {align} from './modules/align'
-include {sort_bam} from './modules/sort_bam'
+
+
 include {sort_readname_bam} from './modules/sort_bam'
-include {unique_sam} from './modules/unique_sam'
+
 include {enrichment} from './modules/enrichment'
 include {index_sam} from './modules/index_sam'
-include {dedup} from './modules/dedup'
+
 include {dac_exclusion} from './modules/dac_exclusion'
-//include {fetch_chrom_sizes} from './modules/fetch_chrom_sizes'
 include {peak_bed_graph} from './modules/peak_bed_graph'
 include {bam_to_bed} from './modules/bam_to_bed'
 include {unique_frags} from './modules/unique_frags'
-include {trim} from './modules/trim'
+
+/// BAM PROCESSING
+//include {trim} from './modules/trim'
+//include {align} from './modules/align'
+//include {sort_bam} from './modules/sort_bam'
+//include {lib_complex_preseq} from './modules/lib_complex_preseq'
+//include {unique_sam} from './modules/unique_sam'
+//include {quality_filter} from './modules/quality_filter'
+//include {createStatsSamtoolsfiltered} from './modules/createStatsSamtoolsfiltered'
+//include {dedup} from './modules/dedup'
+
 include {bedgraph_to_bigwig} from './modules/bedgraph_to_bigwig'
 include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
 include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
 include {pileups_report} from './modules/pileups_report'
 include {multiqc} from './modules/multiqc'
+
+/// DOWNLOAD_REFERENCES
 //include {downloadSNPRef} from './modules/download'
 //include {downloadDACFile} from './modules/download'
 //include {downloadGeneAnotation} from './modules/download'
 //include {downloadGenome} from './modules/download'
 //include {createGenomeIndex} from './modules/createGenomeIndex'
 //include {createSamplesheet} from './modules/createSamplesheet'
-include {createStatsSamtoolsfiltered} from './modules/createStatsSamtoolsfiltered'
-include {quality_filter} from './modules/quality_filter'
-include {lib_complex_preseq} from './modules/lib_complex_preseq'
+//include {fetch_chrom_sizes} from './modules/fetch_chrom_sizes'
+
+
+
 include {calcFragsLength} from './modules/calcFragsLength'
 include {fragLenHist} from './modules/fragLenHist'
 include {frags_and_peaks} from './modules/frags_and_peaks'
@@ -121,11 +133,20 @@ workflow {
     chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
     chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
 
-    fastqc(chSampleInfo) 
-    
+    fastqc(chSampleInfo)
+
+    // Process the BAM files
+    BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex)
+
+    chDedupFiles = BAM_PROCESSING.out.bam_deduped
+
+    //************************************************************************
+    //DOWNLOAD_REFERENCES
+    //************************************************************************
+
     //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely, do not include in the workflow
-    //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir) // remove definitely
-    /*chDACFileRef = downloadDACFile(chGenomesInfo,refDir) // remove definitely
+    //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir) 
+    /*chDACFileRef = downloadDACFile(chGenomesInfo,refDir) 
     
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
@@ -146,9 +167,16 @@ workflow {
 
     
 
-    chSNPS_ref = downloadSNPRef(chGenomesInfo) // remove definitely
+    chSNPS_ref = downloadSNPRef(chGenomesInfo) 
+    //************************************************************************
+    //************************************************************************
+    
 
     fastqc(chSampleInfo) 
+
+    //************************************************************************
+    //BAM_PROCESSING
+    //************************************************************************
     chTrimFiles = trim(chSampleInfo)
     chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
     chSortedFiles = sort_bam(chAlignFiles)
@@ -158,6 +186,10 @@ workflow {
     chFilteredFiles = quality_filter(chUniqueFiles) 
     chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) 
     chDedupFiles = dedup(chFilteredFiles) 
+    //************************************************************************
+    //************************************************************************
+
+
     chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
