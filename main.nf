@@ -134,12 +134,16 @@ workflow {
     chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
     chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
 
+    // Run FastQC on the samples
     fastqc(chSampleInfo)
 
     // Process the BAM files
     BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes)
 
     chDedupFiles = BAM_PROCESSING.out.bam_deduped
+
+    // Filter the DAC files
+    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
 
     //************************************************************************
     //DOWNLOAD_REFERENCES
