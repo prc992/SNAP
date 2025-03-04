@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 include {fastqc} from './modules/fastqc'
 
 
-include {sort_readname_bam} from './modules/sort_bam'
+//include {sort_readname_bam} from './modules/sort_bam'
 
 include {enrichment} from './modules/enrichment'
 include {index_sam} from './modules/index_sam'
