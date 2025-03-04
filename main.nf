@@ -119,10 +119,11 @@ workflow {
     chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
     chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
     chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
+    chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
     
     //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely, do not include in the workflow
     //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir) // remove definitely
-    /*chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
+    /*chDACFileRef = downloadDACFile(chGenomesInfo,refDir) // remove definitely
     
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
@@ -141,9 +142,9 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
 
-    /*
+    
 
-    chSNPS_ref = downloadSNPRef(chGenomesInfo)
+    chSNPS_ref = downloadSNPRef(chGenomesInfo) // remove definitely
 
     fastqc(chSampleInfo) 
     chTrimFiles = trim(chSampleInfo)

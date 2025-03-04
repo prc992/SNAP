@@ -3,6 +3,7 @@ nextflow.enable.dsl=2
 // Import the required processes from the modules
 include {downloadGenome} from '../../modules/local/download'
 include {downloadDACFile} from '../../modules/local/download'
+include {downloadSNPRef} from '../../modules/local/download'
 include {createGenomeIndex} from '../../modules/local/createGenomeIndex'
 include {fetch_chrom_sizes} from '../../modules/local/fetch_chrom_sizes'
 include {createSamplesheet} from '../../modules/local/createSamplesheet'
@@ -37,10 +38,13 @@ workflow DOWNLOAD_REFERENCES {
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
 
+    chSNPS_ref = downloadSNPRef(chGenomesInfo)
+
     emit: genome = chGenome
     emit: genome_index = chGenomeIndex
     emit: chrom_sizes = chChromSizes
     emit: dac_file_ref = chDACFileRef
     emit: sample_info = chSampleInfo
+    emit: snp_ref = chSNPS_ref
 
 }
