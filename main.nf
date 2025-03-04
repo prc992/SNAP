@@ -8,7 +8,7 @@ include {fastqc} from './modules/fastqc'
 
 include {enrichment} from './modules/enrichment'
 
-include {dac_exclusion} from './modules/dac_exclusion'
+
 include {peak_bed_graph} from './modules/peak_bed_graph'
 include {bam_to_bed} from './modules/bam_to_bed'
 include {unique_frags} from './modules/unique_frags'
@@ -22,6 +22,7 @@ include {unique_frags} from './modules/unique_frags'
 //include {quality_filter} from './modules/quality_filter'
 //include {createStatsSamtoolsfiltered} from './modules/createStatsSamtoolsfiltered'
 //include {dedup} from './modules/dedup'
+//include {dac_exclusion} from './modules/dac_exclusion'
 
 
 include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
@@ -145,18 +146,10 @@ workflow {
     // Process the BAM files
     BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes)
 
-    chDedupFiles = BAM_PROCESSING.out.bam_deduped
-
-    // Filter the DAC files
-    if (params.exclude_dac_regions) {
-        chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
-    } else {
-        chDACFilteredFiles = chDedupFiles
-    }
-    
+    chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
 
     // Process the BAM signal
-    BAM_SIGNAL_PROCESSING(chDACFilteredFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
+    BAM_SIGNAL_PROCESSING(chBAMProcessedFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
                             chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo)
 
 

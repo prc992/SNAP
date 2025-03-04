@@ -8,6 +8,7 @@ include {unique_sam} from '../../modules/local/unique_sam'
 include {quality_filter} from '../../modules/local/quality_filter'
 include {createStatsSamtoolsfiltered} from '../../modules/local/createStatsSamtoolsfiltered'
 include {dedup} from '../../modules/local/dedup'
+include {dac_exclusion} from '../../modules/dac_exclusion'
 
 workflow BAM_PROCESSING {
 
@@ -28,5 +29,12 @@ workflow BAM_PROCESSING {
     chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chFilteredFiles)
     chDedup = dedup(chFilteredFiles)
 
-    emit: bam_deduped = chDedup
+        // Filter the DAC files
+    if (params.exclude_dac_regions) {
+        chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
+    } else {
+        chDACFilteredFiles = chDedupFiles
+    }
+
+    emit: bam_processed = chDACFilteredFiles
 }
