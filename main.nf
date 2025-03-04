@@ -120,6 +120,8 @@ workflow {
     chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
     chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
     chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
+
+    fastqc(chSampleInfo) 
     
     //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely, do not include in the workflow
     //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir) // remove definitely
