@@ -117,8 +117,7 @@ workflow {
     chGenome = DOWNLOAD_REFERENCES.out.genome
     chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
     chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
-
-
+    chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
     
     //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely, do not include in the workflow
     //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir) // remove definitely

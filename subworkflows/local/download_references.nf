@@ -1,8 +1,9 @@
 nextflow.enable.dsl=2
 
 // Import the required processes from the modules
-include { downloadGenome } from '../../modules/local/download'
-include { createGenomeIndex } from '../../modules/local/createGenomeIndex'
+include {downloadGenome} from '../../modules/local/download'
+include {downloadDACFile} from '../../modules/local/download'
+include {createGenomeIndex} from '../../modules/local/createGenomeIndex'
 include {fetch_chrom_sizes} from '../../modules/local/fetch_chrom_sizes'
 
 workflow DOWNLOAD_REFERENCES {
@@ -16,9 +17,11 @@ workflow DOWNLOAD_REFERENCES {
     chGenome = downloadGenome(chGenomesInfo, chrefDir)
     chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome, chrefDir)
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,chrefDir)
+    chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
 
     emit: genome = chGenome
     emit: genome_index = chGenomeIndex
     emit: chrom_sizes = chChromSizes
+    emit: dac_file_ref = chDACFileRef
 
 }
