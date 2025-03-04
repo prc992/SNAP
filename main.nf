@@ -148,7 +148,12 @@ workflow {
     chDedupFiles = BAM_PROCESSING.out.bam_deduped
 
     // Filter the DAC files
-    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
+    if (params.exclude_dac_regions) {
+        chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef)
+    } else {
+        chDACFilteredFiles = chDedupFiles
+    }
+    
 
     // Process the BAM signal
     BAM_SIGNAL_PROCESSING(chDACFilteredFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
