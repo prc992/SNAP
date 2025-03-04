@@ -8,7 +8,7 @@ process call_peaks{
   publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),path(sampleBam),val(_)
+  tuple val(sampleId),path(sampleBam),val(_),val(_)
 
   output:
   tuple val(sampleId),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls"),path("macs2_mqc_versions.yml")
