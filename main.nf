@@ -44,7 +44,7 @@ include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
 include {createMotifGCfile} from './modules/end_motif_gc'
 
-include { download_references } from './subworkflows/local/download_references'
+include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
 
 workflow {
     // Static information about the pipeline
@@ -113,7 +113,7 @@ workflow {
    
     // Download the genome, gene annotation, and DAC file
     DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
-    
+
     chGenome = DOWNLOAD_REFERENCES.out[0]
     chGenomeIndex = DOWNLOAD_REFERENCES.out[1]
 
