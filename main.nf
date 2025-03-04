@@ -10,7 +10,7 @@ include {enrichment} from './modules/enrichment'
 include {index_sam} from './modules/index_sam'
 include {dedup} from './modules/dedup'
 include {dac_exclusion} from './modules/dac_exclusion'
-include {fetch_chrom_sizes} from './modules/fetch_chrom_sizes'
+//include {fetch_chrom_sizes} from './modules/fetch_chrom_sizes'
 include {peak_bed_graph} from './modules/peak_bed_graph'
 include {bam_to_bed} from './modules/bam_to_bed'
 include {unique_frags} from './modules/unique_frags'
@@ -116,12 +116,13 @@ workflow {
 
     chGenome = DOWNLOAD_REFERENCES.out.genome
     chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
+    chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
 
 
-    /*
-    //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely
-    chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir)
-    chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
+    
+    //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely, do not include in the workflow
+    //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir) // remove definitely
+    /*chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
     
     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
     if (params.samplesheet) {
