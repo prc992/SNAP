@@ -5,6 +5,7 @@ include {downloadGenome} from '../../modules/local/download'
 include {downloadDACFile} from '../../modules/local/download'
 include {createGenomeIndex} from '../../modules/local/createGenomeIndex'
 include {fetch_chrom_sizes} from '../../modules/local/fetch_chrom_sizes'
+include {createSamplesheet} from '../../modules/local/createSamplesheet'
 
 workflow DOWNLOAD_REFERENCES {
 
