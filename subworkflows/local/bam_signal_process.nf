@@ -1,6 +1,6 @@
 nextflow.enable.dsl=2
 
-include {bam_to_bedgraph} from '../../modules/local/bam_to_bedgraph'
+include {call_peaks} from '../../modules/local/call_peaks'
 include {bedgraph_to_bigwig} from '../../modules/local/bedgraph_to_bigwig'
 include {igv_reports} from '../../modules/local/igv_reports'
 include {igv_sample_reports} from '../../modules/local/igv_reports'
@@ -21,7 +21,8 @@ workflow BAM_SIGNAL_PROCESSING {
     chGenomesInfo
 
     main:
-
+    
+    chPeakFiles = call_peaks(chDACFilteredFiles) 
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 

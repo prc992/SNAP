@@ -223,6 +223,7 @@ workflow {
     chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
+    chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
     //************************************************************************
     //************************************************************************
     //************************************************************************
@@ -252,7 +253,7 @@ workflow {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
 
-    chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
+    
     chBedFiles = bam_to_bed(chDACFilteredFiles) //
     
     chUniqueFrags = unique_frags(chBedFiles).collect() //
