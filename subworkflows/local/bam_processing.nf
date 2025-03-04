@@ -1,7 +1,7 @@
 nextflow.enable.dsl=2
 
 include {trim} from '../../modules/local/trim'
-include {align} from './../modules/local/align'
+include {align} from '../../modules/local/align'
 include {sort_bam} from '../../modules/local/sort_bam'
 include {lib_complex_preseq} from '../../modules/local/lib_complex_preseq'
 include {unique_sam} from '../../modules/local/unique_sam'
