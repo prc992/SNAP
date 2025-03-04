@@ -8,7 +8,7 @@ include {unique_sam} from '../../modules/local/unique_sam'
 include {quality_filter} from '../../modules/local/quality_filter'
 include {createStatsSamtoolsfiltered} from '../../modules/local/createStatsSamtoolsfiltered'
 include {dedup} from '../../modules/local/dedup'
-include {dac_exclusion} from '../../modules/dac_exclusion'
+include {dac_exclusion} from '../../modules/local/dac_exclusion'
 
 workflow BAM_PROCESSING {
 
