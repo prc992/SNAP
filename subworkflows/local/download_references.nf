@@ -17,7 +17,7 @@ workflow DOWNLOAD_REFERENCES {
     chGenome = downloadGenome(chGenomesInfo, chrefDir)
     chGenomeIndex = createGenomeIndex(chGenomesInfo,chGenome, chrefDir)
     chChromSizes = fetch_chrom_sizes(chGenomesInfo,chrefDir)
-    chDACFileRef = downloadDACFile(chGenomesInfo,refDir)
+    chDACFileRef = downloadDACFile(chGenomesInfo,chrefDir)
 
     emit: genome = chGenome
     emit: genome_index = chGenomeIndex
