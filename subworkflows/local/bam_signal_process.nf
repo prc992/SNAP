@@ -20,6 +20,8 @@ workflow BAM_SIGNAL_PROCESSING {
     chIGVFilestoSessions
     chGenomesInfo
 
+    main:
+
     chIndexFiles = index_sam(chDACFilteredFiles)
     chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
