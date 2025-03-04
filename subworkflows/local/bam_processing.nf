@@ -15,6 +15,7 @@ workflow BAM_PROCESSING {
     chSampleInfo
     chGenome
     chGenomeIndex
+    chChromSizes
 
     main:
 

@@ -137,7 +137,7 @@ workflow {
     fastqc(chSampleInfo)
 
     // Process the BAM files
-    BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex)
+    BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes)
 
     chDedupFiles = BAM_PROCESSING.out.bam_deduped
 
