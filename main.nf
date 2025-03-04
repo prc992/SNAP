@@ -144,7 +144,7 @@ workflow {
     fastqc(chSampleInfo)
 
     // Process the BAM files
-    BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes)
+    BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef)
 
     chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
 
