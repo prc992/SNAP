@@ -7,7 +7,6 @@ process downloadSNPRef {
 
     input:
     tuple val(genome), val(_), val(_), val(_), val(snp)
-    //tuple val(sampleId), val(enrichment_mark),val(read1), val(read2)
 
     output:
     file "snps_${genome}.vcf"
