@@ -8,7 +8,7 @@ process index_sam {
   publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),path(sampleBam),val(_)
+  tuple val(sampleId),path(sampleBam),val(_),val(_)
 
   output:
   tuple val(sampleId),path(sampleBam),path ('*.bai'),path ("index_sam_mqc_versions.yml")
