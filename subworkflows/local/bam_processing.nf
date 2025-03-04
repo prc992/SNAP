@@ -24,9 +24,9 @@ workflow BAM_PROCESSING {
     chSortBam = sort_bam(chAlign)
     chLibComplexPreseq = lib_complex_preseq(chSortBam)
     chUniqueSam = unique_sam(chSortBam)
-    chQualityFilter = quality_filter(chUniqueSam)
+    chFilteredFiles = quality_filter(chUniqueSam)
     chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chQualityFilter)
-    chDedup = dedup(chCreateStatsSamtoolsfiltered)
+    chDedup = dedup(chFilteredFiles)
 
     emit: bam_deduped = chDedup
 }
