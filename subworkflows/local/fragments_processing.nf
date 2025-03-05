@@ -4,6 +4,7 @@ include {sort_readname_bam} from '../../modules/local/sort_bam'
 include {bam_to_bed} from '../../modules/local/bam_to_bed'
 include {unique_frags} from '../../modules/local/unique_frags'
 include {calcFragsLengthDistribuition} from '../../modules/local/calcFragsLength'
+include {createMotifGCfile} from '../../modules/local/end_motif_gc'
 
 
 workflow FRAGMENTS_PROCESSING {
@@ -24,7 +25,6 @@ workflow FRAGMENTS_PROCESSING {
     chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
     createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
-
         
     //Fragment Length Distribution *******************************************
     chFragmentsSize = calcFragsLengthDistribuition(chIndexFiles).collect()

@@ -59,12 +59,14 @@ include {fragLenHist} from './modules/fragLenHist'
 include {moveSoftFiles} from './modules/moveSoftFiles'
 //include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
 //include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
-include {createMotifGCfile} from './modules/end_motif_gc'
+//include {createMotifGCfile} from './modules/end_motif_gc'
 
+include { INITIALIZATION } from './subworkflows/local/initialization'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
 include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
 include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
-include { INITIALIZATION } from './subworkflows/local/initialization'
+include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
+
 
 workflow {
     // Static information about the pipeline
