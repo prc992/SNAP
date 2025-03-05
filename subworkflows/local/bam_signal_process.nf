@@ -8,6 +8,7 @@ include {igv_reports} from '../../modules/local/igv_reports'
 include {igv_sample_reports} from '../../modules/local/igv_reports'
 include {igv_consolidate_report} from '../../modules/local/igv_reports'
 include {igv_session} from '../../modules/local/igv_reports'
+include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
 
