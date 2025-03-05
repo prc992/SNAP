@@ -1,65 +1,17 @@
  #! /usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-//include {fastqc} from './modules/fastqc'
 
-
-//include {sort_readname_bam} from './modules/sort_bam'
-
-//include {enrichment} from './modules/enrichment'
-
-
-//include {bam_to_bed} from './modules/bam_to_bed'
-//include {unique_frags} from './modules/unique_frags'
-
-/// BAM PROCESSING
-//include {trim} from './modules/trim'
-//include {align} from './modules/align'
-//include {sort_bam} from './modules/sort_bam'
-//include {lib_complex_preseq} from './modules/lib_complex_preseq'
-//include {unique_sam} from './modules/unique_sam'
-//include {quality_filter} from './modules/quality_filter'
-//include {createStatsSamtoolsfiltered} from './modules/createStatsSamtoolsfiltered'
-//include {dedup} from './modules/dedup'
-//include {dac_exclusion} from './modules/dac_exclusion'
-
-
-include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
-include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
-include {pileups_report} from './modules/pileups_report'
+//include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
+//include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
+//include {pileups_report} from './modules/pileups_report'
 include {multiqc} from './modules/multiqc'
 
-/// DOWNLOAD_REFERENCES
-//include {downloadSNPRef} from './modules/download'
-//include {downloadDACFile} from './modules/download'
-//include {downloadGeneAnotation} from './modules/download'
-//include {downloadGenome} from './modules/download'
-//include {createGenomeIndex} from './modules/createGenomeIndex'
-//include {createSamplesheet} from './modules/createSamplesheet'
-//include {fetch_chrom_sizes} from './modules/fetch_chrom_sizes'
+//include {fragLenHist} from './modules/fragLenHist'
 
-/// BAM SIGNAL PROCESSING
-//include {index_sam} from './modules/index_sam'
-//include {bam_to_bedgraph} from './modules/bam_to_bedgraph'
-//include {bedgraph_to_bigwig} from './modules/bedgraph_to_bigwig'
-//include {igv_reports} from './modules/igv_reports'
-//include {igv_sample_reports} from './modules/igv_reports'
-//include {igv_consolidate_report} from './modules/igv_reports'
-//include {igv_session} from './modules/igv_reports'
-//include {peak_bed_graph} from './modules/peak_bed_graph'
-
-
-//include {calcFragsLengthDistribuition} from './modules/calcFragsLength'
-include {fragLenHist} from './modules/fragLenHist'
-//include {frags_and_peaks} from './modules/frags_and_peaks' //remove definitely
-//include {enrichmentReport} from './modules/enrichmentReport'
-//include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
 
 
 include {moveSoftFiles} from './modules/moveSoftFiles'
-//include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
-//include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
-//include {createMotifGCfile} from './modules/end_motif_gc'
 
 include { INITIALIZATION } from './subworkflows/local/initialization'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
