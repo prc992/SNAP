@@ -60,12 +60,12 @@ workflow {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
-    chIGVReportMerged = Channel.value(true)
-    chFragmentsSizeFiles = Channel.value(true)
-    chSNPSMaSHPlot = Channel.value(true)
-    chEnrichmentFilesReport = Channel.value(true)
-    chPeaksReport = Channel.value(true)
-    chFragReport = Channel.value(true)
+    chIGVReportMerged = Channel.empty()
+    chFragmentsSizeFiles = Channel.empty()
+    chSNPSMaSHPlot = Channel.empty()
+    chEnrichmentFilesReport = Channel.empty()
+    chPeaksReport = Channel.empty()
+    chFragReport = Channel.empty()
 
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
