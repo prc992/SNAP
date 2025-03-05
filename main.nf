@@ -99,7 +99,7 @@ workflow {
     chSNPSMaSH = Channel.fromPath("$params.pathSNPSMaSH")
     chSNPSMaSHPyPlot = Channel.fromPath("$params.pathSNPSMaSHPlot")
     chReportFragHist = Channel.fromPath("$params.pathReportFragHist")
-    chReportFragPeaks = Channel.fromPath("$params.pathReportFragPeaks")
+    chReportFrags = Channel.fromPath("$params.pathReportFrags")
     chReportPeaks = Channel.fromPath("$params.pathReportPeaks")
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
     chMergeReportEnrichment = Channel.fromPath("$params.pathMergeReportEnrichment")
@@ -146,7 +146,8 @@ workflow {
 
 
     // Process the fragments
-    FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex)
+    FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
+                            chMultiQCFragsHeader,chReportFrags)
     /*
 
     //End Motif and GC content ***********************************************

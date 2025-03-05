@@ -14,13 +14,11 @@ workflow FRAGMENTS_PROCESSING {
     chIndexFiles
     chGenome
     chGenomeIndex
+    chMultiQCFragsHeader
+    chReportFragPeaks
 
     main:
     
-    //Unique Fragments ******************************************************
-    chUniqueFragments = unique_frags(chIndexFiles)
-    //************************************************************************
-
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
     createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
@@ -33,4 +31,7 @@ workflow FRAGMENTS_PROCESSING {
     //************************************************************************
     
     chBedFiles = bam_to_bed(chBAMProcessedFiles) 
+
+    chUniqueFrags = unique_frags(chBedFiles).collect()
+    chFragAndPeaksFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFragPeaks)
 }
