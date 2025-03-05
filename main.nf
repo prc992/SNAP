@@ -49,7 +49,7 @@ include {multiqc} from './modules/multiqc'
 //include {peak_bed_graph} from './modules/peak_bed_graph'
 
 
-include {calcFragsLength} from './modules/calcFragsLength'
+include {calcFragsLengthDistribuition} from './modules/calcFragsLength'
 include {fragLenHist} from './modules/fragLenHist'
 include {frags_and_peaks} from './modules/frags_and_peaks'
 include {enrichmentReport} from './modules/enrichmentReport'
