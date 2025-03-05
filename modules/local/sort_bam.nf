@@ -37,7 +37,7 @@ process sort_readname_bam {
   publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),path(sampleBam),val(_)
+  tuple val(sampleId),path(sampleBam),val(_),val(_)
   
   output:
   tuple val(sampleId),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
