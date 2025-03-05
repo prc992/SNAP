@@ -56,16 +56,17 @@ workflow {
     chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
+    chMultiQCDummyFile = Channel.fromPath("$params.multiqc_dummy_file")
 
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
-    chIGVReportMerged = Channel.empty()
-    chFragmentsSizeFiles = Channel.empty()
-    chSNPSMaSHPlot = Channel.empty()
-    chEnrichmentFilesReport = Channel.empty()
-    chPeaksReport = Channel.empty()
-    chFragReport = Channel.empty()
+    chIGVReportMerged = chMultiQCDummyFile
+    chFragmentsSizeFiles = chMultiQCDummyFile
+    chSNPSMaSHPlot = chMultiQCDummyFile
+    chEnrichmentFilesReport = chMultiQCDummyFile
+    chPeaksReport = chMultiQCDummyFile
+    chFragReport = chMultiQCDummyFile
 
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
@@ -115,22 +116,8 @@ workflow {
     //Final Report
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
 
-    chMultiQCTrigger = Channel.from(true)  // Garante que multiqc sempre tenha entrada
-
-    chFinalReport = multiqc(
-    chIGVReportMerged.mix(chMultiQCTrigger), 
-    chFragmentsSizeFiles.mix(chMultiQCTrigger),
-    chSNPSMaSHPlot.mix(chMultiQCTrigger), 
-    chEnrichmentFilesReport.mix(chMultiQCTrigger), 
-    chPeaksReport.mix(chMultiQCTrigger), 
-    chFragReport.mix(chMultiQCTrigger), 
-    chMultiQCConfig, 
-    chAllPreviousFiles
-)
-
-
-    /*chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
-        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)*/
+    chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
+        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
 
     moveSoftFiles(chFinalReport)
     
