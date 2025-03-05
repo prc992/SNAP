@@ -9,8 +9,8 @@ nextflow.enable.dsl=2
 //include {enrichment} from './modules/enrichment'
 
 
-include {bam_to_bed} from './modules/bam_to_bed'
-include {unique_frags} from './modules/unique_frags'
+//include {bam_to_bed} from './modules/bam_to_bed'
+//include {unique_frags} from './modules/unique_frags'
 
 /// BAM PROCESSING
 //include {trim} from './modules/trim'
@@ -49,7 +49,7 @@ include {multiqc} from './modules/multiqc'
 //include {peak_bed_graph} from './modules/peak_bed_graph'
 
 
-include {calcFragsLengthDistribuition} from './modules/calcFragsLength'
+//include {calcFragsLengthDistribuition} from './modules/calcFragsLength'
 include {fragLenHist} from './modules/fragLenHist'
 //include {frags_and_peaks} from './modules/frags_and_peaks' //remove definitely
 //include {enrichmentReport} from './modules/enrichmentReport'
@@ -143,8 +143,8 @@ workflow {
                             chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader)
 
 
-
-
+    // Process the fragments
+    FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex)
     /*
 
     //End Motif and GC content ***********************************************
@@ -163,7 +163,7 @@ workflow {
     chBedFiles = bam_to_bed(chDACFilteredFiles) //
     
     chUniqueFrags = unique_frags(chBedFiles).collect() //
-    chPeakAllFiles = chPeakFiles.collect() //
+
 
     
     //Fragments and peaks Plot *******************************************************
