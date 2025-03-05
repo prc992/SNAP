@@ -21,6 +21,9 @@ workflow BAM_PROCESSING {
     chGenomeIndex
     chChromSizes
     chDACFileRef
+    chSNPSMaSH
+    chSNPS_ref
+    chSNPSMaSHPyPlot
 
     main:
 

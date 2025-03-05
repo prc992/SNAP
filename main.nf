@@ -131,7 +131,7 @@ workflow {
 
 
     // Process the BAM files
-    BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef)
+    BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot)
 
     chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
     chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
