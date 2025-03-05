@@ -116,8 +116,22 @@ workflow {
     //Final Report
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
 
-    chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
-        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
+    /*chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
+        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)*/
+
+    chMultiQCTrigger = Channel.fromPath("$params.multiqc_dummy_file")
+
+
+    chFinalReport = multiqc(
+    chIGVReportMerged.mix(chMultiQCTrigger), 
+    chFragmentsSizeFiles.mix(chMultiQCTrigger),
+    chSNPSMaSHPlot.mix(chMultiQCTrigger), 
+    chEnrichmentFilesReport.mix(chMultiQCTrigger), 
+    chPeaksReport.mix(chMultiQCTrigger), 
+    chFragReport.mix(chMultiQCTrigger), 
+    chMultiQCConfig, 
+    chAllPreviousFiles
+)
 
     moveSoftFiles(chFinalReport)
     
