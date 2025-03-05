@@ -1,18 +1,11 @@
  #! /usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-
-//include {lenght_fragment_dist_step1} from './modules/lenght_fragment_dist_step'
-//include {lenght_fragment_dist_step2} from './modules/lenght_fragment_dist_step'
-//include {pileups_report} from './modules/pileups_report'
+//local modules
 include {multiqc} from './modules/multiqc'
-
-//include {fragLenHist} from './modules/fragLenHist'
-
-
-
 include {moveSoftFiles} from './modules/moveSoftFiles'
 
+//subworkflows
 include { INITIALIZATION } from './subworkflows/local/initialization'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
 include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
@@ -61,7 +54,6 @@ workflow {
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
-    //chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header") remove definitely
     chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
@@ -69,44 +61,44 @@ workflow {
     // Create the samplesheet, run FastQC, gather the genome information
     INITIALIZATION()
 
-    chGenomesInfo = INITIALIZATION.out.genomes_info
-    refDir = INITIALIZATION.out.ref_dir
-    chSampleInfo = INITIALIZATION.out.sample_info
+        chGenomesInfo = INITIALIZATION.out.genomes_info
+        refDir = INITIALIZATION.out.ref_dir
+        chSampleInfo = INITIALIZATION.out.sample_info
    
     // Download the genome, gene annotation, and DAC file
     DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
 
-    chGenome = DOWNLOAD_REFERENCES.out.genome
-    chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
-    chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
-    chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
-    chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
-    chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
+        chGenome = DOWNLOAD_REFERENCES.out.genome
+        chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
+        chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
+        chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
+        chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
+        chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
 
 
     // Process the BAM files
     BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot)
 
-    chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
-    chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
-    chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
+        chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
+        chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
+        chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
 
     // Process the BAM signal
     BAM_SIGNAL_PROCESSING(chSampleInfo,chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
                             chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks,\
                             chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader)
 
-    chIGVReportMerged = BAM_SIGNAL_PROCESSING.out.igv_report_merged
-    chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports
-    chPeaksReport = BAM_SIGNAL_PROCESSING.out.peaks_report
+        chIGVReportMerged = BAM_SIGNAL_PROCESSING.out.igv_report_merged
+        chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports
+        chPeaksReport = BAM_SIGNAL_PROCESSING.out.peaks_report
 
 
     // Process the fragments
     FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
                             chMultiQCFragsHeader,chReportFrags)
 
-    chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
-    chFragReport = FRAGMENTS_PROCESSING.out.frag_report
+        chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
+        chFragReport = FRAGMENTS_PROCESSING.out.frag_report
 
 
     //Final Report
