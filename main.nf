@@ -60,6 +60,13 @@ workflow {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
+    chIGVReportMerged = Channel.empty()
+    chFragmentsSizeFiles = Channel.empty()
+    chSNPSMaSHPlot = Channel.empty()
+    chEnrichmentFilesReport = Channel.empty()
+    chPeaksReport = Channel.empty()
+    chFragReport = Channel.empty()
+
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
         chGenomesInfo = INITIALIZATION.out.genomes_info
@@ -96,7 +103,7 @@ workflow {
         chPeaksReport = BAM_SIGNAL_PROCESSING.out.peaks_report
         
         }
-        
+
     if ('FRAGMENTS_PROCESSING' in run_steps) {
         FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
                             chMultiQCFragsHeader,chReportFrags)
@@ -147,7 +154,7 @@ workflow {
                             chMultiQCFragsHeader,chReportFrags)
 
         chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
-        chFragReport = FRAGMENTS_PROCESSING.out.frag_report
+        chFragReport = FRAGMENTS_PROCESSING.out.frag_report*/
 
 
     //Final Report
@@ -156,7 +163,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)*/
+    moveSoftFiles(chFinalReport)
     
 }
 
