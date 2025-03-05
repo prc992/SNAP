@@ -144,98 +144,15 @@ workflow {
 
 
 
-    //************************************************************************
-    //DOWNLOAD_REFERENCES
-    //************************************************************************
 
-    //chGeneAnotation = downloadGeneAnotation(chGenomesInfo,refDir) // remove definitely, do not include in the workflow
-    //chChromSizes = fetch_chrom_sizes(chGenomesInfo,refDir) 
-    /*chDACFileRef = downloadDACFile(chGenomesInfo,refDir) 
-    
-    // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
-    if (params.samplesheet) {
-        //println "Using provided samplesheet: ${params.samplesheet}"
-        chSampleSheet = Channel.fromPath(params.samplesheet)
-    } else {
-        //println "Creating samplesheet because none was provided."
-        chSampleSheet = createSamplesheet(
-            params.sample_dir, 
-            params.enrichment_mark ?: 'no_enrichment_mark'
-        )
-    }
-
-    // Read the SampleSheet provided by the user or created by the pipeline
-    chSampleInfo = chSampleSheet \
-        | splitCsv(header:true) \
-        | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
-
-    
-
-    chSNPS_ref = downloadSNPRef(chGenomesInfo) 
-    //************************************************************************
-    //************************************************************************
-    
-
-    fastqc(chSampleInfo) 
-
-    //************************************************************************
-    //BAM_PROCESSING
-    //************************************************************************
-    chTrimFiles = trim(chSampleInfo)
-    chAlignFiles = align(chTrimFiles,chGenome,chGenomeIndex) 
-    chSortedFiles = sort_bam(chAlignFiles)
-    lib_complex_preseq(chSortedFiles) //Ver pq está dando erro
-    chUniqueFiles = unique_sam(chSortedFiles) 
-
-    chFilteredFiles = quality_filter(chUniqueFiles) 
-    chStatsSamtools = createStatsSamtoolsfiltered(chFilteredFiles) 
-    chDedupFiles = dedup(chFilteredFiles) 
-    //************************************************************************
-    //************************************************************************
-
-
-    chDACFilteredFiles = dac_exclusion(chDedupFiles,chDACFileRef) 
-
-    //************************************************************************
-    //BAM_SIGNAL_PROCESSING
-    //************************************************************************
-
-    chIndexFiles = index_sam(chDACFilteredFiles)
-    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
-    chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
-
-    //Pileups ****************************************************************
-    chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
-    chIGVReportMerged = igv_consolidate_report(chIGVReportsHtml,chMultiQCHousekeepingHeader)
-
-    chBigWigAllFiles = chBigWig.collect()
-    chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
-    chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
-    chPeakFiles = peak_bed_graph(chDACFilteredFiles) 
-    //************************************************************************
-    //************************************************************************
-    //************************************************************************
-
+    /*
 
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chDACFilteredFiles)
     createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
 
-    //SNP Fingerprint using SMaSH ************************************************
-    chAllIndexFiles = chIndexFiles.collect()
-    chAllBAMandBAIIndexFiles = chAllIndexFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
-
-    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
-    chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
-    //*****************************************************************************
-    
-    
-    
         
-    
     //Fragment Length Distribution *******************************************
     chFragmentsSize = calcFragsLengthDistribuition(chIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
@@ -256,12 +173,7 @@ workflow {
     chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)
     //*********************************************************************************
 
-    //ENRICHMENT *********************************************************************
-    chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
-    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
-    chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
-    
-
+\
     //Final Report
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
