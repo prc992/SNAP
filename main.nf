@@ -67,10 +67,43 @@ workflow {
         chSampleInfo = INITIALIZATION.out.sample_info
         }
 
-    if ('DOWNLOAD_REFERENCES' in run_steps) DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
-    if ('BAM_PROCESSING' in run_steps) BAM_PROCESSING()
-    if ('BAM_SIGNAL_PROCESSING' in run_steps) BAM_SIGNAL_PROCESSING()
-    if ('FRAGMENTS_PROCESSING' in run_steps) FRAGMENTS_PROCESSING()
+    if ('DOWNLOAD_REFERENCES' in run_steps) {
+        DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
+
+        chGenome = DOWNLOAD_REFERENCES.out.genome
+        chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
+        chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
+        chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
+        chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
+        chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
+        }
+
+    if ('BAM_PROCESSING' in run_steps) {
+        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot)
+
+        chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
+        chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
+        chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
+        }
+
+    if ('BAM_SIGNAL_PROCESSING' in run_steps) {
+        BAM_SIGNAL_PROCESSING(chSampleInfo,chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
+                            chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks,\
+                            chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader)
+
+        chIGVReportMerged = BAM_SIGNAL_PROCESSING.out.igv_report_merged
+        chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports
+        chPeaksReport = BAM_SIGNAL_PROCESSING.out.peaks_report
+        
+        }
+        
+    if ('FRAGMENTS_PROCESSING' in run_steps) {
+        FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
+                            chMultiQCFragsHeader,chReportFrags)
+
+        chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
+        chFragReport = FRAGMENTS_PROCESSING.out.frag_report
+        }
 
     /*
 
