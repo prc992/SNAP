@@ -66,8 +66,8 @@ workflow {
         refDir = INITIALIZATION.out.ref_dir
         chSampleInfo = INITIALIZATION.out.sample_info
         }
-        
-    if ('DOWNLOAD_REFERENCES' in run_steps) DOWNLOAD_REFERENCES()
+
+    if ('DOWNLOAD_REFERENCES' in run_steps) DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
     if ('BAM_PROCESSING' in run_steps) BAM_PROCESSING()
     if ('BAM_SIGNAL_PROCESSING' in run_steps) BAM_SIGNAL_PROCESSING()
     if ('FRAGMENTS_PROCESSING' in run_steps) FRAGMENTS_PROCESSING()
