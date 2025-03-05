@@ -98,6 +98,7 @@ workflow {
     chSNPSMaSHPyPlot = Channel.fromPath("$params.pathSNPSMaSHPlot")
     chReportFragHist = Channel.fromPath("$params.pathReportFragHist")
     chReportFragPeaks = Channel.fromPath("$params.pathReportFragPeaks")
+    chReportPeaks = Channel.fromPath("$params.pathReportPeaks")
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
     chMergeReportEnrichment = Channel.fromPath("$params.pathMergeReportEnrichment")
     chIGVFilestoSessions = Channel.fromPath("$params.pathIGVFilestoSessions")
@@ -107,10 +108,11 @@ workflow {
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
     chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
-    chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
-    chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
+    chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
+    chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
 
+    // Create the samplesheet, run FastQC, gather the genome information
     INITIALIZATION()
 
     chGenomesInfo = INITIALIZATION.out.genomes_info
@@ -136,7 +138,7 @@ workflow {
 
     // Process the BAM signal
     BAM_SIGNAL_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
-                            chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo)
+                            chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks)
 
 
 
