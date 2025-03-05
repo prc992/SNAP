@@ -34,5 +34,8 @@ workflow FRAGMENTS_PROCESSING {
     chBedFiles = bam_to_bed(chBAMProcessedFiles) 
 
     chUniqueFrags = unique_frags(chBedFiles).collect()
-    chFragAndPeaksFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFragPeaks)
+    chFragFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFragPeaks)
+
+    emit: frag_size_files = chFragmentsSizeFiles
+    emit: frag_report = chFragFilesReport
 }

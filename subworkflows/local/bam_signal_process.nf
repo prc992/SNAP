@@ -58,6 +58,10 @@ workflow BAM_SIGNAL_PROCESSING {
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
 
+    emit: igv_report_merged = chIGVReportMerged
+    emit: merge_enrichment_reports = chMergedEnrichmentReport
+    emit: peaks_report = chPeaksFilesReport
+
     
 
 }

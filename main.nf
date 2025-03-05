@@ -144,45 +144,26 @@ workflow {
                             chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks,\
                             chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader)
 
+    chIGVReportMerged = BAM_SIGNAL_PROCESSING.out.igv_report_merged
+    chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports
+    chPeaksReport = BAM_SIGNAL_PROCESSING.out.peaks_report
+
 
     // Process the fragments
     FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
                             chMultiQCFragsHeader,chReportFrags)
-    /*
 
-    //End Motif and GC content ***********************************************
-    chNameSortedFiles = sort_readname_bam(chDACFilteredFiles)
-    createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
-    //************************************************************************
-
-        
-    //Fragment Length Distribution *******************************************
-    chFragmentsSize = calcFragsLengthDistribuition(chIndexFiles).collect()
-    chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
-    //************************************************************************
-
-    
-    chBedFiles = bam_to_bed(chDACFilteredFiles) //
-    
-    chUniqueFrags = unique_frags(chBedFiles).collect() //
+    chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
+    chFragReport = FRAGMENTS_PROCESSING.out.frag_report
 
 
-    
-    //Fragments and peaks Plot *******************************************************
-    chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
-    chFragAndPeaksFilesReport = frags_and_peaks(chNarrowPeakFiles,chUniqueFrags,\
-    chMultiQCFragsHeader,chMultiQCPeaksHeader,chReportFragPeaks,chSampleInfo)
-    //*********************************************************************************
-
-\
     //Final Report
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
-    chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
-        chSNPSMaSHPlot,chEnrichmentFilesReport,chFragAndPeaksFilesReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)*/
+    chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
+        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
+
+    moveSoftFiles(chFinalReport)
     
 }
 
