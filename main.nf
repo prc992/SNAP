@@ -157,13 +157,15 @@ workflow {
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report*/
 
 
-    //Final Report
-    chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
 
-    chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
-        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
+    workflow.onComplete {
+        //Final Report
+        chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
+        chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
+            chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
+        moveSoftFiles(chFinalReport)
 
-    moveSoftFiles(chFinalReport)
+    }
     
 }
 
