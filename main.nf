@@ -60,7 +60,13 @@ workflow {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
-    if ('INITIALIZATION' in run_steps) INITIALIZATION()
+    if ('INITIALIZATION' in run_steps) {
+        INITIALIZATION()
+        chGenomesInfo = INITIALIZATION.out.genomes_info
+        refDir = INITIALIZATION.out.ref_dir
+        chSampleInfo = INITIALIZATION.out.sample_info
+        }
+        
     if ('DOWNLOAD_REFERENCES' in run_steps) DOWNLOAD_REFERENCES()
     if ('BAM_PROCESSING' in run_steps) BAM_PROCESSING()
     if ('BAM_SIGNAL_PROCESSING' in run_steps) BAM_SIGNAL_PROCESSING()
