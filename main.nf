@@ -12,7 +12,6 @@ include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
 include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
 
-
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -57,6 +56,17 @@ workflow {
     chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
+
+    def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
+    def run_steps = steps.takeWhile { it != params.until } + params.until
+
+    if ('INITIALIZATION' in run_steps) INITIALIZATION()
+    if ('DOWNLOAD_REFERENCES' in run_steps) DOWNLOAD_REFERENCES()
+    if ('BAM_PROCESSING' in run_steps) BAM_PROCESSING()
+    if ('BAM_SIGNAL_PROCESSING' in run_steps) BAM_SIGNAL_PROCESSING()
+    if ('FRAGMENTS_PROCESSING' in run_steps) FRAGMENTS_PROCESSING()
+
+    /*
 
     // Create the samplesheet, run FastQC, gather the genome information
     INITIALIZATION()
@@ -107,7 +117,7 @@ workflow {
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)
+    moveSoftFiles(chFinalReport)*/
     
 }
 
