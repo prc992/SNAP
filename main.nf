@@ -51,14 +51,14 @@ include {multiqc} from './modules/multiqc'
 
 include {calcFragsLengthDistribuition} from './modules/calcFragsLength'
 include {fragLenHist} from './modules/fragLenHist'
-include {frags_and_peaks} from './modules/frags_and_peaks'
+//include {frags_and_peaks} from './modules/frags_and_peaks' //remove definitely
 include {enrichmentReport} from './modules/enrichmentReport'
 include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
 
 
 include {moveSoftFiles} from './modules/moveSoftFiles'
-include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
-include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
+//include {createSMaSHFingerPrint} from './modules/snp_smash_fingerprint'
+//include {createSMaSHFingerPrintPlot} from './modules/snp_smash_fingerprint'
 include {createMotifGCfile} from './modules/end_motif_gc'
 
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
@@ -107,7 +107,7 @@ workflow {
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
     chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
-    chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header")
+    //chMultiQCFragLenHeader = Channel.fromPath("$params.multiqc_frag_len_header") remove definitely
     chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
@@ -135,6 +135,7 @@ workflow {
 
     chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
     chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
+    chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
 
     // Process the BAM signal
     BAM_SIGNAL_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\

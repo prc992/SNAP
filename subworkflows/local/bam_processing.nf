@@ -10,6 +10,8 @@ include {createStatsSamtoolsfiltered} from '../../modules/local/createStatsSamto
 include {dedup} from '../../modules/local/dedup'
 include {dac_exclusion} from '../../modules/local/dac_exclusion'
 include {index_sam} from '../../modules/local/index_sam'
+include {createSMaSHFingerPrint} from '../../modules/local/snp_smash_fingerprint'
+include {createSMaSHFingerPrintPlot} from '../../modules/local/snp_smash_fingerprint'
 
 workflow BAM_PROCESSING {
 
@@ -31,7 +33,7 @@ workflow BAM_PROCESSING {
     chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chFilteredFiles)
     chDedup = dedup(chFilteredFiles)
 
-        // Filter the DAC files
+    // Filter the DAC files
     if (params.exclude_dac_regions) {
         chDACFilteredFiles = dac_exclusion(chDedup,chDACFileRef)
     } else {
@@ -40,6 +42,15 @@ workflow BAM_PROCESSING {
 
     chIndexFiles = index_sam(chDACFilteredFiles)
 
+    //SNP Fingerprint using SMaSH ************************************************
+    chAllIndexFiles = chIndexFiles.collect()
+    chAllBAMandBAIIndexFiles = chAllIndexFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
+
+    chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
+    chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
+
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
+    emit: report_SNP_SMaSH = chSNPSMaSHPlot
 }
