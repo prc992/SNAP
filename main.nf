@@ -52,8 +52,8 @@ include {multiqc} from './modules/multiqc'
 include {calcFragsLengthDistribuition} from './modules/calcFragsLength'
 include {fragLenHist} from './modules/fragLenHist'
 //include {frags_and_peaks} from './modules/frags_and_peaks' //remove definitely
-include {enrichmentReport} from './modules/enrichmentReport'
-include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
+//include {enrichmentReport} from './modules/enrichmentReport'
+//include {merge_enrichment_reports} from './modules/merge_enrichment_reports'
 
 
 include {moveSoftFiles} from './modules/moveSoftFiles'
@@ -138,8 +138,9 @@ workflow {
     chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
 
     // Process the BAM signal
-    BAM_SIGNAL_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
-                            chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks)
+    BAM_SIGNAL_PROCESSING(chSampleInfo,chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
+                            chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks,\
+                            chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader)
 
 
 

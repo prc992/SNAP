@@ -8,10 +8,13 @@ include {igv_reports} from '../../modules/local/igv_reports'
 include {igv_sample_reports} from '../../modules/local/igv_reports'
 include {igv_consolidate_report} from '../../modules/local/igv_reports'
 include {igv_session} from '../../modules/local/igv_reports'
+include {enrichmentReport} from '../../modules/local/enrichmentReport'
+include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
 
 workflow BAM_SIGNAL_PROCESSING {
 
     take:
+    chSampleInfo
     chDACFilteredFiles
     chIndexFiles
     chChromSizes
@@ -23,6 +26,10 @@ workflow BAM_SIGNAL_PROCESSING {
     chGenomesInfo
     chMultiQCPeaksHeader
     chReportPeaks
+    chEnrichmentScript
+    chReportEnrichment
+    chMergeReportEnrichment
+    chMultiQCEnrichmentHeader
 
     main:
     
@@ -44,6 +51,11 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
 
     chPeaksFilesReport = peaks_report(chNarrowPeakFiles,chMultiQCPeaksHeader,chReportPeaks)
+
+    //ENRICHMENT *********************************************************************
+    chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
+    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
+    chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
 
     
 
