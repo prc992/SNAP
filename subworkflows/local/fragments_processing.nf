@@ -32,5 +32,5 @@ workflow FRAGMENTS_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
     
-    chBedFiles = bam_to_bed(chDACFilteredFiles) 
+    chBedFiles = bam_to_bed(chBAMProcessedFiles) 
 }
