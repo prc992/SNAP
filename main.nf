@@ -6,7 +6,7 @@ nextflow.enable.dsl=2
 
 //include {sort_readname_bam} from './modules/sort_bam'
 
-include {enrichment} from './modules/enrichment'
+//include {enrichment} from './modules/enrichment'
 
 
 include {bam_to_bed} from './modules/bam_to_bed'
