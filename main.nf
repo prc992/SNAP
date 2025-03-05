@@ -1,7 +1,7 @@
  #! /usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-include {fastqc} from './modules/fastqc'
+//include {fastqc} from './modules/fastqc'
 
 
 //include {sort_readname_bam} from './modules/sort_bam'
@@ -64,6 +64,7 @@ include {createMotifGCfile} from './modules/end_motif_gc'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
 include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
 include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
+include { INITIALIZATION } from './subworkflows/local/initialization'
 
 workflow {
     // Static information about the pipeline
@@ -109,26 +110,12 @@ workflow {
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
     chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
-    
-    // Create the genome directory if it doesn't exist
-    """
-    mkdir -p ${projectDir}/ref_files/genome
-    """.execute().waitFor()
-    refDir = Channel.fromPath("${projectDir}/ref_files/genome")
 
-    // Read the GenomePaths spreadsheet and filter the row that matches the genome parameter
-    chGenomesSheet = Channel.fromPath(params.genomeInfoPaths)
-    chGenomesInfo = chGenomesSheet \
-        | splitCsv(header:true) \
-        | filter { row -> row.Genome == params.genome } \
-        | ifEmpty { error "No matching Genome found in the GenomePaths spreadsheet. Exiting workflow." }
-        | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }
-    // Destructure and store each column into separate variables
-    chGenomesInfo
-        .map { genome, faGZFile, geneAnnotation, dacList, snp ->
-            [genome, faGZFile, geneAnnotation, dacList, snp]
-        }
+    INITIALIZATION()
 
+    chGenomesInfo = INITIALIZATION.out.genomes_info
+    refDir = INITIALIZATION.out.ref_dir
+    chSampleInfo = INITIALIZATION.out.sample_info
    
     // Download the genome, gene annotation, and DAC file
     DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
@@ -140,8 +127,6 @@ workflow {
     chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
     chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
 
-    // Run FastQC on the samples
-    fastqc(chSampleInfo)
 
     // Process the BAM files
     BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef)
@@ -248,7 +233,7 @@ workflow {
         
     
     //Fragment Length Distribution *******************************************
-    chFragmentsSize = calcFragsLength(chIndexFiles).collect()
+    chFragmentsSize = calcFragsLengthDistribuition(chIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************

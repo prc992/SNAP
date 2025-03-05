@@ -1,4 +1,4 @@
-process calcFragsLength {
+process calcFragsLengthDistribuition {
   label 'med_cpu_med_mem'
   container = params.containers.deeptools
 
