@@ -5,6 +5,7 @@ include {bam_to_bed} from '../../modules/local/bam_to_bed'
 include {unique_frags} from '../../modules/local/unique_frags'
 include {calcFragsLengthDistribuition} from '../../modules/local/calcFragsLength'
 include {createMotifGCfile} from '../../modules/local/end_motif_gc'
+include {frags_report} from '../../modules/local/frags_report.nf'
 
 
 workflow FRAGMENTS_PROCESSING {
