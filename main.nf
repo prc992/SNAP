@@ -85,6 +85,8 @@ workflow {
     chEnrichmentFilesReport = Channel.empty()
     chPeaksReport = Channel.empty()
     chFragReport = Channel.empty()
+    chFastaQC = Channel.empty()
+    chLibComplexPreseq = Channel.empty()
 
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
@@ -133,6 +135,24 @@ workflow {
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
         }
 
+    //
+    // Criamos arquivos dummy para evitar bloqueio do `combine()`
+    chIGVReportMerged = chIGVReportMerged.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_igv.txt"))
+    chFastaQC = chFastaQC.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_fasta.txt"))
+    chFragmentsSizeFiles = chFragmentsSizeFiles.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_frag.txt"))
+    chSNPSMaSHPlot = chSNPSMaSHPlot.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_snps.txt"))
+    chLibComplexPreseq = chLibComplexPreseq.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_libcomplex.txt"))
+    chEnrichmentFilesReport = chEnrichmentFilesReport.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_enrichment.txt"))
+    chPeaksReport = chPeaksReport.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_peaks.txt"))
+    chFragReport = chFragReport.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_frag_report.txt"))
+
+    // Criamos um canal que só será ativado quando todas as saídas estiverem prontas
+    chFinalTrigger = chIGVReportMerged
+        .combine(chFastaQC, chFragmentsSizeFiles, chSNPSMaSHPlot, chLibComplexPreseq, 
+                 chEnrichmentFilesReport, chPeaksReport, chFragReport)
+    //
+
+    /*
 
     //Final Report
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
@@ -151,7 +171,7 @@ workflow {
     /*chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)*/
 
-    moveSoftFiles(chFinalReport)
+    /*moveSoftFiles(chFinalReport)*/
     
 }
 
