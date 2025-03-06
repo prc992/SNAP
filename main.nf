@@ -156,6 +156,11 @@ workflow {
         .combine(chEnrichmentFilesReport)
         .combine(chPeaksReport)
         .combine(chFragReport)
+
+        // MultiQC só será executado quando `chFinalTrigger` estiver pronto
+        chFinalReport = multiqc(chFinalTrigger, chMultiQCConfig, chAllPreviousFiles)
+
+        moveSoftFiles(chFinalReport)
     //
 
     /*
