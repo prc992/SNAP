@@ -73,7 +73,6 @@ workflow BAM_SIGNAL_PROCESSING {
     chAllChannels = chBedGraphFilesAll
         .combine(chIGVReportMergedAll)
         .combine(chPeakFilesAll)
-        .combine(chPeaksFilesReportAll)
         .combine(chIGVReportsHtml)
         .combine(chBigWigAllFiles)
         .combine(chMergedEnrichmentReport)
