@@ -111,6 +111,7 @@ workflow {
         chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
         chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
         chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
+        chLibComplexPreseq = BAM_PROCESSING.out.lib_complex
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
@@ -139,6 +140,7 @@ workflow {
         .mix(chFastaQC)
         .mix(chFragmentsSizeFiles)
         .mix(chSNPSMaSHPlot)
+        .mix(chLibComplexPreseq)
         .mix(chEnrichmentFilesReport)
         .mix(chPeaksReport)
         .mix(chFragReport)

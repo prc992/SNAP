@@ -56,4 +56,5 @@ workflow BAM_PROCESSING {
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
     emit: report_SNP_SMaSH = chSNPSMaSHPlot
+    emit: lib_complex = chLibComplexPreseq
 }
