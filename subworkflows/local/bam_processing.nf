@@ -84,10 +84,7 @@ workflow BAM_PROCESSING {
         .combine(chDACFilteredFilesAll)
         .combine(chSMaSHOutoutAll)
         .combine(chSNPSMaSHPlotAll)
-
-    chAllChannels.view()
     
-
     chOnlyFiles = chAllChannels
         .map { values -> 
             values.findAll { 
@@ -96,7 +93,8 @@ workflow BAM_PROCESSING {
                     it.toString().endsWith(".txt") || 
                     it.toString().endsWith(".stats") || 
                     it.toString().endsWith(".txt") || 
-                    it.toString().endsWith(".idxstats") || 
+                    it.toString().endsWith(".idxstats") ||
+                    it.toString().endsWith(".flagstat") ||  
                     it.toString().contains("Dendrogram_of_Samples")
                 )
             }
@@ -107,10 +105,8 @@ workflow BAM_PROCESSING {
             acc
         }
         .map { it.values().toList() } // 🔹 Converte para uma lista
-        .view() // Exibe os arquivos coletados no terminal
 
         chOnlyFilesList = chOnlyFiles.collect()
-        
         multiqc_bam_processing(chOnlyFilesList,chMultiQCConfig)
 
         
