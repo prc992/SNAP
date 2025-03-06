@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 // Import the required processes from the modules
 include {createSamplesheet} from '../../modules/local/createSamplesheet'
 include {fastqc} from '../../modules/local/fastqc'
-include {multiqc_initialization} from '../local/modules/multiqc'
+include {multiqc_initialization} from '../../modules/local/multiqc'
 
 workflow INITIALIZATION {
 
