@@ -12,7 +12,8 @@ process multiqc {
     //path (chPeaks)
     //path (chFrag)
     //path (chEnrichmentFiles)
-    path (configFile)
+    path (chFinalTrigger)
+    path (chMultiQCConfig)
     path (chAllPreviousFiles)
 
 

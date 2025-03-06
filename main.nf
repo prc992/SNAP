@@ -75,6 +75,9 @@ workflow {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
+    // Criamos um canal que serve como gatilho para o processo final
+    chFinalTrigger = Channel.empty()
+
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
         chGenomesInfo = INITIALIZATION.out.genomes_info
@@ -120,18 +123,23 @@ workflow {
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
         }
 
-    workflow.onComplete {
-        chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
-        chFinalReport = multiqc(chMultiQCConfig,chAllPreviousFiles)
-        println "\n✅ Pipeline finalizada com sucesso! 🎉"
-    }
+
     //Final Report
-    /*chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
+    chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
+    chFinalTrigger = chIGVReportMerged
+        .mix(chFragmentsSizeFiles)
+        .mix(chSNPSMaSHPlot)
+        .mix(chEnrichmentFilesReport)
+        .mix(chPeaksReport)
+        .mix(chFragReport)
 
-    chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
-        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
+    chFinalReport = multiqc(chFinalTrigger,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)*/
+
+    /*chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
+        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)*/
+
+    moveSoftFiles(chFinalReport)
     
 }
 
