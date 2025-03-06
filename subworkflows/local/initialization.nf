@@ -46,10 +46,11 @@ workflow INITIALIZATION {
         | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
     
     // Run FastQC on the samples
-    fastqc(chSampleInfo)
+    chFastaQC = fastqc(chSampleInfo)
 
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
+    emit: fastqc_files = chFastaQC
     emit: ref_dir = refDir
 
 }

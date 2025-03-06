@@ -91,6 +91,7 @@ workflow {
         chGenomesInfo = INITIALIZATION.out.genomes_info
         refDir = INITIALIZATION.out.ref_dir
         chSampleInfo = INITIALIZATION.out.sample_info
+        chFastaQC = INITIALIZATION.out.fastqc_files
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
@@ -135,6 +136,7 @@ workflow {
     //Final Report
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
     chFinalTrigger = chIGVReportMerged
+        .mix(chFastaQC)
         .mix(chFragmentsSizeFiles)
         .mix(chSNPSMaSHPlot)
         .mix(chEnrichmentFilesReport)
