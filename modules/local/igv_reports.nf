@@ -55,7 +55,7 @@ process igv_consolidate_report {
     container = params.containers.ubuntu
     tag "All Samples"
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/BAM_SIGNAL_PROCESSING/", mode : 'copy'
+    //publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/BAM_SIGNAL_PROCESSING/", mode : 'copy'
 
     input:
     path (samples_report)
