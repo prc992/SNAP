@@ -93,12 +93,13 @@ workflow BAM_SIGNAL_PROCESSING {
     
     //chAllChannelsProcessing.view()
     
-   chOnlyFilesProcessing = chAllChannelsProcessing
+    chOnlyFilesProcessing = chAllChannelsProcessing
     .flatten() // Garante que os arquivos estejam em um único fluxo
     .collect() // Junta todos os arquivos antes de processá-los
     .map { files -> 
         def uniqueFiles = [:] as LinkedHashMap
-        files.each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Mantém apenas a primeira ocorrência do nome do arquivo
+        files.findAll { it instanceof Path } // 🔹 Mantém apenas arquivos (Path)
+             .each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Mantém apenas a primeira ocorrência do nome
         return uniqueFiles.values() // Retorna apenas os arquivos únicos
     }
     .flatten() // Garante que cada arquivo seja emitido separadamente no canal
