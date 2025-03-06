@@ -121,6 +121,8 @@ workflow {
         }
 
     workflow.onComplete {
+        chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
+        chFinalReport = multiqc(chMultiQCConfig,chAllPreviousFiles)
         println "\n✅ Pipeline finalizada com sucesso! 🎉"
     }
     //Final Report

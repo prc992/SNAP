@@ -6,12 +6,12 @@ process multiqc {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
     
     input:
-    path (chIGVReport)
-    path (chFragmentsSizeFiles)
-    path (chFootPrintPDF)
-    path (chPeaks)
-    path (chFrag)
-    path (chEnrichmentFiles)
+    //path (chIGVReport)
+    //path (chFragmentsSizeFiles)
+    //path (chFootPrintPDF)
+    //path (chPeaks)
+    //path (chFrag)
+    //path (chEnrichmentFiles)
     path (configFile)
     path (chAllPreviousFiles)
 
