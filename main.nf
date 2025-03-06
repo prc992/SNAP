@@ -75,7 +75,7 @@ workflow {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
-    chDummy = CREATE_DUMMY_FILE()
+    //chDummy = CREATE_DUMMY_FILE()
 
     // Inicializar os canais vazios antes de misturar com o dummy
     chIGVReportMerged = CREATE_DUMMY_FILE('chIGVReportMerged')
