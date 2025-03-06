@@ -86,10 +86,18 @@ workflow BAM_PROCESSING {
         .combine(chSNPSMaSHPlotAll)
     
     chOnlyFiles = chAllChannels
-        .map { values -> values.findAll { it instanceof Path } }
-        .flatten() // Garante que os arquivos estejam em um único canal
-        .distinct() // Remove arquivos duplicados
-        .view()
+        .map { values -> 
+            values.findAll { 
+                it instanceof Path && ( 
+                    it.toString().endsWith(".yml") || 
+                    it.toString().endsWith(".txt") || 
+                    it.toString().endsWith(".jpg") 
+                )
+            }
+        }
+        .flatten()   // Garante um único fluxo de arquivos
+        .distinct()  // Remove arquivos duplicados
+        .view()      // 🔹 Exibe os arquivos coletados no terminal
     
     multiqc_bam_processing(chOnlyFiles,chMultiQCConfig)
 
