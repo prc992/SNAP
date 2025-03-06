@@ -75,5 +75,6 @@ workflow INITIALIZATION {
     emit: genomes_info = chGenomesInfo
     emit: fastqc_files = chFastaQC
     emit: ref_dir = refDir
+    emit: files_report = chFilesReport
 
 }

@@ -66,6 +66,7 @@ workflow {
         refDir = INITIALIZATION.out.ref_dir
         chSampleInfo = INITIALIZATION.out.sample_info
         chFastaQC = INITIALIZATION.out.fastqc_files
+        chFilesReport = INITIALIZATION.out.files_report
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
@@ -80,7 +81,8 @@ workflow {
         }
 
     if ('BAM_PROCESSING' in run_steps) {
-        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot,chMultiQCConfig)
+        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot,\
+                        chFilesReport,chMultiQCConfig)
 
         chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
         chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
