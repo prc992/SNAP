@@ -73,12 +73,13 @@ workflow {
 
     chDummy = CREATE_DUMMY_FILE()
 
-    chIGVReportMerged = chIGVReportMerged.mix(chDummy)
-    chFragmentsSizeFiles = chFragmentsSizeFiles.mix(chDummy)
-    chSNPSMaSHPlot = chSNPSMaSHPlot.mix(chDummy)
-    chEnrichmentFilesReport = chEnrichmentFilesReport.mix(chDummy)
-    chPeaksReport = chPeaksReport.mix(chDummy)
-    chFragReport = chFragReport.mix(chDummy)
+    // Inicializar os canais vazios antes de misturar com o dummy
+    chIGVReportMerged = Channel.empty().mix(chDummy)
+    chFragmentsSizeFiles = Channel.empty().mix(chDummy)
+    chSNPSMaSHPlot = Channel.empty().mix(chDummy)
+    chEnrichmentFilesReport = Channel.empty().mix(chDummy)
+    chPeaksReport = Channel.empty().mix(chDummy)
+    chFragReport = Channel.empty().mix(chDummy)
 
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
