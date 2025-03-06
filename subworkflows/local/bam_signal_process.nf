@@ -64,22 +64,32 @@ workflow BAM_SIGNAL_PROCESSING {
 
     // Collect all the files to generate the MultiQC report
     chBedGraphFilesAll = chBedGraphFiles.collect()
+    chBigWigAllFiles = chBigWig.collect()
+    chIGVReportsHtmlAll = chIGVReportsHtml.collect()
     chIGVReportMergedAll = chIGVReportMerged.collect()
+    chBigWigAllFilesAll = chBigWigAllFiles.collect()
+    chIGVSessionAll = chIGVSession.collect()
     chPeakFilesAll = chPeakFiles.collect()
-    chFilesReportBamProcessingAll = chFilesReportBamProcessing.collect()
-    chFilesReportInitializationAll = chFilesReportInitialization.collect()
+    chPeaksFilesReportAll = chPeaksFilesReport.collect()
+    chEnrichmentFilesCSVAll = chEnrichmentFilesCSV.collect()
+    chEnrichmentFilesReportAll = chEnrichmentFilesReport.collect()
+    chMergedEnrichmentReportAll = chMergedEnrichmentReport.collect()
+
 
     // Combine all the channels
     chAllChannelsProcessing = chBedGraphFilesAll
-        .combine(chIGVReportMergedAll)
-        .combine(chPeakFilesAll)
-        .combine(chIGVReportsHtml)
         .combine(chBigWigAllFiles)
-        .combine(chEnrichmentFilesCSV)
-        .combine(chEnrichmentFilesReport)
-        .combine(chMergedEnrichmentReport)
-        .combine(chFilesReportBamProcessingAll)
-        .combine(chFilesReportInitializationAll)
+        .combine(chIGVReportsHtmlAll)
+        .combine(chIGVReportMergedAll)
+        .combine(chBigWigAllFilesAll)
+        .combine(chIGVSessionAll)
+        .combine(chPeakFilesAll)
+        .combine(chPeaksFilesReportAll)
+        .combine(chEnrichmentFilesCSVAll)
+        .combine(chEnrichmentFilesReportAll)
+        .combine(chMergedEnrichmentReportAll)
+        .combine(chFilesReportBamProcessing)
+        .combine(chFilesReportInitialization)
     
     chAllChannelsProcessing.view()
     
