@@ -123,7 +123,7 @@ workflow {
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
         }
 
-    // Criamos um canal que só será ativado quando todas as saídas estiverem prontas
+    /*// Criamos um canal que só será ativado quando todas as saídas estiverem prontas
     chFinalTrigger = chIGVReportMerged
         .combine(chFastaQC)
         .combine(chFragmentsSizeFiles)
@@ -135,7 +135,7 @@ workflow {
 
         chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
         chFinalReport = multiqc(chFinalTrigger, chMultiQCConfig, chAllPreviousFiles)
-        moveSoftFiles(chFinalReport)
+        moveSoftFiles(chFinalReport)*/
     
 }
 
