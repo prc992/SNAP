@@ -87,26 +87,19 @@ workflow BAM_PROCESSING {
     
 
     chOnlyFiles = chAllChannels
-        .map { values -> 
-            values.findAll { 
-                it instanceof Path && ( 
-                    it.toString().endsWith(".yml") || 
-                    it.toString().endsWith(".txt") || 
-                    it.toString().endsWith(".jpg") 
-                )
-            }
-        }
         .flatten() // Garante que os arquivos estejam em um único fluxo
-        .reduce( [:] as LinkedHashMap ) { acc, file -> 
-            acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
-            acc
+        .collect() // Junta todos os arquivos em uma lista única antes de processá-los
+        .map { files -> 
+            def uniqueFiles = [:] as LinkedHashMap
+            files.each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Mantém apenas a primeira ocorrência do nome do arquivo
+            return uniqueFiles.values() // Retorna apenas os arquivos únicos
         }
-        .map { it.values().toList() } // 🔹 Converte para uma lista
+        .flatten() // Garante que cada arquivo seja emitido separadamente no canal
         .view() // Exibe os arquivos coletados no terminal
 
-        chOnlyFilesList = chOnlyFiles.collect()
-        
-        multiqc_bam_processing(chOnlyFilesList,chMultiQCConfig)
+            chOnlyFilesList = chOnlyFiles.collect()
+            
+            multiqc_bam_processing(chOnlyFilesList,chMultiQCConfig)
 
         
     emit: bam_processed = chDACFilteredFiles
