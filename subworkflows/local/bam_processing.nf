@@ -84,6 +84,8 @@ workflow BAM_PROCESSING {
         .combine(chDACFilteredFilesAll)
         .combine(chSMaSHOutoutAll)
         .combine(chSNPSMaSHPlotAll)
+
+    chAllChannels.view()
     
 
     chOnlyFiles = chAllChannels
