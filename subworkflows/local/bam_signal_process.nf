@@ -91,8 +91,6 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
     
-    //chAllChannelsProcessing.view()
-    
     chOnlyFilesProcessing = chAllChannelsProcessing
     .flatten() // Garante que os arquivos estejam em um único fluxo
     .collect() // Junta todos os arquivos antes de processá-los
