@@ -97,7 +97,7 @@ workflow BAM_PROCESSING {
                     it.toString().endsWith(".stats") || 
                     it.toString().endsWith(".txt") || 
                     it.toString().endsWith(".idxstats") || 
-                    it.toString().endsWith("*.jpg")
+                    it.toString().contains("Dendrogram_of_Samples")
                 )
             }
         }
