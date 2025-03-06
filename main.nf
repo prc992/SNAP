@@ -13,12 +13,16 @@ include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
 
 process CREATE_DUMMY_FILE {
+
+    input:
+    val (file_name)
+
     output:
-    path "dummy.txt"
+    path "*.txt"
 
     script:
     """
-    touch dummy.txt
+    touch "$file_name".txt
     """
 }
 
@@ -74,12 +78,12 @@ workflow {
     chDummy = CREATE_DUMMY_FILE()
 
     // Inicializar os canais vazios antes de misturar com o dummy
-    chIGVReportMerged = Channel.empty().mix(chDummy)
-    chFragmentsSizeFiles = Channel.empty().mix(chDummy)
-    chSNPSMaSHPlot = Channel.empty().mix(chDummy)
-    chEnrichmentFilesReport = Channel.empty().mix(chDummy)
-    chPeaksReport = Channel.empty().mix(chDummy)
-    chFragReport = Channel.empty().mix(chDummy)
+    chIGVReportMerged = CREATE_DUMMY_FILE('chIGVReportMerged')
+    chFragmentsSizeFiles = CREATE_DUMMY_FILE('chFragmentsSizeFiles')
+    chSNPSMaSHPlot = CREATE_DUMMY_FILE('chSNPSMaSHPlot')
+    chEnrichmentFilesReport = CREATE_DUMMY_FILE('chEnrichmentFilesReport')
+    chPeaksReport = CREATE_DUMMY_FILE('chPeaksReport')
+    chFragReport = CREATE_DUMMY_FILE('chFragReport')
 
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
