@@ -12,6 +12,8 @@ include {dac_exclusion} from '../../modules/local/dac_exclusion'
 include {index_sam} from '../../modules/local/index_sam'
 include {createSMaSHFingerPrint} from '../../modules/local/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from '../../modules/local/snp_smash_fingerprint'
+include {multiqc_bam_processing} from '../../modules/local/multiqc'
+
 
 workflow BAM_PROCESSING {
 
@@ -24,6 +26,7 @@ workflow BAM_PROCESSING {
     chSNPSMaSH
     chSNPS_ref
     chSNPSMaSHPyPlot
+    chMultiQCConfig
 
     main:
 
@@ -53,6 +56,38 @@ workflow BAM_PROCESSING {
     chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
 
+
+    chTrimAll = chTrim.collect()
+    chAlignAll = chAlign.collect()
+    chSortBamAll = chSortBam.collect()
+    chLibComplexPreseqAll = chLibComplexPreseq.collect()
+    chUniqueSamAll = chUniqueSam.collect()
+    chFilteredFilesAll = chFilteredFiles.collect()
+    chCreateStatsSamtoolsfilteredAll = chCreateStatsSamtoolsfiltered.collect()
+    chFilteredFilesAll = chFilteredFiles.collect()
+    chCreateStatsSamtoolsfilteredAll = chCreateStatsSamtoolsfiltered.collect()
+    chDedupAll = chDedup.collect()
+    chDACFilteredFilesAll = chDACFilteredFiles.collect()
+    chSMaSHOutoutAll = chSMaSHOutout.collect()
+    chSNPSMaSHPlotAll = chSNPSMaSHPlot.collect()
+
+    chAllChannels = chTrimAll
+        .combine(chAlignAll)
+        .combine(chSortBamAll)
+        .combine(chLibComplexPreseqAll)
+        .combine(chUniqueSamAll)
+        .combine(chFilteredFilesAll)
+        .combine(chCreateStatsSamtoolsfilteredAll)
+        .combine(chFilteredFilesAll)
+        .combine(chCreateStatsSamtoolsfilteredAll)
+        .combine(chDedupAll)
+        .combine(chDACFilteredFilesAll)
+        .combine(chSMaSHOutoutAll)
+        .combine(chSNPSMaSHPlotAll)
+    
+    multiqc_bam_processing(chMultiQCConfig,chAllChannels)
+
+        
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
     emit: report_SNP_SMaSH = chSNPSMaSHPlot
