@@ -51,7 +51,26 @@ workflow INITIALIZATION {
 
     chFastaQCAll = chFastaQC.collect()
 
-    multiqc_initialization(chFastaQCAll)
+    // Filter only the files that will be used in the MultiQC report and remove duplicates
+    chOnlyFiles = chFastaQCAll
+        .map { values -> 
+            values.findAll { 
+                it instanceof Path && ( 
+                    it.toString().endsWith(".yml") || 
+                    it.toString().endsWith(".zip") || 
+                    it.toString().endsWith(".html") || )
+                )
+            }
+        }
+        .flatten() // Garante que os arquivos estejam em um único fluxo
+        .reduce( [:] as LinkedHashMap ) { acc, file -> 
+            acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
+            acc
+        }
+        .map { it.values().toList() } // 🔹 Converte para uma lista
+        chFilesReport = chOnlyFiles.collect()
+
+    multiqc_initialization(chFilesReport)
 
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
