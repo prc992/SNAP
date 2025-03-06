@@ -75,16 +75,6 @@ workflow {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
-    //chDummy = CREATE_DUMMY_FILE()
-
-    // Inicializar os canais vazios antes de misturar com o dummy
-    chIGVReportMerged = CREATE_DUMMY_FILE('chIGVReportMerged')
-    chFragmentsSizeFiles = CREATE_DUMMY_FILE('chFragmentsSizeFiles')
-    chSNPSMaSHPlot = CREATE_DUMMY_FILE('chSNPSMaSHPlot')
-    chEnrichmentFilesReport = CREATE_DUMMY_FILE('chEnrichmentFilesReport')
-    chPeaksReport = CREATE_DUMMY_FILE('chPeaksReport')
-    chFragReport = CREATE_DUMMY_FILE('chFragReport')
-
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
         chGenomesInfo = INITIALIZATION.out.genomes_info
@@ -130,13 +120,16 @@ workflow {
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
         }
 
+    workflow.onComplete {
+        println "\n✅ Pipeline finalizada com sucesso! 🎉"
+    }
     //Final Report
-    chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
+    /*chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
 
     chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
         chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
 
-    moveSoftFiles(chFinalReport)
+    moveSoftFiles(chFinalReport)*/
     
 }
 
