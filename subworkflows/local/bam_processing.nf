@@ -87,8 +87,9 @@ workflow BAM_PROCESSING {
     
     chOnlyFiles = chAllChannels
         .map { values -> values.findAll { it instanceof Path } }
-        //.flatten() // Garante que os arquivos estejam em um único canal
+        .flatten() // Garante que os arquivos estejam em um único canal
         .distinct() // Remove arquivos duplicados
+        .view()
     
     multiqc_bam_processing(chOnlyFiles,chMultiQCConfig)
 
