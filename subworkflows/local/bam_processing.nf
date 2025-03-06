@@ -90,7 +90,9 @@ workflow BAM_PROCESSING {
         .map { values -> 
             values.findAll { 
                 it instanceof Path && ( 
-                    it.toString().endsWith("*.*") 
+                    it.toString().endsWith(".yml") || 
+                    it.toString().endsWith(".txt") || 
+                    it.toString().endsWith("*.jpg")
                 )
             }
         }
