@@ -58,7 +58,7 @@ workflow INITIALIZATION {
                 it instanceof Path && ( 
                     it.toString().endsWith(".yml") || 
                     it.toString().endsWith(".zip") || 
-                    it.toString().endsWith(".html") || )
+                    it.toString().endsWith(".html") )
             }
         }
         .flatten() // Garante que os arquivos estejam em um único fluxo
