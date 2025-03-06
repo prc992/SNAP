@@ -81,6 +81,8 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chFilesReportBamProcessingAll)
         .combine(chFilesReportInitializationAll)
     
+    chAllChannelsProcessing.view()
+    
     // Filter only the files that will be used in the MultiQC report and remove duplicates
     chOnlyFilesProcessing = chAllChannelsProcessing
         .map { values -> 
@@ -108,7 +110,7 @@ workflow BAM_SIGNAL_PROCESSING {
         .map { it.values().toList() } // 🔹 Converte para uma lista
 
         chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
-        chFilesReportSignalProcess.view()
+        //chFilesReportSignalProcess.view()
     
     multiqc_bam_signal_processing(chFilesReportSignalProcess,chMultiQCConfig)
 
