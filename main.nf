@@ -78,6 +78,14 @@ workflow {
     // Criamos um canal que serve como gatilho para o processo final
     chFinalTrigger = Channel.empty()
 
+    // Inicializa os canais vazios para evitar erro de variável não definida
+    chIGVReportMerged = Channel.empty()
+    chFragmentsSizeFiles = Channel.empty()
+    chSNPSMaSHPlot = Channel.empty()
+    chEnrichmentFilesReport = Channel.empty()
+    chPeaksReport = Channel.empty()
+    chFragReport = Channel.empty()
+
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
         chGenomesInfo = INITIALIZATION.out.genomes_info
