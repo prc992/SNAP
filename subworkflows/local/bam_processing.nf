@@ -85,7 +85,11 @@ workflow BAM_PROCESSING {
         .combine(chSMaSHOutoutAll)
         .combine(chSNPSMaSHPlotAll)
     
-    multiqc_bam_processing(chAllChannels,chMultiQCConfig)
+    chOnlyFiles = chAllChannels.map { values -> 
+    values.findAll { it instanceof Path }
+}
+    
+    multiqc_bam_processing(chOnlyFiles,chMultiQCConfig)
 
         
     emit: bam_processed = chDACFilteredFiles
