@@ -25,3 +25,22 @@ process multiqc {
     multiqc . 
     """
 }
+
+process multiqc_initialization {
+    label 'process_medium'
+    tag "All Samples" 
+    container = params.containers.multiqc 
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/INITIALIZATION/", mode : 'copy'
+    
+    input:
+    path (chFilesReport)
+
+    output:
+    path ("*.*")
+
+    script:
+    """
+    multiqc . 
+    """
+}

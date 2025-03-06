@@ -3,6 +3,7 @@ nextflow.enable.dsl=2
 // Import the required processes from the modules
 include {createSamplesheet} from '../../modules/local/createSamplesheet'
 include {fastqc} from '../../modules/local/fastqc'
+include {multiqc_initialization} from './modules/multiqc'
 
 workflow INITIALIZATION {
 
@@ -47,6 +48,8 @@ workflow INITIALIZATION {
     
     // Run FastQC on the samples
     chFastaQC = fastqc(chSampleInfo)
+
+    multiqc_initialization(chFastaQC)
 
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo

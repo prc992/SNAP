@@ -12,20 +12,6 @@ include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
 include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
 
-process CREATE_DUMMY_FILE {
-
-    input:
-    val (file_name)
-
-    output:
-    path "*.txt"
-
-    script:
-    """
-    touch "$file_name".txt
-    """
-}
-
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
