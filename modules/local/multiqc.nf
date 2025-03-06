@@ -28,7 +28,7 @@ process multiqc_bam_processing {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/BAM_PROCESSING/", mode : 'copy'
     
     input:
-    path (chOnlyFiles)
+    path (chFilesReport)
     path (chMultiQCConfig)
 
     output:

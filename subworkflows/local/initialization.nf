@@ -49,7 +49,9 @@ workflow INITIALIZATION {
     // Run FastQC on the samples
     chFastaQC = fastqc(chSampleInfo)
 
-    multiqc_initialization(chFastaQC)
+    chFastaQCAll = chFastaQC.collect()
+
+    multiqc_initialization(chFastaQCAll)
 
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo

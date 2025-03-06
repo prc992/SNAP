@@ -107,9 +107,9 @@ workflow BAM_PROCESSING {
             acc
         }
         .map { it.values().toList() } // 🔹 Converte para uma lista
-        chOnlyFilesList = chOnlyFiles.collect()
+        chFilesReport = chOnlyFiles.collect()
     
-    multiqc_bam_processing(chOnlyFilesList,chMultiQCConfig)
+    multiqc_bam_processing(chFilesReport,chMultiQCConfig)
 
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
