@@ -1,4 +1,4 @@
-process multiqc {
+/*process multiqc {
     label 'process_medium'
     tag "All Samples" 
     container = params.containers.multiqc 
@@ -18,7 +18,7 @@ process multiqc {
     """
     multiqc . 
     """
-}
+}*/
 
 process multiqc_bam_processing {
     label 'process_medium'
