@@ -70,7 +70,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportInitializationAll = chFilesReportInitialization.collect()
 
     // Combine all the channels
-    chAllChannels = chBedGraphFilesAll
+    chAllChannelsProcessing = chBedGraphFilesAll
         .combine(chIGVReportMergedAll)
         .combine(chPeakFilesAll)
         .combine(chIGVReportsHtml)
@@ -82,7 +82,7 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chFilesReportInitializationAll)
     
     // Filter only the files that will be used in the MultiQC report and remove duplicates
-    chOnlyFiles = chAllChannels
+    chOnlyFilesProcessing = chAllChannelsProcessing
         .map { values -> 
             values.findAll { 
                 it instanceof Path && ( 
@@ -107,7 +107,7 @@ workflow BAM_SIGNAL_PROCESSING {
         }
         .map { it.values().toList() } // 🔹 Converte para uma lista
 
-        chFilesReportSignalProcess = chOnlyFiles.collect()
+        chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
         chFilesReportSignalProcess.view()
     
     multiqc_bam_signal_processing(chFilesReportSignalProcess,chMultiQCConfig)
