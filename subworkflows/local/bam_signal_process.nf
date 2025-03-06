@@ -88,6 +88,8 @@ workflow BAM_SIGNAL_PROCESSING {
                 it instanceof Path && ( 
                     it.toString().endsWith(".yml") || 
                     it.toString().endsWith(".csv") || 
+                    it.toString().endsWith(".vcf") || 
+                    it.toString().endsWith(".html") || 
                     it.toString().endsWith(".zip") || 
                     it.toString().endsWith(".txt") || 
                     it.toString().endsWith(".stats") || 
