@@ -95,9 +95,10 @@ workflow BAM_PROCESSING {
                 )
             }
         }
-        .flatten()   // Garante um único fluxo de arquivos
-        .distinct()  // Remove arquivos duplicados
-        .view()      // 🔹 Exibe os arquivos coletados no terminal
+        .flatten() // Garante um fluxo linear de arquivos
+        .groupBy { it.getName() } // Agrupa arquivos pelo nome (ignorando o caminho)
+        .map { key, files -> files.first() } // Pega apenas um arquivo de cada grupo
+        .view() // 🔹 Exibe os arquivos coletados no terminal
     
     multiqc_bam_processing(chOnlyFiles,chMultiQCConfig)
 
