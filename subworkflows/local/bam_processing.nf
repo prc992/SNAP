@@ -94,6 +94,9 @@ workflow BAM_PROCESSING {
                 it instanceof Path && ( 
                     it.toString().endsWith(".yml") || 
                     it.toString().endsWith(".txt") || 
+                    it.toString().endsWith(".stats") || 
+                    it.toString().endsWith(".txt") || 
+                    it.toString().endsWith(".idxstats") || 
                     it.toString().endsWith("*.jpg")
                 )
             }
