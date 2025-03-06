@@ -91,37 +91,20 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
     
-    chAllChannelsProcessing.view()
+    //chAllChannelsProcessing.view()
     
-    // Filter only the files that will be used in the MultiQC report and remove duplicates
-    chOnlyFilesProcessing = chAllChannelsProcessing
-        .map { values -> 
-            values.findAll { 
-                it instanceof Path && ( 
-                    it.toString().endsWith(".yml") || 
-                    it.toString().endsWith(".csv") || 
-                    it.toString().endsWith(".vcf") || 
-                    it.toString().endsWith(".html") || 
-                    it.toString().endsWith(".zip") || 
-                    it.toString().endsWith(".txt") || 
-                    it.toString().endsWith(".stats") || 
-                    it.toString().endsWith(".txt") || 
-                    it.toString().endsWith(".idxstats") ||
-                    it.toString().endsWith(".flagstat") ||  
-                    it.toString().contains("Dendrogram_of_Samples")
-                )
-            }
-        }
-        .flatten() // Garante que os arquivos estejam em um único fluxo
-        .reduce( [:] as LinkedHashMap ) { acc, file -> 
-            acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
-            acc
-        }
-        .map { it.values().toList() } // 🔹 Converte para uma lista
+   chOnlyFilesProcessing = chAllChannelsProcessing
+    .flatten() // Garante que os arquivos estejam em um único fluxo
+    .collect() // Junta todos os arquivos antes de processá-los
+    .map { files -> 
+        def uniqueFiles = [:] as LinkedHashMap
+        files.each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Mantém apenas a primeira ocorrência do nome do arquivo
+        return uniqueFiles.values() // Retorna apenas os arquivos únicos
+    }
+    .flatten() // Garante que cada arquivo seja emitido separadamente no canal
 
-        chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
-        //chFilesReportSignalProcess.view()
-    
+    chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
+    //chFilesReportSignalProcess.view()
     multiqc_bam_signal_processing(chFilesReportSignalProcess,chMultiQCConfig)
 
 
