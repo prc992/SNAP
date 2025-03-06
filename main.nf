@@ -75,18 +75,6 @@ workflow {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
-    // Criamos um canal que serve como gatilho para o processo final
-    chFinalTrigger = Channel.empty()
-
-    // Inicializa os canais vazios para evitar erro de variável não definida
-    chIGVReportMerged = Channel.empty()
-    chFragmentsSizeFiles = Channel.empty()
-    chSNPSMaSHPlot = Channel.empty()
-    chEnrichmentFilesReport = Channel.empty()
-    chPeaksReport = Channel.empty()
-    chFragReport = Channel.empty()
-    chFastaQC = Channel.empty()
-    chLibComplexPreseq = Channel.empty()
 
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
@@ -135,18 +123,6 @@ workflow {
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
         }
 
-    //
-    // Criamos arquivos dummy para evitar bloqueio do `combine()`
-    chIGVReportMerged = chIGVReportMerged.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_igv.txt"))
-    chFastaQC = chFastaQC.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_fasta.txt"))
-    chFragmentsSizeFiles = chFragmentsSizeFiles.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_frag.txt"))
-    chSNPSMaSHPlot = chSNPSMaSHPlot.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_snps.txt"))
-    chLibComplexPreseq = chLibComplexPreseq.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_libcomplex.txt"))
-    chEnrichmentFilesReport = chEnrichmentFilesReport.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_enrichment.txt"))
-    chPeaksReport = chPeaksReport.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_peaks.txt"))
-    chFragReport = chFragReport.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_frag_report.txt"))
-
-    // Criamos um canal que só será ativado quando todas as saídas estiverem prontas
     // Criamos um canal que só será ativado quando todas as saídas estiverem prontas
     chFinalTrigger = chIGVReportMerged
         .combine(chFastaQC)
@@ -158,33 +134,8 @@ workflow {
         .combine(chFragReport)
 
         chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
-
-        // MultiQC só será executado quando `chFinalTrigger` estiver pronto
         chFinalReport = multiqc(chFinalTrigger, chMultiQCConfig, chAllPreviousFiles)
-
         moveSoftFiles(chFinalReport)
-    //
-
-    /*
-
-    //Final Report
-    chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
-    chFinalTrigger = chIGVReportMerged
-        .mix(chFastaQC)
-        .mix(chFragmentsSizeFiles)
-        .mix(chSNPSMaSHPlot)
-        .mix(chLibComplexPreseq)
-        .mix(chEnrichmentFilesReport)
-        .mix(chPeaksReport)
-        .mix(chFragReport)
-
-    chFinalReport = multiqc(chFinalTrigger,chMultiQCConfig,chAllPreviousFiles)
-
-
-    /*chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
-        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)*/
-
-    /*moveSoftFiles(chFinalReport)*/
     
 }
 
