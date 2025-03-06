@@ -56,7 +56,7 @@ workflow BAM_PROCESSING {
     chSMaSHOutout = createSMaSHFingerPrint(chSNPSMaSH,chSNPS_ref,chAllBAMandBAIIndexFiles)
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
 
-
+    // Collect all the files to generate the MultiQC report
     chTrimAll = chTrim.collect()
     chAlignAll = chAlign.collect()
     chSortBamAll = chSortBam.collect()
@@ -71,6 +71,7 @@ workflow BAM_PROCESSING {
     chSMaSHOutoutAll = chSMaSHOutout.collect()
     chSNPSMaSHPlotAll = chSNPSMaSHPlot.collect()
 
+    // Combine all the channels
     chAllChannels = chTrimAll
         .combine(chAlignAll)
         .combine(chSortBamAll)
@@ -85,6 +86,7 @@ workflow BAM_PROCESSING {
         .combine(chSMaSHOutoutAll)
         .combine(chSNPSMaSHPlotAll)
     
+    // Filter only the files that will be used in the MultiQC report and remove duplicates
     chOnlyFiles = chAllChannels
         .map { values -> 
             values.findAll { 
@@ -105,11 +107,10 @@ workflow BAM_PROCESSING {
             acc
         }
         .map { it.values().toList() } // 🔹 Converte para uma lista
-
         chOnlyFilesList = chOnlyFiles.collect()
-        multiqc_bam_processing(chOnlyFilesList,chMultiQCConfig)
+    
+    multiqc_bam_processing(chOnlyFilesList,chMultiQCConfig)
 
-        
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
     emit: report_SNP_SMaSH = chSNPSMaSHPlot
