@@ -87,22 +87,12 @@ workflow BAM_PROCESSING {
     
 
     chOnlyFiles = chAllChannels
-        .map { values -> 
-            values.findAll { 
-                it instanceof Path && ( 
-                    it.toString().endsWith(".yml") || 
-                    it.toString().endsWith(".txt") || 
-                    it.toString().endsWith(".jpg") 
-                )
-            }
-        }
         .flatten() // Garante que os arquivos estejam em um único fluxo
         .reduce( [:] as LinkedHashMap ) { acc, file -> 
             acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
             acc
         }
         .map { it.values().toList() } // 🔹 Converte para uma lista
-        .flatten() // 🔹 Garante que cada arquivo seja emitido individualmente
         .view() // Exibe os arquivos coletados no terminal
 
         chOnlyFilesList = chOnlyFiles.collect()
