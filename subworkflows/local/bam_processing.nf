@@ -26,7 +26,7 @@ workflow BAM_PROCESSING {
     chSNPSMaSH
     chSNPS_ref
     chSNPSMaSHPyPlot
-    chFilesReport
+    chFilesReportInitialization
     chMultiQCConfig
 
     main:
@@ -71,7 +71,7 @@ workflow BAM_PROCESSING {
     chDACFilteredFilesAll = chDACFilteredFiles.collect()
     chSMaSHOutoutAll = chSMaSHOutout.collect()
     chSNPSMaSHPlotAll = chSNPSMaSHPlot.collect()
-    chFilesReportAll = chFilesReport.collect()
+    chFilesReportInitializationAll = chFilesReportInitialization.collect()
 
     // Combine all the channels
     chAllChannels = chTrimAll
@@ -87,7 +87,7 @@ workflow BAM_PROCESSING {
         .combine(chDACFilteredFilesAll)
         .combine(chSMaSHOutoutAll)
         .combine(chSNPSMaSHPlotAll)
-        .combine(chFilesReportAll)
+        .combine(chFilesReportInitializationAll)
     
     // Filter only the files that will be used in the MultiQC report and remove duplicates
     chOnlyFiles = chAllChannels
@@ -119,4 +119,5 @@ workflow BAM_PROCESSING {
     emit: bam_processed_index = chIndexFiles
     emit: report_SNP_SMaSH = chSNPSMaSHPlot
     emit: lib_complex = chLibComplexPreseq
+    emit: files_report_bam_processing = chFilesReportBamProcessing
 }

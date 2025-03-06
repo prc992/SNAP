@@ -66,7 +66,7 @@ workflow {
         refDir = INITIALIZATION.out.ref_dir
         chSampleInfo = INITIALIZATION.out.sample_info
         chFastaQC = INITIALIZATION.out.fastqc_files
-        chFilesReport = INITIALIZATION.out.files_report
+        chFilesReportInitialization = INITIALIZATION.out.files_report_initialization
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
@@ -82,18 +82,20 @@ workflow {
 
     if ('BAM_PROCESSING' in run_steps) {
         BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot,\
-                        chFilesReport,chMultiQCConfig)
+                        chFilesReportInitialization,chMultiQCConfig)
 
         chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
         chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
         chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
         chLibComplexPreseq = BAM_PROCESSING.out.lib_complex
+        chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
         BAM_SIGNAL_PROCESSING(chSampleInfo,chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
                             chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks,\
-                            chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader)
+                            chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader,\
+                            chFilesReportBamProcessing,chFilesReportInitialization,chMultiQCConfig)
 
         chIGVReportMerged = BAM_SIGNAL_PROCESSING.out.igv_report_merged
         chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports

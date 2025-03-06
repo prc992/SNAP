@@ -67,14 +67,14 @@ workflow INITIALIZATION {
             acc
         }
         .map { it.values().toList() } // 🔹 Converte para uma lista
-        chFilesReport = chOnlyFiles.collect()
+        chFilesReportInitialization = chOnlyFiles.collect()
 
-    multiqc_initialization(chFilesReport)
+    multiqc_initialization(chFilesReportInitialization)
 
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
     emit: fastqc_files = chFastaQC
     emit: ref_dir = refDir
-    emit: files_report = chFilesReport
+    emit: files_report_initialization = chFilesReportInitialization
 
 }

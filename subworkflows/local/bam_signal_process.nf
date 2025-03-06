@@ -31,6 +31,9 @@ workflow BAM_SIGNAL_PROCESSING {
     chReportEnrichment
     chMergeReportEnrichment
     chMultiQCEnrichmentHeader
+    chFilesReportBamProcessing
+    chFilesReportInitialization
+    chMultiQCConfig
 
     main:
     
@@ -57,6 +60,53 @@ workflow BAM_SIGNAL_PROCESSING {
     chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
+
+    // Collect all the files to generate the MultiQC report
+    chBedGraphFilesAll = chBedGraphFiles.collect()
+    chIGVReportMergedAll = chIGVReportMerged.collect()
+    chPeakFilesAll = chPeakFiles.collect()
+    chFilesReportBamProcessingAll = chFilesReportBamProcessing.collect()
+    chFilesReportInitializationAll = chFilesReportInitialization.collect()
+
+    // Combine all the channels
+    chAllChannels = chBedGraphFilesAll
+        .combine(chIGVReportMergedAll)
+        .combine(chPeakFilesAll)
+        .combine(chPeaksFilesReportAll)
+        .combine(chIGVReportsHtml)
+        .combine(chBigWigAllFiles)
+        .combine(chMergedEnrichmentReport)
+        .combine(chFilesReportBamProcessingAll)
+        .combine(chFilesReportInitializationAll)
+    
+    // Filter only the files that will be used in the MultiQC report and remove duplicates
+    chOnlyFiles = chAllChannels
+        .map { values -> 
+            values.findAll { 
+                it instanceof Path && ( 
+                    it.toString().endsWith(".yml") || 
+                    it.toString().endsWith(".csv") || 
+                    it.toString().endsWith(".zip") || 
+                    it.toString().endsWith(".txt") || 
+                    it.toString().endsWith(".stats") || 
+                    it.toString().endsWith(".txt") || 
+                    it.toString().endsWith(".idxstats") ||
+                    it.toString().endsWith(".flagstat") ||  
+                    it.toString().contains("Dendrogram_of_Samples")
+                )
+            }
+        }
+        .flatten() // Garante que os arquivos estejam em um único fluxo
+        .reduce( [:] as LinkedHashMap ) { acc, file -> 
+            acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
+            acc
+        }
+        .map { it.values().toList() } // 🔹 Converte para uma lista
+        chFilesReportSignalProcess = chOnlyFiles.collect()
+    
+    multiqc_bam_processing(chFilesReportSignalProcess,chMultiQCConfig)
+
+
 
     emit: igv_report_merged = chIGVReportMerged
     emit: merge_enrichment_reports = chMergedEnrichmentReport
