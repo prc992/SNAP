@@ -12,6 +12,16 @@ include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
 include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
 
+process CREATE_DUMMY_FILE {
+    output:
+    path "dummy.txt"
+
+    script:
+    """
+    touch dummy.txt
+    """
+}
+
 workflow {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -61,12 +71,14 @@ workflow {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
-    chIGVReportMerged = chMultiQCDummyFile
-    chFragmentsSizeFiles = chMultiQCDummyFile
-    chSNPSMaSHPlot = chMultiQCDummyFile
-    chEnrichmentFilesReport = chMultiQCDummyFile
-    chPeaksReport = chMultiQCDummyFile
-    chFragReport = chMultiQCDummyFile
+    chDummy = CREATE_DUMMY_FILE.out
+
+    chIGVReportMerged = chIGVReportMerged.mix(chDummy)
+    chFragmentsSizeFiles = chFragmentsSizeFiles.mix(chDummy)
+    chSNPSMaSHPlot = chSNPSMaSHPlot.mix(chDummy)
+    chEnrichmentFilesReport = chEnrichmentFilesReport.mix(chDummy)
+    chPeaksReport = chPeaksReport.mix(chDummy)
+    chFragReport = chFragReport.mix(chDummy)
 
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION()
@@ -116,22 +128,8 @@ workflow {
     //Final Report
     chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
 
-    /*chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
-        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)*/
-
-    chMultiQCTrigger = Channel.fromPath("$params.multiqc_dummy_file")
-
-
-    chFinalReport = multiqc(
-    chIGVReportMerged.mix(chMultiQCTrigger), 
-    chFragmentsSizeFiles.mix(chMultiQCTrigger),
-    chSNPSMaSHPlot.mix(chMultiQCTrigger), 
-    chEnrichmentFilesReport.mix(chMultiQCTrigger), 
-    chPeaksReport.mix(chMultiQCTrigger), 
-    chFragReport.mix(chMultiQCTrigger), 
-    chMultiQCConfig, 
-    chAllPreviousFiles
-)
+    chFinalReport = multiqc(chIGVReportMerged,chFragmentsSizeFiles,
+        chSNPSMaSHPlot,chEnrichmentFilesReport,chPeaksReport,chFragReport,chMultiQCConfig,chAllPreviousFiles)
 
     moveSoftFiles(chFinalReport)
     
