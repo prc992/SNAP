@@ -11,6 +11,7 @@ include {igv_session} from '../../modules/local/igv_reports'
 include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
+include {multiqc_bam_signal_processing} from '../../modules/local/multiqc'
 
 workflow BAM_SIGNAL_PROCESSING {
 
@@ -104,7 +105,7 @@ workflow BAM_SIGNAL_PROCESSING {
         .map { it.values().toList() } // 🔹 Converte para uma lista
         chFilesReportSignalProcess = chOnlyFiles.collect()
     
-    multiqc_bam_processing(chFilesReportSignalProcess,chMultiQCConfig)
+    multiqc_bam_signal_processing(chFilesReportSignalProcess,chMultiQCConfig)
 
 
 
