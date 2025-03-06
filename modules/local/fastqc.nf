@@ -10,7 +10,8 @@ process fastqc {
   tuple val(sampleId), val(enrichment_mark),path(read1), path(read2)
 
   output:
-  tuple path ('*_fastqc.html'),path ('*_fastqc.zip'),path ("fastqc_mqc_versions.yml")
+  tuple path ('*_fastqc.html')
+  //,path ('*_fastqc.zip'),path ("fastqc_mqc_versions.yml")
   
   script:
   """
