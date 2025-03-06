@@ -59,7 +59,6 @@ workflow INITIALIZATION {
                     it.toString().endsWith(".yml") || 
                     it.toString().endsWith(".zip") || 
                     it.toString().endsWith(".html") || )
-                )
             }
         }
         .flatten() // Garante que os arquivos estejam em um único fluxo
