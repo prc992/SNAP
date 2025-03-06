@@ -2,7 +2,6 @@
 nextflow.enable.dsl=2
 
 //local modules
-include {multiqc} from './modules/multiqc'
 include {moveSoftFiles} from './modules/moveSoftFiles'
 
 //subworkflows
