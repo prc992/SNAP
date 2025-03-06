@@ -86,7 +86,7 @@ process igv_session {
     container = params.containers.python
     tag "All Samples"
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/BAM_SIGNAL_PROCESSING/igv_session/", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/igv_session/BAM_SIGNAL_PROCESSING/", mode : 'copy'
 
     input:
     path (bw)
