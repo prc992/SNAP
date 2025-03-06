@@ -75,6 +75,8 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chPeakFilesAll)
         .combine(chIGVReportsHtml)
         .combine(chBigWigAllFiles)
+        .combine(chEnrichmentFilesCSV)
+        .combine(chEnrichmentFilesReport)
         .combine(chMergedEnrichmentReport)
         .combine(chFilesReportBamProcessingAll)
         .combine(chFilesReportInitializationAll)
