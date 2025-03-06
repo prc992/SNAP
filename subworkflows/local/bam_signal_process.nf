@@ -106,7 +106,9 @@ workflow BAM_SIGNAL_PROCESSING {
             acc
         }
         .map { it.values().toList() } // 🔹 Converte para uma lista
+
         chFilesReportSignalProcess = chOnlyFiles.collect()
+        chFilesReportSignalProcess.view()
     
     multiqc_bam_signal_processing(chFilesReportSignalProcess,chMultiQCConfig)
 
