@@ -85,6 +85,7 @@ workflow BAM_PROCESSING {
         .combine(chSMaSHOutoutAll)
         .combine(chSNPSMaSHPlotAll)
     
+
     chOnlyFiles = chAllChannels
         .map { values -> 
             values.findAll { 
@@ -95,16 +96,16 @@ workflow BAM_PROCESSING {
                 )
             }
         }
-        .flatten() // Garante um fluxo linear de arquivos
+        .flatten() // Garante que os arquivos estejam em um único fluxo
         .reduce( [:] as LinkedHashMap ) { acc, file -> 
             acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
             acc
         }
-        .map { it.values() } // Converte o mapa de volta para uma lista de arquivos
-        .flatten() // Garante que os arquivos estejam em um único fluxo
-        .view() // 🔹 Exibe os arquivos coletados no terminal
-    
-    multiqc_bam_processing(chOnlyFiles,chMultiQCConfig)
+        .map { it.values().toList() } // 🔹 Converte para uma lista
+        .flatten() // 🔹 Garante que cada arquivo seja emitido individualmente
+        .view() // Exibe os arquivos coletados no terminal
+        
+        multiqc_bam_processing(chOnlyFiles,chMultiQCConfig)
 
         
     emit: bam_processed = chDACFilteredFiles
