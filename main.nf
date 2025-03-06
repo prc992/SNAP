@@ -157,6 +157,8 @@ workflow {
         .combine(chPeaksReport)
         .combine(chFragReport)
 
+        chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
+
         // MultiQC só será executado quando `chFinalTrigger` estiver pronto
         chFinalReport = multiqc(chFinalTrigger, chMultiQCConfig, chAllPreviousFiles)
 
