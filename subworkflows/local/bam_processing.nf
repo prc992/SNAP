@@ -85,7 +85,7 @@ workflow BAM_PROCESSING {
         .combine(chSMaSHOutoutAll)
         .combine(chSNPSMaSHPlotAll)
     
-    multiqc_bam_processing(chMultiQCConfig,chAllChannels)
+    multiqc_bam_processing(chAllChannels,chMultiQCConfig)
 
         
     emit: bam_processed = chDACFilteredFiles
