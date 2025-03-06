@@ -52,7 +52,7 @@ process multiqc_bam_signal_processing {
     path (chMultiQCConfig)
 
     output:
-    path ("*.*")
+    path ("*.html")
 
     script:
     """
