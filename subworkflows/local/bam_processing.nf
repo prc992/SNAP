@@ -96,8 +96,12 @@ workflow BAM_PROCESSING {
             }
         }
         .flatten() // Garante um fluxo linear de arquivos
-        .groupBy { it.getName() } // Agrupa arquivos pelo nome (ignorando o caminho)
-        .map { key, files -> files.first() } // Pega apenas um arquivo de cada grupo
+        .reduce( [:] as LinkedHashMap ) { acc, file -> 
+            acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
+            acc
+        }
+        .map { it.values() } // Converte o mapa de volta para uma lista de arquivos
+        .flatten() // Garante que os arquivos estejam em um único fluxo
         .view() // 🔹 Exibe os arquivos coletados no terminal
     
     multiqc_bam_processing(chOnlyFiles,chMultiQCConfig)
