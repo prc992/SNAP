@@ -147,9 +147,15 @@ workflow {
     chFragReport = chFragReport.ifEmpty(Channel.fromPath("${workflow.projectDir}/ref_files/multiqc/dummy_frag_report.txt"))
 
     // Criamos um canal que só será ativado quando todas as saídas estiverem prontas
+    // Criamos um canal que só será ativado quando todas as saídas estiverem prontas
     chFinalTrigger = chIGVReportMerged
-        .combine(chFastaQC, chFragmentsSizeFiles, chSNPSMaSHPlot, chLibComplexPreseq, 
-                 chEnrichmentFilesReport, chPeaksReport, chFragReport)
+        .combine(chFastaQC)
+        .combine(chFragmentsSizeFiles)
+        .combine(chSNPSMaSHPlot)
+        .combine(chLibComplexPreseq)
+        .combine(chEnrichmentFilesReport)
+        .combine(chPeaksReport)
+        .combine(chFragReport)
     //
 
     /*
