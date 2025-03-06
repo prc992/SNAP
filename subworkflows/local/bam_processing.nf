@@ -104,8 +104,10 @@ workflow BAM_PROCESSING {
         .map { it.values().toList() } // 🔹 Converte para uma lista
         .flatten() // 🔹 Garante que cada arquivo seja emitido individualmente
         .view() // Exibe os arquivos coletados no terminal
+
+        chOnlyFilesList = chOnlyFiles.collect()
         
-        multiqc_bam_processing(chOnlyFiles,chMultiQCConfig)
+        multiqc_bam_processing(chOnlyFilesList,chMultiQCConfig)
 
         
     emit: bam_processed = chDACFilteredFiles
