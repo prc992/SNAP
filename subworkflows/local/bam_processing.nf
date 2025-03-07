@@ -114,7 +114,7 @@ workflow BAM_PROCESSING {
         .map { it.values().toList() } // 🔹 Converte para uma lista
         chFilesReportBamProcessing = chOnlyFiles.collect()
     
-    multiqc_bam_processing(chFilesReportBamProcessing,chMultiQCConfig)
+    multiqc_bam_processing(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
 
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
