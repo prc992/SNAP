@@ -61,12 +61,13 @@ workflow {
 
 
     if ('INITIALIZATION' in run_steps) {
-        chInitReport = INITIALIZATION()
+        INITIALIZATION()
         chGenomesInfo = INITIALIZATION.out.genomes_info
         refDir = INITIALIZATION.out.ref_dir
         chSampleInfo = INITIALIZATION.out.sample_info
         chFastaQC = INITIALIZATION.out.fastqc_files
         chFilesReportInitialization = INITIALIZATION.out.files_report_initialization
+        chInitReport = INITIALIZATION.out.init_report
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
