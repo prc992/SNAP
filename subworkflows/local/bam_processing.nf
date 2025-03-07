@@ -18,7 +18,6 @@ include {multiqc_bam_processing} from '../../modules/local/multiqc'
 workflow BAM_PROCESSING {
 
     take:
-    chInitReport
     chSampleInfo
     chGenome
     chGenomeIndex
