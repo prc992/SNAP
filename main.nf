@@ -68,7 +68,8 @@ workflow {
         chFastaQC = INITIALIZATION.out.fastqc_files
         chFilesReportInitialization = INITIALIZATION.out.files_report_initialization
         chInitReport = INITIALIZATION.out.init_report
-        moveSoftFiles(chInitReport)
+        
+        moveSoftFiles_init(chInitReport)
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
@@ -92,6 +93,8 @@ workflow {
         chLibComplexPreseq = BAM_PROCESSING.out.lib_complex
         chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
         chBAMProcessReport = BAM_PROCESSING.out.bam_process_report
+
+        moveSoftFiles_bam_processing(chBAMProcessReport)
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
