@@ -48,6 +48,7 @@ process multiqc_bam_processing {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
     
     input:
+    val(chInitReport)
     path (chFilesReport)
     path (chMultiQCConfig)
 
@@ -68,7 +69,6 @@ process multiqc_bam_signal_processing {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
     
     input:
-    val(chInitReport)
     path (chFilesReport)
     path (chMultiQCConfig)
 
