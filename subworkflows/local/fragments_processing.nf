@@ -6,6 +6,7 @@ include {unique_frags} from '../../modules/local/unique_frags'
 include {calcFragsLengthDistribuition} from '../../modules/local/calcFragsLength'
 include {createMotifGCfile} from '../../modules/local/end_motif_gc'
 include {frags_report} from '../../modules/local/frags_report.nf'
+include {multiqc_fragments_processing} from '../../modules/local/multiqc'
 
 
 workflow FRAGMENTS_PROCESSING {
@@ -26,7 +27,7 @@ workflow FRAGMENTS_PROCESSING {
     
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
-    createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
+    chMotifGCfile = createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
         
     //Fragment Length Distribution *******************************************
@@ -39,6 +40,39 @@ workflow FRAGMENTS_PROCESSING {
 
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chFragFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFragPeaks)
+
+    // Collect all the files to generate the MultiQC report
+    chNameSortedFilesAll = chNameSortedFiles.collect()
+    chMotifGCfileAll = chMotifGCfile.collect()
+    //chFragmentsSize
+    chBedFilesAll = chBedFiles.collect()
+    //chUniqueFrags
+    chFragFilesReportAll = chFragFilesReport.collect()
+
+    // Combine all the channels
+    chAllChannels = chNameSortedFilesAll
+        .combine(chMotifGCfileAll)
+        .combine(chFragmentsSize)
+        .combine(chBedFilesAll)
+        .combine(chUniqueFrags)
+        .combine(chFragFilesReportAll)
+        .combine(chFilesReportSignalProcess)
+        .combine(chFilesReportBamProcessing)
+        .combine(chFilesReportInitialization)
+    
+    chOnlyFilesProcessing = chAllChannelsProcessing
+    .flatten() // Garante que os arquivos estejam em um único fluxo
+    .collect() // Junta todos os arquivos antes de processá-los
+    .map { files -> 
+        def uniqueFiles = [:] as LinkedHashMap
+        files.findAll { it instanceof Path } // 🔹 Mantém apenas arquivos (Path)
+             .each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Mantém apenas a primeira ocorrência do nome
+        return uniqueFiles.values() // Retorna apenas os arquivos únicos
+    }
+    .flatten() // Garante que cada arquivo seja emitido separadamente no canal
+
+    chFilesReportFragmentslProcess = chOnlyFilesProcessing.collect()
+    multiqc_fragments_processing(chFilesReportFragmentslProcess,chMultiQCConfig)
 
     emit: frag_size_files = chFragmentsSizeFiles
     emit: frag_report = chFragFilesReport

@@ -20,6 +20,26 @@
     """
 }*/
 
+process multiqc_fragments_processing {
+    label 'process_medium'
+    tag "All Samples" 
+    container = params.containers.multiqc 
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/FRAGMENTS_PROCESSING/", mode : 'copy'
+    
+    input:
+    path (chFilesReport)
+    path (chMultiQCConfig)
+
+    output:
+    path ("*.*")
+
+    script:
+    """
+    multiqc . 
+    """
+}
+
 process multiqc_bam_processing {
     label 'process_medium'
     tag "All Samples" 
