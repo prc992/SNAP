@@ -69,7 +69,7 @@ workflow INITIALIZATION {
         .map { it.values().toList() } // 🔹 Converte para uma lista
         chFilesReportInitialization = chOnlyFiles.collect()
 
-    multiqc_initialization(chFilesReportInitialization)
+    chInitReport = multiqc_initialization(chFilesReportInitialization)
 
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo

@@ -61,7 +61,7 @@ workflow {
 
 
     if ('INITIALIZATION' in run_steps) {
-        INITIALIZATION()
+        chInitReport = INITIALIZATION()
         chGenomesInfo = INITIALIZATION.out.genomes_info
         refDir = INITIALIZATION.out.ref_dir
         chSampleInfo = INITIALIZATION.out.sample_info
