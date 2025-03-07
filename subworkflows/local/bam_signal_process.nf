@@ -12,6 +12,7 @@ include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
 include {multiqc_bam_signal_processing} from '../../modules/local/multiqc'
+include {moveSoftFiles_bam_processing} from '../../modules/local/moveSoftFiles'
 
 workflow BAM_SIGNAL_PROCESSING {
 
@@ -105,6 +106,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
     chBAMSignalReport = multiqc_bam_signal_processing(chBAMProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
+    moveSoftFiles_bam_processing(chBAMSignalReport)
 
 
 
