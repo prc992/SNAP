@@ -35,6 +35,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportBamProcessing
     chFilesReportInitialization
     chMultiQCConfig
+    chBAMProcessReport
 
     main:
     
@@ -103,7 +104,7 @@ workflow BAM_SIGNAL_PROCESSING {
     .flatten() // Garante que cada arquivo seja emitido separadamente no canal
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
-    multiqc_bam_signal_processing(chFilesReportSignalProcess,chMultiQCConfig)
+    multiqc_bam_signal_processing(chBAMProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
 
 
 

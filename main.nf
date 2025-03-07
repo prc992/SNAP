@@ -90,13 +90,14 @@ workflow {
         chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
         chLibComplexPreseq = BAM_PROCESSING.out.lib_complex
         chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
+        chBAMProcessReport = BAM_PROCESSING.out.bam_process_report
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
         BAM_SIGNAL_PROCESSING(chSampleInfo,chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
                             chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks,\
                             chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader,\
-                            chFilesReportBamProcessing,chFilesReportInitialization,chMultiQCConfig)
+                            chFilesReportBamProcessing,chFilesReportInitialization,chMultiQCConfig,chBAMProcessReport)
 
         chIGVReportMerged = BAM_SIGNAL_PROCESSING.out.igv_report_merged
         chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports
