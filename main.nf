@@ -113,6 +113,7 @@ workflow {
 
         chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
+        chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
         }
 
     /*// Criamos um canal que só será ativado quando todas as saídas estiverem prontas
