@@ -4,9 +4,6 @@ process moveSoftFiles {
     
     input:
     val(_)
-    val(_)
-    val(_)
-    val(_)
     
     script:
     """

@@ -68,6 +68,7 @@ workflow {
         chFastaQC = INITIALIZATION.out.fastqc_files
         chFilesReportInitialization = INITIALIZATION.out.files_report_initialization
         chInitReport = INITIALIZATION.out.init_report
+        moveSoftFiles(chInitReport)
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
@@ -116,7 +117,7 @@ workflow {
         chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
         }
 
-    moveSoftFiles(chFragsProcessReport,chBAMSignalReport,chBAMProcessReport,chInitReport)
+    //moveSoftFiles(chFragsProcessReport,chBAMSignalReport,chBAMProcessReport,chInitReport)
 
     /*// Criamos um canal que só será ativado quando todas as saídas estiverem prontas
     chFinalTrigger = chIGVReportMerged
