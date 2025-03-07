@@ -17,6 +17,10 @@ workflow FRAGMENTS_PROCESSING {
     chGenomeIndex
     chMultiQCFragsHeader
     chReportFragPeaks
+    chFilesReportSignalProcess
+    chFilesReportBamProcessing
+    chFilesReportInitialization
+    chMultiQCConfig
 
     main:
     

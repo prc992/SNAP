@@ -105,7 +105,8 @@ workflow {
 
     if ('FRAGMENTS_PROCESSING' in run_steps) {
         FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
-                            chMultiQCFragsHeader,chReportFrags)
+                            chMultiQCFragsHeader,chReportFrags,\
+                            chFilesReportSignalProcess,chFilesReportBamProcessing,chFilesReportInitialization,chMultiQCConfig)
 
         chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
