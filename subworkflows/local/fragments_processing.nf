@@ -22,6 +22,7 @@ workflow FRAGMENTS_PROCESSING {
     chFilesReportBamProcessing
     chFilesReportInitialization
     chMultiQCConfig
+    chBAMSignalReport
 
     main:
     
@@ -72,7 +73,7 @@ workflow FRAGMENTS_PROCESSING {
     .flatten() // Garante que cada arquivo seja emitido separadamente no canal
 
     chFilesReportFragmentslProcess = chOnlyFilesProcessing.collect()
-    multiqc_fragments_processing(chFilesReportFragmentslProcess,chMultiQCConfig)
+    multiqc_fragments_processing(chBAMSignalReport,chFilesReportFragmentslProcess,chMultiQCConfig)
 
     emit: frag_size_files = chFragmentsSizeFiles
     emit: frag_report = chFragFilesReport

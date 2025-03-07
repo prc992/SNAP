@@ -103,12 +103,13 @@ workflow {
         chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports
         chPeaksReport = BAM_SIGNAL_PROCESSING.out.peaks_report
         chFilesReportSignalProcess = BAM_SIGNAL_PROCESSING.out.files_report_bam_signal_processing
+        chBAMSignalReport = BAM_SIGNAL_PROCESSING.out.bam_signal_report
         }
 
     if ('FRAGMENTS_PROCESSING' in run_steps) {
         FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
-                            chMultiQCFragsHeader,chReportFrags,\
-                            chFilesReportSignalProcess,chFilesReportBamProcessing,chFilesReportInitialization,chMultiQCConfig)
+                            chMultiQCFragsHeader,chReportFrags,chFilesReportSignalProcess,\
+                            chFilesReportBamProcessing,chFilesReportInitialization,chMultiQCConfig,chBAMSignalReport)
 
         chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
