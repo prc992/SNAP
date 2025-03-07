@@ -111,7 +111,5 @@ workflow BAM_SIGNAL_PROCESSING {
     emit: igv_report_merged = chIGVReportMerged
     emit: merge_enrichment_reports = chMergedEnrichmentReport
     emit: peaks_report = chPeaksFilesReport
-
-    
-
+    emit: files_report_bam_signal_processing = chFilesReportSignalProcess
 }
