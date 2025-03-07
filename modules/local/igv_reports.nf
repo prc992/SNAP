@@ -13,7 +13,7 @@ process igv_reports {
     tuple val(_), val(_),val(path_analysis),val(_), val(_)
 
     exec:
-    path_sample_multiqc =  path_analysis + "/reports/multiqc/BAM_SIGNAL_PROCESSING/" 
+    path_sample_multiqc =  path_analysis + "/reports/multiqc/" 
     htmlFile = "igv_housekeeping_genes_report.html"
 
     output:
@@ -30,7 +30,7 @@ process igv_sample_reports {
     container = params.containers.igv_reports
     tag "Sample - $sampleId"
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/BAM_SIGNAL_PROCESSING/", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
 
     input:
     tuple val(sampleId),path(bedgraph),val (_)
@@ -86,7 +86,7 @@ process igv_session {
     container = params.containers.python
     tag "All Samples"
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/igv_session/BAM_SIGNAL_PROCESSING/", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/igv_session/", mode : 'copy'
 
     input:
     path (bw)
