@@ -13,7 +13,7 @@ include {index_sam} from '../../modules/local/index_sam'
 include {createSMaSHFingerPrint} from '../../modules/local/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from '../../modules/local/snp_smash_fingerprint'
 include {multiqc_bam_processing} from '../../modules/local/multiqc'
-include {moveSoftFiles_bam_processing} from './modules/local/moveSoftFiles'
+include {moveSoftFiles_bam_processing} from '../../modules/local/moveSoftFiles'
 
 
 workflow BAM_PROCESSING {

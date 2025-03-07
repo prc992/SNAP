@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 include {createSamplesheet} from '../../modules/local/createSamplesheet'
 include {fastqc} from '../../modules/local/fastqc'
 include {multiqc_initialization} from '../../modules/local/multiqc'
-include {moveSoftFiles_init} from './modules/local/moveSoftFiles'
+include {moveSoftFiles_init} from '../../modules/local/moveSoftFiles'
 
 workflow INITIALIZATION {
 
