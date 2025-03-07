@@ -7,6 +7,7 @@ include {calcFragsLengthDistribuition} from '../../modules/local/calcFragsLength
 include {createMotifGCfile} from '../../modules/local/end_motif_gc'
 include {frags_report} from '../../modules/local/frags_report.nf'
 include {multiqc_fragments_processing} from '../../modules/local/multiqc'
+include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 
 workflow FRAGMENTS_PROCESSING {
@@ -74,6 +75,7 @@ workflow FRAGMENTS_PROCESSING {
 
     chFilesReportFragmentslProcess = chOnlyFilesProcessing.collect()
     chFragsProcessReport = multiqc_fragments_processing(chBAMSignalReport,chFilesReportFragmentslProcess,chMultiQCConfig)
+    moveSoftFiles(chFragsProcessReport)
 
     emit: frag_size_files = chFragmentsSizeFiles
     emit: frag_report = chFragFilesReport
