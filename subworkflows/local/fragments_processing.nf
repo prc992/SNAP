@@ -60,7 +60,7 @@ workflow FRAGMENTS_PROCESSING {
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
     
-    chOnlyFilesProcessing = chAllChannelsProcessing
+    chOnlyFilesProcessing = chAllChannels
     .flatten() // Garante que os arquivos estejam em um único fluxo
     .collect() // Junta todos os arquivos antes de processá-los
     .map { files -> 
