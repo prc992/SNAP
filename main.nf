@@ -2,7 +2,7 @@
 nextflow.enable.dsl=2
 
 //local modules
-include {moveSoftFiles} from './modules/moveSoftFiles'
+include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 //subworkflows
 include { INITIALIZATION } from './subworkflows/local/initialization'
@@ -115,6 +115,8 @@ workflow {
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
         chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
         }
+
+    moveSoftFiles(chFragsProcessReport,chBAMSignalReport,chBAMProcessReport,chInitReport)
 
     /*// Criamos um canal que só será ativado quando todas as saídas estiverem prontas
     chFinalTrigger = chIGVReportMerged
