@@ -91,6 +91,7 @@ process multiqc_initialization {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
     
     input:
+    val(_)
     path (chFilesReport)
     path (chMultiQCConfig)
 

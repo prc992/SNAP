@@ -74,7 +74,7 @@ workflow INITIALIZATION {
         .map { it.values().toList() } // 🔹 Converte para uma lista
         chFilesReportInitialization = chOnlyFiles.collect()
 
-    chInitReport = multiqc_initialization(chFilesReportInitialization,chMultiQCConfig)
+    chInitReport = multiqc_initialization(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
     moveSoftFiles(chInitReport)
 
     emit: sample_info = chSampleInfo
