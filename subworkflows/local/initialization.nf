@@ -4,6 +4,7 @@ nextflow.enable.dsl=2
 include {createSamplesheet} from '../../modules/local/createSamplesheet'
 include {fastqc} from '../../modules/local/fastqc'
 include {multiqc_initialization} from '../../modules/local/multiqc'
+include {moveSoftFiles_init} from './modules/local/moveSoftFiles'
 
 workflow INITIALIZATION {
 
@@ -70,6 +71,7 @@ workflow INITIALIZATION {
         chFilesReportInitialization = chOnlyFiles.collect()
 
     chInitReport = multiqc_initialization(chFilesReportInitialization)
+    moveSoftFiles_init(chInitReport)
 
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo

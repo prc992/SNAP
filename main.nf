@@ -2,8 +2,7 @@
 nextflow.enable.dsl=2
 
 //local modules
-include {moveSoftFiles_init} from './modules/local/moveSoftFiles'
-include {moveSoftFiles_bam_processing} from './modules/local/moveSoftFiles'
+
 
 //subworkflows
 include { INITIALIZATION } from './subworkflows/local/initialization'
@@ -69,8 +68,6 @@ workflow {
         chFastaQC = INITIALIZATION.out.fastqc_files
         chFilesReportInitialization = INITIALIZATION.out.files_report_initialization
         chInitReport = INITIALIZATION.out.init_report
-        
-        moveSoftFiles_init(chInitReport)
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
@@ -95,7 +92,7 @@ workflow {
         chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
         chBAMProcessReport = BAM_PROCESSING.out.bam_process_report
 
-        moveSoftFiles_bam_processing(chBAMProcessReport)
+        //moveSoftFiles_bam_processing(chBAMProcessReport)
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
