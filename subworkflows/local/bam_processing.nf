@@ -13,7 +13,7 @@ include {index_sam} from '../../modules/local/index_sam'
 include {createSMaSHFingerPrint} from '../../modules/local/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from '../../modules/local/snp_smash_fingerprint'
 include {multiqc_bam_processing} from '../../modules/local/multiqc'
-include {moveSoftFiles_bam_processing} from '../../modules/local/moveSoftFiles'
+include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 
 workflow BAM_PROCESSING {
@@ -116,7 +116,7 @@ workflow BAM_PROCESSING {
         chFilesReportBamProcessing = chOnlyFiles.collect()
     
     chBAMProcessReport = multiqc_bam_processing(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
-    moveSoftFiles_bam_processing(chBAMProcessReport)
+    moveSoftFiles(chBAMProcessReport)
 
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
