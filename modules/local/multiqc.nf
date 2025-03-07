@@ -92,6 +92,7 @@ process multiqc_initialization {
     
     input:
     path (chFilesReport)
+    path (chMultiQCConfig)
 
     output:
     path ("*.*")

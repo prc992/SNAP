@@ -8,6 +8,10 @@ include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 workflow INITIALIZATION {
 
+
+    take:
+    chMultiQCConfig
+
     main:
 
     // Create the genome directory if it doesn't exist
@@ -70,7 +74,7 @@ workflow INITIALIZATION {
         .map { it.values().toList() } // 🔹 Converte para uma lista
         chFilesReportInitialization = chOnlyFiles.collect()
 
-    chInitReport = multiqc_initialization(chFilesReportInitialization)
+    chInitReport = multiqc_initialization(chFilesReportInitialization,chMultiQCConfig)
     moveSoftFiles(chInitReport)
 
     emit: sample_info = chSampleInfo
