@@ -81,8 +81,8 @@ workflow {
         }
 
     if ('BAM_PROCESSING' in run_steps) {
-        BAM_PROCESSING (chInitReport,chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot,\
-                        chFilesReportInitialization,chMultiQCConfig)
+        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot,\
+                        chFilesReportInitialization,chMultiQCConfig,chInitReport)
 
         chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
         chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
