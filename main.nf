@@ -2,7 +2,8 @@
 nextflow.enable.dsl=2
 
 //local modules
-include {moveSoftFiles} from './modules/local/moveSoftFiles'
+include {moveSoftFiles_init} from './modules/local/moveSoftFiles'
+include {moveSoftFiles_bam_processing} from './modules/local/moveSoftFiles'
 
 //subworkflows
 include { INITIALIZATION } from './subworkflows/local/initialization'
