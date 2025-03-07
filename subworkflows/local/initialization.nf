@@ -76,5 +76,6 @@ workflow INITIALIZATION {
     emit: fastqc_files = chFastaQC
     emit: ref_dir = refDir
     emit: files_report_initialization = chFilesReportInitialization
+    emit: init_report = chInitReport
 
 }
