@@ -12,7 +12,7 @@ include {dac_exclusion} from '../../modules/local/dac_exclusion'
 include {index_sam} from '../../modules/local/index_sam'
 include {createSMaSHFingerPrint} from '../../modules/local/snp_smash_fingerprint'
 include {createSMaSHFingerPrintPlot} from '../../modules/local/snp_smash_fingerprint'
-include {multiqc_bam_processing} from '../../modules/local/multiqc'
+include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 
@@ -115,7 +115,7 @@ workflow BAM_PROCESSING {
         .map { it.values().toList() } // 🔹 Converte para uma lista
         chFilesReportBamProcessing = chOnlyFiles.collect()
     
-    chBAMProcessReport = multiqc_bam_processing(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
+    chBAMProcessReport = multiqc(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
     moveSoftFiles(chBAMProcessReport)
 
     emit: bam_processed = chDACFilteredFiles

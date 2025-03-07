@@ -1,4 +1,4 @@
-/*process multiqc {
+process multiqc {
     label 'process_medium'
     tag "All Samples" 
     container = params.containers.multiqc 
@@ -6,9 +6,9 @@
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
     
     input:
-    path (chFinalTrigger)
+    val (_)
+    path (chFilesReport)
     path (chMultiQCConfig)
-    path (chAllPreviousFiles)
 
 
     output:
@@ -18,7 +18,7 @@
     """
     multiqc . 
     """
-}*/
+}
 
 process multiqc_fragments_processing {
     label 'process_medium'

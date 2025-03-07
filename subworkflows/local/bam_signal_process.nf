@@ -11,7 +11,7 @@ include {igv_session} from '../../modules/local/igv_reports'
 include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
-include {multiqc_bam_signal_processing} from '../../modules/local/multiqc'
+include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 workflow BAM_SIGNAL_PROCESSING {
@@ -105,7 +105,7 @@ workflow BAM_SIGNAL_PROCESSING {
     .flatten() // Garante que cada arquivo seja emitido separadamente no canal
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
-    chBAMSignalReport = multiqc_bam_signal_processing(chBAMProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
+    chBAMSignalReport = multiqc(chBAMProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
     moveSoftFiles(chBAMSignalReport)
 
 

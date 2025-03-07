@@ -6,7 +6,7 @@ include {unique_frags} from '../../modules/local/unique_frags'
 include {calcFragsLengthDistribuition} from '../../modules/local/calcFragsLength'
 include {createMotifGCfile} from '../../modules/local/end_motif_gc'
 include {frags_report} from '../../modules/local/frags_report.nf'
-include {multiqc_fragments_processing} from '../../modules/local/multiqc'
+include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 
@@ -74,7 +74,7 @@ workflow FRAGMENTS_PROCESSING {
     .flatten() // Garante que cada arquivo seja emitido separadamente no canal
 
     chFilesReportFragmentslProcess = chOnlyFilesProcessing.collect()
-    chFragsProcessReport = multiqc_fragments_processing(chBAMSignalReport,chFilesReportFragmentslProcess,chMultiQCConfig)
+    chFragsProcessReport = multiqc(chBAMSignalReport,chFilesReportFragmentslProcess,chMultiQCConfig)
     moveSoftFiles(chFragsProcessReport)
 
     emit: frag_size_files = chFragmentsSizeFiles

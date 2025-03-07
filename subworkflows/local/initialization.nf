@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 // Import the required processes from the modules
 include {createSamplesheet} from '../../modules/local/createSamplesheet'
 include {fastqc} from '../../modules/local/fastqc'
-include {multiqc_initialization} from '../../modules/local/multiqc'
+include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 workflow INITIALIZATION {
@@ -74,7 +74,7 @@ workflow INITIALIZATION {
         .map { it.values().toList() } // 🔹 Converte para uma lista
         chFilesReportInitialization = chOnlyFiles.collect()
 
-    chInitReport = multiqc_initialization(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
+    chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
     moveSoftFiles(chInitReport)
 
     emit: sample_info = chSampleInfo
