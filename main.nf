@@ -82,7 +82,7 @@ workflow {
         chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
         }
 
-/*    
+    
     if ('ALIGNMENT' in run_steps) {
         ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
                     chFilesReportInitialization,chInitReport,\
@@ -92,7 +92,7 @@ workflow {
         chFilesReportAlignment = ALIGNMENT.out.files_report_alignment
         chAlignmentReport = ALIGNMENT.out.aligment_report
         }
-
+/*
     if ('BAM_PROCESSING' in run_steps) {
         BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,\
                         chAlign,chSNPSMaSHPyPlot,\
