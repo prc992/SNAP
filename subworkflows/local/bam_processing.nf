@@ -22,16 +22,17 @@ workflow BAM_PROCESSING {
     chGenomeIndex
     chChromSizes
     chDACFileRef
-    chSNPSMaSH
     chSNPS_ref
     chAlign
+    chSNPSMaSH
     chSNPSMaSHPyPlot
-    chFilesReportInitialization
-    chFilesReportAlignment
     chMultiQCConfig
+    chFilesReportInitialization
     chInitReport
+    chFilesReportAlignment
     chAlignmentReport
 
+ 
     main:
 
     chSortBam = sort_bam(chAlign)
@@ -92,27 +93,16 @@ workflow BAM_PROCESSING {
     
     // Filter only the files that will be used in the MultiQC report and remove duplicates
     chOnlyFiles = chAllChannels
-        .map { values -> 
-            values.findAll { 
-                it instanceof Path && ( 
-                    it.toString().endsWith(".yml") || 
-                    it.toString().endsWith(".zip") || 
-                    it.toString().endsWith(".txt") || 
-                    it.toString().endsWith(".stats") || 
-                    it.toString().endsWith(".txt") || 
-                    it.toString().endsWith(".idxstats") ||
-                    it.toString().endsWith(".flagstat") ||  
-                    it.toString().contains("Dendrogram_of_Samples")
-                )
-            }
-        }
-        .flatten() // Garante que os arquivos estejam em um único fluxo
-        .reduce( [:] as LinkedHashMap ) { acc, file -> 
-            acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
-            acc
-        }
-        .map { it.values().toList() } // 🔹 Converte para uma lista
-        chFilesReportBamProcessing = chOnlyFiles.collect()
+    .flatten() // Make sure the files are in a single flow
+    .collect() // Joins all files before processing them
+    .map { files -> 
+        def uniqueFiles = [:] as LinkedHashMap
+        files.findAll { it instanceof Path } // Keeps only files (Path)
+             .each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Keeps only the first occurrence of the name
+        return uniqueFiles.values()  // Returns only unique files
+    } 
+    .flatten()
+    chFilesReportBamProcessing = chOnlyFiles.collect()
     
     chBAMProcessReport = multiqc(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
     moveSoftFiles(chBAMProcessReport)

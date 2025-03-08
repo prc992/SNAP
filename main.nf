@@ -92,11 +92,13 @@ workflow {
         chFilesReportAlignment = ALIGNMENT.out.files_report_alignment
         chAlignmentReport = ALIGNMENT.out.aligment_report
         }
-/*
+
     if ('BAM_PROCESSING' in run_steps) {
-        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,\
-                        chAlign,chSNPSMaSHPyPlot,\
-                        chFilesReportInitialization,chFilesReportAlignment,chMultiQCConfig,chInitReport,chAlignmentReport)
+        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPS_ref,
+                        chAlign,
+                        chSNPSMaSH,chSNPSMaSHPyPlot,chMultiQCConfig,
+                        chFilesReportInitialization,chInitReport,
+                        chFilesReportAlignment,chAlignmentReport)
 
         chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
         chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
@@ -105,7 +107,7 @@ workflow {
         chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
         chBAMProcessReport = BAM_PROCESSING.out.bam_process_report
         }
-
+/*
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
         BAM_SIGNAL_PROCESSING(chSampleInfo,chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
                             chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks,\
