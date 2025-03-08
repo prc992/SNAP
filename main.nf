@@ -7,6 +7,7 @@ nextflow.enable.dsl=2
 //subworkflows
 include { INITIALIZATION } from './subworkflows/local/initialization'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
+include { ALIGNMENT } from './subworkflows/local/alignment'
 include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
 include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
@@ -56,7 +57,7 @@ workflow {
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
 
-    def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
+    def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
 
 
@@ -73,17 +74,29 @@ workflow {
     if ('DOWNLOAD_REFERENCES' in run_steps) {
         DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
 
+        chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
         chGenome = DOWNLOAD_REFERENCES.out.genome
         chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
         chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
         chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
-        chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
         chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
         }
 
+/*    
+    if ('ALIGNMENT' in run_steps) {
+        ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
+                    chFilesReportInitialization,chInitReport,\
+                    chMultiQCConfig)
+
+        chAlign = ALIGNMENT.out.align
+        chFilesReportAlignment = ALIGNMENT.out.files_report_alignment
+        chAlignmentReport = ALIGNMENT.out.aligment_report
+        }
+
     if ('BAM_PROCESSING' in run_steps) {
-        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,chSNPSMaSHPyPlot,\
-                        chFilesReportInitialization,chMultiQCConfig,chInitReport)
+        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPSMaSH,chSNPS_ref,\
+                        chAlign,chSNPSMaSHPyPlot,\
+                        chFilesReportInitialization,chFilesReportAlignment,chMultiQCConfig,chInitReport,chAlignmentReport)
 
         chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
         chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
@@ -91,8 +104,6 @@ workflow {
         chLibComplexPreseq = BAM_PROCESSING.out.lib_complex
         chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
         chBAMProcessReport = BAM_PROCESSING.out.bam_process_report
-
-        //moveSoftFiles_bam_processing(chBAMProcessReport)
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
@@ -118,21 +129,7 @@ workflow {
         chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
         }
 
-    //moveSoftFiles(chFragsProcessReport,chBAMSignalReport,chBAMProcessReport,chInitReport)
-
-    /*// Criamos um canal que só será ativado quando todas as saídas estiverem prontas
-    chFinalTrigger = chIGVReportMerged
-        .combine(chFastaQC)
-        .combine(chFragmentsSizeFiles)
-        .combine(chSNPSMaSHPlot)
-        .combine(chLibComplexPreseq)
-        .combine(chEnrichmentFilesReport)
-        .combine(chPeaksReport)
-        .combine(chFragReport)
-
-        chAllPreviousFiles = Channel.fromPath("${workflow.projectDir}/${params.outputFolder}/")
-        chFinalReport = multiqc(chFinalTrigger, chMultiQCConfig, chAllPreviousFiles)
-        moveSoftFiles(chFinalReport)*/
+*/
     
 }
 

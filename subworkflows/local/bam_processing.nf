@@ -1,7 +1,5 @@
 nextflow.enable.dsl=2
 
-include {trim} from '../../modules/local/trim'
-include {align} from '../../modules/local/align'
 include {sort_bam} from '../../modules/local/sort_bam'
 include {lib_complex_preseq} from '../../modules/local/lib_complex_preseq'
 include {unique_sam} from '../../modules/local/unique_sam'
@@ -26,15 +24,16 @@ workflow BAM_PROCESSING {
     chDACFileRef
     chSNPSMaSH
     chSNPS_ref
+    chAlign
     chSNPSMaSHPyPlot
     chFilesReportInitialization
+    chFilesReportAlignment
     chMultiQCConfig
     chInitReport
+    chAlignmentReport
 
     main:
 
-    chTrim = trim(chSampleInfo)
-    chAlign = align(chTrim,chGenome,chGenomeIndex)
     chSortBam = sort_bam(chAlign)
     chLibComplexPreseq = lib_complex_preseq(chSortBam)
     chUniqueSam = unique_sam(chSortBam)
