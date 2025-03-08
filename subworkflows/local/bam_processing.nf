@@ -60,8 +60,6 @@ workflow BAM_PROCESSING {
     chSNPSMaSHPlot = createSMaSHFingerPrintPlot(chSMaSHOutout,chSNPSMaSHPyPlot)
 
     // Collect all the files to generate the MultiQC report
-    chTrimAll = chTrim.collect()
-    chAlignAll = chAlign.collect()
     chSortBamAll = chSortBam.collect()
     chLibComplexPreseqAll = chLibComplexPreseq.collect()
     chUniqueSamAll = chUniqueSam.collect()
