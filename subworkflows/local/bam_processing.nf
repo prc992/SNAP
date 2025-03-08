@@ -74,8 +74,7 @@ workflow BAM_PROCESSING {
     chFilesReportInitializationAll = chFilesReportInitialization.collect()
 
     // Combine all the channels
-    chAllChannels = chTrimAll
-        .combine(chAlignAll)
+    chAllChannels = chSortBamAll
         .combine(chSortBamAll)
         .combine(chLibComplexPreseqAll)
         .combine(chUniqueSamAll)
