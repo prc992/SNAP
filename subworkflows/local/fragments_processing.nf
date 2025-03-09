@@ -57,7 +57,6 @@ workflow FRAGMENTS_PROCESSING {
         .combine(chBedFilesAll)
         .combine(chUniqueFrags)
         .combine(chFragFilesReportAll)
-        .combine(chFilesReportSignalProcess)
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
     
