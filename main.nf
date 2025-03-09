@@ -34,7 +34,7 @@ workflow {
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
     println ""
-    println "Running workflow entry: ${workflow.entryName}"
+    //println "Running workflow entry: ${workflow.entryName}"
 
 
     //Auxiliar code
