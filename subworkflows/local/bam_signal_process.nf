@@ -40,7 +40,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     main:
     
-    chBedGraphFiles = bam_to_bedgraph(chIndexFiles)
+    chBedGraphFiles = bam_to_bedgraph(chBAMProcessedIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
     //Pileups ****************************************************************
