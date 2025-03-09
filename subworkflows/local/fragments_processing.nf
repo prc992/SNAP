@@ -41,7 +41,7 @@ workflow FRAGMENTS_PROCESSING {
     chBedFiles = bam_to_bed(chBAMProcessedFiles) 
 
     chUniqueFrags = unique_frags(chBedFiles).collect()
-    chFragFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFragPeaks)
+    chFragFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFrags)
 
     // Collect all the files to generate the MultiQC report
     chNameSortedFilesAll = chNameSortedFiles.collect()
