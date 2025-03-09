@@ -5,6 +5,10 @@ process sort_bam {
 
   tag "Sample - $sampleId" 
   
+  if (params.intermediate_bams == true) {
+    publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
+  }
+  
   input:
   tuple val(sampleId),path(sampleBam),val(_)
   
@@ -33,6 +37,10 @@ process sort_readname_bam {
   container = params.containers.samtools
 
   tag "Sample - $sampleId" 
+
+  if (params.intermediate_bams == true) {
+    publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
+  }
   
   input:
   tuple val(sampleId),path(sampleBam),val(_),val(_)

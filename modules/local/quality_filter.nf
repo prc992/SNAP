@@ -4,6 +4,10 @@ process quality_filter {
     
     tag "Sample - $sampleId" 
 
+    if (params.intermediate_bams == true) {
+        publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
+    }
+
     input:
     tuple val(sampleId),path(sampleBam),val(_)
 

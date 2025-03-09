@@ -5,6 +5,9 @@ process unique_sam {
 
   tag "Sample - $sampleId" 
   
+  if (params.intermediate_bams == true) {
+    publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
+  }
   
   input:
   tuple val(sampleId),path(sortedBam),val(_)
