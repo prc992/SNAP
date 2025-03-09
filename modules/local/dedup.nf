@@ -5,9 +5,6 @@ process dedup {
 
   tag "Sample - $sampleId"  
 
-  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
-  
-
   input:
   tuple val(sampleId),path(uniqueBam),val(_)
 
