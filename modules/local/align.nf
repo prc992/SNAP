@@ -5,7 +5,7 @@ process align {
 
   tag "Sample - $sampleId"
 
-  if (params.output_big_bam == true) {
+  if (params.intermediate_bams == true) {
     publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   }
   
