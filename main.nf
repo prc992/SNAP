@@ -107,13 +107,27 @@ workflow {
         chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
         chBAMProcessReport = BAM_PROCESSING.out.bam_process_report
         }
+    
+    if ('FRAGMENTS_PROCESSING' in run_steps) {
+
+        FRAGMENTS_PROCESSING(chGenome,chGenomeIndex,
+                            chBAMProcessedFiles,chBAMProcessedIndexFiles,
+                            chMultiQCFragsHeader,chReportFrags,
+                            chMultiQCConfig,
+                            chFilesReportInitialization,chFilesReportBamProcessing,
+                            chBAMProcessReport)
+
+        chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
+        chFragReport = FRAGMENTS_PROCESSING.out.frag_report
+        chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
+        }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
         BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
                             chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,
                             chMultiQCConfig,chEnrichmentScript,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,
-                            chFilesReportInitialization,chFilesReportBamProcessing,chBAMProcessReport)
+                            chFilesReportInitialization,chFilesReportBamProcessing,chBAMProcessReport,chFragsProcessReport)
 
 
 
@@ -124,19 +138,7 @@ workflow {
         chBAMSignalReport = BAM_SIGNAL_PROCESSING.out.bam_signal_report
         }
 
-    if ('FRAGMENTS_PROCESSING' in run_steps) {
 
-        FRAGMENTS_PROCESSING(chGenome,chGenomeIndex,
-                            chBAMProcessedFiles,chBAMProcessedIndexFiles,
-                            chMultiQCFragsHeader,chReportFrags,
-                            chMultiQCConfig,
-                            chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportSignalProcess,
-                            chBAMSignalReport)
-
-        chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
-        chFragReport = FRAGMENTS_PROCESSING.out.frag_report
-        chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
-        }
 
 
     

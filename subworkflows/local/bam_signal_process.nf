@@ -37,6 +37,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportInitialization
     chFilesReportBamProcessing
     chBAMProcessReport
+    chFragsProcessReport
 
     main:
     
@@ -92,6 +93,7 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chMergedEnrichmentReportAll)
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
+        .combine(chFragsProcessReport)
     
     chOnlyFilesProcessing = chAllChannelsProcessing
     .flatten() // Garante que os arquivos estejam em um único fluxo
