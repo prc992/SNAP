@@ -1,8 +1,6 @@
 process quality_filter {
     label 'low_cpu_low_mem'
     container = params.containers.samtools
-  
-    publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
     
     tag "Sample - $sampleId" 
 

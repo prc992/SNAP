@@ -34,7 +34,6 @@ process sort_readname_bam {
   container = params.containers.samtools
 
   tag "Sample - $sampleId" 
-  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
   tuple val(sampleId),path(sampleBam),val(_),val(_)
