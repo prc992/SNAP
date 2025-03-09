@@ -4,7 +4,6 @@ process sort_bam {
   container = params.containers.samtools
 
   tag "Sample - $sampleId" 
-  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
   tuple val(sampleId),path(sampleBam),val(_)
