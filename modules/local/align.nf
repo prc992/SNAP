@@ -13,7 +13,7 @@ process align {
   each path (genomeIndexFiles)
 
   if (params.intermediate_bams == true) {
-    publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/align/$sampleId", mode : 'copy'
   }
 
   output:
