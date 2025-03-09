@@ -60,7 +60,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chPeaksFilesReport = peaks_report(chNarrowPeakFiles,chMultiQCPeaksHeader,chReportPeaks)
 
     //ENRICHMENT *********************************************************************
-    chEnrichmentFilesCSV = enrichment(chDACFilteredFiles,chEnrichmentScript).collect()
+    chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
 
