@@ -18,24 +18,24 @@ workflow BAM_SIGNAL_PROCESSING {
 
     take:
     chSampleInfo
-    chDACFilteredFiles
-    chIndexFiles
-    chChromSizes
-    chPileUpBED
     chGenome
     chGenomeIndex
-    chMultiQCHousekeepingHeader
-    chIGVFilestoSessions
+    chChromSizes
+    chBAMProcessedFiles
+    chBAMProcessedIndexFiles
     chGenomesInfo
+    chMultiQCHousekeepingHeader
+    chMultiQCEnrichmentHeader
     chMultiQCPeaksHeader
-    chReportPeaks
+    chIGVFilestoSessions
+    chMultiQCConfig
     chEnrichmentScript
+    chPileUpBED
+    chReportPeaks
     chReportEnrichment
     chMergeReportEnrichment
-    chMultiQCEnrichmentHeader
-    chFilesReportBamProcessing
     chFilesReportInitialization
-    chMultiQCConfig
+    chFilesReportBamProcessing
     chBAMProcessReport
 
     main:
@@ -52,7 +52,7 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
-    chPeakFiles = call_peaks(chDACFilteredFiles) 
+    chPeakFiles = call_peaks(chBAMProcessedFiles) 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
