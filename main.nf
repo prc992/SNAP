@@ -107,12 +107,15 @@ workflow {
         chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
         chBAMProcessReport = BAM_PROCESSING.out.bam_process_report
         }
-/*
+
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
-        BAM_SIGNAL_PROCESSING(chSampleInfo,chBAMProcessedFiles,chBAMProcessedIndexFiles,chChromSizes,chPileUpBED,chGenome,chGenomeIndex,\
-                            chMultiQCHousekeepingHeader,chIGVFilestoSessions,chGenomesInfo,chMultiQCPeaksHeader,chReportPeaks,\
-                            chEnrichmentScript,chReportEnrichment,chMergeReportEnrichment,chMultiQCEnrichmentHeader,\
-                            chFilesReportBamProcessing,chFilesReportInitialization,chMultiQCConfig,chBAMProcessReport)
+        BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,
+                            chBAMProcessedFiles,chBAMProcessedIndexFiles,
+                            chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,
+                            chMultiQCConfig,chEnrichmentScript,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,
+                            chFilesReportInitialization,chFilesReportBamProcessing,chBAMProcessReport)
+
+
 
         chIGVReportMerged = BAM_SIGNAL_PROCESSING.out.igv_report_merged
         chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports
@@ -120,7 +123,7 @@ workflow {
         chFilesReportSignalProcess = BAM_SIGNAL_PROCESSING.out.files_report_bam_signal_processing
         chBAMSignalReport = BAM_SIGNAL_PROCESSING.out.bam_signal_report
         }
-
+/*
     if ('FRAGMENTS_PROCESSING' in run_steps) {
         FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
                             chMultiQCFragsHeader,chReportFrags,chFilesReportSignalProcess,\
