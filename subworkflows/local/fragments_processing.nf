@@ -13,16 +13,16 @@ include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 workflow FRAGMENTS_PROCESSING {
 
     take:
-    chBAMProcessedFiles
-    chIndexFiles
     chGenome
     chGenomeIndex
+    chBAMProcessedFiles
+    chBAMProcessedIndexFiles
     chMultiQCFragsHeader
-    chReportFragPeaks
-    chFilesReportSignalProcess
-    chFilesReportBamProcessing
-    chFilesReportInitialization
+    chReportFrags
     chMultiQCConfig
+    chFilesReportInitialization
+    chFilesReportBamProcessing
+    chFilesReportSignalProcess
     chBAMSignalReport
 
     main:

@@ -123,18 +123,22 @@ workflow {
         chFilesReportSignalProcess = BAM_SIGNAL_PROCESSING.out.files_report_bam_signal_processing
         chBAMSignalReport = BAM_SIGNAL_PROCESSING.out.bam_signal_report
         }
-/*
+
     if ('FRAGMENTS_PROCESSING' in run_steps) {
-        FRAGMENTS_PROCESSING(chBAMProcessedFiles,chBAMProcessedIndexFiles,chGenome,chGenomeIndex,\
-                            chMultiQCFragsHeader,chReportFrags,chFilesReportSignalProcess,\
-                            chFilesReportBamProcessing,chFilesReportInitialization,chMultiQCConfig,chBAMSignalReport)
+
+        FRAGMENTS_PROCESSING(chGenome,chGenomeIndex,
+                            chBAMProcessedFiles,chBAMProcessedIndexFiles,
+                            chMultiQCFragsHeader,chReportFrags,
+                            chMultiQCConfig,
+                            chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportSignalProcess,
+                            chBAMSignalReport)
 
         chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
         chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
         }
 
-*/
+
     
 }
 
