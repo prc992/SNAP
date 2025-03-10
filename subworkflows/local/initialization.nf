@@ -33,17 +33,24 @@ workflow INITIALIZATION {
             [genome, faGZFile, geneAnnotation, dacList, snp]
         }
 
-
-     // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
-    if (params.samplesheetfasta) {
+    if params.samplesheetBams {
+        chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
+    } else if params.sample_dir_bams {
+        chSampleSheetBams = createSamplesheetBams(
+            params.sample_dir_bams, 
+            params.enrichment_mark ?: 'no_enrichment_mark'
+        )
+    } else if (params.samplesheetfasta) {
         //println "Using provided samplesheet: ${params.samplesheet}"
         chSampleSheetFasta = Channel.fromPath(params.samplesheetfasta)
-    } else {
+    } else if (params.sample_dir_fasta) {
         //println "Creating samplesheet because none was provided."
         chSampleSheetFasta = createSamplesheetFasta(
             params.sample_dir_fasta, 
             params.enrichment_mark ?: 'no_enrichment_mark'
         )
+    } else {
+        error "No SampleSheet for Fasta Files war provided neither no sample dir. Exiting workflow."
     }
 
     // Read the SampleSheet provided by the user or created by the pipeline
