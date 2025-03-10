@@ -12,6 +12,15 @@ include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
 include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
 
+process fake_aligment {
+    input:
+    tuple val(sampleId), val(enrichment_mark),path(bam)
+
+    output:
+    tuple val(sampleId),path('*.bam'),val (_)
+
+}
+
 workflow  {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
@@ -92,18 +101,23 @@ workflow  {
 
         if (skip_alignment) {
             println "skip_alignment (main) true: ${skip_alignment}"
+            chAlign = fake_aligment(chSampleInfo)
+            chFilesReportAlignment = Channel.empty()
+            chAlignmentReport = Channel.empty()
+
         } else {
             println "skip_alignment (main) false: ${skip_alignment}"
+
+            ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
+                    chFilesReportInitialization,chInitReport,\
+                    chMultiQCConfig)
+            chAlign = ALIGNMENT.out.align
+            chFilesReportAlignment = ALIGNMENT.out.files_report_alignment
+            chAlignmentReport = ALIGNMENT.out.aligment_report
         }
         
 
-        ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
-                    chFilesReportInitialization,chInitReport,\
-                    chMultiQCConfig)
-
-        chAlign = ALIGNMENT.out.align
-        chFilesReportAlignment = ALIGNMENT.out.files_report_alignment
-        chAlignmentReport = ALIGNMENT.out.aligment_report
+        
         }
 
     if ('BAM_PROCESSING' in run_steps) {
