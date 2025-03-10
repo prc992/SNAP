@@ -35,7 +35,6 @@ workflow INITIALIZATION {
         }
 
     if (chSkipAlignment) {
-        println "skip_alignment (main) true: ${chSkipAlignment}"
         if (params.samplesheetBams) {
             chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
         } else if (params.sample_dir_bam) {
@@ -43,7 +42,6 @@ workflow INITIALIZATION {
         } 
         
     } else {
-        println "skip_alignment (main) false: ${chSkipAlignment}"
         if (params.samplesheetfasta) {
             //println "Using provided samplesheet: ${params.samplesheet}"
             chSampleSheetFasta = Channel.fromPath(params.samplesheetfasta)
