@@ -85,6 +85,8 @@ workflow  {
 
     
     if ('ALIGNMENT' in run_steps) {
+        println "skip_alignment (main): ${skip_alignment}"
+
         ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
                     chFilesReportInitialization,chInitReport,\
                     chMultiQCConfig)

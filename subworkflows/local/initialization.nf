@@ -58,7 +58,6 @@ workflow INITIALIZATION {
         error "No SampleSheet for Fasta Files war provided neither no sample dir. Exiting workflow."
     }
 
-    println "skip_alignment: ${skip_alignment}"
     chFastaQC = Channel.empty()
     chFilesReportInitialization = Channel.empty()
     chInitReport = Channel.empty()
