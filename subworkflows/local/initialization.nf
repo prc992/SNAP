@@ -2,6 +2,7 @@ nextflow.enable.dsl=2
 
 // Import the required processes from the modules
 include {createSamplesheetFasta} from '../../modules/local/createSamplesheet'
+include {createSamplesheetBam} from '../../modules/local/createSamplesheet'
 include {fastqc} from '../../modules/local/fastqc'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
@@ -35,9 +36,9 @@ workflow INITIALIZATION {
 
     if (params.samplesheetBams) {
         chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
-    } else if (params.sample_dir_bams) {
-        chSampleSheetBams = createSamplesheetBams(
-            params.sample_dir_bams, 
+    } else if (params.sample_dir_bam) {
+        chSampleSheetBams = createSamplesheetBam(
+            params.sample_dir_bam, 
             params.enrichment_mark ?: 'no_enrichment_mark'
         )
     } else if (params.samplesheetfasta) {
