@@ -11,7 +11,6 @@ process fastqc {
 
   output:
   path('*.*')
-  //tuple path ('*_fastqc.html'),path ('*_fastqc.zip'),path ("fastqc_mqc_versions.yml")
   
   script:
   """

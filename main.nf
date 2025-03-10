@@ -12,7 +12,7 @@ include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
 include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
 
-workflow SNAP {
+workflow  {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
     def releaseVersion = "v1.2.0 - All processes in the pipeline"
@@ -34,7 +34,7 @@ workflow SNAP {
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
     println ""
-    println "Running workflow entry: ${workflow.entryName}"
+    println "Running workflow entry: ${params.entryName}"
 
 
     //Auxiliar code

@@ -1,6 +1,6 @@
-process createSamplesheet {
+process createSamplesheetFasta {
     label 'low_cpu_low_mem'
-    tag "Creating Samplesheet" 
+    tag "Creating Samplesheet Fasta" 
 
     publishDir "${workflow.projectDir}/${params.outputFolder}", mode : 'copy'
 
@@ -9,7 +9,7 @@ process createSamplesheet {
     val enrichment_mark
 
     output:
-    path "snap-samplesheet-*.csv"
+    path "snap-samplesheet-fasta*.csv"
 
     script:
     """

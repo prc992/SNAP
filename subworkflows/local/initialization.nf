@@ -1,7 +1,7 @@
 nextflow.enable.dsl=2
 
 // Import the required processes from the modules
-include {createSamplesheet} from '../../modules/local/createSamplesheet'
+include {createSamplesheetFasta} from '../../modules/local/createSamplesheet'
 include {fastqc} from '../../modules/local/fastqc'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
@@ -40,14 +40,14 @@ workflow INITIALIZATION {
         chSampleSheet = Channel.fromPath(params.samplesheet)
     } else {
         //println "Creating samplesheet because none was provided."
-        chSampleSheet = createSamplesheet(
+        chSampleSheetFasta = createSamplesheetFasta(
             params.sample_dir, 
             params.enrichment_mark ?: 'no_enrichment_mark'
         )
     }
 
     // Read the SampleSheet provided by the user or created by the pipeline
-    chSampleInfo = chSampleSheet \
+    chSampleInfo = chSampleSheetFasta \
         | splitCsv(header:true) \
         | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
     
