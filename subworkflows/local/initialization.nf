@@ -37,7 +37,7 @@ workflow INITIALIZATION {
     if (chSkipAlignment) {
         println "skip_alignment (main) true: ${chSkipAlignment}"
     } else {
-        println "skip_alignment (main) true: ${chSkipAlignment}"
+        println "skip_alignment (main) false: ${chSkipAlignment}"
     }
 
     if (params.samplesheetBams) {
