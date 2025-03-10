@@ -36,32 +36,21 @@ workflow INITIALIZATION {
 
     if (chSkipAlignment) {
         println "skip_alignment (main) true: ${chSkipAlignment}"
+        if (params.samplesheetBams) {
+            chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
+        } else if (params.sample_dir_bam) {
+            chSampleSheetBams = createSamplesheetBam(params.sample_dir_bam, params.enrichment_mark ?: 'no_enrichment_mark')
+        } 
+        
     } else {
         println "skip_alignment (main) false: ${chSkipAlignment}"
-    }
-
-    if (params.samplesheetBams) {
-        chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
-        skip_alignment = true
-    } else if (params.sample_dir_bam) {
-        chSampleSheetBams = createSamplesheetBam(
-            params.sample_dir_bam, 
-            params.enrichment_mark ?: 'no_enrichment_mark'
-        )
-        skip_alignment = true
-    } else if (params.samplesheetfasta) {
-        //println "Using provided samplesheet: ${params.samplesheet}"
-        chSampleSheetFasta = Channel.fromPath(params.samplesheetfasta)
-        skip_alignment = false
-    } else if (params.sample_dir_fasta) {
-        //println "Creating samplesheet because none was provided."
-        chSampleSheetFasta = createSamplesheetFasta(
-            params.sample_dir_fasta, 
-            params.enrichment_mark ?: 'no_enrichment_mark'
-        )
-        skip_alignment = false
-    } else {
-        error "No SampleSheet for Fasta Files war provided neither no sample dir. Exiting workflow."
+        if (params.samplesheetfasta) {
+            //println "Using provided samplesheet: ${params.samplesheet}"
+            chSampleSheetFasta = Channel.fromPath(params.samplesheetfasta)
+        } else if (params.sample_dir_fasta) {
+            //println "Creating samplesheet because none was provided."
+            chSampleSheetFasta = createSamplesheetFasta(params.sample_dir_fasta, params.enrichment_mark ?: 'no_enrichment_mark')
+        }    
     }
 
     chFastaQC = Channel.empty()
@@ -72,7 +61,6 @@ workflow INITIALIZATION {
         chSampleInfo = chSampleSheetBams \
             | splitCsv(header:true) \
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam) 
-            
             }
     } else {
         chSampleInfo = chSampleSheetFasta \
