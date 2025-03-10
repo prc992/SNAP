@@ -60,6 +60,7 @@ workflow INITIALIZATION {
 
     println "skip_alignment: ${skip_alignment}"
     chFastaQC = Channel.empty()
+    chFilesReportInitialization = Channel.empty()
     
     if (skip_alignment = true) {
         chSampleInfo = chSampleSheetBams \
