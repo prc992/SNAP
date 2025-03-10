@@ -59,12 +59,13 @@ workflow INITIALIZATION {
     }
 
     println "skip_alignment: ${skip_alignment}"
+    chFastaQC = Channel.empty()
     
     if (skip_alignment = true) {
         chSampleInfo = chSampleSheetBams \
             | splitCsv(header:true) \
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam) 
-            chFastaQC = Channel.empty()
+            
             }
     } else {
         chSampleInfo = chSampleSheetFasta \
