@@ -57,7 +57,7 @@ workflow INITIALIZATION {
     chFilesReportInitialization = Channel.empty()
     chInitReport = Channel.empty()
     
-    if (skip_alignment = true) {
+    if (chSkipAlignment) {
         chSampleInfo = chSampleSheetBams \
             | splitCsv(header:true) \
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam) 
