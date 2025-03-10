@@ -105,14 +105,11 @@ workflow  {
     if ('ALIGNMENT' in run_steps) {
 
         if (skip_alignment) {
-            println "skip_alignment (main) true: ${skip_alignment}"
             chAlign = fake_aligment(chSampleInfo)
             chFilesReportAlignment = Channel.empty()
             chAlignmentReport = Channel.empty()
 
         } else {
-            println "skip_alignment (main) false: ${skip_alignment}"
-
             ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
                     chFilesReportInitialization,chInitReport,\
                     chMultiQCConfig)
