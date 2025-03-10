@@ -33,9 +33,9 @@ workflow INITIALIZATION {
             [genome, faGZFile, geneAnnotation, dacList, snp]
         }
 
-    if params.samplesheetBams {
+    if (params.samplesheetBams) {
         chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
-    } else if params.sample_dir_bams {
+    } else if (params.sample_dir_bams) {
         chSampleSheetBams = createSamplesheetBams(
             params.sample_dir_bams, 
             params.enrichment_mark ?: 'no_enrichment_mark'
@@ -52,7 +52,7 @@ workflow INITIALIZATION {
     } else {
         error "No SampleSheet for Fasta Files war provided neither no sample dir. Exiting workflow."
     }
-
+    
     // Read the SampleSheet provided by the user or created by the pipeline
     chSampleInfo = chSampleSheetFasta \
         | splitCsv(header:true) \
@@ -64,22 +64,17 @@ workflow INITIALIZATION {
     chFastaQCAll = chFastaQC.collect()
 
     // Filter only the files that will be used in the MultiQC report and remove duplicates
-    chOnlyFiles = chFastaQCAll
-        .map { values -> 
-            values.findAll { 
-                it instanceof Path && ( 
-                    it.toString().endsWith(".yml") || 
-                    it.toString().endsWith(".zip") || 
-                    it.toString().endsWith(".html") )
-            }
-        }
-        .flatten() // Garante que os arquivos estejam em um único fluxo
-        .reduce( [:] as LinkedHashMap ) { acc, file -> 
-            acc.putIfAbsent(file.getName(), file) // Mantém apenas a primeira ocorrência do nome do arquivo
-            acc
-        }
-        .map { it.values().toList() } // 🔹 Converte para uma lista
-        chFilesReportInitialization = chOnlyFiles.collect()
+    chOnlyFiles = chAllChannels
+    .flatten() // Make sure the files are in a single flow
+    .collect() // Joins all files before processing them
+    .map { files -> 
+        def uniqueFiles = [:] as LinkedHashMap
+        files.findAll { it instanceof Path } // Keeps only files (Path)
+             .each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Keeps only the first occurrence of the name
+        return uniqueFiles.values()  // Returns only unique files
+    } 
+    .flatten()
+    chFilesReportInitialization = chOnlyFiles.collect()
 
     chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
     moveSoftFiles(chInitReport)
