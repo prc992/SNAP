@@ -65,8 +65,8 @@ workflow INITIALIZATION {
     } else {
         chSampleInfo = chSampleSheetFasta \
             | splitCsv(header:true) \
-            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) 
-
+            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2)
+            } 
             // Run FastQC on the samples
             chFastaQC = fastqc(chSampleInfo)
             chFastaQCAll = chFastaQC.collect()
