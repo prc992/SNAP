@@ -58,6 +58,7 @@ workflow  {
 
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
+    def skip_alignment = false
 
     
 

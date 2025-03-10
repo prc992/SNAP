@@ -36,33 +36,44 @@ workflow INITIALIZATION {
 
     if (params.samplesheetBams) {
         chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
+        skip_alignment = true
     } else if (params.sample_dir_bam) {
         chSampleSheetBams = createSamplesheetBam(
             params.sample_dir_bam, 
             params.enrichment_mark ?: 'no_enrichment_mark'
         )
+        skip_alignment = true
     } else if (params.samplesheetfasta) {
         //println "Using provided samplesheet: ${params.samplesheet}"
         chSampleSheetFasta = Channel.fromPath(params.samplesheetfasta)
+        skip_alignment = false
     } else if (params.sample_dir_fasta) {
         //println "Creating samplesheet because none was provided."
         chSampleSheetFasta = createSamplesheetFasta(
             params.sample_dir_fasta, 
             params.enrichment_mark ?: 'no_enrichment_mark'
         )
+        skip_alignment = false
     } else {
         error "No SampleSheet for Fasta Files war provided neither no sample dir. Exiting workflow."
     }
     
-    // Read the SampleSheet provided by the user or created by the pipeline
-    chSampleInfo = chSampleSheetFasta \
-        | splitCsv(header:true) \
-        | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) }
-    
-    // Run FastQC on the samples
-    chFastaQC = fastqc(chSampleInfo)
+    if (params.samplesheetBams || params.sample_dir_bam) {
+        chSampleInfoBam = chSampleSheetBams \
+            | splitCsv(header:true) \
+            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam) }
+    } else {
+        chSampleInfoFasta = chSampleSheetFasta \
+            | splitCsv(header:true) \
+            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) 
 
-    chFastaQCAll = chFastaQC.collect()
+            // Run FastQC on the samples
+            chFastaQC = fastqc(chSampleInfoFasta)
+            chFastaQCAll = chFastaQC.collect()
+        
+        }
+    }
+    
 
     // Filter only the files that will be used in the MultiQC report and remove duplicates
     chOnlyFiles = chFastaQCAll
