@@ -96,10 +96,8 @@ workflow  {
                         tuple(sampleId, file(bam), enrichment_mark) 
                         }
 
-            //chFilesReportAlignment = Channel.empty()
-            //chAlignmentReport = Channel.empty()
-            chFilesReportAlignment = chAlign
-            chAlignmentReport = chAlign
+            chFilesReportAlignment = Channel.of("NO_DATA")
+            chAlignmentReport = Channel.of("NO_DATA")
 
         } else {
             ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
