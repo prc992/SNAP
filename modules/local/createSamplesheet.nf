@@ -51,7 +51,7 @@ process createSamplesheetBam {
     """
     now=\$(date +'%Y-%m-%d-%H-%M-%S')
     filename="snap-samplesheet-bam-\$now.csv"
-    echo "sampleId,enrichment_mark,read1,read2" > \$filename
+    echo "sampleId,enrichment_mark,bam" > \$filename
 
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
@@ -60,8 +60,8 @@ process createSamplesheetBam {
             continue
         fi
         files=(\$(find \$subfolder -type f \\( -name '*.bam' \\) | sort))
-        read1=\$(realpath \${files[0]})
-        echo "\$sampleId,${enrichment_mark},\$read1" >> \$filename
+        bam=\$(realpath \${files[0]})
+        echo "\$sampleId,${enrichment_mark},\$bam" >> \$filename
     done
     """
 }
