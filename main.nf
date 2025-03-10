@@ -56,6 +56,12 @@ workflow  {
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
 
+    if (params.samplesheetBams || params.sample_dir_bam) {
+        skip_alignment = true
+    } else {
+        skip_alignment = false
+    }
+
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
     
@@ -69,7 +75,6 @@ workflow  {
         chFastaQC = INITIALIZATION.out.fastqc_files
         chFilesReportInitialization = INITIALIZATION.out.files_report_initialization
         chInitReport = INITIALIZATION.out.init_report
-        skip_alignment = INITIALIZATION.out.skip_alignment
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {

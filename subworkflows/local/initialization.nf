@@ -105,6 +105,5 @@ workflow INITIALIZATION {
     emit: ref_dir = refDir
     emit: files_report_initialization = chFilesReportInitialization
     emit: init_report = chInitReport
-    emit: skip_alignment = false //skip_alignment
 
 }
