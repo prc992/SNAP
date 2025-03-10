@@ -105,7 +105,7 @@ workflow  {
     if ('ALIGNMENT' in run_steps) {
 
         if (skip_alignment) {
-            chAlign = fake_aligment(chSampleInfo)
+            chAlign = chSampleInfo.map { sampleId, enrichment_mark, bam -> bam }
             chFilesReportAlignment = Channel.empty()
             chAlignmentReport = Channel.empty()
 
