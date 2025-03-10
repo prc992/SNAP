@@ -42,7 +42,6 @@ workflow BAM_PROCESSING {
         chLibComplexPreseq = Channel.of("NO_DATA")
         chUniqueSam = Channel.of("NO_DATA")
         chFilteredFiles = Channel.of("NO_DATA")
-        chDedup = Channel.of("NO_DATA")
     }
     else{
         chSortBam = sort_bam(chAlign)
