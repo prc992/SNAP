@@ -84,7 +84,12 @@ workflow  {
 
     
     if ('ALIGNMENT' in run_steps) {
-        println "skip_alignment (main): ${skip_alignment}"
+        if (skip_alignment) {
+            println "skip_alignment (main) true: ${skip_alignment}"
+        } else {
+            println "skip_alignment (main) false: ${skip_alignment}"
+        }
+        
 
         ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
                     chFilesReportInitialization,chInitReport,\
