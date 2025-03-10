@@ -19,6 +19,11 @@ process fake_aligment {
     output:
     tuple val(sampleId),path('*.bam'),val (_)
 
+    script:
+    """
+    cp ${bam} ${sampleId}.bam
+    """
+
 }
 
 workflow  {
