@@ -63,12 +63,12 @@ workflow INITIALIZATION {
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam) 
             }
     } else {
-        chSampleInfoFasta = chSampleSheetFasta \
+        chSampleInfo = chSampleSheetFasta \
             | splitCsv(header:true) \
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) 
 
             // Run FastQC on the samples
-            chFastaQC = fastqc(chSampleInfoFasta)
+            chFastaQC = fastqc(chSampleInfo)
             chFastaQCAll = chFastaQC.collect()
 
             // Filter only the files that will be used in the MultiQC report and remove duplicates
