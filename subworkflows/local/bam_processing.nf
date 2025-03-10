@@ -37,6 +37,12 @@ workflow BAM_PROCESSING {
 
     if (params.deduped_bam) {
         chDedup = chAlign
+
+        chSortBam = Channel.of("NO_DATA")
+        chLibComplexPreseq = Channel.of("NO_DATA")
+        chUniqueSam = Channel.of("NO_DATA")
+        chFilteredFiles = Channel.of("NO_DATA")
+        chDedup = Channel.of("NO_DATA")
     }
     else{
         chSortBam = sort_bam(chAlign)
