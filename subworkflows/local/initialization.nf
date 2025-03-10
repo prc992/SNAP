@@ -9,12 +9,9 @@ include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 workflow INITIALIZATION {
 
-
     take:
     chMultiQCConfig
     chSkipAlignment
-
-
 
     main:
 
@@ -37,7 +34,7 @@ workflow INITIALIZATION {
             [genome, faGZFile, geneAnnotation, dacList, snp]
         }
 
-    if chSkipAlignment {
+    if (chSkipAlignment) {
         println "skip_alignment (main) true: ${chSkipAlignment}"
     } else {
         println "skip_alignment (main) true: ${chSkipAlignment}"
