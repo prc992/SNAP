@@ -96,6 +96,7 @@ workflow INITIALIZATION {
     }
     
 
+    println "skip_alignment (INITIALIZATION): ${skip_alignment}"
     
 
     emit: sample_info = chSampleInfo
