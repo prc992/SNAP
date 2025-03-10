@@ -21,7 +21,7 @@ process fake_aligment {
 
     script:
     """
-    cp ${bam} ${sampleId}.bam
+    ln -s $bam ${sampleId}.bam
     """
 
 }
