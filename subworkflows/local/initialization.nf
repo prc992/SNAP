@@ -53,9 +53,9 @@ workflow INITIALIZATION {
         }    
     }
 
-    chFastaQC = Channel.empty()
-    chFilesReportInitialization = Channel.empty()
-    chInitReport = Channel.empty()
+    chFastaQC = Channel.of("NO_DATA")
+    chFilesReportInitialization = Channel.of("NO_DATA")
+    chInitReport = Channel.of("NO_DATA")
     
     if (chSkipAlignment) {
         chSampleInfo = chSampleSheetBams \
