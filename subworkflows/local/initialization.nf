@@ -35,13 +35,13 @@ workflow INITIALIZATION {
 
 
      // If the 'samplesheet' parameter is provided, use it directly; otherwise, create a new samplesheet
-    if (params.samplesheet) {
+    if (params.samplesheetfasta) {
         //println "Using provided samplesheet: ${params.samplesheet}"
-        chSampleSheet = Channel.fromPath(params.samplesheet)
+        chSampleSheetFasta = Channel.fromPath(params.samplesheetfasta)
     } else {
         //println "Creating samplesheet because none was provided."
         chSampleSheetFasta = createSamplesheetFasta(
-            params.sample_dir, 
+            params.sample_dir_fasta, 
             params.enrichment_mark ?: 'no_enrichment_mark'
         )
     }
