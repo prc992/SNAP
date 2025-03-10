@@ -9,12 +9,12 @@ process createSamplesheetFasta {
     val enrichment_mark
 
     output:
-    path "snap-samplesheet-fasta*.csv"
+    path "snap-samplesheet-fasta-*.csv"
 
     script:
     """
     now=\$(date +'%Y-%m-%d-%H-%M-%S')
-    filename="snap-samplesheet-\$now.csv"
+    filename="snap-samplesheet-fasta-\$now.csv"
     echo "sampleId,enrichment_mark,read1,read2" > \$filename
 
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
