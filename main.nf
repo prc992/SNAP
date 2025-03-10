@@ -98,8 +98,8 @@ workflow  {
 
             //chFilesReportAlignment = Channel.empty()
             //chAlignmentReport = Channel.empty()
-            chFilesReportAlignment = Channel.of("NO_DATA")
-            chAlignmentReport = Channel.of("NO_DATA")
+            chFilesReportAlignment = chAlign
+            chAlignmentReport = chAlign
 
         } else {
             ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
