@@ -64,7 +64,7 @@ workflow INITIALIZATION {
     chFastaQCAll = chFastaQC.collect()
 
     // Filter only the files that will be used in the MultiQC report and remove duplicates
-    chOnlyFiles = chAllChannels
+    chOnlyFiles = chFastaQCAll
     .flatten() // Make sure the files are in a single flow
     .collect() // Joins all files before processing them
     .map { files -> 
