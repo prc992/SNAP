@@ -58,38 +58,39 @@ workflow INITIALIZATION {
         error "No SampleSheet for Fasta Files war provided neither no sample dir. Exiting workflow."
     }
     
-    if (params.samplesheetBams || params.sample_dir_bam) {
-        chSampleInfoBam = chSampleSheetBams \
+    if (skip_alignment = true) {
+        chSampleInfo = chSampleSheetBams \
             | splitCsv(header:true) \
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam) }
     } else {
-        chSampleInfoFasta = chSampleSheetFasta \
+        chSampleInfo = chSampleSheetFasta \
             | splitCsv(header:true) \
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2) 
 
             // Run FastQC on the samples
             chFastaQC = fastqc(chSampleInfoFasta)
             chFastaQCAll = chFastaQC.collect()
-        
+
+            // Filter only the files that will be used in the MultiQC report and remove duplicates
+            chOnlyFiles = chFastaQCAll
+            .flatten() // Make sure the files are in a single flow
+            .collect() // Joins all files before processing them
+            .map { files -> 
+                def uniqueFiles = [:] as LinkedHashMap
+                files.findAll { it instanceof Path } // Keeps only files (Path)
+                    .each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Keeps only the first occurrence of the name
+                return uniqueFiles.values()  // Returns only unique files
+            } 
+            .flatten()
+            chFilesReportInitialization = chOnlyFiles.collect()
+
+            chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
+            moveSoftFiles(chInitReport)
         }
     }
     
 
-    // Filter only the files that will be used in the MultiQC report and remove duplicates
-    chOnlyFiles = chFastaQCAll
-    .flatten() // Make sure the files are in a single flow
-    .collect() // Joins all files before processing them
-    .map { files -> 
-        def uniqueFiles = [:] as LinkedHashMap
-        files.findAll { it instanceof Path } // Keeps only files (Path)
-             .each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Keeps only the first occurrence of the name
-        return uniqueFiles.values()  // Returns only unique files
-    } 
-    .flatten()
-    chFilesReportInitialization = chOnlyFiles.collect()
-
-    chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
-    moveSoftFiles(chInitReport)
+    
 
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
