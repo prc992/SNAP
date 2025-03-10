@@ -78,7 +78,6 @@ workflow  {
     if ('DOWNLOAD_REFERENCES' in run_steps) {
         DOWNLOAD_REFERENCES(chGenomesInfo,refDir)
 
-        chSampleInfo = DOWNLOAD_REFERENCES.out.sample_info
         chGenome = DOWNLOAD_REFERENCES.out.genome
         chGenomeIndex = DOWNLOAD_REFERENCES.out.genome_index
         chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
