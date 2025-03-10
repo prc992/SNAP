@@ -17,7 +17,7 @@ process fake_aligment {
     tuple val(sampleId), val(enrichment_mark),path(bam)
 
     output:
-    tuple val(sampleId),path('*.bam'),val (_)
+    tuple val(sampleId),path('*.bam'),val (enrichment_mark)
 
     script:
     """
