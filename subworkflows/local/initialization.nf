@@ -88,11 +88,7 @@ workflow INITIALIZATION {
             moveSoftFiles(chInitReport)
         }
     }
-    
-
-    println "skip_alignment (INITIALIZATION): ${skip_alignment}"
-    
-
+        
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
     emit: fastqc_files = chFastaQC
