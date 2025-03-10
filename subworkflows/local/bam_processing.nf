@@ -72,7 +72,7 @@ workflow BAM_PROCESSING {
     chSMaSHOutoutAll = chSMaSHOutout.collect()
     chSNPSMaSHPlotAll = chSNPSMaSHPlot.collect()
     chFilesReportInitializationAll = chFilesReportInitialization.collect()
-    chFilesReportAlignmentAll = chFilesReportAlignment.collect()
+    //chFilesReportAlignmentAll = chFilesReportAlignment.collect()
 
     // Combine all the channels
     chAllChannels = chSortBamAll
@@ -88,7 +88,7 @@ workflow BAM_PROCESSING {
         .combine(chSMaSHOutoutAll)
         .combine(chSNPSMaSHPlotAll)
         .combine(chFilesReportInitializationAll)
-        .combine(chFilesReportAlignmentAll)
+        //.combine(chFilesReportAlignmentAll)
     
     // Filter only the files that will be used in the MultiQC report and remove duplicates
     chOnlyFiles = chAllChannels
