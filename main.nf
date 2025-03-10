@@ -9,22 +9,9 @@ include { INITIALIZATION } from './subworkflows/local/initialization'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
 include { ALIGNMENT } from './subworkflows/local/alignment'
 include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
-include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 include { FRAGMENTS_PROCESSING } from './subworkflows/local/fragments_processing'
+include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 
-process fake_aligment {
-    input:
-    tuple val(sampleId), val(enrichment_mark),path(bam)
-
-    output:
-    tuple val(sampleId),path('*.bam'),val (enrichment_mark)
-
-    script:
-    """
-    cp ${bam} ${sampleId}.bam
-    """
-
-}
 
 workflow  {
     // Static information about the pipeline
@@ -108,6 +95,7 @@ workflow  {
             chAlign = chSampleInfo.map { sampleId, enrichment_mark, bam -> 
                         tuple(sampleId, file(bam), enrichment_mark) 
                         }
+                        
             chFilesReportAlignment = Channel.empty()
             chAlignmentReport = Channel.empty()
 
