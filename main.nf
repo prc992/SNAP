@@ -98,8 +98,8 @@ workflow  {
 
             //chFilesReportAlignment = Channel.empty()
             //chAlignmentReport = Channel.empty()
-            chFilesReportAlignment = Channel.of(file('/dev/null'))
-            chAlignmentReport = Channel.of(file('/dev/null'))
+            chFilesReportAlignment = Channel.of(path('/dev/null'))
+            chAlignmentReport = Channel.of(path('/dev/null'))
 
         } else {
             ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
