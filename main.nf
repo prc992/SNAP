@@ -58,8 +58,6 @@ workflow  {
 
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'BAM_SIGNAL_PROCESSING', 'FRAGMENTS_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
-    def skip_alignment = false
-
     
 
 
@@ -71,6 +69,7 @@ workflow  {
         chFastaQC = INITIALIZATION.out.fastqc_files
         chFilesReportInitialization = INITIALIZATION.out.files_report_initialization
         chInitReport = INITIALIZATION.out.init_report
+        skip_alignment = INITIALIZATION.out.skip_alignment
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
