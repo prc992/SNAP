@@ -35,12 +35,19 @@ workflow BAM_PROCESSING {
  
     main:
 
-    chSortBam = sort_bam(chAlign)
-    chLibComplexPreseq = lib_complex_preseq(chSortBam)
-    chUniqueSam = unique_sam(chSortBam)
-    chFilteredFiles = quality_filter(chUniqueSam)
-    chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chFilteredFiles)
-    chDedup = dedup(chFilteredFiles)
+    if (params.deduped_bam) {
+        chDedup = chAlign
+    }
+    else{
+        chSortBam = sort_bam(chAlign)
+        chLibComplexPreseq = lib_complex_preseq(chSortBam)
+        chUniqueSam = unique_sam(chSortBam)
+        chFilteredFiles = quality_filter(chUniqueSam)
+        chDedup = dedup(chFilteredFiles)
+    }
+    
+
+
 
     // Filter the DAC files
     if (params.exclude_dac_regions) {
@@ -49,6 +56,7 @@ workflow BAM_PROCESSING {
         chDACFilteredFiles = chDedup
     }
 
+    chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chDACFilteredFiles)
     chIndexFiles = index_sam(chDACFilteredFiles)
 
     //SNP Fingerprint using SMaSH ************************************************
