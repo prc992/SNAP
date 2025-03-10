@@ -12,6 +12,9 @@ workflow INITIALIZATION {
 
     take:
     chMultiQCConfig
+    chSkipAlignment
+
+
 
     main:
 
@@ -33,6 +36,12 @@ workflow INITIALIZATION {
         .map { genome, faGZFile, geneAnnotation, dacList, snp ->
             [genome, faGZFile, geneAnnotation, dacList, snp]
         }
+
+    if chSkipAlignment {
+        println "skip_alignment (main) true: ${chSkipAlignment}"
+    } else {
+        println "skip_alignment (main) true: ${chSkipAlignment}"
+    }
 
     if (params.samplesheetBams) {
         chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
