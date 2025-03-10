@@ -57,6 +57,8 @@ workflow INITIALIZATION {
     } else {
         error "No SampleSheet for Fasta Files war provided neither no sample dir. Exiting workflow."
     }
+
+    println "skip_alignment: ${skip_alignment}"
     
     if (skip_alignment = true) {
         chSampleInfo = chSampleSheetBams \
