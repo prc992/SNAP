@@ -68,7 +68,7 @@ workflow  {
 
 
     if ('INITIALIZATION' in run_steps) {
-        INITIALIZATION(chMultiQCConfig)
+        INITIALIZATION(chMultiQCConfig,skip_alignment)
         chGenomesInfo = INITIALIZATION.out.genomes_info
         refDir = INITIALIZATION.out.ref_dir
         chSampleInfo = INITIALIZATION.out.sample_info
@@ -89,7 +89,7 @@ workflow  {
 
     
     if ('ALIGNMENT' in run_steps) {
-        
+
         if (skip_alignment) {
             println "skip_alignment (main) true: ${skip_alignment}"
         } else {
