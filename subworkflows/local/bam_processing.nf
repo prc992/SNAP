@@ -57,7 +57,7 @@ workflow BAM_PROCESSING {
         chFilteredFiles = quality_filter(chUniqueSam)
         chDedup = dedup(chFilteredFiles)
     }
-    
+    /*
 
     // Filter the DAC files
     if (params.exclude_dac_regions) {
@@ -130,5 +130,5 @@ workflow BAM_PROCESSING {
     emit: report_SNP_SMaSH = chSNPSMaSHPlot
     emit: lib_complex = chLibComplexPreseq
     emit: files_report_bam_processing = chFilesReportBamProcessing
-    emit: bam_process_report = chBAMProcessReport
+    emit: bam_process_report = chBAMProcessReport*/
 }
