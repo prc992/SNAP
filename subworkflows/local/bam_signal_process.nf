@@ -42,7 +42,6 @@ workflow BAM_SIGNAL_PROCESSING {
     
 
     main:
-    
     chBedGraphFiles = bam_to_bedgraph(chBAMProcessedIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
@@ -65,12 +64,7 @@ workflow BAM_SIGNAL_PROCESSING {
     //ENRICHMENT *********************************************************************
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
 
-    if (skip_alignment) {
-        chSampleInfo = chSampleInfo.map { [sampleId, enrichment_mark, bam] -> 
-            def dummyTxt = "NO_DATA"
-            tuple(sampleId, enrichment_mark, bam, dummyTxt)
-        }
-    }
+
 
 
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
