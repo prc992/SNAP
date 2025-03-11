@@ -64,6 +64,10 @@ workflow BAM_SIGNAL_PROCESSING {
     //ENRICHMENT *********************************************************************
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
 
+        if (skip_alignment) {
+            chEnrichmentFilesCSV.view()
+        }
+
 
 
 
