@@ -16,10 +16,10 @@ process multiqc {
 
     script:
     """
-    multiqc . 
+    multiqc . --force
     """
 }
-
+/*
 process multiqc_fragments_processing {
     label 'process_medium'
     tag "All Samples" 
@@ -102,4 +102,4 @@ process multiqc_initialization {
     """
     multiqc . 
     """
-}
+}*/
