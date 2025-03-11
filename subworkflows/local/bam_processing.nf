@@ -44,7 +44,7 @@ workflow BAM_PROCESSING {
             def dummyTxt = "NO_DATA"
             tuple(sampleId, bam, dummyTxt, alignYml)}
 
-        chDedup = chAlign
+        //chDedup = chAlign
 
         chSortBam = Channel.of("NO_DATA")
         chLibComplexPreseq = Channel.of("NO_DATA")
