@@ -147,7 +147,7 @@ workflow  {
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
                             chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,
                             chMultiQCConfig,chEnrichmentScript,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,
-                            chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess
+                            chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess,
                             chFragReport)
 
 
