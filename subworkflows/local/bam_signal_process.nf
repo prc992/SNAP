@@ -67,8 +67,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     if (skip_alignment) {
         chSampleInfo = chSampleInfo.map { [sampleId, enrichment_mark, bam] -> 
-            def dummyTxt = "NO_DATA"
-            tuple(sampleId, enrichment_mark, bam, dummyTxt)
+            tuple(sampleId, enrichment_mark, bam, null)
         }
     }
 
