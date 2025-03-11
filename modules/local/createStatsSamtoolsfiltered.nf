@@ -7,7 +7,7 @@ process createStatsSamtoolsfiltered {
     tag "Sample - $sampleId" 
 
     input:
-    tuple val(sampleId),path(sampleBam),val(_)
+    tuple val(sampleId),path(sampleBam),val(_),val(_)
 
     output:
     tuple val(sampleId),path ('*.stats'),path ('*.idxstats'),path ('*.flagstat'),path ("samtools_stats_filtered_mqc_versions.yml")

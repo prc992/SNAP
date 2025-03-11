@@ -36,6 +36,10 @@ workflow BAM_PROCESSING {
     main:
 
     if (params.deduped_bam) {
+
+        chMapped = chOutput.map { sampleId, bam, txtFile, ymlFile -> 
+    tuple(sampleId, bam, txtFile.toString(), ymlFile.toString())
+}
         chDedup = chAlign
 
         chSortBam = Channel.of("NO_DATA")
