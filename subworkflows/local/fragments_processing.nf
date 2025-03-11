@@ -78,4 +78,5 @@ workflow FRAGMENTS_PROCESSING {
     emit: frag_size_files = chFragmentsSizeFiles
     emit: frag_report = chFragFilesReport
     emit: frag_process_report = chFragsProcessReport
+    emit: files_report_fragments_processing = chFilesReportFragmentslProcess
 }
