@@ -66,13 +66,9 @@ workflow BAM_SIGNAL_PROCESSING {
 
         if (chSkipAlignment) {
             chSampleInfo = chSampleInfo.map {sampleId, enrichment_mark, bam -> 
-            def dummyTxt = "NO_DATA"
-            tuple(sampleId, enrichment_mark, bam, dummyTxt)
+            tuple(sampleId, enrichment_mark, bam, null)
             }
         }
-
-
-
 
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
@@ -89,7 +85,6 @@ workflow BAM_SIGNAL_PROCESSING {
     chEnrichmentFilesCSVAll = chEnrichmentFilesCSV.collect()
     chEnrichmentFilesReportAll = chEnrichmentFilesReport.collect()
     chMergedEnrichmentReportAll = chMergedEnrichmentReport.collect()
-
 
     // Combine all the channels
     chAllChannelsProcessing = chBedGraphFilesAll
