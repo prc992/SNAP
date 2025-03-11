@@ -16,7 +16,7 @@ process multiqc {
 
     script:
     """
-    multiqc . --force
+    multiqc .
     """
 }
 /*
