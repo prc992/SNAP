@@ -21,7 +21,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chGenome
     chGenomeIndex
     chChromSizes
-    skip_alignment
+    chSkipAlignment
     chBAMProcessedFiles
     chBAMProcessedIndexFiles
     chGenomesInfo
@@ -67,7 +67,8 @@ workflow BAM_SIGNAL_PROCESSING {
 
     if (skip_alignment) {
         chSampleInfo = chSampleInfo.map { [sampleId, enrichment_mark, bam] -> 
-            tuple(sampleId, enrichment_mark, bam, null)
+            def dummyTxt = "NO_DATA"
+            tuple(sampleId, enrichment_mark, bam, dummyTxt)
         }
     }
 
