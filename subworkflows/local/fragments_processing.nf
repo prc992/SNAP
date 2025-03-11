@@ -53,7 +53,7 @@ workflow FRAGMENTS_PROCESSING {
     // Combine all the channels
     chAllChannels = chNameSortedFilesAll
         .combine(chMotifGCfileAll)
-        .combine(chFragmentsSize)
+        .combine(chFragmentsSizeFiles)
         .combine(chBedFilesAll)
         .combine(chUniqueFrags)
         .combine(chFragFilesReportAll)
