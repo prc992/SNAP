@@ -36,8 +36,9 @@ workflow BAM_SIGNAL_PROCESSING {
     chMergeReportEnrichment
     chFilesReportInitialization
     chFilesReportBamProcessing
-    chBAMProcessReport
+    chFilesReportFragmentsProcess
     chFragsProcessReport
+    
 
     main:
     
@@ -93,7 +94,7 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chMergedEnrichmentReportAll)
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
-        .combine(chFragsProcessReport)
+        .combine(chFilesReportFragmentsProcess)
     
     chOnlyFilesProcessing = chAllChannelsProcessing
     .flatten() // Garante que os arquivos estejam em um único fluxo
@@ -107,7 +108,7 @@ workflow BAM_SIGNAL_PROCESSING {
     .flatten() // Garante que cada arquivo seja emitido separadamente no canal
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
-    chBAMSignalReport = multiqc(chBAMProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
+    chBAMSignalReport = multiqc(chFragsProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
     moveSoftFiles(chBAMSignalReport)
 
 
