@@ -131,4 +131,11 @@ workflow BAM_PROCESSING {
     emit: lib_complex = chLibComplexPreseq
     emit: files_report_bam_processing = chFilesReportBamProcessing
     emit: bam_process_report = chBAMProcessReport*/
+
+    emit: bam_processed = chSampleInfo
+    emit: bam_processed_index = chSampleInfo
+    emit: report_SNP_SMaSH = chSampleInfo
+    emit: lib_complex = chSampleInfo
+    emit: files_report_bam_processing = chSampleInfo
+    emit: bam_process_report = chSampleInfo
 }
