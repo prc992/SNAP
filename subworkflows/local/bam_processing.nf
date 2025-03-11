@@ -37,10 +37,9 @@ workflow BAM_PROCESSING {
 
     if (params.deduped_bam) {
 
-        chMapped = chOutput.map { sampleId, bam, txtFile, ymlFile -> 
-    tuple(sampleId, bam, txtFile.toString(), ymlFile.toString())
-}
-        chDedup = chAlign
+        chDedup = chAlign.map { sampleId, bam, txtFile, ymlFile -> 
+        tuple(sampleId, bam, txtFile.toString(), ymlFile.toString())
+        //chDedup = chAlign
 
         chSortBam = Channel.of("NO_DATA")
         chLibComplexPreseq = Channel.of("NO_DATA")
@@ -55,8 +54,6 @@ workflow BAM_PROCESSING {
         chDedup = dedup(chFilteredFiles)
     }
     
-
-
 
     // Filter the DAC files
     if (params.exclude_dac_regions) {
