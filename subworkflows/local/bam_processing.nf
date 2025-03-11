@@ -67,7 +67,7 @@ workflow BAM_PROCESSING {
     } else {
         chDACFilteredFiles = chDedup
     }
-
+    chDACFilteredFiles.view()
     chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chDACFilteredFiles)
     chIndexFiles = index_sam(chDACFilteredFiles)
 
