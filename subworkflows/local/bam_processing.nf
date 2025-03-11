@@ -40,9 +40,9 @@ workflow BAM_PROCESSING {
             tuple(sampleId, bam, null, alignYml)}
 
         chSortBam = null
-        //chLibComplexPreseq = Channel.of("NO_DATA")
-        //chUniqueSam = Channel.of("NO_DATA")
-        //chFilteredFiles = Channel.of("NO_DATA")
+        chLibComplexPreseq = null
+        chUniqueSam = null
+        chFilteredFiles = null
     }
     else{
         chSortBam = sort_bam(chAlign)
