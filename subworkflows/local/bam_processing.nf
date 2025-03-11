@@ -36,19 +36,13 @@ workflow BAM_PROCESSING {
     main:
 
     if (params.deduped_bam) {
-
-        //chDedup = chAlign.map { sampleId, bam, ymlFile -> 
-        //tuple(sampleId, bam, txtFile.toString(), ymlFile.toString())}
-
         chDedup = chAlign.map { sampleId, bam, alignYml -> 
             tuple(sampleId, bam, null, alignYml)}
 
-        //chDedup = chAlign
-
-        chSortBam = Channel.of("NO_DATA")
-        chLibComplexPreseq = Channel.of("NO_DATA")
-        chUniqueSam = Channel.of("NO_DATA")
-        chFilteredFiles = Channel.of("NO_DATA")
+        //chSortBam = Channel.of("NO_DATA")
+        //chLibComplexPreseq = Channel.of("NO_DATA")
+        //chUniqueSam = Channel.of("NO_DATA")
+        //chFilteredFiles = Channel.of("NO_DATA")
     }
     else{
         chSortBam = sort_bam(chAlign)
@@ -57,16 +51,14 @@ workflow BAM_PROCESSING {
         chFilteredFiles = quality_filter(chUniqueSam)
         chDedup = dedup(chFilteredFiles)
     }
-    /*
 
     // Filter the DAC files
     if (params.exclude_dac_regions) {
-        //chDedup.view()
         chDACFilteredFiles = dac_exclusion(chDedup,chDACFileRef)
     } else {
         chDACFilteredFiles = chDedup
     }
-    //chDACFilteredFiles.view()
+
     chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chDACFilteredFiles)
     chIndexFiles = index_sam(chDACFilteredFiles)
 
@@ -130,12 +122,5 @@ workflow BAM_PROCESSING {
     emit: report_SNP_SMaSH = chSNPSMaSHPlot
     emit: lib_complex = chLibComplexPreseq
     emit: files_report_bam_processing = chFilesReportBamProcessing
-    emit: bam_process_report = chBAMProcessReport*/
-
-    emit: bam_processed = chSampleInfo
-    emit: bam_processed_index = chSampleInfo
-    emit: report_SNP_SMaSH = chSampleInfo
-    emit: lib_complex = chSampleInfo
-    emit: files_report_bam_processing = chSampleInfo
-    emit: bam_process_report = chSampleInfo
+    emit: bam_process_report = chBAMProcessReport
 }
