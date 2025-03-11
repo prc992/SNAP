@@ -65,7 +65,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
 
         if (chSkipAlignment) {
-            chSampleInfo = chSampleInfo.map { [sampleId, enrichment_mark, bam] -> 
+            chSampleInfo2 = chSampleInfo.map { [sampleId, enrichment_mark, bam] -> 
             def dummyTxt = "NO_DATA"
             tuple(sampleId, enrichment_mark, bam, dummyTxt)
             }
