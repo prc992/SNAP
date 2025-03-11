@@ -21,6 +21,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chGenome
     chGenomeIndex
     chChromSizes
+    skip_alignment
     chBAMProcessedFiles
     chBAMProcessedIndexFiles
     chGenomesInfo
@@ -63,6 +64,15 @@ workflow BAM_SIGNAL_PROCESSING {
 
     //ENRICHMENT *********************************************************************
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
+
+    if (skip_alignment) {
+        chSampleInfo = chSampleInfo.map { [sampleId, enrichment_mark, bam] -> 
+            def dummyTxt = "NO_DATA"
+            tuple(sampleId, enrichment_mark, bam, dummyTxt)
+        }
+    }
+
+
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
 

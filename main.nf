@@ -141,7 +141,7 @@ workflow  {
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
-        BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,
+        BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,skip_alignment,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
                             chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,
                             chMultiQCConfig,chEnrichmentScript,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,
