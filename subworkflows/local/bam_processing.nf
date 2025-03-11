@@ -39,10 +39,10 @@ workflow BAM_PROCESSING {
         chDedup = chAlign.map { sampleId, bam, alignYml -> 
             tuple(sampleId, bam, null, alignYml)}
 
-        chSortBam = null
-        chLibComplexPreseq = null
-        chUniqueSam = null
-        chFilteredFiles = null
+        chSortBam = Channel.of("NO_DATA")
+        chLibComplexPreseq = Channel.of("NO_DATA")
+        chUniqueSam = Channel.of("NO_DATA")
+        chFilteredFiles = Channel.of("NO_DATA")
     }
     else{
         chSortBam = sort_bam(chAlign)
@@ -54,7 +54,8 @@ workflow BAM_PROCESSING {
 
     // Filter the DAC files
     if (params.exclude_dac_regions) {
-        chDACFilteredFiles = dac_exclusion(chDedup,chDACFileRef)
+        //chDACFilteredFiles = dac_exclusion(chDedup,chDACFileRef)
+        chDACFilteredFiles = chDedup
     } else {
         chDACFilteredFiles = chDedup
     }
