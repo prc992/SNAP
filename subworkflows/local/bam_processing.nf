@@ -39,7 +39,7 @@ workflow BAM_PROCESSING {
         chDedup = chAlign.map { sampleId, bam, alignYml -> 
             tuple(sampleId, bam, null, alignYml)}
 
-        //chSortBam = Channel.of("NO_DATA")
+        chSortBam = null
         //chLibComplexPreseq = Channel.of("NO_DATA")
         //chUniqueSam = Channel.of("NO_DATA")
         //chFilteredFiles = Channel.of("NO_DATA")
