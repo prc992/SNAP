@@ -16,13 +16,6 @@ process lib_complex_preseq {
   """
   preseq lc_extrap -B $sortedBam > ${sampleId}.lc_extrap.txt
 
-  exit_code=\$?
-
-  if [[ \$exit_code -ne 0 ]]; then
-      echo "ERROR: Preseq falhou para a amostra $sampleId. Motivo possível: amostra não suficientemente profunda ou remoção excessiva de duplicatas." >&2
-      exit 1
-  fi
-
   cat <<-END_VERSIONS > preseq_mqc_versions.yml
   "${task.process}":
     preseq: \$(echo \$(preseq 2>&1) | sed 's/^.*Version: //; s/Usage:.*\$//')
