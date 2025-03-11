@@ -66,8 +66,6 @@ workflow  {
     def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'FRAGMENTS_PROCESSING','BAM_SIGNAL_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
     
-
-
     if ('INITIALIZATION' in run_steps) {
         INITIALIZATION(chMultiQCConfig,skip_alignment)
         chGenomesInfo = INITIALIZATION.out.genomes_info
