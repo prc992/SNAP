@@ -41,8 +41,7 @@ workflow BAM_PROCESSING {
         //tuple(sampleId, bam, txtFile.toString(), ymlFile.toString())}
 
         chDedup = chAlign.map { sampleId, bam, alignYml -> 
-            def dummyTxt = "NO_DATA"
-            tuple(sampleId, bam, dummyTxt, alignYml)}
+            tuple(sampleId, bam, null, alignYml)}
 
         //chDedup = chAlign
 
