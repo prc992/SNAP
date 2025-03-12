@@ -17,10 +17,11 @@ process dac_exclusion {
   output:
   tuple val(sampleId),path('*.bam'),path("*.txt"),path ("dac_exclusion_mqc_versions.yml")
 
+  //bedtools intersect -v -abam $dedupBam -b $sampleDAC > $strBam
   script:
   """
   touch $strTxt
-  bedtools intersect -v -abam $dedupBam -b $sampleDAC > $strBam
+  
 
   cat <<-END_VERSIONS > dac_exclusion_mqc_versions.yml
     "${task.process}":
