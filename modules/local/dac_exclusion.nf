@@ -11,15 +11,15 @@ process dac_exclusion {
   each path (sampleDAC)
 
   exec:
-  strBam = sampleId + '.dac_filtered.dedup.unique.sorted.bam'
+  strBam = sampleId + '.dac_filtered_2.dedup.unique.sorted.bam'
   strTxt = sampleId + '-dummy.txt'
 
   output:
   tuple val(sampleId),path('*.bam'),path("*.txt"),path ("dac_exclusion_mqc_versions.yml")
 
-  //bedtools intersect -v -abam $dedupBam -b $sampleDAC > $strBam
   script:
   """
+  bedtools intersect -v -abam $dedupBam -b $sampleDAC > $strBam
   touch $strTxt
   
 
