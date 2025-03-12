@@ -11,7 +11,7 @@ process dac_exclusion {
   each path (sampleDAC)
 
   exec:
-  strBam = sampleId + '.dac_filtered_2.dedup.unique.sorted.bam'
+  strBam = sampleId + '.dac_filtered.dedup.unique.sorted.bam'
   strTxt = sampleId + '-dummy.txt'
 
   output:
@@ -19,7 +19,8 @@ process dac_exclusion {
 
   script:
   """
-  bedtools intersect -v -abam $dedupBam -b $sampleDAC > $strBam
+  bedtools intersect -v -abam $dedupBam -b $sampleDAC > ${strBam}.tmp
+  mv ${strBam}.tmp $strBam
   touch $strTxt
   
 
