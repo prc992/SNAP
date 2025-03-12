@@ -19,11 +19,10 @@ process dac_exclusion {
 
   script:
   """
+  touch $strTxt
   bedtools intersect -v -abam $dedupBam -b $sampleDAC > ${strBam}.tmp
   mv ${strBam}.tmp $strBam
-  touch $strTxt
   
-
   cat <<-END_VERSIONS > dac_exclusion_mqc_versions.yml
     "${task.process}":
         bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
