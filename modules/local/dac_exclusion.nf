@@ -21,7 +21,6 @@ process dac_exclusion {
   """
   touch $strTxt
   bedtools intersect -v -abam $dedupBam -b $sampleDAC > ${sampleId}.tmp
-  rm $dedupBam
   mv ${sampleId}.tmp $strBam
   
   cat <<-END_VERSIONS > dac_exclusion_mqc_versions.yml
