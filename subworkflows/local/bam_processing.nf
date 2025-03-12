@@ -54,8 +54,8 @@ workflow BAM_PROCESSING {
 
     // Filter the DAC files
     if (params.exclude_dac_regions) {
-        //chDACFilteredFiles = dac_exclusion(chDedup,chDACFileRef)
-        chDACFilteredFiles = chDedup
+        chDACFilteredFiles = dac_exclusion(chDedup,chDACFileRef)
+        //chDACFilteredFiles = chDedup
     } else {
         chDACFilteredFiles = chDedup
     }
