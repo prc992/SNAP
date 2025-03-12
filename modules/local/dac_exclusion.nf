@@ -15,7 +15,7 @@ process dac_exclusion {
   strTxt = sampleId + '-dummy.txt'
 
   output:
-  tuple val(sampleId),path("*.bam"),path("*.txt"),path ("dac_exclusion_mqc_versions.yml")
+  tuple val(sampleId),path(strBam),path(strTxt),path ("dac_exclusion_mqc_versions.yml")
 
   script:
   """
