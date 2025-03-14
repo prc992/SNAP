@@ -82,8 +82,6 @@ workflow PREPROCESSING {
             .flatten()
             chFilesReportInitialization = chOnlyFiles.collect()
 
-            chFastaQCAll.view()
-
             chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
             moveSoftFiles(chInitReport)
         }
