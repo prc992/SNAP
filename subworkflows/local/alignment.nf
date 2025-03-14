@@ -29,6 +29,7 @@ workflow ALIGNMENT {
     // Combine all the channels
     chAllChannels = chTrimAll
         .combine(chAlignAll)
+        .combine(chFilesReportInitialization)
     
     chOnlyFiles = chAllChannels
     .flatten() // Make sure the files are in a single flow
