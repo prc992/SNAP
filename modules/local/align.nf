@@ -4,7 +4,7 @@ process align {
   container = params.containers.bwa_and_samtools
 
   tag "Sample - $sampleId"
-  //publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
   tuple val(sampleId),path(trimmedFiles),val(_),val(_)
