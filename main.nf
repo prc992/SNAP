@@ -5,7 +5,7 @@ nextflow.enable.dsl=2
 
 
 //subworkflows
-include { QUALITY_ASSESSMENT } from './subworkflows/local/quality_assessment'
+include { PREPROCESSING } from './subworkflows/local/preprocessing.nf'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
 include { ALIGNMENT } from './subworkflows/local/alignment'
 include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
@@ -63,17 +63,17 @@ workflow  {
         skip_alignment = false
     }
 
-    def steps = ['QUALITY_ASSESSMENT', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'FRAGMENTS_PROCESSING','BAM_SIGNAL_PROCESSING']
+    def steps = ['PREPROCESSING', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'FRAGMENTS_PROCESSING','BAM_SIGNAL_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
     
-    if ('QUALITY_ASSESSMENT' in run_steps) {
-        QUALITY_ASSESSMENT(chMultiQCConfig,skip_alignment)
-        chGenomesInfo = QUALITY_ASSESSMENT.out.genomes_info
-        refDir = QUALITY_ASSESSMENT.out.ref_dir
-        chSampleInfo = QUALITY_ASSESSMENT.out.sample_info
-        chFastaQC = QUALITY_ASSESSMENT.out.fastqc_files
-        chFilesReportInitialization = QUALITY_ASSESSMENT.out.files_report_initialization
-        chInitReport = QUALITY_ASSESSMENT.out.init_report
+    if ('PREPROCESSING' in run_steps) {
+        PREPROCESSING(chMultiQCConfig,skip_alignment)
+        chGenomesInfo = PREPROCESSING.out.genomes_info
+        refDir = PREPROCESSING.out.ref_dir
+        chSampleInfo = PREPROCESSING.out.sample_info
+        chFastaQC = PREPROCESSING.out.fastqc_files
+        chFilesReportInitialization = PREPROCESSING.out.files_report_initialization
+        chInitReport = PREPROCESSING.out.init_report
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
