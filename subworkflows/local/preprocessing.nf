@@ -82,10 +82,11 @@ workflow PREPROCESSING {
             .flatten()
             chFilesReportInitialization = chOnlyFiles.collect()
 
+            chFastaQCAll.view()
+
             chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
             moveSoftFiles(chInitReport)
         }
-    
         
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
