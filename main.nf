@@ -5,7 +5,7 @@ nextflow.enable.dsl=2
 
 
 //subworkflows
-include { INITIALIZATION } from './subworkflows/local/initialization'
+include { QUALITY_ASSESSMENT } from './subworkflows/local/quality_assessment'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
 include { ALIGNMENT } from './subworkflows/local/alignment'
 include { BAM_PROCESSING } from './subworkflows/local/bam_processing'
@@ -63,10 +63,10 @@ workflow  {
         skip_alignment = false
     }
 
-    def steps = ['INITIALIZATION', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'FRAGMENTS_PROCESSING','BAM_SIGNAL_PROCESSING']
+    def steps = ['QUALITY_ASSESSMENT', 'DOWNLOAD_REFERENCES','ALIGNMENT', 'BAM_PROCESSING', 'FRAGMENTS_PROCESSING','BAM_SIGNAL_PROCESSING']
     def run_steps = steps.takeWhile { it != params.until } + params.until
     
-    if ('INITIALIZATION' in run_steps) {
+    if ('QUALITY_ASSESSMENT' in run_steps) {
         INITIALIZATION(chMultiQCConfig,skip_alignment)
         chGenomesInfo = INITIALIZATION.out.genomes_info
         refDir = INITIALIZATION.out.ref_dir

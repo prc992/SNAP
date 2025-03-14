@@ -7,7 +7,7 @@ include {fastqc} from '../../modules/local/fastqc'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
-workflow INITIALIZATION {
+workflow QUALITY_ASSESSMENT {
 
     take:
     chMultiQCConfig
