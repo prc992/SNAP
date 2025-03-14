@@ -67,13 +67,13 @@ workflow  {
     def run_steps = steps.takeWhile { it != params.until } + params.until
     
     if ('QUALITY_ASSESSMENT' in run_steps) {
-        INITIALIZATION(chMultiQCConfig,skip_alignment)
-        chGenomesInfo = INITIALIZATION.out.genomes_info
-        refDir = INITIALIZATION.out.ref_dir
-        chSampleInfo = INITIALIZATION.out.sample_info
-        chFastaQC = INITIALIZATION.out.fastqc_files
-        chFilesReportInitialization = INITIALIZATION.out.files_report_initialization
-        chInitReport = INITIALIZATION.out.init_report
+        QUALITY_ASSESSMENT(chMultiQCConfig,skip_alignment)
+        chGenomesInfo = QUALITY_ASSESSMENT.out.genomes_info
+        refDir = QUALITY_ASSESSMENT.out.ref_dir
+        chSampleInfo = QUALITY_ASSESSMENT.out.sample_info
+        chFastaQC = QUALITY_ASSESSMENT.out.fastqc_files
+        chFilesReportInitialization = QUALITY_ASSESSMENT.out.files_report_initialization
+        chInitReport = QUALITY_ASSESSMENT.out.init_report
         }
 
     if ('DOWNLOAD_REFERENCES' in run_steps) {
