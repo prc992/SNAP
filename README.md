@@ -1,3 +1,5 @@
+![Pipeline Workflow](workflow-SNAP.png)
+
 # SNAP Pipeline Documentation
 
 ## Input Data Options
