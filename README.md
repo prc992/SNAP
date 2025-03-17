@@ -191,7 +191,7 @@ To use **custom regions**, specify:–genes_pileup_report <path_to_custom_bed_fi
 
 # SNAP Pipeline Output Directory Structure  
 
-After running the SNAP pipeline, the results will be organized into several directories within the output folder. Each directory stores specific files related to different stages of the pipeline. Below is an explanation of each directory:  
+After running the SNAP pipeline, the results will be organized into several directories within the output folder which you can provide via the parameter **--outputFolder** (the default value for this parameter is analysis_folder). Each directory stores specific files related to different stages of the pipeline. Below is an explanation of each directory:  
 
 ```
 output_folder/
