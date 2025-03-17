@@ -34,6 +34,7 @@ workflow  {
     println "SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma."
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
+    println "Running pipeline with profile: ${params.profile}"
 
     //Auxiliar code
     chEnrichmentScript= Channel.fromPath("$params.pathEnrichmentScript")
