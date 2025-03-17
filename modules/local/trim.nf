@@ -7,7 +7,7 @@ process trim {
   publishDir "${workflow.projectDir}/${params.outputFolder}/trim/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId), val(enrichment_mark),file(read1), val(read2)
+  tuple val(sampleId), val(enrichment_mark),file(read1), file(read2)
 
   output:
   tuple val(sampleId),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")
