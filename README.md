@@ -176,7 +176,7 @@ To **disable** this step, set:
 ## END Motif and GC Content Analysis
 The pipeline generates an **END motif analysis file** at:motifs/bp_motif.bed
 
-By default, this analysis considers **4-mers**, but this value can be adjusted using: motifs/bp_motif.bed
+By default, this analysis considers **4-mers**, but this value can be adjusted using the parameter **--nmer**
 
 ---
 
