@@ -54,8 +54,8 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
-    //chBAMProcessedFiles.view()
 
+    // Match the samples with the controls
     SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
     SamplesListFilter = SamplesListCombine.filter { row -> row[1] == row[5] }.map { row -> [row[0], row[2], row[7]] }
     SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[1] }.map { row -> [row[0], row[2], null] }
@@ -68,9 +68,8 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportSignalProcess = Channel.of("NO_DATA")
     chBAMSignalReport = Channel.of("NO_DATA")
 
-    /*
-
-    chPeakFiles = call_peaks(chBAMProcessedFiles) 
+    chPeakFiles = call_peaks(chBAMProcessedFiles)
+    /* 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
