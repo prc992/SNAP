@@ -54,7 +54,12 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
-    chBAMProcessedFiles.view()
+    //chBAMProcessedFiles.view()
+
+    SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
+    //SamplesList2Combine.view()
+    SamplesListFilter = SamplesListCombine.filter { row -> row[1] == row[5] }.map { row -> [row[0], row[2], row[7]] }
+    SamplesListFilter.view()
 
     chIGVReportMerged = Channel.of("NO_DATA")
     chMergedEnrichmentReport = Channel.of("NO_DATA")
