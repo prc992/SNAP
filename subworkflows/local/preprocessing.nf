@@ -58,12 +58,12 @@ workflow PREPROCESSING {
     if (chSkipAlignment) {
         chSampleInfo = chSampleSheetBams \
             | splitCsv(header:true) \
-            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam) 
+            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam, row.control) 
             }
     } else {
         chSampleInfo = chSampleSheetFasta \
             | splitCsv(header:true) \
-            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2)
+            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2,row.control) 
             } 
             // Run FastQC on the samples
             chFastaQC = fastqc(chSampleInfo)
@@ -85,7 +85,9 @@ workflow PREPROCESSING {
             chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
             moveSoftFiles(chInitReport)
         }
-        
+    
+    chSampleInfo.view()
+    
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
     emit: fastqc_files = chFastaQC
