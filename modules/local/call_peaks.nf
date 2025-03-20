@@ -15,10 +15,18 @@ process call_peaks{
   
   script:
   """
-  macs2 \\
-  callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
-  -t $sampleBam \\
-  -n $sampleId --bdg
+  if [ ! -s ${sampleControl} ]; then
+    macs2 \\
+    callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
+    -t $sampleBam \\
+    -n $sampleId --bdg
+  else
+    macs2 \\
+    callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
+    -t $sampleBam \\
+    -n $sampleId --bdg
+  fi
+
 
   cat <<-END_VERSIONS > macs2_mqc_versions.yml
     "${task.process}":
