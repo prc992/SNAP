@@ -58,7 +58,7 @@ workflow BAM_SIGNAL_PROCESSING {
     // Match the samples with the controls
     SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
     SamplesListFilter = SamplesListCombine.filter { row -> row[1] == row[5] }.map { row -> [row[0], row[2], row[7]] }
-    SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[1] }.map { row -> [row[0], row[2], null] }
+    SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[1] }.map { row -> [row[0], row[2], file('/dev/null')] }
     SamplesListMix = SamplesListFilter.mix(SamplesListNoControl)
     SamplesListMix.view()
 
@@ -68,7 +68,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportSignalProcess = Channel.of("NO_DATA")
     chBAMSignalReport = Channel.of("NO_DATA")
 
-    chPeakFiles = call_peaks(chBAMProcessedFiles)
+    //chPeakFiles = call_peaks(chBAMProcessedFiles)
     /* 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
