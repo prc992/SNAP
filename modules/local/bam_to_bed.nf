@@ -15,7 +15,7 @@ process bam_to_bed {
   String strBed = sampleId + '.bed'
 
   output:
-  tuple val(sampleId),path ('*.bed'),path ("bam_to_bed_mqc_versions.yml")
+  tuple val(sampleId),val(control),path ('*.bed'),path ("bam_to_bed_mqc_versions.yml")
 
   script:
   """
