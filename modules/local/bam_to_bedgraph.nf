@@ -7,13 +7,13 @@ process bam_to_bedgraph {
   publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),path(sampleBam),path (indexBam),path ("bam_to_bedgraph_mqc_versions.yml")
+  tuple val(sampleId),val(control),path(sampleBam),path (indexBam),path ("bam_to_bedgraph_mqc_versions.yml")
 
   exec:
   strbedgraph = sampleId + '.bedgraph'
 
   output:
-  tuple val(sampleId),path('*.bedgraph'),path ("bam_to_bedgraph_mqc_versions.yml")
+  tuple val(sampleId),val(control),path('*.bedgraph'),path ("bam_to_bedgraph_mqc_versions.yml")
 
   script:
   """

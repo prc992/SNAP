@@ -7,7 +7,7 @@ process bedgraph_to_bigwig {
     publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
     input:
-    tuple val(sampleId),path(chbedgraph),val (_)
+    tuple val(sampleId),val(control),path(chbedgraph),val (_)
     each path (chrom_sizes)
 
     output:

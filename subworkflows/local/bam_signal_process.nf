@@ -54,6 +54,10 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
+    chBAMProcessedFiles.view()
+
+    /*
+
     chPeakFiles = call_peaks(chBAMProcessedFiles) 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
@@ -124,5 +128,5 @@ workflow BAM_SIGNAL_PROCESSING {
     emit: merge_enrichment_reports = chMergedEnrichmentReport
     emit: peaks_report = chPeaksFilesReport
     emit: files_report_bam_signal_processing = chFilesReportSignalProcess
-    emit: bam_signal_report = chBAMSignalReport
+    emit: bam_signal_report = chBAMSignalReport*/
 }
