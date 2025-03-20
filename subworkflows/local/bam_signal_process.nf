@@ -69,7 +69,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportSignalProcess = Channel.of("NO_DATA")
     chBAMSignalReport = Channel.of("NO_DATA")
 
-    chPeakFiles = call_peaks(chBAMProcessedFiles)
+    chPeakFiles = call_peaks(SamplesListMix)
     /* 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
