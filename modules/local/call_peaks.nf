@@ -24,6 +24,7 @@ process call_peaks{
     macs2 \\
     callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
     -t $sampleBam \\
+    -c $sampleControl \\
     -n $sampleId --bdg
   fi
 
