@@ -6,7 +6,7 @@ process calcFragsLengthDistribuition {
   publishDir "${workflow.projectDir}/${params.outputFolder}/frag/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),path(sortedBam),path (sampleBamIndex),val(_)
+  tuple val(sampleId),val(control),path(sortedBam),path (sampleBamIndex),val(_)
 
   output:
   tuple path("*fragment_sizes.txt"), path ("bamPEFragmentSize_mqc_versions.yml")

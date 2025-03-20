@@ -9,7 +9,7 @@ process createMotifGCfile {
   publishDir "${workflow.projectDir}/${params.outputFolder}/motifs/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),path(sampleBam),val(_)
+  tuple val(sampleId),val(control),path(sampleBam),val(_)
   each path (genomeFile)
   each path (genomeIndexFiles)
 

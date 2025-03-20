@@ -37,10 +37,10 @@ process sort_readname_bam {
   tag "Sample - $sampleId" 
   
   input:
-  tuple val(sampleId),path(sampleBam),val(_),val(_)
+  tuple val(sampleId),val(control),path(sampleBam),val(_),val(_)
   
   output:
-  tuple val(sampleId),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
+  tuple val(sampleId),val(control),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.sorted.bam'

@@ -9,7 +9,7 @@ process bam_to_bed {
   publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),path(sampleBam),val(_),val(_)
+  tuple val(sampleId),val(control),path(sampleBam),val(_),val(_)
 
   exec:
   String strBed = sampleId + '.bed'
