@@ -15,7 +15,7 @@ process calcFragsLengthDistribuition {
   //touch ${sampleId}.fragment_sizes.txt
   script:
   """
-  bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt
+  touch ${sampleId}.fragment_sizes.txt
 
   cat <<-END_VERSIONS > bamPEFragmentSize_mqc_versions.yml
     "${task.process}":
