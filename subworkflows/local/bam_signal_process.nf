@@ -56,6 +56,12 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chBAMProcessedFiles.view()
 
+    chIGVReportMerged = Channel.of("NO_DATA")
+    chMergedEnrichmentReport = Channel.of("NO_DATA")
+    chPeaksFilesReport = Channel.of("NO_DATA")
+    chFilesReportSignalProcess = Channel.of("NO_DATA")
+    chBAMSignalReport = Channel.of("NO_DATA")
+
     /*
 
     chPeakFiles = call_peaks(chBAMProcessedFiles) 
@@ -120,7 +126,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
     chBAMSignalReport = multiqc(chFragsProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
-    moveSoftFiles(chBAMSignalReport)
+    moveSoftFiles(chBAMSignalReport)*/
 
 
 
@@ -128,5 +134,5 @@ workflow BAM_SIGNAL_PROCESSING {
     emit: merge_enrichment_reports = chMergedEnrichmentReport
     emit: peaks_report = chPeaksFilesReport
     emit: files_report_bam_signal_processing = chFilesReportSignalProcess
-    emit: bam_signal_report = chBAMSignalReport*/
+    emit: bam_signal_report = chBAMSignalReport
 }
