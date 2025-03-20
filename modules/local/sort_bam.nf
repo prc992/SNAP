@@ -8,10 +8,10 @@ process sort_bam {
   //publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),path(sampleBam),val(_)
+  tuple val(sampleId),val(control),path(sampleBam),val(_)
   
   output:
-  tuple val(sampleId),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
+  tuple val(sampleId),val(control),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.sorted.bam'

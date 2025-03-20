@@ -5,14 +5,14 @@ process quality_filter {
     tag "Sample - $sampleId" 
 
     input:
-    tuple val(sampleId),path(sampleBam),val(_)
+    tuple val(sampleId),val(control),path(sampleBam),val(_)
 
     exec:
     String strBam = sampleId + '.filtered.unique.sorted.bam'
   
 
     output:
-    tuple val(sampleId),path('*.bam'),path ("samtools_QualityFilter_mqc_versions.yml")
+    tuple val(sampleId),val(control),path('*.bam'),path ("samtools_QualityFilter_mqc_versions.yml")
 
     script:
     """

@@ -7,14 +7,14 @@ process dedup {
   
 
   input:
-  tuple val(sampleId),path(uniqueBam),val(_)
+  tuple val(sampleId),val(control),path(uniqueBam),val(_)
 
   exec:
   strDedupBam = sampleId + '.dedup.unique.sorted.bam'
   strTxt = sampleId + '-MarkDuplicates.metrics.txt'
 
   output:
-  tuple val(sampleId),path('*.bam'),path("*.txt"),path ("picard_MarkDuplicates_mqc_versions.yml")
+  tuple val(sampleId),val(control),path('*.bam'),path("*.txt"),path ("picard_MarkDuplicates_mqc_versions.yml")
   
   script:
   """

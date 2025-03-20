@@ -7,7 +7,7 @@ process dac_exclusion {
   publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),path(dedupBam),val(_),val(_)
+  tuple val(sampleId),val(control),path(dedupBam),val(_),val(_)
   each path (sampleDAC)
 
   exec:
@@ -15,7 +15,7 @@ process dac_exclusion {
   strTxt = sampleId + '-dummy.txt'
 
   output:
-  tuple val(sampleId),path(strBam),path(strTxt),path ("dac_exclusion_mqc_versions.yml")
+  tuple val(sampleId),val(control),path(strBam),path(strTxt),path ("dac_exclusion_mqc_versions.yml")
 
   script:
   """
