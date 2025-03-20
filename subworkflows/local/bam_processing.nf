@@ -118,8 +118,6 @@ workflow BAM_PROCESSING {
     chBAMProcessReport = multiqc(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
     moveSoftFiles(chBAMProcessReport)
 
-    chDACFilteredFiles.view()
-
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
     emit: report_SNP_SMaSH = chSNPSMaSHPlot
