@@ -57,9 +57,11 @@ workflow BAM_SIGNAL_PROCESSING {
     //chBAMProcessedFiles.view()
 
     SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
-    //SamplesList2Combine.view()
     SamplesListFilter = SamplesListCombine.filter { row -> row[1] == row[5] }.map { row -> [row[0], row[2], row[7]] }
-    SamplesListFilter.view()
+    //SamplesListFilter.view()
+
+    SamplesListNoControl = chBAMProcessedFiles.filter { row -> row.size() == 4 }
+    SamplesListNoControl.view()
 
     chIGVReportMerged = Channel.of("NO_DATA")
     chMergedEnrichmentReport = Channel.of("NO_DATA")
