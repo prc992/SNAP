@@ -23,6 +23,8 @@ process moveSoftFiles {
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*-dummy.txt' -exec rm {} \\;
     find ${workflow.projectDir}/${params.outputFolder} -type f -name 'igv_housekeeping_genes_mqc.html' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
 
-    find ${workflow.projectDir}/work -type f -name "*.*" -delete
+    if [ "${params.cleanup}" == "true" ]; then
+        find ${workflow.projectDir}/work -type f -name "*.*" -delete
+    fi
     """
 }
