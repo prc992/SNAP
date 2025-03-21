@@ -43,7 +43,7 @@ process sort_readname_bam {
   tuple val(sampleId),val(control),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
 
   exec:
-  String strBam = sampleId + '.sorted.bam'
+  String strBam = sampleId + '.n_sorted.bam'
 
   //samtools sort -@ $task.cpus $sampleBam -o $strBam
 
