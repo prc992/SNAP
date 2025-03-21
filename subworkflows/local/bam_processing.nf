@@ -46,6 +46,7 @@ workflow BAM_PROCESSING {
     }
     else{
         println "Arquivos não deduplicados"
+        chAlign.view()
         chSortBam = sort_bam(chAlign)
         chLibComplexPreseq = lib_complex_preseq(chSortBam)
         chUniqueSam = unique_sam(chSortBam)
