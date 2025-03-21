@@ -7,6 +7,7 @@ process createSamplesheetFasta {
     input:
     val sample_dir
     val enrichment_mark
+    val sample_control
 
     output:
     path "snap-samplesheet-fasta-*.csv"
@@ -15,7 +16,7 @@ process createSamplesheetFasta {
     """
     now=\$(date +'%Y-%m-%d-%H-%M-%S')
     filename="snap-samplesheet-fasta-\$now.csv"
-    echo "sampleId,enrichment_mark,read1,read2" > \$filename
+    echo "sampleId,enrichment_mark,read1,read2,control" > \$filename
 
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
@@ -29,7 +30,7 @@ process createSamplesheetFasta {
         if [ \${#files[@]} -gt 1 ]; then
             read2=\$(realpath \${files[1]})
         fi
-        echo "\$sampleId,${enrichment_mark},\$read1,\$read2" >> \$filename
+        echo "\$sampleId,${enrichment_mark},\$read1,\$read2,${sample_control}" >> \$filename
     done
     """
 }

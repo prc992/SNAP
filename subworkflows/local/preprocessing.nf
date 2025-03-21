@@ -38,16 +38,16 @@ workflow PREPROCESSING {
         if (params.samplesheetBams) {
             chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
         } else if (params.sample_dir_bam) {
-            chSampleSheetBams = createSamplesheetBam(params.sample_dir_bam, params.enrichment_mark ?: 'no_enrichment_mark')
+            chSampleSheetBams = createSamplesheetBam(params.sample_dir_bam, params.enrichment_mark)
         } 
         
     } else {
         if (params.samplesheetfasta) {
-            //println "Using provided samplesheet: ${params.samplesheet}"
+            //Using provided samplesheet: ${params.samplesheet}
             chSampleSheetFasta = Channel.fromPath(params.samplesheetfasta)
         } else if (params.sample_dir_fasta) {
-            //println "Creating samplesheet because none was provided."
-            chSampleSheetFasta = createSamplesheetFasta(params.sample_dir_fasta, params.enrichment_mark ?: 'no_enrichment_mark')
+            //Creating samplesheet because none was provided
+            chSampleSheetFasta = createSamplesheetFasta (params.sample_dir_fasta, params.enrichment_mark, params.sample_control)
         }    
     }
 
