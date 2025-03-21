@@ -92,9 +92,8 @@ workflow  {
 
         if (skip_alignment) {
             chAlign = chSampleInfo.map { sampleId, enrichment_mark, bam,control -> 
-                        tuple(sampleId, file(bam), enrichment_mark,control) 
+                        tuple(sampleId, control, file(bam), enrichment_mark,enrichment_mark) 
                         }
-
             chFilesReportAlignment = Channel.of("NO_DATA")
             chAlignmentReport = Channel.of("NO_DATA")
 
