@@ -16,14 +16,16 @@ process call_peaks{
   script:
   """
   if [ ! -s ${sampleControl} ]; then
+    touch no_control.xls
     macs2 \\
     callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
-    -t no_control_$sampleBam \\
+    -t $sampleBam \\
     -n $sampleId --bdg
   else
+    touch with_control.xls
     macs2 \\
     callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
-    -t control_$sampleBam \\
+    -t $sampleBam \\
     -c $sampleControl \\
     -n $sampleId --bdg
   fi
