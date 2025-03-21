@@ -21,8 +21,6 @@ workflow PREPROCESSING {
     """.execute().waitFor()
     refDir = Channel.fromPath("${projectDir}/ref_files/genome")
 
-    ch_sample_control = Channel.value(params.sample_control)
-
     // Read the GenomePaths spreadsheet and filter the row that matches the genome parameter
     chGenomesSheet = Channel.fromPath(params.genomeInfoPaths)
     chGenomesInfo = chGenomesSheet \
@@ -40,7 +38,7 @@ workflow PREPROCESSING {
         if (params.samplesheetBams) {
             chSampleSheetBams = Channel.fromPath(params.samplesheetBams)
         } else if (params.sample_dir_bam) {
-            chSampleSheetBams = createSamplesheetBam(params.sample_dir_bam, params.enrichment_mark, ch_sample_control)
+            chSampleSheetBams = createSamplesheetBam(params.sample_dir_bam, params.enrichment_mark, params.sample_control)
         } 
         
     } else {
