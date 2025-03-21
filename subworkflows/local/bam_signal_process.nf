@@ -80,12 +80,11 @@ workflow BAM_SIGNAL_PROCESSING {
     //ENRICHMENT *********************************************************************
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
 
-    /*
 
     // Because I skiped the alignment, I need to create a placeholder second read file
     if (chSkipAlignment) {
-        chSampleInfo = chSampleInfo.map {sampleId, enrichment_mark, bam -> 
-        tuple(sampleId, enrichment_mark, bam, null)
+        chSampleInfo = chSampleInfo.map {sampleId, enrichment_mark, bam, control -> 
+        tuple(sampleId, control, bam, enrichment_mark,null)
         }
     }
 
