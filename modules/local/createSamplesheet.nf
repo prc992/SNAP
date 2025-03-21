@@ -48,9 +48,9 @@ process createSamplesheetBam {
     publishDir "${workflow.projectDir}/${params.outputFolder}", mode : 'copy'
 
     input:
-    val sample_dir
-    val enrichment_mark
-    val sample_control
+    val (sample_dir)
+    val (enrichment_mark)
+    val (sample_control)
 
     output:
     path "snap-samplesheet-bam-*.csv"
