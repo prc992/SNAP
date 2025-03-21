@@ -62,10 +62,12 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportSignalProcess = Channel.of("NO_DATA")
     chBAMSignalReport = Channel.of("NO_DATA")
 
-    /*
+  
 
     // Match the samples with the controls
     def fake_control = file('/dev/null')
+    chBAMProcessedFiles.view()
+    /*
     SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
     SamplesListFilter = SamplesListCombine.filter { row -> row[1] == row[5] }.map { row -> [row[0], row[2], row[7]] }
     SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[1] }.map { row -> [row[0], row[2], fake_control] }
