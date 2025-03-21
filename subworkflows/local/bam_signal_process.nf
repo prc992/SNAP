@@ -54,13 +54,6 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
-    chIGVReportMerged = Channel.of("NO_DATA")
-    chMergedEnrichmentReport = Channel.of("NO_DATA")
-    chPeaksFilesReport = Channel.of("NO_DATA")
-    chFilesReportSignalProcess = Channel.of("NO_DATA")
-    chBAMSignalReport = Channel.of("NO_DATA")
-
-  
 
     // Match the samples with the controls
     def fake_control = file('/dev/null')
@@ -133,7 +126,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
     chBAMSignalReport = multiqc(chFragsProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
-    moveSoftFiles(chBAMSignalReport)*/
+    moveSoftFiles(chBAMSignalReport)
 
 
 
