@@ -62,14 +62,8 @@ workflow BAM_SIGNAL_PROCESSING {
     SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[1] }.map { row -> [row[0], row[2], fake_control] }
     SamplesListMix = SamplesListFilter.mix(SamplesListNoControl)
 
-    chIGVReportMerged = Channel.of("NO_DATA")
-    chMergedEnrichmentReport = Channel.of("NO_DATA")
-    chPeaksFilesReport = Channel.of("NO_DATA")
-    chFilesReportSignalProcess = Channel.of("NO_DATA")
-    chBAMSignalReport = Channel.of("NO_DATA")
 
-    chPeakFiles = call_peaks(SamplesListMix)
-    /* 
+    chPeakFiles = call_peaks(SamplesListMix) 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
@@ -131,7 +125,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
     chBAMSignalReport = multiqc(chFragsProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
-    moveSoftFiles(chBAMSignalReport)*/
+    moveSoftFiles(chBAMSignalReport)
 
 
 

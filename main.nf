@@ -157,10 +157,6 @@ workflow  {
         chFilesReportSignalProcess = BAM_SIGNAL_PROCESSING.out.files_report_bam_signal_processing
         chBAMSignalReport = BAM_SIGNAL_PROCESSING.out.bam_signal_report
         }
-
-
-
-
     
 }
 

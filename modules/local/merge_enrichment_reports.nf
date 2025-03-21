@@ -9,7 +9,7 @@ process merge_enrichment_reports {
     path (chEnrichmentFilesReport)
     each path (chMultiQCEnrichmentHeader)
     each path (chMergeReportEnrichment)
-    tuple val(sampleId), val(enrichment_mark), val(read1), val(read2)
+    tuple val(sampleId), val(control),val(enrichment_mark), val(read1), val(read2)
 
     output:
     path ("*.csv")
