@@ -50,6 +50,7 @@ process createSamplesheetBam {
     input:
     val sample_dir
     val enrichment_mark
+    val sample_control
 
     output:
     path "snap-samplesheet-bam-*.csv"
