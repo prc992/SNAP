@@ -42,8 +42,6 @@ workflow BAM_SIGNAL_PROCESSING {
     
 
     main:
-    println ("BAM_SIGNAL_PROCESSINGv1")
-    chBAMProcessedFiles.view()
     chBedGraphFiles = bam_to_bedgraph(chBAMProcessedIndexFiles)
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
