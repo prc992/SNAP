@@ -18,12 +18,12 @@ process call_peaks{
   if [ ! -s ${sampleControl} ]; then
     macs2 \\
     callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
-    -t $sampleBam \\
+    -t no_control_$sampleBam \\
     -n $sampleId --bdg
   else
     macs2 \\
     callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
-    -t $sampleBam \\
+    -t control_$sampleBam \\
     -c $sampleControl \\
     -n $sampleId --bdg
   fi
