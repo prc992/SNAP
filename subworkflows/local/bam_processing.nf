@@ -45,6 +45,7 @@ workflow BAM_PROCESSING {
         chFilteredFiles = Channel.of("NO_DATA")
     }
     else{
+        println "Arquivos não deduplicados"
         chSortBam = sort_bam(chAlign)
         chLibComplexPreseq = lib_complex_preseq(chSortBam)
         chUniqueSam = unique_sam(chSortBam)
