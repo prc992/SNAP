@@ -4,7 +4,7 @@ process fastqc {
   container = params.containers.fastqc
 
   tag "Sample - $sampleId"  
-  publishDir "${workflow.projectDir}/${params.outputFolder}/fastqc/${sampleId}", mode : 'move'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/fastqc/${sampleId}", mode : 'copy'
   
   input:
   tuple val(sampleId), val(enrichment_mark),path(read1), path(read2), val(control)
