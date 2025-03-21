@@ -74,7 +74,7 @@ process createSamplesheetBam {
         if [ "\$sampleId" == "${sample_control}" ]; then
             echo "\$sampleId,${enrichment_mark},\$bam" >> \$filename
         else
-            echo "\$sampleId,${enrichment_mark},\$bam$,${sample_control}" >> \$filename
+            echo "\$sampleId,${enrichment_mark},\$bam,${sample_control}" >> \$filename
         fi
             
     done
