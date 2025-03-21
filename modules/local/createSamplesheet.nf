@@ -30,8 +30,8 @@ process createSamplesheetFasta {
         if [ \${#files[@]} -gt 1 ]; then
             read2=\$(realpath \${files[1]})
         fi
-        
-        if [\$sampleId == "${sample_control}" ]; then
+
+        if [\$sampleId == ${sample_control} ]; then
             echo "\$sampleId,${enrichment_mark},\$read1,\$read2," >> \$filename
         else
             echo "\$sampleId,${enrichment_mark},\$read1,\$read2,${sample_control}" >> \$filename
