@@ -36,8 +36,8 @@ workflow BAM_PROCESSING {
     main:
 
     if (params.deduped_bam) {
-        chDedup = chAlign.map { sampleId, bam, alignYml -> 
-            tuple(sampleId, bam, null, alignYml)}
+        chDedup = chAlign.map { sampleId,control ,bam, alignYml -> 
+            tuple(sampleId, control,bam, null, alignYml)}
 
         chSortBam = Channel.of("NO_DATA")
         chLibComplexPreseq = Channel.of("NO_DATA")
