@@ -72,8 +72,13 @@ workflow FRAGMENTS_PROCESSING {
     .flatten() // Garante que cada arquivo seja emitido separadamente no canal
 
     chFilesReportFragmentsProcess = chOnlyFilesProcessing.collect()
-    chFragsProcessReport = multiqc(chBAMProcessReport,chFilesReportFragmentsProcess,chMultiQCConfig)
-    moveSoftFiles(chFragsProcessReport)
+
+    if (params.until == 'FRAGMENTS_PROCESSING') {
+        chFragsProcessReport = multiqc(chBAMProcessReport,chFilesReportFragmentsProcess,chMultiQCConfig)
+        moveSoftFiles(chFragsProcessReport)
+    } else {
+        chFragsProcessReport = Channel.of("NO_DATA")
+    }
 
     emit: frag_size_files = chFragmentsSizeFiles
     emit: frag_report = chFragFilesReport
