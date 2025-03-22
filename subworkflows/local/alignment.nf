@@ -43,6 +43,7 @@ workflow ALIGNMENT {
     .flatten()
     chFilesReportAlignment = chOnlyFiles.collect()
 
+    // Create the MultiQC report and move the soft files only if this is the last process
     if (params.until == 'ALIGNMENT') {
         chAlignmentReport = multiqc(chAlignAll,chFilesReportAlignment,chMultiQCConfig)
         moveSoftFiles(chAlignmentReport)

@@ -115,6 +115,7 @@ workflow BAM_PROCESSING {
     .flatten()
     chFilesReportBamProcessing = chOnlyFiles.collect()
 
+    // Create the MultiQC report and move the soft files only if this is the last process
     if (params.until == 'BAM_PROCESSING') {
         chBAMProcessReport = multiqc(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
         moveSoftFiles(chBAMProcessReport)
