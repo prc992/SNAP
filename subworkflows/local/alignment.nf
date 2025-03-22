@@ -43,8 +43,12 @@ workflow ALIGNMENT {
     .flatten()
     chFilesReportAlignment = chOnlyFiles.collect()
 
-    chAlignmentReport = multiqc(chAlignAll,chFilesReportAlignment,chMultiQCConfig)
-    moveSoftFiles(chAlignmentReport)
+    if (params.until == 'ALIGNMENT') {
+        chAlignmentReport = multiqc(chAlignAll,chFilesReportAlignment,chMultiQCConfig)
+        moveSoftFiles(chAlignmentReport)
+    } else {
+        chAlignmentReport = Channel.of("NO_DATA")
+    }
 
     emit: align = chAlign
     emit: files_report_alignment = chFilesReportAlignment
