@@ -114,9 +114,13 @@ workflow BAM_PROCESSING {
     } 
     .flatten()
     chFilesReportBamProcessing = chOnlyFiles.collect()
-    
-    chBAMProcessReport = multiqc(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
-    moveSoftFiles(chBAMProcessReport)
+
+    if (params.until == 'BAM_PROCESSING') {
+        chBAMProcessReport = multiqc(chInitReport,chFilesReportBamProcessing,chMultiQCConfig)
+        moveSoftFiles(chBAMProcessReport)
+    } else {
+        chBAMProcessReport = Channel.of("NO_DATA")
+    }
 
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
