@@ -84,8 +84,11 @@ workflow PREPROCESSING {
             .flatten()
             chFilesReportInitialization = chOnlyFiles.collect()
 
-            chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
-            moveSoftFiles(chInitReport)
+            // Create the MultiQC report and move the soft files only if this is the last process
+            if (params.until == 'PREPROCESSING') {
+                chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
+                moveSoftFiles(chInitReport)
+            }
         }
     
     //chSampleInfo.view()
