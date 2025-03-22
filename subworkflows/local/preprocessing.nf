@@ -85,7 +85,7 @@ workflow PREPROCESSING {
             chFilesReportInitialization = chOnlyFiles.collect()
 
             // Create the MultiQC report and move the soft files only if this is the last process
-            if (params.until == 'PREPROCESSING') {
+            if (params.until == 'PREPROCESSING' || params.until == 'DOWNLOAD_REFERENCES') {
                 chInitReport = multiqc(chFastaQCAll,chFilesReportInitialization,chMultiQCConfig)
                 moveSoftFiles(chInitReport)
             }
