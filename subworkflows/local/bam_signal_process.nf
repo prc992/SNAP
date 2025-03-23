@@ -105,7 +105,7 @@ workflow BAM_SIGNAL_PROCESSING {
     //********************************
     //********************************
 
-    quality_report_lite(chEnrichmentFilesReport,chFragsProcessReport,chPeakFiles)
+    quality_report_lite(chEnrichmentFilesReport)
 
     // Collect all the files to generate the MultiQC report
     chBedGraphFilesAll = chBedGraphFiles.collect()
