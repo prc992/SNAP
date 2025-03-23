@@ -19,8 +19,7 @@ process quality_report_lite {
 
     input:
     path enrichment_files
-    //path frags_files
-    //path peaks_files
+    path peaks_files
 
     output:
     path "quality.csv" 
@@ -105,7 +104,7 @@ workflow BAM_SIGNAL_PROCESSING {
     //********************************
     //********************************
 
-    quality_report_lite(chEnrichmentFilesReport)
+    quality_report_lite(chEnrichmentFilesReport,chPeaksFilesReport)
 
     // Collect all the files to generate the MultiQC report
     chBedGraphFilesAll = chBedGraphFiles.collect()
