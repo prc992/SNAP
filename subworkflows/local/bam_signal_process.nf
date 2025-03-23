@@ -81,7 +81,7 @@ workflow BAM_SIGNAL_PROCESSING {
         }
     }
 
-    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chEnrichmentScript).collect()
+    chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
 
     // Collect all the files to generate the MultiQC report
