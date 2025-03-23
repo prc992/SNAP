@@ -14,6 +14,23 @@ include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_re
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
+process quality_report_lite {
+    tag "All Samples"
+
+    input:
+    path enrichment_files
+    //path frags_files
+    //path peaks_files
+
+    output:
+    path "quality.csv" 
+
+    script:
+    """
+    touch quality.xls
+    """
+}
+
 workflow BAM_SIGNAL_PROCESSING {
 
     take:
@@ -83,6 +100,12 @@ workflow BAM_SIGNAL_PROCESSING {
     chSampleInfo.view()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
+    
+    //********************************
+    //********************************
+    //********************************
+
+    quality_report_lite(chEnrichmentFilesReport,chFragsProcessReport,chPeakFiles)
 
     // Collect all the files to generate the MultiQC report
     chBedGraphFilesAll = chBedGraphFiles.collect()
