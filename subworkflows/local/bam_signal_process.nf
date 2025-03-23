@@ -15,19 +15,24 @@ include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
 process quality_report_lite {
+    label 'low_cpu_low_mem'
+    container = params.containers.python
+
     tag "All Samples"
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/metrics_lite/", mode: 'copy'
 
     input:
+    path chReportQualityLite
     path enrichment_files
     path peaks_files
     path frags_process_report
 
     output:
-    path "quality.csv" 
+    path "QualityMetrics.csv" 
 
     script:
     """
-    touch quality.xls
+    python $chReportQualityLite 
     """
 }
 
@@ -52,6 +57,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chReportPeaks
     chReportEnrichment
     chMergeReportEnrichment
+    chReportQualityLite
     chFilesReportInitialization
     chFilesReportBamProcessing
     chFilesReportFragmentsProcess
@@ -105,7 +111,7 @@ workflow BAM_SIGNAL_PROCESSING {
     //********************************
     //********************************
 
-    quality_report_lite(chEnrichmentFilesReport,chPeaksFilesReport,chFragsProcessReport)
+    quality_report_lite(chReportQualityLite,chEnrichmentFilesReport,chPeaksFilesReport,chFragsProcessReport)
 
     // Collect all the files to generate the MultiQC report
     chBedGraphFilesAll = chBedGraphFiles.collect()

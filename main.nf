@@ -47,6 +47,7 @@ workflow  {
     chReportFrags = Channel.fromPath("$params.pathReportFrags")
     chReportPeaks = Channel.fromPath("$params.pathReportPeaks")
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
+    chReportQualityLite = Channel.fromPath("$params.pathReportQualityLite")
     chMergeReportEnrichment = Channel.fromPath("$params.pathMergeReportEnrichment")
     chIGVFilestoSessions = Channel.fromPath("$params.pathIGVFilestoSessions")
 
@@ -144,7 +145,7 @@ workflow  {
         BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,skip_alignment,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
                             chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,
-                            chMultiQCConfig,chEnrichmentScript,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,
+                            chMultiQCConfig,chEnrichmentScript,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,
                             chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess,
                             chFragReport)
 
