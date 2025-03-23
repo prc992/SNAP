@@ -71,7 +71,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chPeaksFilesReport = peaks_report(chNarrowPeakFiles,chMultiQCPeaksHeader,chReportPeaks)
 
     //ENRICHMENT *********************************************************************
-    chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chReportEnrichment).collect()
+    chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
 
 
     // Because I skiped the alignment, I need to create a placeholder second read file
