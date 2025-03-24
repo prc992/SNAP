@@ -128,7 +128,7 @@ workflow  {
     
     if ('FRAGMENTS_PROCESSING' in run_steps) {
 
-        FRAGMENTS_PROCESSING(chGenome,chGenomeIndex,
+        FRAGMENTS_PROCESSING(chSampleInfo,chGenome,chGenomeIndex,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
                             chMultiQCFragsHeader,chReportFrags,
                             chMultiQCConfig,
