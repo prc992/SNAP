@@ -8,9 +8,7 @@ process trim {
 
   input:
   tuple val(sampleId), val(enrichment_mark),val(control),path(reads)
-  //tuple val(sampleId), val(enrichment_mark),path(read1), path(read2), val(control)
   
-
   output:
   tuple val(sampleId),val(control),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")
 
@@ -18,15 +16,17 @@ process trim {
   // Extract read1 and optional read2 from the reads list
   def read1 = reads[0]
   def read2 = reads.size() > 1 ? reads[1] : null
-  
+
   """
-  if [ -z "$read2" ]; then
-    # Single-end
-    trim_galore $read1 --gzip --cores $task.cpus
+  if [[ \${#reads[@]} -eq 2 ]]; then
+      # Paired-end
+      trim_galore --paired \${reads[0]} \${reads[1]} --gzip --cores $task.cpus
   else
-    # Paired-end
-    trim_galore --paired $read1 $read2 --gzip --cores $task.cpus
+      # Single-end
+      trim_galore \${reads[0]} --gzip --cores $task.cpus
   fi
+
+  
 
   cat <<-END_VERSIONS > trim_mqc_versions.yml
   "${task.process}":
