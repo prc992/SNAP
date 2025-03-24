@@ -6,7 +6,7 @@ process enrichmentReport {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode: 'copy'
 
     input:
-    tuple val(sampleId),val(enrichment_mark), val(_), val(_),val(_)
+    tuple val(sampleId),val(enrichment_mark), val(_), val(_)
     path(csvFiles)
     each path(chReportEnrichment)
 
