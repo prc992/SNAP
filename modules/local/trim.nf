@@ -13,10 +13,6 @@ process trim {
   tuple val(sampleId),val(control),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")
 
   script:
-  // Extract read1 and optional read2 from the reads list
-  def read1 = reads[0]
-  def read2 = reads.size() > 1 ? reads[1] : null
-
   """
   if [[ \${#reads[@]} -eq 2 ]]; then
       # Paired-end
@@ -25,8 +21,6 @@ process trim {
       # Single-end
       trim_galore \${reads[0]} --gzip --cores $task.cpus
   fi
-
-  
 
   cat <<-END_VERSIONS > trim_mqc_versions.yml
   "${task.process}":
