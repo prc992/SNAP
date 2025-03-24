@@ -3,7 +3,7 @@ process calcFragsLengthDistribuition {
   container = params.containers.deeptools
 
   tag "Sample - $sampleId"  
-  publishDir "${workflow.projectDir}/${params.outputFolder}/frag/${sampleId}", mode : 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/frags/${sampleId}", mode : 'copy'
 
   input:
   tuple val(sampleId),val(control),path(sortedBam),path (sampleBamIndex),val(_)

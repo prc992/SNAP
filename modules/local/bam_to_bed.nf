@@ -6,7 +6,7 @@ process bam_to_bed {
 
   tag "Sample - $sampleId"  
 
-  publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/frags/${sampleId}", mode : 'copy'
   
   input:
   tuple val(sampleId),val(control),path(sampleBam),val(_),val(_)
