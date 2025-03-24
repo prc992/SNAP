@@ -85,10 +85,10 @@ workflow BAM_SIGNAL_PROCESSING {
     SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[1] }.map { row -> [row[0], row[2], fake_control] }
     SamplesListMix = SamplesListFilter.mix(SamplesListNoControl)
 
-    
 
 
-    chPeakFiles = call_peaks(SamplesListMix) 
+
+    chPeakFiles = call_peaks(SamplesListMix,chSampleInfo) 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
