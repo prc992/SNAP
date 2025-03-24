@@ -67,7 +67,7 @@ workflow PREPROCESSING {
             | splitCsv(header:true) \
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2,row.control) 
             } */
-            
+
         chSampleInfo = chSampleSheetFasta \
             | splitCsv(header: true) \
             | map { row ->
@@ -102,8 +102,6 @@ workflow PREPROCESSING {
             }
         }
     
-    //chSampleInfo.view()
-
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
     emit: fastqc_files = chFastaQC
