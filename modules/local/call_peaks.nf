@@ -9,20 +9,24 @@ process call_peaks{
 
   input:
   tuple val(sampleId),path(sampleBam),path(sampleControl)
+  tuple val(sampleId), val(_),val(_),val(reads)
+  
 
   output:
   tuple val(sampleId),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls"),path("macs2_mqc_versions.yml")
   
   script:
+  // Check if the reads are paired-end or single-end
+  def bamFormat = reads.size() > 1 ? "BAMPE" : "BAM"
   """
   if [ ! -s ${sampleControl} ]; then
     macs2 \\
-    callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
+    callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f $bamFormat --extsize 146 --nomodel \\
     -t $sampleBam \\
     -n $sampleId --bdg
   else
     macs2 \\
-    callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f BAMPE --extsize 146 --nomodel \\
+    callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f $bamFormat --extsize 146 --nomodel \\
     -t $sampleBam \\
     -c $sampleControl \\
     -n $sampleId --bdg
