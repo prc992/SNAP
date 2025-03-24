@@ -7,17 +7,19 @@ process quality_filter {
 
     input:
     tuple val(sampleId),val(control),path(sampleBam),val(_)
+    tuple val(sampleId), val(_),val(_),val(reads)
 
     exec:
     String strBam = sampleId + '.filtered.unique.sorted.bam'
   
-
     output:
     tuple val(sampleId),val(control),path('*.bam'),path ("samtools_QualityFilter_mqc_versions.yml")
 
     script:
+    def singlePairedFilter = reads.size() > 1 ? "-f $params.filter_samtools.inclusion_flag" : ""
+
     """
-    samtools view -bh -f $params.filter_samtools.inclusion_flag -F $params.filter_samtools.exclusion_flag -q $params.filter_samtools.min_qc --threads $task.cpus $sampleBam > $strBam
+    samtools view -bh $singlePairedFilter -F $params.filter_samtools.exclusion_flag -q $params.filter_samtools.min_qc --threads $task.cpus $sampleBam > $strBam
 
     cat <<-END_VERSIONS > samtools_QualityFilter_mqc_versions.yml
     "${task.process}":

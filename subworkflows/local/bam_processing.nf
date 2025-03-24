@@ -17,6 +17,7 @@ include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 workflow BAM_PROCESSING {
 
     take:
+    chSampleInfo
     chGenome
     chGenomeIndex
     chChromSizes
