@@ -26,7 +26,7 @@ process trim {
   fi
 
   cat <<-END_VERSIONS > trim_mqc_versions.yml
-  "\${task.process}":
+  "${task.process}":
       trimgalore: \$(trim_galore --version 2>&1 | sed 's/^.*version //; s/Last.*\$//')
       cutadapt: \$(cutadapt --version)
   END_VERSIONS
