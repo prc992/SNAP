@@ -13,6 +13,10 @@ process fastqc {
   tuple val(sampleId),path('*fastqc.html'),path('fastqc_mqc_versions.yml'),path('*fastqc.zip')
   
   script:
+  // Extract read1 and optional read2 from the reads list
+  def read1 = reads[0]
+  def read2 = reads.size() > 1 ? reads[1] : null
+  
   """
   if [ -z "$read2" ]; then
       # Single-end
