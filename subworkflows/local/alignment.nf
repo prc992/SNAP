@@ -19,7 +19,11 @@ workflow ALIGNMENT {
 
     main:
 
-    chTrim = trim(chSampleInfo)
+    chSampleInfoSingleandPaired = chSampleInfo.map { sampleId, enrichment_mark, read1, read2, control ->
+        tuple(sampleId, enrichment_mark, control, [file(read1), file(read2)])
+    }
+
+    chTrim = trim(chSampleInfoSingleandPaired)
     chAlign = align(chTrim,chGenome,chGenomeIndex)
 
     // Collect all the files to generate the MultiQC report

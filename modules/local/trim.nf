@@ -7,13 +7,18 @@ process trim {
   publishDir "${workflow.projectDir}/${params.outputFolder}/trim/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId), val(enrichment_mark),path(read1), path(read2), val(control)
+  tuple val(sampleId), val(enrichment_mark),val(control),path(reads)
+  //tuple val(sampleId), val(enrichment_mark),path(read1), path(read2), val(control)
   
 
   output:
   tuple val(sampleId),val(control),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")
 
   script:
+  // Extract read1 and optional read2 from the reads list
+  def read1 = reads[0]
+  def read2 = reads.size() > 1 ? reads[1] : null
+  
   """
   if [ -z "$read2" ]; then
     # Single-end
