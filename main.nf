@@ -112,7 +112,7 @@ workflow  {
         }
 
     if ('BAM_PROCESSING' in run_steps) {
-        BAM_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPS_ref,
+        BAM_PROCESSING (chGenome, chGenomeIndex,chChromSizes,chDACFileRef,chSNPS_ref,
                         chAlign,
                         chSNPSMaSH,chSNPSMaSHPyPlot,chMultiQCConfig,
                         chFilesReportInitialization,chInitReport,
