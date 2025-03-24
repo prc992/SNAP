@@ -20,7 +20,10 @@ workflow ALIGNMENT {
     main:
 
     chSampleInfoSingleandPaired = chSampleInfo.map { sampleId, enrichment_mark, read1, read2, control ->
-        tuple(sampleId, enrichment_mark, control, [file(read1), file(read2)])
+    def reads = [file(read1)]
+        if (read2) {
+            reads << file(read2)}
+    tuple(sampleId, enrichment_mark, control, reads)
     }
 
     chTrim = trim(chSampleInfoSingleandPaired)
