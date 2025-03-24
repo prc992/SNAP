@@ -17,7 +17,7 @@ process trim {
   def read2 = reads.size() > 1 ? reads[1] : null
 
   """
-  if [[ -n $read2 ]]; then
+  if [ -n "$read2" ]; then
       echo "Paired-end mode: $read1 + $read2"
       trim_galore --paired $read1 $read2 --gzip --cores $task.cpus
   else
