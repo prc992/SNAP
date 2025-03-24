@@ -19,6 +19,8 @@ workflow ALIGNMENT {
 
     main:
 
+    chSampleInfo.view()
+
     chTrim = trim(chSampleInfo)
     chAlign = align(chTrim,chGenome,chGenomeIndex)
 
