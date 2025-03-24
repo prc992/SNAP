@@ -13,11 +13,10 @@ process enrichmentReport {
     output:
     path ("*_report.csv")
 
-    //touch ${sampleId}_report.csv
-
     script:
     """
     # create an empty file to satisfy the output requirement if no enrichment mark is available
+    touch ${sampleId}_report.csv
     python $chReportEnrichment --mark ${enrichment_mark} --samplename ${sampleId}
     """
 }
