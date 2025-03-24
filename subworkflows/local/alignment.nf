@@ -18,9 +18,7 @@ workflow ALIGNMENT {
     chMultiQCConfig
 
     main:
-
-    chSampleInfo.view()
-
+    
     chTrim = trim(chSampleInfo)
     chAlign = align(chTrim,chGenome,chGenomeIndex)
 
