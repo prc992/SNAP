@@ -13,18 +13,21 @@ process trim {
   tuple val(sampleId),val(control),path('*.fq.gz'),path("*report.txt"),path ("trim_mqc_versions.yml")
 
   script:
+  def read1 = reads[0]
+  def read2 = reads.size() > 1 ? reads[1] : null
+
   """
-  if [[ \${#reads[@]} -eq 2 ]]; then
-      # Paired-end
-      trim_galore --paired \${reads[0]} \${reads[1]} --gzip --cores $task.cpus
+  if [[ -n "$read2" ]]; then
+      echo "Paired-end mode: $read1 + $read2"
+      trim_galore --paired $read1 $read2 --gzip --cores $task.cpus
   else
-      # Single-end
-      trim_galore \${reads[0]} --gzip --cores $task.cpus
+      echo "Single-end mode: $read1"
+      trim_galore $read1 --gzip --cores $task.cpus
   fi
 
   cat <<-END_VERSIONS > trim_mqc_versions.yml
-  "${task.process}":
-      trimgalore: \$(echo \$(trim_galore --version 2>&1) | sed 's/^.*version //; s/Last.*\$//')
+  "\${task.process}":
+      trimgalore: \$(trim_galore --version 2>&1 | sed 's/^.*version //; s/Last.*\$//')
       cutadapt: \$(cutadapt --version)
   END_VERSIONS
   """
