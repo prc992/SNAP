@@ -63,10 +63,21 @@ workflow PREPROCESSING {
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam, row.control) 
             }
     } else {
-        chSampleInfo = chSampleSheetFasta \
+        /*chSampleInfo = chSampleSheetFasta \
             | splitCsv(header:true) \
             | map { row-> tuple(row.sampleId,row.enrichment_mark, row.read1, row.read2,row.control) 
-            } 
+            } */
+            
+        chSampleInfo = chSampleSheetFasta \
+            | splitCsv(header: true) \
+            | map { row ->
+                def reads = [file(row.read1)]
+                if (row.read2) {
+                    reads << file(row.read2)
+                }
+                tuple(row.sampleId, row.enrichment_mark, row.control, reads)
+            }
+
             // Run FastQC on the samples
             chFastaQC = fastqc(chSampleInfo)
             chFastaQCAll = chFastaQC.collect()
