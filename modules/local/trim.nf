@@ -16,9 +16,9 @@ process trim {
   def trimCommand = ""
 
   if (read_method == "PE") {
-    trimCommand = "trim_galore --paired $read1 $read2 --gzip --cores $task.cpus"
+    trimCommand = "trim_galore --paired ${reads[0]} ${reads[1]} --gzip --cores $task.cpus"
   } else {
-    trimCommand = "trim_galore $read1 --gzip --cores $task.cpus"
+    trimCommand = "trim_galore ${reads[0]} --gzip --cores $task.cpus"
   }
 
   """
