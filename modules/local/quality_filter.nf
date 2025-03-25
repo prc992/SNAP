@@ -21,7 +21,7 @@ process quality_filter {
     """
     samtools view -bh $singlePairedFilter -F $params.filter_samtools.exclusion_flag -q $params.filter_samtools.min_qc --threads $task.cpus $sampleBam > $strBam
 
-    cat <<-END_VERSIONS > samtools_QualityFilter_mqc_versions.yml
+    cat <<-END_VERSIONS > samtools_QualityFilter_mqc_versions.ymlk
     "${task.process}":
       samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
     END_VERSIONS
