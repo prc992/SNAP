@@ -7,15 +7,12 @@ process trim {
   publishDir "${workflow.projectDir}/${params.outputFolder}/trim/${sampleId}", mode: 'copy'
 
   input:
-  tuple val(sampleId), val(enrichment_mark), val(control), path(reads)
+  tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(reads)
 
   output:
-  tuple val(sampleId), val(control), val(read_method), path('*.fq.gz'), path("*report.txt"), path("trim_mqc_versions.yml")
+  tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path('*.fq.gz'), path("*report.txt"), path("trim_mqc_versions.yml")
 
   script:
-  def read1 = reads[0]
-  def read2 = reads.size() > 1 ? reads[1] : null
-  def read_method = reads.size() > 1 ? "PE" : "SE"
   def trimCommand = ""
 
   if (read_method == "PE") {
