@@ -7,7 +7,7 @@ process lib_complex_preseq {
   publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(control),path(sortedBam),val(_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sortedBam),val (_)
 
   output:
   tuple val(sampleId),val(control),path("*.lc_extrap.txt"),path ("preseq_mqc_versions.yml")
