@@ -72,10 +72,12 @@ workflow PREPROCESSING {
             | splitCsv(header: true) \
             | map { row ->
                 def reads = [file(row.read1)]
+                def read_method = "SE"
                 if (row.read2) {
                     reads << file(row.read2)
+                    read_method = "PE"
                 }
-                tuple(row.sampleId, row.enrichment_mark, row.control, reads)
+                tuple(row.sampleId, row.enrichment_mark, row.control, read_method, reads)
             }
 
             // Run FastQC on the samples
