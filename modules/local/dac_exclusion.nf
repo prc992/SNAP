@@ -7,19 +7,17 @@ process dac_exclusion {
   publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(control),path(dedupBam),val(_),val(_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(dedupBam),val(_),val(_),val(_)
   each path (sampleDAC)
 
   exec:
   strBam = sampleId + '.dac_filtered.dedup.unique.sorted.bam'
-  strTxt = sampleId + '-dummy.txt'
 
   output:
-  tuple val(sampleId),val(control),path(strBam),path(strTxt),path ("dac_exclusion_mqc_versions.yml")
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(strBam),path ("dac_exclusion_mqc_versions.yml")
 
   script:
   """
-  touch $strTxt
   bedtools intersect -v -abam $dedupBam -b $sampleDAC > ${sampleId}.tmp
   mv ${sampleId}.tmp $strBam
   
