@@ -5,21 +5,20 @@ process dedup {
 
   tag "Sample - $sampleId"  
   
-
   input:
-  tuple val(sampleId),val(control),path(uniqueBam),val(_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val(_)
 
   exec:
   strDedupBam = sampleId + '.dedup.unique.sorted.bam'
   strTxt = sampleId + '-MarkDuplicates.metrics.txt'
 
   output:
-  tuple val(sampleId),val(control),path('*.bam'),path("*.txt"),path ("picard_MarkDuplicates_mqc_versions.yml")
+  tuple val(sampleId),val(enrichment_mark,)val(control),val(read_method),path('*.bam'),path("*.txt"),path ("picard_MarkDuplicates_mqc_versions.yml")
   
   script:
   """
   picard MarkDuplicates \\
-  I=$uniqueBam \\
+  I=$sampleBam \\
   O=$strDedupBam \\
   REMOVE_DUPLICATES=true \\
   ASSUME_SORT_ORDER=coordinate \\
