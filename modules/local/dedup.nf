@@ -13,7 +13,7 @@ process dedup {
   strTxt = sampleId + '-MarkDuplicates.metrics.txt'
 
   output:
-  tuple val(sampleId),val(enrichment_mark,)val(control),val(read_method),path('*.bam'),path("*.txt"),path ("picard_MarkDuplicates_mqc_versions.yml")
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path('*.bam'),path("*.txt"),path ("picard_MarkDuplicates_mqc_versions.yml")
   
   script:
   """
