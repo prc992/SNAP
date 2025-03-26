@@ -117,8 +117,6 @@ workflow BAM_PROCESSING {
     chUniqueSamAll = chUniqueSam.collect()
     chFilterQualityAll = chFilterQuality.collect()
     chCreateStatsSamtoolsfilteredAll = chCreateStatsSamtoolsfiltered.collect()
-    chFilteredFilesAll = chFilteredFiles.collect()
-    chCreateStatsSamtoolsfilteredAll = chCreateStatsSamtoolsfiltered.collect()
     chDedupAll = chDedup.collect()
     chDACFilteredFilesAll = chDACFilteredFiles.collect()
     chSMaSHOutoutAll = chSMaSHOutout.collect()
