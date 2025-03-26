@@ -1,29 +1,35 @@
 process quality_filter {
-    label 'low_cpu_low_mem'
-    container = params.containers.samtools
-    
-    tag "Sample - $sampleId" 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
+  label 'low_cpu_low_mem'
+  container = params.containers.samtools
 
-    input:
-    tuple val(sampleId),val(control),path(sampleBam),val(_)
-    tuple val(sampleId), val(_),val(_),val(reads)
+  tag "Sample - $sampleId" 
+  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode: 'copy'
 
-    exec:
-    String strBam = sampleId + '.filtered.unique.sorted.bam'
-  
-    output:
-    tuple val(sampleId),val(control),path('*.bam'),path ("samtools_QualityFilter_mqc_versions.yml")
+  input:
+  tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(sampleBam), val(_)
 
-    script:
-    def singlePairedFilter = reads.size() > 1 ? "-f $params.filter_samtools.inclusion_flag" : ""
+  output:
+  tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path('*.bam'), path("samtools_QualityFilter_mqc_versions.yml")
 
-    """
-    samtools view -bh $singlePairedFilter -F $params.filter_samtools.exclusion_flag -q $params.filter_samtools.min_qc --threads $task.cpus $sampleBam > $strBam
+  script:
+  String strBam = sampleId + '.filtered.unique.sorted.bam'
+  String filterCommand = ""
 
-    cat <<-END_VERSIONS > samtools_QualityFilter_mqc_versions.ymlk
-    "${task.process}":
-      samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
-    END_VERSIONS
-    """
+  if (read_method == "PE") {
+    // Only apply inclusion flag (-f) for paired-end
+    filterCommand = "samtools view -bh -f ${params.filter_samtools.inclusion_flag} -F ${params.filter_samtools.exclusion_flag} -q ${params.filter_samtools.min_qc} --threads $task.cpus $sampleBam > $strBam"
+  } else {
+    // Skip -f for single-end
+    filterCommand = "samtools view -bh -F ${params.filter_samtools.exclusion_flag} -q ${params.filter_samtools.min_qc} --threads $task.cpus $sampleBam > $strBam"
+  }
+
+  """
+  echo "Running samtools quality filter for sample $sampleId in $read_method mode"
+  $filterCommand
+
+  cat <<-END_VERSIONS > samtools_QualityFilter_mqc_versions.yml
+  "${task.process}":
+    samtools: \$(samtools --version | sed 's/^.*samtools //; s/Using.*\$//')
+  END_VERSIONS
+  """
 }
