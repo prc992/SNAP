@@ -130,7 +130,6 @@ workflow BAM_PROCESSING {
         .combine(chFilterPPAll)
         .combine(chLibComplexPreseqAll)
         .combine(chUniqueSamAll)
-        .combine(chFilteredFilesAll)
         .combine(chCreateStatsSamtoolsfilteredAll)
         .combine(chFilterQualityAll)
         .combine(chCreateStatsSamtoolsfilteredAll)
