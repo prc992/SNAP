@@ -13,6 +13,43 @@ include {createSMaSHFingerPrintPlot} from '../../modules/local/snp_smash_fingerp
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
+process filter_properly_paired {
+  label 'low_cpu_high_mem'
+
+  container = params.containers.samtools
+
+  tag "Sample - $sampleId" 
+  
+  publishDir "${workflow.projectDir}/${params.outputFolder}/align/${sampleId}", mode : 'copy'
+  
+  input:
+  tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(sampleBam), val(_)
+  
+  output:
+  tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path('*.bam'), path("samtools_filter_pp_mqc_versions.yml")
+
+  script:
+  String strPPBam = sampleId + '.pp.sorted.bam'
+
+  def filterCommand = ""
+
+  if (read_method == "PE") {
+    filterCommand = "samtools view -b -f 2 $sampleBam > ${strPPBam}"
+  } else {
+    // Just copy the original BAM
+    filterCommand = "cp $sampleBam ${strPPBam}"
+  }
+
+  """
+  echo "Filtering BAM for sample $sampleId (mode: $read_method)"
+  $filterCommand
+
+  cat <<-END_VERSIONS > samtools_filter_pp_mqc_versions.yml
+  "${task.process}":
+      samtools: \$(samtools --version | sed 's/^.*samtools //; s/Using.*\$//')
+  END_VERSIONS
+  """
+}
 
 workflow BAM_PROCESSING {
 
@@ -40,16 +77,18 @@ workflow BAM_PROCESSING {
             tuple(sampleId, control,bam, null, alignYml)}
 
         chSortBam = Channel.of("NO_DATA")
+        chFilterPP = Channel.of("NO_DATA")
         chLibComplexPreseq = Channel.of("NO_DATA")
         chUniqueSam = Channel.of("NO_DATA")
         chFilteredFiles = Channel.of("NO_DATA")
     }
     else{
         chSortBam = sort_bam(chAlign)
-        chLibComplexPreseq = lib_complex_preseq(chSortBam)
-        chUniqueSam = unique_sam(chSortBam)
-        chFilteredFiles = quality_filter(chUniqueSam,chSampleInfo)
-        chDedup = dedup(chFilteredFiles)
+        chFilterPP = filter_properly_paired(chSortBam)
+        chLibComplexPreseq = lib_complex_preseq(chFilterPP)
+        chUniqueSam = unique_sam(chFilterPP)
+        chFilterQuality = quality_filter(chUniqueSam,chSampleInfo)
+        chDedup = dedup(chFilterQuality)
     }
 
     // Filter the DAC files
@@ -73,6 +112,7 @@ workflow BAM_PROCESSING {
 
     // Collect all the files to generate the MultiQC report
     chSortBamAll = chSortBam.collect()
+    chFilterPPAll = chFilterPP.collect()
     chLibComplexPreseqAll = chLibComplexPreseq.collect()
     chUniqueSamAll = chUniqueSam.collect()
     chFilteredFilesAll = chFilteredFiles.collect()
@@ -89,6 +129,7 @@ workflow BAM_PROCESSING {
     // Combine all the channels
     chAllChannels = chSortBamAll
         .combine(chSortBamAll)
+        .combine(chFilterPPAll)
         .combine(chLibComplexPreseqAll)
         .combine(chUniqueSamAll)
         .combine(chFilteredFilesAll)
