@@ -16,7 +16,7 @@ process unique_sam {
   
   script:
   """
-  samtools view --threads $task.cpus -b -q 1 $sortedBam > $strBam
+  samtools view --threads $task.cpus -b -q 1 $sampleBam > $strBam
 
   cat <<-END_VERSIONS > samtools_unique_mqc_versions.yml
   "${task.process}":
