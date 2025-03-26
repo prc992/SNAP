@@ -6,10 +6,10 @@ process unique_sam {
   tag "Sample - $sampleId" 
   
   input:
-  tuple val(sampleId),val(control),path(sortedBam),val(_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val(_)
 
   output:
-  tuple val(sampleId),val(control),path('*.bam'),path ("samtools_unique_mqc_versions.yml")
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path('*.bam'),path ("samtools_unique_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.unique.sorted.bam'
