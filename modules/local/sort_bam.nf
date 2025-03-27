@@ -37,7 +37,7 @@ process sort_readname_bam {
   tag "Sample - $sampleId" 
   
   input:
-  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(strBam),val (_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val (_)
   
   output:
   tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
