@@ -53,6 +53,30 @@ process createMotifGCfile {
     #Put it all together
     awk '{getline line < f2; print \$0 "\t" line}' f2="$strBPr2FA" "$strBPr1FA" > "$strBPmotif"
     """
+  } else {
+    motifCommand = """
+    #  Single-End: BED files
+    bedtools bamtobed -i $sampleBam > ${sampleId}.bed
+
+    # Expand 5' according to strand
+    awk -v nmer="${params.nmer}" 'BEGIN{OFS="\\t"} {
+      if (\$6 == "+") {
+        print \$1, \$2, \$2 + nmer, \$4, \$5, \$6
+      } else {
+        print \$1, \$3 - nmer, \$3, \$4, \$5, \$6
+      }
+    }' ${sampleId}.bed > ${sampleId}_expanded.bed
+
+    # GC content
+    awk 'OFS = "\\t" {print \$1, \$2, \$3, \$4, \$5}' ${sampleId}_expanded.bed | \\
+    sort -k1,1 -k2,2n | \\
+    bedtools nuc -fi $genomeFile -bed - | \\
+    awk 'OFS = "\\t" {print \$1, \$2, \$3, \$4, \$5, \$7}' > $strBed
+    
+    # Extract sequences from the genome
+    bedtools getfasta -fi $genomeFile -bed ${sampleId}_expanded.bed -s -bedOut -fo | \\
+    awk 'BEGIN{OFS="\\t"} {print \$1, \$2, \$3, \$4, \$5, \$6, \$7, toupper(\$8), toupper(\$8)}' > "$strBPmotif"
+    """
   }
   
   """
