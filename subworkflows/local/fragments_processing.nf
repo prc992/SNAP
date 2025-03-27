@@ -27,17 +27,17 @@ workflow FRAGMENTS_PROCESSING {
 
     main:
     
-    //End Motif and GC content ***********************************************
-    chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
-
     chFragmentsSizeFiles = Channel.of("NO_DATA")
     chFragFilesReport = Channel.of("NO_DATA")
     chFragsProcessReport = Channel.of("NO_DATA")
     chFilesReportFragmentsProcess = Channel.of("NO_DATA")
-    /*
+
+    //End Motif and GC content ***********************************************
+    chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
+    
     chMotifGCfile = createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
-        
+     /*   
     //Fragment Length Distribution *******************************************
     chFragmentsSize = calcFragsLengthDistribuition(chBAMProcessedIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
