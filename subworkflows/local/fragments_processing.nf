@@ -29,6 +29,12 @@ workflow FRAGMENTS_PROCESSING {
     
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
+
+    chFragmentsSizeFiles = Channel.of("NO_DATA")
+    chFragFilesReport = Channel.of("NO_DATA")
+    chFragsProcessReport = Channel.of("NO_DATA")
+    chFilesReportFragmentsProcess = Channel.of("NO_DATA")
+    /*
     chMotifGCfile = createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
         
@@ -80,7 +86,7 @@ workflow FRAGMENTS_PROCESSING {
         moveSoftFiles(chFragsProcessReport)
     } else {
         chFragsProcessReport = Channel.of("NO_DATA")
-    }
+    }*/
 
     emit: frag_size_files = chFragmentsSizeFiles
     emit: frag_report = chFragFilesReport

@@ -9,7 +9,7 @@ process createMotifGCfile {
   publishDir "${workflow.projectDir}/${params.outputFolder}/motifs/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),val(control),path(sampleBam),val(_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val (_)
   each path (genomeFile)
   each path (genomeIndexFiles)
 
@@ -24,8 +24,7 @@ process createMotifGCfile {
   String strBPmotif = sampleId + '_' + params.nmer + 'NMER_bp_motif.bed'
   
   output:
-  path ('*bp_motif.bed')
-  //tuple val(sampleId),path ('*.bedpe'),path ("createMotifGCfile_mqc_versions.yml")
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),path ('*bp_motif.bed'),path ("createMotifGCfile_mqc_versions.yml")
 
   script:
   """

@@ -37,15 +37,14 @@ process sort_readname_bam {
   tag "Sample - $sampleId" 
   
   input:
-  tuple val(sampleId),val(control),path(sampleBam),val(_),val(_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(strBam),val (_)
   
   output:
-  tuple val(sampleId),val(control),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path('*.bam'),path ("samtools_sort_mqc_versions.yml")
 
   exec:
   String strBam = sampleId + '.n_sorted.bam'
 
-  //samtools sort -@ $task.cpus $sampleBam -o $strBam
 
   script:
   """
