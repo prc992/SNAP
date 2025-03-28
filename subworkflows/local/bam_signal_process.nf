@@ -65,8 +65,9 @@ workflow BAM_SIGNAL_PROCESSING {
     
 
     main:
+
     chBedGraphFiles = bam_to_bedgraph(chBAMProcessedIndexFiles)
-    chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
+    /*chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
     //Pileups ****************************************************************
     chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
@@ -157,13 +158,13 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
     chBAMSignalReport = multiqc(chFragsProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
-    moveSoftFiles(chBAMSignalReport)
+    moveSoftFiles(chBAMSignalReport)*/
 
 
 
-    emit: igv_report_merged = chIGVReportMerged
-    emit: merge_enrichment_reports = chMergedEnrichmentReport
-    emit: peaks_report = chPeaksFilesReport
-    emit: files_report_bam_signal_processing = chFilesReportSignalProcess
-    emit: bam_signal_report = chBAMSignalReport
+    //emit: igv_report_merged = chIGVReportMerged
+    //emit: merge_enrichment_reports = chMergedEnrichmentReport
+    //emit: peaks_report = chPeaksFilesReport
+    //emit: files_report_bam_signal_processing = chFilesReportSignalProcess
+    //emit: bam_signal_report = chBAMSignalReport
 }
