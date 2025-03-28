@@ -47,8 +47,16 @@ process sort_readname_bam {
 
 
   script:
+  def motifCommand = ""
+  if (read_method == "PE") {
+    sortCommand = "samtools sort -@ $task.cpus -n $sampleBam -o $strBam"
+  } else {
+    sortCommand = "touch mark_for_deletion_$strBam"  // Create an empty file because this analysis is not valid for single-end reads
+  }
   """
-  samtools sort -@ $task.cpus -n $sampleBam -o $strBam
+  echo "Generating sorting by name sample $sampleId ($read_method)"
+  $sortCommand 
+
 
   cat <<-END_VERSIONS > samtools_sort_mqc_versions.yml
   "${task.process}":
