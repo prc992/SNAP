@@ -11,30 +11,9 @@ include {igv_session} from '../../modules/local/igv_reports'
 include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
+include {quality_report_lite} from '../../modules/local/quality_report_lite'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
-
-process quality_report_lite {
-    label 'low_cpu_low_mem'
-    container = params.containers.python
-
-    tag "All Samples"
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/metrics_lite/", mode: 'copy'
-
-    input:
-    path chReportQualityLite
-    path enrichment_files
-    path peaks_files
-    path frags_process_report
-
-    output:
-    path "QualityMetrics.csv" 
-
-    script:
-    """
-    python $chReportQualityLite 
-    """
-}
 
 workflow BAM_SIGNAL_PROCESSING {
 
