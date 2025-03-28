@@ -83,10 +83,10 @@ workflow BAM_SIGNAL_PROCESSING {
         tuple(sampleId, control, bam, enrichment_mark,null)
         }
     }
-    /*
+    
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
-    
+    /*
     //********************************
     //********************************
     //********************************
