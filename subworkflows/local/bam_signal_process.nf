@@ -86,7 +86,7 @@ workflow BAM_SIGNAL_PROCESSING {
     
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
-    /*
+    
     //********************************
     //********************************
     //********************************
@@ -135,7 +135,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chFilesReportSignalProcess = chOnlyFilesProcessing.collect()
     chBAMSignalReport = multiqc(chFragsProcessReport,chFilesReportSignalProcess,chMultiQCConfig)
-    moveSoftFiles(chBAMSignalReport)*/
+    moveSoftFiles(chBAMSignalReport)
 
 
 
