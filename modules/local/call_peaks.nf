@@ -9,8 +9,6 @@ process call_peaks{
 
   input:
   tuple val(sampleId),path(sampleBam),path(sampleControl)
-  tuple val(sampleId), val(_),val(_),val(reads)
-  
 
   output:
   tuple val(sampleId),path ('*treat_pileup.bdg'),path ('*control_lambda.bdg'),path ('*narrowPeak'),path("*.xls"),path("macs2_mqc_versions.yml")
