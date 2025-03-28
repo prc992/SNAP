@@ -7,11 +7,11 @@ process bedgraph_to_bigwig {
     publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
     input:
-    tuple val(sampleId),val(control),path(chbedgraph),val (_)
+    tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(chbedgraph), val (_)
     each path (chrom_sizes)
 
     output:
-    tuple path ("*.bw"),path ("bedgraph_to_bigwig_mqc_versions.yml")
+    tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path("*.bw"), path ("bedgraph_to_bigwig_mqc_versions.yml")
 
     exec:
     str_bw = sampleId + '.bw'

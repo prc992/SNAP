@@ -46,10 +46,10 @@ workflow BAM_SIGNAL_PROCESSING {
     main:
 
     chBedGraphFiles = bam_to_bedgraph(chBAMProcessedIndexFiles)
-    /*chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
+    chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
     //Pileups ****************************************************************
-    chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
+    /*chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
     chIGVReportMerged = igv_consolidate_report(chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
     chBigWigAllFiles = chBigWig.collect()
