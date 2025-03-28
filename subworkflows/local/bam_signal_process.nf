@@ -71,11 +71,11 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
 
     chPeaksFilesReport = peaks_report(chNarrowPeakFiles,chMultiQCPeaksHeader,chReportPeaks)
-    /*
+    
     //ENRICHMENT *********************************************************************
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
 
-
+    /*
     // Because I skiped the alignment, I need to create a placeholder second read file
     if (chSkipAlignment) {
         chSampleInfo = chSampleInfo.map {sampleId, enrichment_mark, bam, control -> 

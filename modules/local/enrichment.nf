@@ -8,7 +8,7 @@ process enrichment {
   publishDir "${workflow.projectDir}/${params.outputFolder}/peaks/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(control),path(sampleBam),val(_),val(_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val(_),val(_)
   each path (chEnrichmentScript)
 
 
