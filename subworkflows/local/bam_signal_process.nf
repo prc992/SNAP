@@ -79,7 +79,8 @@ workflow BAM_SIGNAL_PROCESSING {
 
 
 
-    chPeakFiles = call_peaks(chSamplesListMix,chSampleInfo) 
+    chPeakFiles = call_peaks(chSamplesListMix)
+    /* 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
