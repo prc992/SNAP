@@ -9,26 +9,31 @@ process bam_to_bed {
   publishDir "${workflow.projectDir}/${params.outputFolder}/frags/${sampleId}", mode : 'copy'
   
   input:
-  tuple val(sampleId),val(control),path(sampleBam),val(_),val(_)
-  tuple val(sampleId), val(_),val(_),val(reads)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val (_)
 
   exec:
   String strBed = sampleId + '.bed'
   def is_paired = reads.size() > 1 ? true : false
 
   output:
-  tuple val(sampleId),val(control),path ('*.bed'),path ("bam_to_bed_mqc_versions.yml")
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path ('*.bed'),path ("bam_to_bed_mqc_versions.yml")
 
   script:
-  def bedCommand = is_paired ?
-    "bedtools bamtobed -i $sampleBam -bedpe | awk 'BEGIN{OFS=\"\\t\";FS=\"\\t\"} (\$1==\$4){print \$1, \$2, \$6}' > $strBed" :
-    "bedtools bamtobed -i $sampleBam | awk 'BEGIN{OFS=\"\\t\"} {print \$1, \$2, \$3}' > $strBed"
-  """
-  $bedCommand
+    def bedCommand = ""
 
-  cat <<-END_VERSIONS > bam_to_bed_mqc_versions.yml
-    "${task.process}":
-        bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
-  END_VERSIONS
-  """
-}
+    if (read_method == "PE") {
+      bedCommand = "bedtools bamtobed -i $sampleBam -bedpe | awk 'BEGIN{OFS=\"\\t\";FS=\"\\t\"} (\$1==\$4){print \$1, \$2, \$6}' > $strBed"
+    } else {
+      bedCommand = "bedtools bamtobed -i $sampleBam | awk 'BEGIN{OFS=\"\\t\"} {print \$1, \$2, \$3}' > $strBed"
+    }
+
+    """
+    echo "Running bedtools bamtobed for sample $sampleId in $read_method mode"
+    $bedCommand
+
+      cat <<-END_VERSIONS > bam_to_bed_mqc_versions.yml
+      "${task.process}":
+          bedtools: \$(bedtools --version | sed -e "s/bedtools v//g")
+    END_VERSIONS
+    """
+  }

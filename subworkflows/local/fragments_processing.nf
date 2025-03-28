@@ -44,9 +44,9 @@ workflow FRAGMENTS_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
     
-    /*chBedFiles = bam_to_bed(chBAMProcessedFiles,chSampleInfo) 
+    chBedFiles = bam_to_bed(chBAMProcessedFiles,chSampleInfo) 
 
-    chUniqueFrags = unique_frags(chBedFiles).collect()
+    /*chUniqueFrags = unique_frags(chBedFiles).collect()
     chFragFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFrags)
 
     // Collect all the files to generate the MultiQC report
