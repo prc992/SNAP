@@ -27,11 +27,6 @@ workflow FRAGMENTS_PROCESSING {
 
     main:
     
-    chFragmentsSizeFiles = Channel.of("NO_DATA")
-    chFragFilesReport = Channel.of("NO_DATA")
-    chFragsProcessReport = Channel.of("NO_DATA")
-    chFilesReportFragmentsProcess = Channel.of("NO_DATA")
-
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
     
@@ -48,7 +43,7 @@ workflow FRAGMENTS_PROCESSING {
 
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chFragFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFrags)
-    /*
+    
     // Collect all the files to generate the MultiQC report
     chNameSortedFilesAll = chNameSortedFiles.collect()
     chMotifGCfileAll = chMotifGCfile.collect()
