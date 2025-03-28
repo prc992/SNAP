@@ -33,7 +33,7 @@ process igv_sample_reports {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
 
     input:
-    tuple val(sampleId),val(control),path(bedgraph),val (_)
+    tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(bedgraph), val(_)
     each path (house_keeping_genes)
     each path (genomeFile)
     each path (genomeIndexFiles)

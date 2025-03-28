@@ -49,7 +49,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chBigWig = bedgraph_to_bigwig(chBedGraphFiles,chChromSizes)
 
     //Pileups ****************************************************************
-    /*chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
+    chIGVReportsHtml = igv_sample_reports(chBedGraphFiles,chPileUpBED,chGenome,chGenomeIndex).collect()
     chIGVReportMerged = igv_consolidate_report(chIGVReportsHtml,chMultiQCHousekeepingHeader)
 
     chBigWigAllFiles = chBigWig.collect()
@@ -57,7 +57,7 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
-
+    /*
     // Match the samples with the controls
     def fake_control = file('/dev/null')
     SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
