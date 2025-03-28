@@ -81,7 +81,7 @@ workflow FRAGMENTS_PROCESSING {
         moveSoftFiles(chFragsProcessReport)
     } else {
         chFragsProcessReport = Channel.of("NO_DATA")
-    }*/
+    }
 
     emit: frag_size_files = chFragmentsSizeFiles
     emit: frag_report = chFragFilesReport
