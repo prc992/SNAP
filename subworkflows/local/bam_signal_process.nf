@@ -60,34 +60,26 @@ workflow BAM_SIGNAL_PROCESSING {
     
     // Match the samples with the controls
     def fake_control = file('/dev/null')
-    SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
+    chSamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
 
-    SamplesListFilter = SamplesListCombine.filter { row -> row[2] == row[6] }.map { row -> [row[0],row[1],row[3], row[4], row[10]] }
-    SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[2] }.map { row -> [row[0],row[1],row[3], row[4], fake_control] }
-    SamplesListMix = SamplesListFilter.mix(SamplesListNoControl)
+    chSamplesListFilter = chSamplesListCombine.filter { row -> row[2] == row[6] }.map { row -> [row[0],row[1],row[3], row[4], row[10]] }
+    chSamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[2] }.map { row -> [row[0],row[1],row[3], row[4], fake_control] }
+    chSamplesListMix = chSamplesListFilter.mix(chSamplesListNoControl)
 
-    SamplesListMix.view()
 
     //tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(dedupBam),val(_),val(_)
-
     //  [0]      [1]      [2]       [3]     [4]         [5]                              [6]           [7]     [8] [9]    [10]             [11]
     //[sample2, Medip, sample_ctrl, PE, sample2.bam, dac_exclusion_mqc_versions.yml, sample_ctrl, No_enrichment, , PE, sample_ctrl.bam, dac_exclusion_mqc_versions.yml]
-    
     //call peak input
     //tuple val(sampleId),path(sampleBam),path(sampleControl)
-
     //dac_exclusion output
     //            [0]           [1]               [2]          [3]           [4]         [5]
     //tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(strBam),path ("dac_exclusion_mqc_versions.yml")
 
 
 
-    /*SamplesListMix.view()/*
 
-
-
-
-    chPeakFiles = call_peaks(SamplesListMix,chSampleInfo) 
+    chPeakFiles = call_peaks(chSamplesListMix,chSampleInfo) 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
