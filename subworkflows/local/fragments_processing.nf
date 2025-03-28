@@ -37,14 +37,14 @@ workflow FRAGMENTS_PROCESSING {
     
     chMotifGCfile = createMotifGCfile(chNameSortedFiles,chGenome,chGenomeIndex)
     //************************************************************************
-     /*   
+        
     //Fragment Length Distribution *******************************************
     chFragmentsSize = calcFragsLengthDistribuition(chBAMProcessedIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
     
-    chBedFiles = bam_to_bed(chBAMProcessedFiles,chSampleInfo) 
+    /*chBedFiles = bam_to_bed(chBAMProcessedFiles,chSampleInfo) 
 
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chFragFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFrags)

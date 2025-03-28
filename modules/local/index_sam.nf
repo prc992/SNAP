@@ -11,8 +11,8 @@ process index_sam {
   tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val (_)
 
   output:
-  tuple val(sampleId),val(control),path(sampleBam),path ('*.bai'),path ("index_sam_mqc_versions.yml")
-
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),path ('*.bai'),path ("index_sam_mqc_versions.yml")
+  
   script:
   """
   samtools index -@ $task.cpus $sampleBam
