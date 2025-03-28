@@ -61,19 +61,14 @@ workflow BAM_SIGNAL_PROCESSING {
     // Match the samples with the controls
     def fake_control = file('/dev/null')
     SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
-    //SamplesListCombine.view()
 
-    SamplesListFilter = SamplesListCombine.filter { row -> row[1] == row[5] }.map { row -> [row[0], row[2], row[7]] }
-    SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[1] }.map { row -> [row[0], row[2], fake_control] }
-    SamplesListNoControl.view()
+    SamplesListFilter = SamplesListCombine.filter { row -> row[2] == row[6] }.map { row -> [row[0], row[4], row[10]] }
+    SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[2] }.map { row -> [row[0], row[4], fake_control] }
     SamplesListMix = SamplesListFilter.mix(SamplesListNoControl)
 
-    /*SamplesListMix.view()/*
+    SamplesListMix.view()
 
-
-
-
-    chPeakFiles = call_peaks(SamplesListMix,chSampleInfo) 
+    /*chPeakFiles = call_peaks(SamplesListMix,chSampleInfo) 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
