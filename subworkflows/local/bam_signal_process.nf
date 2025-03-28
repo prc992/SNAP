@@ -62,8 +62,8 @@ workflow BAM_SIGNAL_PROCESSING {
     def fake_control = file('/dev/null')
     SamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
 
-    SamplesListFilter = SamplesListCombine.filter { row -> row[2] == row[6] }.map { row -> [row[0],[1],[3], row[4], row[10]] }
-    SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[2] }.map { row -> [row[0],[1],[3], row[4], fake_control] }
+    SamplesListFilter = SamplesListCombine.filter { row -> row[2] == row[6] }.map { row -> [row[0],row[1],row[3], row[4], row[10]] }
+    SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[2] }.map { row -> [row[0],row[1],row[3], row[4], fake_control] }
     SamplesListMix = SamplesListFilter.mix(SamplesListNoControl)
 
     SamplesListMix.view()
