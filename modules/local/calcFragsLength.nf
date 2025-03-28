@@ -18,7 +18,7 @@ process calcFragsLengthDistribuition {
     //bamPEFragmentSizeCommand = "bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt"
     bamPEFragmentSizeCommand = "touch ${sampleId}.fragment_sizes.txt"
   } else {
-    bamPEFragmentSizeCommand = "touch ${sampleId}.fragment_sizes.txt"
+    bamPEFragmentSizeCommand = "touch mark_for_deletion_${sampleId}.fragment_sizes.txt"
   }
   """
   echo "Running bamPEFragmentSize for sample $sampleId in $read_method mode"
