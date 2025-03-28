@@ -55,7 +55,7 @@ process createMotifGCfile {
     """
   } else {
     motifCommand = """
-    touch mark_for_deletion_$strBed  # Create an empty file because this analysis is not valid for single-end reads
+    touch mark_for_deletion_$strBPmotif  # Create an empty file because this analysis is not valid for single-end reads
     """
   }
   
