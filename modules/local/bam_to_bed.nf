@@ -13,7 +13,6 @@ process bam_to_bed {
 
   exec:
   String strBed = sampleId + '.bed'
-  def is_paired = reads.size() > 1 ? true : false
 
   output:
   tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path ('*.bed'),path ("bam_to_bed_mqc_versions.yml")
