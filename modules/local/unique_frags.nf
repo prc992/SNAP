@@ -7,7 +7,7 @@ process unique_frags {
   publishDir "${workflow.projectDir}/${params.outputFolder}/frags/${sampleId}", mode : 'copy'
 
   input:
-  tuple val(sampleId),val(control),path (sampleBed),val(_)
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path (sampleBed),val(_)
 
   output:
   path ('*.csv')
