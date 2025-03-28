@@ -66,6 +66,7 @@ workflow BAM_SIGNAL_PROCESSING {
     SamplesListFilter = SamplesListCombine.filter { row -> row[1] == row[5] }.map { row -> [row[0], row[2], row[7]] }
     SamplesListNoControl = chBAMProcessedFiles.filter { row -> !row[1] }.map { row -> [row[0], row[2], fake_control] }
     SamplesListMix = SamplesListFilter.mix(SamplesListNoControl)
+    println "------"
 
     SamplesListMix.view()/*
 
