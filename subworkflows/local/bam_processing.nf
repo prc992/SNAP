@@ -35,6 +35,13 @@ workflow BAM_PROCESSING {
  
     main:
 
+    chDACFilteredFiles = Channel.of("NO_DATA")
+    chIndexFiles = Channel.of("NO_DATA")
+    chSNPSMaSHPlot = Channel.of("NO_DATA")
+    chLibComplexPreseq = Channel.of("NO_DATA")
+    chFilesReportBamProcessing = Channel.of("NO_DATA")
+    chBAMProcessReport = Channel.of("NO_DATA")
+
     if (params.deduped_bam) {
         chDedup = chAlign.map { sampleId,control ,bam, alignYml -> 
             tuple(sampleId, control,bam, null, alignYml)}
@@ -65,6 +72,7 @@ workflow BAM_PROCESSING {
 
     chDACFilteredFiles.view()
 
+    /*
     chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chDACFilteredFiles)
     chIndexFiles = index_sam(chDACFilteredFiles)
 
@@ -125,7 +133,7 @@ workflow BAM_PROCESSING {
         moveSoftFiles(chBAMProcessReport)
     } else {
         chBAMProcessReport = Channel.of("NO_DATA")
-    }
+    }*/
 
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
