@@ -71,8 +71,6 @@ process createSamplesheetBam {
         files=(\$(find \$subfolder -type f \\( -name '*.bam' \\) | sort))
         bam=\$(realpath \${files[0]})
         
-        row.sampleId,row.enrichment_mark, row.bam, row.control, row.read_method
-
         if [ "\$sampleId" == "${sample_control}" ]; then
             echo "\$sampleId,${enrichment_mark},\$bam,,${read_method}" >> \$filename
         else
