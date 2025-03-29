@@ -40,9 +40,6 @@ workflow PREPROCESSING {
         } else if (params.sample_dir_bam) {
             chSampleSheetBams = createSamplesheetBam(params.sample_dir_bam, params.enrichment_mark, params.sample_control)
         } 
-
-    
-    chSampleSheetBams.view()
         
     } else {
         if (params.samplesheetfasta) {
@@ -57,8 +54,6 @@ workflow PREPROCESSING {
     chFastaQC = Channel.of("NO_DATA")
     chFilesReportInitialization = Channel.of("NO_DATA")
     chInitReport = Channel.of("NO_DATA")
-
-    
     
     if (chSkipAlignment) {
         chSampleInfo = chSampleSheetBams \
@@ -101,6 +96,8 @@ workflow PREPROCESSING {
                 moveSoftFiles(chInitReport)
             }
         }
+
+    chSampleInfo.view()
     
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
