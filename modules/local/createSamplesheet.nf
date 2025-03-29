@@ -2,7 +2,7 @@ process createSamplesheetFasta {
     label 'low_cpu_low_mem'
     tag "Creating Samplesheet Fasta" 
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}", mode : 'move'
+    publishDir "${workflow.projectDir}/${params.outputFolder}", mode : 'copy'
 
     input:
     val sample_dir
