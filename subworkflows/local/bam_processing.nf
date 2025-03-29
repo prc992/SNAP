@@ -44,12 +44,9 @@ workflow BAM_PROCESSING {
 
 
     if (params.deduped_bam) {
-        chAlign.view()
 
-        chDedup = chAlign.map { sampleId,control ,bam, alignYml -> 
-            tuple(sampleId, control,bam, null, alignYml)}
-
-        chAlign.view()
+        chDedup = chAlign.map { sampleId,enrichment_mark,control,read_method,bam,alignYml -> 
+            tuple(sampleId,enrichment_mark, control,read_method,bam, null, null)}
 
         chSortBam = Channel.of("NO_DATA")
         chFilterPP = Channel.of("NO_DATA")
