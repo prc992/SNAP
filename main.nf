@@ -97,7 +97,6 @@ workflow  {
                         }
             chFilesReportAlignment = Channel.of("NO_DATA")
             chAlignmentReport = Channel.of("NO_DATA")
-            chAlign.view()
 
         } else {
             ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
