@@ -79,11 +79,12 @@ workflow BAM_SIGNAL_PROCESSING {
     // Because I skiped the alignment, I need to create a placeholder second read file
     if (chSkipAlignment) {
         //// CORRECT THAT LATER
-        tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(reads)
         chSampleInfo = chSampleInfo.map {sampleId, enrichment_mark, bam, control -> 
         tuple(sampleId, control, bam, enrichment_mark,null)
         }
     }*/
+
+    //tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(reads)
 
     chSampleInfo.view()
     
