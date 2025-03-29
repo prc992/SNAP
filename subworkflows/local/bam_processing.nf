@@ -42,9 +42,6 @@ workflow BAM_PROCESSING {
     chFilesReportBamProcessing = Channel.of("NO_DATA")
     chBAMProcessReport = Channel.of("NO_DATA")
 
-    chAlign.view() // Debugging: view the contents of the chAlign channel
-
-    /*
 
     if (params.deduped_bam) {
         chDedup = chAlign.map { sampleId,control ,bam, alignYml -> 
@@ -65,6 +62,10 @@ workflow BAM_PROCESSING {
         chFilterQuality = quality_filter(chUniqueSam)
         chDedup = dedup(chFilterQuality)
     }
+
+    chDedup.view()
+
+    /*
 
     // Filter the DAC files
     if (params.exclude_dac_regions) {
