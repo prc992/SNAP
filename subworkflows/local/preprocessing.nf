@@ -53,6 +53,13 @@ workflow PREPROCESSING {
 
     chSampleSheetFasta.view()
 
+    chSampleInfo = Channel.of("NO_DATA")
+    chGenomesInfo = Channel.of("NO_DATA")
+    chFastaQC = Channel.of("NO_DATA")
+    refDir = Channel.of("NO_DATA")
+    chFilesReportInitialization = Channel.of("NO_DATA")
+    chInitReport = Channel.of("NO_DATA")
+
 
     chFastaQC = Channel.of("NO_DATA")
     chFilesReportInitialization = Channel.of("NO_DATA")
