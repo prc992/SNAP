@@ -16,7 +16,7 @@ analysis_results*/*
 analysis_*/*
 work/*
 *_sample_sheet.csv
-*_test_*.csv
+_test*.csv
 *multiqc.random.regions.bed
 /ref_files/genome/SNP*.txt
 *.chrom.sizes

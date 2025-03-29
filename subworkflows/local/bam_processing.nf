@@ -43,6 +43,7 @@ workflow BAM_PROCESSING {
         chFilterPP = Channel.of("NO_DATA")
         chLibComplexPreseq = Channel.of("NO_DATA")
         chUniqueSam = Channel.of("NO_DATA")
+        chFilterQuality = Channel.of("NO_DATA")
         chFilteredFiles = Channel.of("NO_DATA")
     }
     else{
