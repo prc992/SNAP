@@ -58,7 +58,7 @@ workflow PREPROCESSING {
     if (chSkipAlignment) {
         chSampleInfo = chSampleSheetBams \
             | splitCsv(header:true) \
-            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam, row.control,row.read_method) }
+            | map { row-> tuple(row.sampleId,row.enrichment_mark, row.bam, row.control, row.read_method) 
             }
     } else {
         chSampleInfo = chSampleSheetFasta \
