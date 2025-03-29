@@ -16,7 +16,7 @@ process createSamplesheetFasta {
     """
     now=\$(date +'%Y-%m-%d-%H-%M-%S')
     filename="snap-samplesheet-fasta-\$now.csv"
-    echo "sampleId,enrichment_mark,read1,read2,control" > \$filename
+    echo "sampleId,enrichment_mark,control,read_method" > \$filename
 
     for subfolder in \$(find ${sample_dir} -mindepth 1 -maxdepth 1 -type d); do
         sampleId=\$(basename \$subfolder)
