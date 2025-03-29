@@ -42,6 +42,10 @@ workflow BAM_PROCESSING {
     chFilesReportBamProcessing = Channel.of("NO_DATA")
     chBAMProcessReport = Channel.of("NO_DATA")
 
+    chAlign.view() // Debugging: view the contents of the chAlign channel
+
+    /*
+
     if (params.deduped_bam) {
         chDedup = chAlign.map { sampleId,control ,bam, alignYml -> 
             tuple(sampleId, control,bam, null, alignYml)}
