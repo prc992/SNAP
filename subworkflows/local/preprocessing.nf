@@ -51,9 +51,14 @@ workflow PREPROCESSING {
         }    
     }
 
+    chSampleSheetFasta.view()
+
+
     chFastaQC = Channel.of("NO_DATA")
     chFilesReportInitialization = Channel.of("NO_DATA")
     chInitReport = Channel.of("NO_DATA")
+
+    /*
     
     if (chSkipAlignment) {
         chSampleInfo = chSampleSheetBams \
@@ -102,6 +107,6 @@ workflow PREPROCESSING {
     emit: fastqc_files = chFastaQC
     emit: ref_dir = refDir
     emit: files_report_initialization = chFilesReportInitialization
-    emit: init_report = chInitReport
+    emit: init_report = chInitReport*/
 
 }
