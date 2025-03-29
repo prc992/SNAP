@@ -40,6 +40,9 @@ workflow PREPROCESSING {
         } else if (params.sample_dir_bam) {
             chSampleSheetBams = createSamplesheetBam(params.sample_dir_bam, params.enrichment_mark, params.sample_control)
         } 
+
+    
+    chSampleSheetBams.view()
         
     } else {
         if (params.samplesheetfasta) {
