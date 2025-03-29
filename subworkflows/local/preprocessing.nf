@@ -108,12 +108,12 @@ workflow PREPROCESSING {
                 moveSoftFiles(chInitReport)
             }
         }
-    
+    */
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
     emit: fastqc_files = chFastaQC
     emit: ref_dir = refDir
     emit: files_report_initialization = chFilesReportInitialization
-    emit: init_report = chInitReport*/
+    emit: init_report = chInitReport
 
 }
