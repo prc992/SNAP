@@ -90,13 +90,14 @@ workflow  {
 
     
     if ('ALIGNMENT' in run_steps) {
-
+        
         if (skip_alignment) {
-            chAlign = chSampleInfo.map { sampleId, enrichment_mark, bam,control -> 
-                        tuple(sampleId, control, file(bam), enrichment_mark) 
+            chAlign = chSampleInfo.map { sampleId, enrichment_mark, bam,control,read_method -> 
+                        tuple(sampleId, enrichment_mark, control, read_method,file(bam),null) 
                         }
             chFilesReportAlignment = Channel.of("NO_DATA")
             chAlignmentReport = Channel.of("NO_DATA")
+            chAlign.view()
 
         } else {
             ALIGNMENT (chSampleInfo,chGenome,chGenomeIndex,\
