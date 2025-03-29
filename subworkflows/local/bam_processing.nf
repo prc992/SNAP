@@ -64,9 +64,6 @@ workflow BAM_PROCESSING {
         chDedup = dedup(chFilterQuality)
     }
 
-    //chDedup.view()
-
-    /*
 
     // Filter the DAC files
     if (params.exclude_dac_regions) {
@@ -76,9 +73,6 @@ workflow BAM_PROCESSING {
         chDACFilteredFiles = chDedup
     }
 
-    chDACFilteredFiles.view()
-
-    /*
     chCreateStatsSamtoolsfiltered = createStatsSamtoolsfiltered(chDACFilteredFiles)
     chIndexFiles = index_sam(chDACFilteredFiles)
 
@@ -139,7 +133,7 @@ workflow BAM_PROCESSING {
         moveSoftFiles(chBAMProcessReport)
     } else {
         chBAMProcessReport = Channel.of("NO_DATA")
-    }*/
+    }
 
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
