@@ -19,3 +19,4 @@ work/*
 *multiqc.random.regions.bed
 /ref_files/genome/SNP*.txt
 *.chrom.sizes
+*folder_analysis*
