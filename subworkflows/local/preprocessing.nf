@@ -96,8 +96,6 @@ workflow PREPROCESSING {
                 moveSoftFiles(chInitReport)
             }
         }
-
-    chSampleInfo.view()
     
     emit: sample_info = chSampleInfo
     emit: genomes_info = chGenomesInfo
