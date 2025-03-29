@@ -34,14 +34,12 @@ workflow BAM_PROCESSING {
 
  
     main:
-
     chDACFilteredFiles = Channel.of("NO_DATA")
     chIndexFiles = Channel.of("NO_DATA")
     chSNPSMaSHPlot = Channel.of("NO_DATA")
     chLibComplexPreseq = Channel.of("NO_DATA")
     chFilesReportBamProcessing = Channel.of("NO_DATA")
     chBAMProcessReport = Channel.of("NO_DATA")
-
 
     if (params.deduped_bam) {
 
