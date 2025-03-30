@@ -23,6 +23,7 @@ process trim {
 
   """
   echo "Running Trim Galore for sample $sampleId in $read_method mode"
+  echo "Command executed: $trimCommand"
   $trimCommand
 
   cat <<-END_VERSIONS > trim_mqc_versions.yml
