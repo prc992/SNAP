@@ -19,7 +19,7 @@ process align {
 
   script:
   """
-  bwa mem $genomeFile $trimmedFiles -t $task.cpus $bwa_params | \
+  bwa mem $genomeFile $trimmedFiles -t $task.cpus $params.bwa_params | \
    samtools view --threads $task.cpus -Sb -u > $strBam
 
   cat <<-END_VERSIONS > align_mqc_versions.yml
