@@ -17,10 +17,10 @@ process quality_filter {
 
   if (read_method == "PE") {
     // Only apply inclusion flag (-f) for paired-end
-    filterCommand = "samtools view -bh -f ${params.filter_samtools.inclusion_flag} -F ${params.filter_samtools.exclusion_flag} -q ${params.filter_samtools.min_qc} --threads $task.cpus $sampleBam > $strBam"
+    filterCommand = "samtools view -bh ${params.filter_samtools_pe_params} --threads $task.cpus $sampleBam > $strBam"
   } else {
     // Skip -f for single-end
-    filterCommand = "samtools view -bh -F ${params.filter_samtools.exclusion_flag} -q ${params.filter_samtools.min_qc} --threads $task.cpus $sampleBam > $strBam"
+    filterCommand = "samtools view -bh ${params.filter_samtools_se_params} --threads $task.cpus $sampleBam > $strBam"
   }
 
   """
