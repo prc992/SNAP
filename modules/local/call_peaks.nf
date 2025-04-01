@@ -22,7 +22,7 @@ process call_peaks {
     bamFormat = "BAM"
   }
 
-  if (sampleControl.name == "null") {
+  if (sampleControl.name == "${params.dummy_control_file_name}") {
     macs2Command = """
     macs2 \\
       callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f ${bamFormat} --extsize 146 --nomodel \\
