@@ -40,7 +40,7 @@ process call_peaks {
   }
 
   """
-  echo "Running MACS2 callpeak for sample $sampleId in $read_method mode (format: $bamFormat)"
+  echo "Running MACS2 callpeak for sample $sampleId in $read_method mode (format: $bamFormat) $sampleControl.name"
   $macs2Command
 
   cat <<-END_VERSIONS > macs2_mqc_versions.yml
