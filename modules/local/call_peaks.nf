@@ -14,27 +14,34 @@ process call_peaks {
 
   script:
   def bamFormat = ""
+  def macs2Command = ""
+
   if (read_method == "PE") {
     bamFormat = "BAMPE"
   } else {
     bamFormat = "BAM"
   }
 
+  if (sampleControl.name == "null") {
+    macs2Command = """
+    macs2 \\
+      callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f ${bamFormat} --extsize 146 --nomodel \\
+      -t $sampleBam \\
+      -n $sampleId --bdg
+    """
+  } else {
+    macs2Command = """
+    macs2 \\
+      callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f ${bamFormat} --extsize 146 --nomodel \\
+      -t $sampleBam \\
+      -c $sampleControl \\
+      -n $sampleId --bdg
+    """
+  }
+
   """
   echo "Running MACS2 callpeak for sample $sampleId in $read_method mode (format: $bamFormat)"
-
-  if [ ! -s ${sampleControl} ]; then
-    macs2 \\
-    callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f $bamFormat --extsize 146 --nomodel \\
-    -t $sampleBam \\
-    -n $sampleId --bdg
-  else
-    macs2 \\
-    callpeak --SPMR -B -q 0.01 --keep-dup 1 -g hs -f $bamFormat --extsize 146 --nomodel \\
-    -t $sampleBam \\
-    -c $sampleControl \\
-    -n $sampleId --bdg
-  fi
+  $macs2Command
 
   cat <<-END_VERSIONS > macs2_mqc_versions.yml
   "${task.process}":
