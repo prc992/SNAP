@@ -58,7 +58,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
 
     // Match the samples with the controls
-    def fake_control = file(params.dummy_control)
+    def fake_control = file(params.dummy_control_file)
     chSamplesListCombine = chBAMProcessedFiles.combine(chBAMProcessedFiles)
 
     chSamplesListFilter = chSamplesListCombine.filter { row -> row[2] == row[6] }.map { row -> [row[0],row[1],row[3], row[4], row[10]] }
