@@ -27,5 +27,7 @@ process moveSoftFiles {
     if [ "${params.cleanup}" == "true" ]; then
         rm -rf ${workflow.workDir} || true
     fi
+
+    echo "Finalizing moveSoftFiles step"
     """
 }
