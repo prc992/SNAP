@@ -29,5 +29,6 @@ process moveSoftFiles {
     fi
 
     echo "Finalizing moveSoftFiles step" >&1
+    echo "Stub output for testing" > .command.out
     """
 }
