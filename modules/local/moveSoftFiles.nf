@@ -25,7 +25,7 @@ process moveSoftFiles {
     find ${workflow.projectDir}/${params.outputFolder} -type f -name 'igv_housekeeping_genes_mqc.html' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\;
 
     if [ "${params.cleanup}" == "true" ]; then
-        rm -rf ${workflow.workDir}
+        rm -rf ${workflow.workDir} || true
     fi
     """
 }
