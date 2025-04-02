@@ -28,6 +28,6 @@ process moveSoftFiles {
         rm -rf ${workflow.workDir} || true
     fi
 
-    echo "Finalizing moveSoftFiles step"
+    echo "Finalizing moveSoftFiles step" >&1
     """
 }
