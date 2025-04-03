@@ -268,3 +268,67 @@ output_folder/
 #### `stats_files/`
 - Contains **all the statistics** related to sequencing reads, alignment metrics, and quality filtering.
 
+## Usage Examples
+
+Below are some practical examples showing how to run the SNAP pipeline in different scenarios. These examples aim to help you get started quickly, whether you’re working with FASTA or BAM files, using spreadsheets or directory-based input.
+
+#### `Example 1: Running the pipeline with FASTA files using a spreadsheet/`
+
+In this example, we assume you have sequencing files in compressed FASTA format (.fasta.gz) and a spreadsheet that specifies the location of each read file. Your reference genome is hg19.
+
+You can run the pipeline with the following command:
+
+`nextflow run main.nf -profile docker_light_macos --genome hg19 --outputFolder result_analysis --samplesheetfasta control_sample_sheet.csv`
+
+Explanation of the parameters:
+
+	-profile docker_light_macos** - chooses the appropriate environment profile (in this case, lightweight Docker for macOS)
+	--genome hg19 — specifies the reference genome
+	--outputFolder result_analysis — sets the output directory
+	--samplesheetfasta control_sample_sheet.csv — provides the path to your input spreadsheet (FASTA mode)
+ 
+#### `Example 2: Running the pipeline with FASTA files organized in subdirectories (no spreadsheet)`
+
+In this example, your FASTA files are stored in a root directory (sample_folder), where each sample has its own subdirectory named after the sample, and the corresponding .fasta.gz files are located inside these subdirectories.
+
+If your files follow this structure, you do not need to manually create a sample sheet — the pipeline will generate it automatically.
+
+You can run the pipeline with the following command:
+
+`nextflow run main.nf -profile docker_light_macos --genome hg19 --outputFolder result_analysis --sample_dir_fasta sample_folder`
+
+#### `Example 3: Running the pipeline with raw BAM files (paired-end or single-end)`
+
+In this example, you are working with raw BAM files (i.e., generated directly after alignment) and want to provide them via a directory. The pipeline can process both paired-end (PE) and single-end (SE) BAMs.
+
+By default, the pipeline assumes the reads are paired-end. If your data is single-end, you must explicitly set the parameter --read_method SE.
+
+You can run the pipeline with one of the following commands, depending on your data type:
+
+For paired-end BAM files (default):
+
+`nextflow run main.nf -profile docker_light_macos --genome hg19 --outputFolder result_analysis --sample_dir_bam sample_folder`
+
+For single-end BAM files:
+
+`nextflow run main.nf -profile docker_light_macos --genome hg19 --outputFolder result_analysis --sample_dir_bam sample_folder --read_method SE`
+
+#### `Example 4: Running the pipeline with end motif analysis profile`
+
+This example shows how to run the pipeline specifically to prioritize end motif analysis. A dedicated profile, end_motif_analysis, was created for this purpose.
+
+In this profile: We set -q 0 in Trim Galore, disabling quality-based trimming.
+ 
+This avoids removing biologically meaningful bases at the ends of reads due to low quality scores, which helps preserve true fragment ends — a crucial aspect for reliable motif discovery.
+
+The pipeline also sets --until FRAGMENTS_PROCESSING automatically, stopping the execution right after generating the fragment files, which are used for motif analysis.
+
+ You can run the pipeline with:
+
+ `nextflow run main.nf -profile docker_light_macos,end_motif_analysis --genome hg19 --outputFolder result_analysis --sample_dir_fasta sample_folder`
+
+ Output of interest:
+
+ After execution, motif analysis results will be found in:
+
+ `motifs/<sample_name>/<sample_id>_NMER_bp_motif.bed`
