@@ -317,12 +317,11 @@ For single-end BAM files:
 
 This example shows how to run the pipeline specifically to prioritize end motif analysis. A dedicated profile, end_motif_analysis, was created for this purpose.
 
-In this profile:
-	•	We set -q 0 in Trim Galore, disabling quality-based trimming.
+In this profile: We set -q 0 in Trim Galore, disabling quality-based trimming.
  
 This avoids removing biologically meaningful bases at the ends of reads due to low quality scores, which helps preserve true fragment ends — a crucial aspect for reliable motif discovery.
 
-	•	The pipeline also sets --until FRAGMENTS_PROCESSING automatically, stopping the execution right after generating the fragment files, which are used for motif analysis.
+The pipeline also sets --until FRAGMENTS_PROCESSING automatically, stopping the execution right after generating the fragment files, which are used for motif analysis.
 
  You can run the pipeline with:
 
