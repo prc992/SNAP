@@ -41,7 +41,7 @@ Sample_folder/
 ### Automatic Spreadsheet Generation
 When using this method, the pipeline will generate a **spreadsheet** (`CSV format`) with the following structure: 
 
-sampleId, enrichment_mark, read1, read2
+sampleId, enrichment_mark, read1, read2, control
 
 - The pipeline supports both **paired-end** and **single-end** FASTA files.
 - You can specify which **enrichment mark** should be calculated using the `--enrichment_mark` parameter.
@@ -71,10 +71,11 @@ Then, set:
 ## Providing Input via Spreadsheet (FASTA)
 To provide input using a spreadsheet, use the `--samplesheetfasta` parameter. This expects a **CSV file** with the following structure:
 
-sampleId, enrichment_mark, read1, read2
+sampleId, enrichment_mark, read1, read2,control
 
 - The **enrichment_mark** field can be left blank if no enrichment mark calculation is required.
 - The **read2** field can be left blank for **single-end** FASTA files.
+- The **control** field is used when you wanto to indicate which sample is going to be used as a control, in that case you just provide the sampleid of the samples here, if you left blank the samples will have no control sample.
 
 ---
 
