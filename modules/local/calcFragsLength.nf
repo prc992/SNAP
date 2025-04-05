@@ -15,8 +15,8 @@ process calcFragsLengthDistribuition {
   def bamPEFragmentSizeCommand = ""
 
   if (read_method == "PE") {
-    //bamPEFragmentSizeCommand = "bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt"
-    bamPEFragmentSizeCommand = "touch ${sampleId}.fragment_sizes.txt"
+    bamPEFragmentSizeCommand = "bamPEFragmentSize -b $sortedBam --outRawFragmentLengths ${sampleId}.fragment_sizes.txt"
+    //bamPEFragmentSizeCommand = "touch ${sampleId}.fragment_sizes.txt"
   } else {
     bamPEFragmentSizeCommand = "touch mark_for_deletion_${sampleId}.fragment_sizes.txt"
   }
