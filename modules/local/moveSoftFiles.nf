@@ -25,10 +25,6 @@ process moveSoftFiles {
     find ${workflow.projectDir}/${params.outputFolder} -type f -name 'mark_for_deletion_*' -exec rm {} \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name 'igv_housekeeping_genes_mqc.html' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
 
-    if [ "${params.cleanup}" == "true" ]; then
-        rm -rf ${workflow.workDir} || true
-    fi
-
     echo "Finalizing moveSoftFiles step" >&1
     echo "Stub output for testing" > .command.out
     """
