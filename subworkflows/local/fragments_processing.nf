@@ -39,7 +39,7 @@ workflow FRAGMENTS_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
     
-    chBedFiles = bam_to_bed(chBAMProcessedFiles) 
+    chBedFiles = bam_to_bed(chNameSortedFiles) 
 
     chUniqueFrags = unique_frags(chBedFiles).collect()
     chFragFilesReport = frags_report(chUniqueFrags,chMultiQCFragsHeader,chReportFrags)
