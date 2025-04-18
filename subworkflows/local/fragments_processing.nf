@@ -34,7 +34,7 @@ workflow FRAGMENTS_PROCESSING {
     //************************************************************************
         
     //Fragment Length Distribution *******************************************
-    chFragmentsSize = calcFragsLengthDistribuition(chNameSortedFiles).collect()
+    chFragmentsSize = calcFragsLengthDistribuition(chBAMProcessedIndexFiles).collect()
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
