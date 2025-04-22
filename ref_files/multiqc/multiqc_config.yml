@@ -45,15 +45,16 @@ custom_content:
     - merged_enrichment_H3K4ME3
     - merged_enrichment_H3K27AC
     - fragment_lengths
-    - my_custom_content_image
+    - dendogram_of_samples_by_snp_profile
 
 custom_data:
-  my_custom_content_image:
+  dendogram_of_samples_by_snp_profile:
     section_name: "Dendrogram of Samples by SNP Profile"
     order: 1000
 sp:
-  my_custom_content_image:
+  dendogram_of_samples_by_snp_profile:
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
+
 ignore_images: false
 
 table_columns_visible:
