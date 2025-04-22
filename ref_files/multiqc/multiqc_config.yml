@@ -56,7 +56,8 @@ custom_data:
 sp:
   dendogram_of_samples_by_snp_profile:
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
-  
+
+custom_data:
   dendogram_of_samples_by_snp_profile_v2:
     section_name: "Dendrogram of Samples by SNP Profile v2"
     description: "Dendrogram of Samples by SNP Profile v2"
