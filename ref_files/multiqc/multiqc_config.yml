@@ -50,11 +50,13 @@ custom_content:
 custom_data:
   dendogram_of_samples_by_snp_profile:
     section_name: "Dendrogram of Samples by SNP Profile"
+    description: "Dendrogram of Samples by SNP Profile v3"
     order: 1000
 sp:
   dendogram_of_samples_by_snp_profile:
+    description: "Dendrogram of Samples by SNP Profile v2"  
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
-    description: "Dendrogram of Samples by SNP Profile v2"
+    
 
 ignore_images: false
 
