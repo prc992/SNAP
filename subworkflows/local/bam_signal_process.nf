@@ -93,7 +93,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chPeaksFilesReport = peaks_report(chNarrowPeakFiles,chMultiQCPeaksHeader,chReportPeaks)
 
-    //chPeaksAnnotationReport = peaks_annotations(chNarrowPeakFiles,chRGenomicAnnotation)
+    chPeaksAnnotationReport = peaks_annotations(chNarrowPeakFiles,chRGenomicAnnotation)
     
     //ENRICHMENT *********************************************************************
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
