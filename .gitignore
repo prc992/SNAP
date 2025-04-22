@@ -14,6 +14,7 @@
 .nextflow/*
 analysis_results*/*
 analysis_*/*
+*_test_*
 work/*
 *_sample_sheet.csv
 *_test*.csv
