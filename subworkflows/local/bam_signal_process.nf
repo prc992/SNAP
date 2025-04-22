@@ -15,6 +15,26 @@ include {quality_report_lite} from '../../modules/local/quality_report_lite'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
+process peaks_annotations {
+    label 'low_cpu_low_mem'
+    container = params.containers.snap_genomic_annotation
+    tag "All Samples" 
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/peak_annotation/", mode : 'copy'
+    
+    input:
+    path (chNarrowPeakFiles)
+    each path (chRGenomicAnnotation)
+
+    output:
+    path ("*.jpg")
+
+    script:
+    """
+    Rscript $chGenomicAnnotation -i . -o .
+    """
+}
+
 workflow BAM_SIGNAL_PROCESSING {
 
     take:
@@ -32,6 +52,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chIGVFilestoSessions
     chMultiQCConfig
     chEnrichmentScript
+    chRGenomicAnnotation
     chPileUpBED
     chReportPeaks
     chReportEnrichment
@@ -71,6 +92,8 @@ workflow BAM_SIGNAL_PROCESSING {
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
 
     chPeaksFilesReport = peaks_report(chNarrowPeakFiles,chMultiQCPeaksHeader,chReportPeaks)
+
+    chPeaksAnnotationReport = peaks_annotations(chNarrowPeakFiles,chRGenomicAnnotation)
     
     //ENRICHMENT *********************************************************************
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()

@@ -38,8 +38,8 @@ workflow  {
 
     //Auxiliar code
     chEnrichmentScript= Channel.fromPath("$params.pathEnrichmentScript")
-    chRfrag_plotFragDist = Channel.fromPath("$params.pathRfrag_plotFragDist")
-    chRComparison = Channel.fromPath("$params.pathRComparison")
+    //chRfrag_plotFragDist = Channel.fromPath("$params.pathRfrag_plotFragDist")
+    //chRComparison = Channel.fromPath("$params.pathRComparison")
     chRPileups= Channel.fromPath("$params.pathRPileups")
     chSNPSMaSH = Channel.fromPath("$params.pathSNPSMaSH")
     chSNPSMaSHPyPlot = Channel.fromPath("$params.pathSNPSMaSHPlot")
@@ -50,6 +50,7 @@ workflow  {
     chReportQualityLite = Channel.fromPath("$params.pathReportQualityLite")
     chMergeReportEnrichment = Channel.fromPath("$params.pathMergeReportEnrichment")
     chIGVFilestoSessions = Channel.fromPath("$params.pathIGVFilestoSessions")
+    chRGenomicAnnotation = Channel.fromPath("$params.pathRGenomicAnnotation")
 
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
@@ -145,7 +146,7 @@ workflow  {
         BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,skip_alignment,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
                             chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,
-                            chMultiQCConfig,chEnrichmentScript,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,
+                            chMultiQCConfig,chEnrichmentScript,chRGenomicAnnotation,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,
                             chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess,
                             chFragReport)
 
