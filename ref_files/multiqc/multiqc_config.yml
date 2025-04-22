@@ -46,15 +46,23 @@ custom_content:
     - merged_enrichment_H3K27AC
     - fragment_lengths
     - dendogram_of_samples_by_snp_profile
+    - dendogram_of_samples_by_snp_profile_v2
 
 custom_data:
   dendogram_of_samples_by_snp_profile:
     section_name: "Dendrogram of Samples by SNP Profile"
-    description: "Dendrogram of Samples by SNP Profile v3"
+    description: "Dendrogram of Samples by SNP Profile"
     order: 1000
 sp:
   dendogram_of_samples_by_snp_profile:
-    description: "Dendrogram of Samples by SNP Profile v2"  
+    fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
+  
+  dendogram_of_samples_by_snp_profile_v2:
+    section_name: "Dendrogram of Samples by SNP Profile v2"
+    description: "Dendrogram of Samples by SNP Profile v2"
+    order: 1000
+sp:
+  dendogram_of_samples_by_snp_profile_v2:
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
     
 
