@@ -31,7 +31,7 @@ process peaks_annotations {
 
     script:
     """
-    Rscript $chGenomicAnnotation -i . -o .
+    Rscript $chRGenomicAnnotation -i . -o .
     """
 }
 
