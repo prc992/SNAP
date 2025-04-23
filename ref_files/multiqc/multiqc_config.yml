@@ -56,29 +56,22 @@ custom_data:
 
   genomic_annotation:
     section_name: "Genomic Annotation"
+    plot_type: 'html'
+    data: |
+      <b>Combined TSS Distribution</b><br>
+      <img src="multi_sample_pie_charts_grid_with_percentages.jpg" width="600"><br><br>
+
+      <b>Combined TSS Distribution v2</b><br>
+      <img src="combined_TSS_distribution.jpg" width="600"><br><br>
+
+      <b>Combined TSS Distribution v3</b><br>
+      <img src="concentric_donut_chart.jpg" width="600"><br><br>
     order: 1010
-  plot_1:
-    description_html:  <b>Combined TSS Distribution </b>
-    parent_id: genomic_annotation
-  plot_2:
-    description_html:  <b>Combined TSS Distribution v2 </b>
-    parent_id: genomic_annotation
-  plot_3:
-    description_html:  <b>Combined TSS Distribution v3  </b>
-    parent_id: genomic_annotation
 
 sp:
   dendogram_of_samples_by_snp_profile:
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
-  plot_1:
-    fn: "multi_sample_pie_charts_grid_with_percentages.jpg"
-  plot_2:
-    fn: "combined_TSS_distribution.jpg"
-  plot_3:
-    fn: "concentric_donut_chart.jpg"
 
-    
-  
 
 ignore_images: false
 
