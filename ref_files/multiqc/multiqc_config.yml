@@ -55,15 +55,18 @@ custom_data:
     order: 1000
 
   tsne_clustering:
-    section_name: "t-SNE Clustering of Samples"
-    description: "Visualization of sample clustering using t-SNE on SNP data."
+    section_name: Genomic Annotation"
+    description: "Combined TSS Distribution"
     order: 1010
 
 sp:
   dendogram_of_samples_by_snp_profile:
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
   tsne_clustering:
-    fn: "combined_TSS_distribution.jpg"    
+    fn: "combined_TSS_distribution.jpg"
+    extra_fn:
+      - "concentric_donut_chart.jpg"
+      - "multi_sample_pie_charts_grid_with_percentages.jpg"    
 
 ignore_images: false
 
