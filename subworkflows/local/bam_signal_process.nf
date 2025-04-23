@@ -20,7 +20,7 @@ process peaks_annotations {
     container = params.containers.snap_genomic_annotation
     tag "All Samples" 
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/peak_annotation/", mode : 'copy'
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
     
     input:
     path (chNarrowPeakFiles)
