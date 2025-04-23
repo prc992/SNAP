@@ -437,7 +437,7 @@ if (output_grid_plot) {
     tryCatch({
         #pdf(file.path(figures_dir, "multi_sample_pie_charts_grid_with_percentages.pdf"),
         #    width = 3*n_cols + 4, height = 4*n_rows + 4)
-        jpeg(file.path(output_dir, "z1_multi_sample_pie_charts_grid_with_percentages"),
+        jpeg(file.path(output_dir, "z1_multi_sample_pie_charts_grid_with_percentages.jpg"),
             width = 3*n_cols + 4, height = 4*n_rows + 4, units = "in", res = 300)
         
         #title Genomic Distribution Across Samples
