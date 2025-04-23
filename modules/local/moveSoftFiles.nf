@@ -19,6 +19,8 @@ process moveSoftFiles {
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*idxstats' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*stats' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*metrics.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
+    find ${workflow.projectDir}/${params.outputFolder}/reports/multiqc/ -type f -name '*.csv' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
+    find ${workflow.projectDir}/${params.outputFolder}/reports/multiqc/ -type f -name '*.vcf' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*gz_trimming_report.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*-dummy.txt' -exec rm {} \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name 'mark_for_deletion_*' -exec rm {} \\; || true
