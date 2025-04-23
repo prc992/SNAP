@@ -58,14 +58,16 @@ custom_data:
     section_name: "Genomic Annotation"
     plot_type: 'html'
     data: |
-      <b>Combined TSS Distribution</b><br>
-      <img src="multi_sample_pie_charts_grid_with_percentages.jpg" width="600"><br><br>
+      <b>Genomic Distribution Across Samples</b><br>
+      <img src="z1_multi_sample_pie_charts_grid_with_percentages.jpg" width="600"><br><br>
+    
+      <br>
+      <img src="z3_concentric_donut_chart.jpg" width="600"><br><br>
 
-      <b>Combined TSS Distribution v2</b><br>
-      <img src="combined_TSS_distribution.jpg" width="600"><br><br>
+      <b>Distribution of peaks relative to TSS</b><br>
+      <img src="z2_combined_TSS_distribution.jpg" width="600"><br><br>
 
-      <b>Combined TSS Distribution v3</b><br>
-      <img src="concentric_donut_chart.jpg" width="600"><br><br>
+
     order: 1010
 
 sp:

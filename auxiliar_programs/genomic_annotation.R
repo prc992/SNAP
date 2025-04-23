@@ -364,7 +364,7 @@ create_tss_distribution_plot <- function(anno_list, figures_dir, base_height = 6
     
     # Create the plot file
     #pdf(file.path(figures_dir, "combined_TSS_distribution.pdf"), width = 10, height = plot_height)
-    jpeg(file.path(output_dir, "combined_TSS_distribution.jpg"),width = 10, height = plot_height, units = "in", res = 300)
+    jpeg(file.path(output_dir, "z2_combined_TSS_distribution.jpg"),width = 10, height = plot_height, units = "in", res = 300)
     
 
     # Create the plot
@@ -437,7 +437,7 @@ if (output_grid_plot) {
     tryCatch({
         #pdf(file.path(figures_dir, "multi_sample_pie_charts_grid_with_percentages.pdf"),
         #    width = 3*n_cols + 4, height = 4*n_rows + 4)
-        jpeg(file.path(output_dir, "multi_sample_pie_charts_grid_with_percentages.jpg"),
+        jpeg(file.path(output_dir, "z1_multi_sample_pie_charts_grid_with_percentages"),
             width = 3*n_cols + 4, height = 4*n_rows + 4, units = "in", res = 300)
         
         #title Genomic Distribution Across Samples
@@ -533,7 +533,7 @@ tryCatch({
             
             # Create donut chart
             #pdf(file.path(figures_dir, "concentric_donut_chart.pdf"), width = pdf_width, height = pdf_height)
-            jpeg(file.path(output_dir, "concentric_donut_chart.jpg"),width = pdf_width, height = pdf_height, units = "in", res = 300)
+            jpeg(file.path(output_dir, "z3_concentric_donut_chart.jpg"),width = pdf_width, height = pdf_height, units = "in", res = 300)
             
             par(mar = c(max(1, n_samples/5), 1, 3, 1))
             # Title Genomic Feature Distribution\nAcross Samples
