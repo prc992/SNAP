@@ -58,13 +58,13 @@ custom_data:
     section_name: "Genomic Annotation"
     order: 1010
   plot_1:
-    description_html: Combined TSS Distribution
+    description_html:  <b>Combined TSS Distribution </b>
     parent_id: genomic_annotation
   plot_2:
-    description_html: Combined TSS Distribution v2
+    description_html:  <b>Combined TSS Distribution v2 </b>
     parent_id: genomic_annotation
   plot_3:
-    description_html: Combined TSS Distribution v3
+    description_html:  <b>Combined TSS Distribution v3  </b>
     parent_id: genomic_annotation
 
 sp:
