@@ -46,7 +46,7 @@ custom_content:
     - merged_enrichment_H3K27AC
     - fragment_lengths
     - dendogram_of_samples_by_snp_profile
-    - dendogram_of_samples_by_snp_profile_v2
+    - tsne_clustering
 
 custom_data:
   dendogram_of_samples_by_snp_profile:
