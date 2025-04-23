@@ -20,7 +20,7 @@ process moveSoftFiles {
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*stats' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*metrics.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
     find ${workflow.projectDir}/${params.outputFolder}/reports/multiqc/ \
-        -type f ! \( -name "*.html" -o -name "*.jpg" \) \
+        -type f ! ( -name "*.html" -o -name "*.jpg" ) \
         -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*gz_trimming_report.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*-dummy.txt' -exec rm {} \\; || true
