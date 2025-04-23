@@ -55,7 +55,7 @@ custom_data:
     order: 1000
 
   tsne_clustering:
-    section_name: Genomic Annotation"
+    section_name: Genomic Annotation
     description: "Combined TSS Distribution"
     order: 1010
 
