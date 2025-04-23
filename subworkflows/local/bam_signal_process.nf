@@ -128,6 +128,7 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chIGVSessionAll)
         .combine(chPeakFilesAll)
         .combine(chPeaksFilesReportAll)
+        .combine(chPeaksAnnotationReport)
         .combine(chEnrichmentFilesCSVAll)
         .combine(chEnrichmentFilesReportAll)
         .combine(chMergedEnrichmentReportAll)

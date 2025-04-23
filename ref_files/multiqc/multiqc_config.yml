@@ -63,7 +63,7 @@ sp:
   dendogram_of_samples_by_snp_profile:
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
   tsne_clustering:
-    fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"    
+    fn: "combined_TSS_distribution.jpg"    
 
 ignore_images: false
 
