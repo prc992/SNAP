@@ -63,14 +63,20 @@ custom_data:
     parent_id: tsne_clustering
   plot_2:
     parent_id: tsne_clustering
+  plot_3:
+    parent_id: tsne_clustering
 
 sp:
   dendogram_of_samples_by_snp_profile:
     fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
   plot_1:
-    fn: "combined_TSS_distribution.jpg"
+    fn: "multi_sample_pie_charts_grid_with_percentages.jpg"
   plot_2:
+    fn: "combined_TSS_distribution.jpg"
+  plot_3:
     fn: "concentric_donut_chart.jpg"
+
+    
   
 
 ignore_images: false
