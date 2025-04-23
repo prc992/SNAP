@@ -57,15 +57,21 @@ custom_data:
   tsne_clustering:
     section_name: "Genomic Annotation"
     description: |
-      Combined TSS Distribution<br>
-      <img src="combined_TSS_distribution.jpg" width="600"><br>
-      <img src="concentric_donut_chart.jpg" width="600"><br>
-      <img src="multi_sample_pie_charts_grid_with_percentages.jpg" width="600"><br>
+      Combined TSS Distribution
     order: 1010
+  plot_1:
+    parent_id: tsne_clustering
+  plot_2:
+    parent_id: tsne_clustering
 
 sp:
   dendogram_of_samples_by_snp_profile:
-    fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"  
+    fn: "Dendrogram_of_Samples_by_SNP_Profile.jpg"
+  plot_1:
+    fn: "combined_TSS_distribution.jpg"
+  plot_2:
+    fn: "concentric_donut_chart.jpg"
+  
 
 ignore_images: false
 
