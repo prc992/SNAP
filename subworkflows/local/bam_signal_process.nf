@@ -27,11 +27,11 @@ process peaks_annotations {
     each path (chRGenomicAnnotation)
 
     output:
-    path ("*.jpg")
+    path ("*.*")
 
     script:
     """
-    Rscript $chRGenomicAnnotation -i . -o .
+    Rscript $chRGenomicAnnotation -i . -o . --force_barplot TRUE
     """
 }
 
