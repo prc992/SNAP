@@ -315,10 +315,10 @@ create_genomic_distribution_plot <- function(combined_stats, figures_dir, featur
         scale_fill_manual(values = feature_colors) +
         theme_minimal() +
         theme(
-            axis.text.y = element_text(size = 9),
-            axis.text.x = element_text(size = 9),
+            axis.text.y = element_text(size = 10),
+            axis.text.x = element_text(size = 10),
             legend.position = "right",
-            legend.text = element_text(size = 9),
+            legend.text = element_text(size = 10),
             plot.title = element_text(hjust = 0.5),
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
