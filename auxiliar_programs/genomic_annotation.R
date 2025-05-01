@@ -318,14 +318,13 @@ create_genomic_distribution_plot <- function(combined_stats, figures_dir, featur
             axis.text.y = element_text(size = 6),
             axis.text.x = element_text(size = 8),
             legend.position = "right",
-            legend.text = element_text(size = 8),
+            legend.text = element_text(size = 10),
             plot.title = element_text(hjust = 0.5),
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
             plot.margin = margin(10, 10, 10, 10)
         ) +
         labs(
-            title = "Distribution of peaks across genomic features",
             x = "Frequency (%)",
             y = "Samples"
         ) +
