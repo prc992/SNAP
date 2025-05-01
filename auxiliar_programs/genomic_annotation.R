@@ -350,7 +350,7 @@ create_genomic_distribution_plot <- function(combined_stats, figures_dir, featur
     ggsave(
     filename = file.path(output_dir, output_filename_jpg),
     plot = p_bar,
-    width = 12,
+    width = 10,
     height = plot_height,
     dpi = 300,
     limitsize = FALSE,
