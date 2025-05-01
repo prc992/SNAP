@@ -1,6 +1,7 @@
 nextflow.enable.dsl=2
 
 include {call_peaks} from '../../modules/local/call_peaks'
+include {peaks_annotations} from '../../modules/local/peaks_annotations.nf'
 include {peaks_report} from '../../modules/local/peaks_report.nf'
 include {bam_to_bedgraph} from '../../modules/local/bam_to_bedgraph'
 include {bedgraph_to_bigwig} from '../../modules/local/bedgraph_to_bigwig'
@@ -14,26 +15,6 @@ include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_re
 include {quality_report_lite} from '../../modules/local/quality_report_lite'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
-
-process peaks_annotations {
-    label 'low_cpu_low_mem'
-    container = params.containers.snap_genomic_annotation
-    tag "All Samples" 
-
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
-    
-    input:
-    path (chNarrowPeakFiles)
-    each path (chRGenomicAnnotation)
-
-    output:
-    path ("z*.jpg")
-
-    script:
-    """
-    Rscript $chRGenomicAnnotation -i . -o . --force_barplot TRUE
-    """
-}
 
 workflow BAM_SIGNAL_PROCESSING {
 
