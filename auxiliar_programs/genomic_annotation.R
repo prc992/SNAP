@@ -325,8 +325,7 @@ create_genomic_distribution_plot <- function(combined_stats, figures_dir, featur
             plot.margin = margin(10, 10, 10, 10)
         ) +
         labs(
-            x = "Frequency (%)",
-            y = "Samples"
+            x = "Frequency (%)"
         ) +
         scale_x_continuous(expand = c(0, 0)) +
         scale_y_discrete(limits = rev(levels(factor(combined_stats$Sample)))) +
