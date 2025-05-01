@@ -380,7 +380,15 @@ create_tss_distribution_plot <- function(anno_list, figures_dir, base_height = 6
 
     # Create the plot
     # Title Distribution of peaks relative to TSS
-    print(plotDistToTSS(anno_list, title = ""))
+    #print(plotDistToTSS(anno_list, title = ""))
+
+    tss_plot <- plotDistToTSS(anno_list, title = "") +
+        theme(
+            axis.text.x = element_text(size = 10),
+            axis.text.y = element_text(size = 10),
+            legend.text = element_text(size = 12)
+        )
+    print(tss_plot)
 
     
     cat("TSS distribution plot saved to", file.path(figures_dir, "combined_TSS_distribution.pdf"), "\n")
