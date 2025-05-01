@@ -325,7 +325,8 @@ create_genomic_distribution_plot <- function(combined_stats, figures_dir, featur
             plot.margin = margin(10, 10, 10, 10)
         ) +
         labs(
-            x = "Frequency (%)"
+            x = "Frequency (%)",
+            y = ""
         ) +
         scale_x_continuous(expand = c(0, 0)) +
         scale_y_discrete(limits = rev(levels(factor(combined_stats$Sample)))) +
@@ -447,12 +448,12 @@ if (output_grid_plot) {
     tryCatch({
         #pdf(file.path(figures_dir, "multi_sample_pie_charts_grid_with_percentages.pdf"),
         #    width = 3*n_cols + 4, height = 4*n_rows + 4)
-        jpeg(file.path(output_dir, "z1_multi_sample_pie_charts_grid_with_percentages.jpg"),
-            width = 3*n_cols + 4, height = 4*n_rows + 4, units = "in", res = 300)
+        #jpeg(file.path(output_dir, "z1_multi_sample_pie_charts_grid_with_percentages.jpg"),
+        #    width = 3*n_cols + 4, height = 4*n_rows + 4, units = "in", res = 300)
         
         #title Genomic Distribution Across Samples
-        do.call(gridExtra::grid.arrange, c(pie_charts, ncol = n_cols))
-        dev.off()
+        #do.call(gridExtra::grid.arrange, c(pie_charts, ncol = n_cols))
+        #dev.off()
     }, error = function(e) {
         cat("Note: Could not create grid layout with grid.arrange:", e$message, "\n")
     })
@@ -543,12 +544,12 @@ tryCatch({
             
             # Create donut chart
             #pdf(file.path(figures_dir, "concentric_donut_chart.pdf"), width = pdf_width, height = pdf_height)
-            jpeg(file.path(output_dir, "z3_concentric_donut_chart.jpg"),width = pdf_width, height = pdf_height, units = "in", res = 300)
+            #jpeg(file.path(output_dir, "z3_concentric_donut_chart.jpg"),width = pdf_width, height = pdf_height, units = "in", res = 300)
             
-            par(mar = c(max(1, n_samples/5), 1, 3, 1))
+            #par(mar = c(max(1, n_samples/5), 1, 3, 1))
             # Title Genomic Feature Distribution\nAcross Samples
-            plot(NULL, xlim = c(-plot_margin, plot_margin), ylim = c(-plot_margin, plot_margin), axes = FALSE, 
-                 xlab = "", ylab = "")
+            #plot(NULL, xlim = c(-plot_margin, plot_margin), ylim = c(-plot_margin, plot_margin), axes = FALSE, 
+            #     xlab = "", ylab = "")
             
             # Draw segments
             for (i in 1:nrow(donut_data)) {
