@@ -59,14 +59,10 @@ custom_data:
     plot_type: 'html'
     data: |
       <b>Genomic Distribution Across Samples</b><br>
-      <img src="z1_multi_sample_pie_charts_grid_with_percentages.jpg" width="1000"><br><br>
+      <img src="z1_forced_genomic_distribution_barplot.jpg" width="1000"><br><br>
     
-      <br>
-      <img src="z3_concentric_donut_chart.jpg" width="1000"><br><br>
-
       <b>Distribution of peaks relative to TSS</b><br>
       <img src="z2_combined_TSS_distribution.jpg" width="1000"><br><br>
-
 
     order: 1010
 

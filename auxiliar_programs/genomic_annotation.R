@@ -345,7 +345,7 @@ create_genomic_distribution_plot <- function(combined_stats, figures_dir, featur
     #       limitsize = FALSE)
 
     # Save with a different name if forced
-    output_filename_jpg <- if(force_barplot) "forced_genomic_distribution_barplot.jpg" else "combined_genomic_distribution_barplot.jpg"
+    output_filename_jpg <- if(force_barplot) "z1_forced_genomic_distribution_barplot.jpg" else "combined_genomic_distribution_barplot.jpg"
 
     ggsave(
     filename = file.path(output_dir, output_filename_jpg),
