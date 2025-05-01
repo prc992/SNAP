@@ -27,8 +27,7 @@ process peaks_annotations {
     each path (chRGenomicAnnotation)
 
     output:
-    path ("z1_forced_genomic_distribution_barplot.jpg.jpg")
-    path ("z2_combined_TSS_distribution.jpg.png")
+    path ("z*.jpg")
 
     script:
     """
