@@ -662,7 +662,7 @@ tryCatch({
             scale_y_discrete(limits = rev(levels(factor(combined_stats$Sample))))
         
         # Save the plot
-        ggsave(file.path(figures_dir, "genomic_distribution_barplot.pdf"), 
+        ggsave(file.path(output_dir, "genomic_distribution_barplot.pdf"), 
                p_bar, width = 12, height = max(6, n_samples * 0.3), limitsize = FALSE)
     }
     
