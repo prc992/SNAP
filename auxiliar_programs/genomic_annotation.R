@@ -337,14 +337,26 @@ create_genomic_distribution_plot <- function(combined_stats, figures_dir, featur
     plot_height <- max(6, n_samples * 0.3)
     
     # Save with a different name if forced
-    output_filename <- if(force_barplot) "forced_genomic_distribution_barplot.pdf" else "combined_genomic_distribution_barplot.pdf"
+    #output_filename <- if(force_barplot) "forced_genomic_distribution_barplot.pdf" else "combined_genomic_distribution_barplot.pdf"
     
-    ggsave(file.path(output_dir, output_filename), 
-           p_bar, 
-           width = 12, 
-           height = plot_height,
-           limitsize = FALSE)
-    
+    #ggsave(file.path(output_dir, output_filename), 
+    #       p_bar, 
+    #       width = 12, 
+    #       height = plot_height,
+    #       limitsize = FALSE)
+
+    # Save with a different name if forced
+    output_filename_jpg <- if(force_barplot) "forced_genomic_distribution_barplot.jpg" else "combined_genomic_distribution_barplot.jpg"
+
+    ggsave(
+    filename = file.path(output_dir, output_filename_jpg),
+    plot = p_bar,
+    width = 12,
+    height = plot_height,
+    dpi = 300,
+    limitsize = FALSE,
+    device = "jpeg")
+
     cat("Genomic distribution bar plot saved to", 
         file.path(output_dir, output_filename), "\n")
 }
