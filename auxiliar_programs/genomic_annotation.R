@@ -358,7 +358,7 @@ create_genomic_distribution_plot <- function(combined_stats, figures_dir, featur
     device = "jpeg")
 
     cat("Genomic distribution bar plot saved to", 
-        file.path(output_dir, output_filename), "\n")
+        file.path(output_dir, output_filename_jpg), "\n")
 }
 
 #' @title Create TSS Distribution Plot
