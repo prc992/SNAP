@@ -25,7 +25,6 @@ process fragle_ct_estimation {
     
     script:
     """
-    cd /usr/src/app
     python /usr/src/app/main.py --input \$PWD --output \$PWD --mode R --cpu ${task.cpus} --threads ${task.cpus}
     """
 }
