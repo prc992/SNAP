@@ -9,3 +9,5 @@
 #     sort_samples: true
 #     title: "Circulating tumor DNA"
 #     "tt_decimals": 2
+#     ymin: 0
+#     ymax: 1.0
