@@ -18,7 +18,7 @@ process fragle_ct_estimation {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/fragle/", mode : 'copy'
     
     input:
-    tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val(_)
+    tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sortedBam),path (sampleBamIndex),val (_)
     
     output:
     path ("*.csv")
@@ -49,7 +49,7 @@ workflow FRAGMENTS_PROCESSING {
 
     main:
 
-    chFragleFiles = fragle_ct_estimation(chBAMProcessedFiles)
+    chFragleFiles = fragle_ct_estimation(chBAMProcessedIndexFiles)
     
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
