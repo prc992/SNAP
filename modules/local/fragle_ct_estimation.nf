@@ -10,7 +10,7 @@ process fragle_ct_estimation {
     path (chBamAndBai)
     
     output:
-    path ("Fragle_mqc.csv")
+    path ("Fragle.txt")
     
     script:
     """
@@ -30,6 +30,6 @@ process fragle_ct_estimation {
     cd /usr/src/app
     python /usr/src/app/main.py --input \$WORKDIR --output \$WORKDIR --mode R --cpu ${task.cpus} --threads ${task.cpus}
     cd \$WORKDIR
-    mv Fragle.csv Fragle_mqc.csv
+    mv Fragle.csv Fragle.txt
     """
 }
