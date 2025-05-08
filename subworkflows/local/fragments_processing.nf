@@ -49,7 +49,6 @@ workflow FRAGMENTS_PROCESSING {
 
     main:
 
-    chFragleFiles = fragle_ct_estimation(chBAMProcessedIndexFiles)
     
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
@@ -62,6 +61,11 @@ workflow FRAGMENTS_PROCESSING {
     chFragmentsSizeFiles = chFragmentsSize.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.fragment_sizes.txt') }} // Filter the Fragments Size files
     //************************************************************************
+
+    // Fragle CT estimation **************************************************
+    chBAMProcessedIndexFilesAll = chBAMProcessedIndexFiles.collect()
+    chFragleFiles = fragle_ct_estimation(chBAMProcessedIndexFilesAll)
+    
     
     chBedFiles = bam_to_bed(chNameSortedFiles) 
 
