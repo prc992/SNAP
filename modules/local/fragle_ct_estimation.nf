@@ -10,7 +10,7 @@ process fragle_ct_estimation {
     path (chBamAndBai)
     
     output:
-    path ("Fragle.csv")
+    path ("Fragle_mqc.csv")
     
     script:
     """
