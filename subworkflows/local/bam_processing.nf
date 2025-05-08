@@ -135,6 +135,7 @@ workflow BAM_PROCESSING {
 
     emit: bam_processed = chDACFilteredFiles
     emit: bam_processed_index = chIndexFiles
+    emit: bam_and_bai_files = chAllBAMandBAIIndexFiles
     emit: report_SNP_SMaSH = chSNPSMaSHPlot
     emit: lib_complex = chLibComplexPreseq
     emit: files_report_bam_processing = chFilesReportBamProcessing

@@ -121,6 +121,7 @@ workflow  {
 
         chBAMProcessedFiles = BAM_PROCESSING.out.bam_processed
         chBAMProcessedIndexFiles = BAM_PROCESSING.out.bam_processed_index
+        chBAMBAIProcessedFiles = BAM_PROCESSING.out.bam_and_bai_files
         chSNPSMaSHPlot = BAM_PROCESSING.out.report_SNP_SMaSH
         chLibComplexPreseq = BAM_PROCESSING.out.lib_complex
         chFilesReportBamProcessing = BAM_PROCESSING.out.files_report_bam_processing
@@ -130,7 +131,7 @@ workflow  {
     if ('FRAGMENTS_PROCESSING' in run_steps) {
 
         FRAGMENTS_PROCESSING(chSampleInfo,chGenome,chGenomeIndex,
-                            chBAMProcessedFiles,chBAMProcessedIndexFiles,
+                            chBAMProcessedFiles,chBAMProcessedIndexFiles,chBAMBAIProcessedFiles,
                             chMultiQCFragsHeader,chReportFrags,
                             chMultiQCConfig,
                             chFilesReportInitialization,chFilesReportBamProcessing,

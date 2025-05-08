@@ -18,7 +18,7 @@ process fragle_ct_estimation {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/fragle/", mode : 'copy'
     
     input:
-    tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sortedBam),path (sampleBamIndex),val (_)
+    path (chBamAndBai)
     
     output:
     path ("*.csv")
@@ -40,6 +40,7 @@ workflow FRAGMENTS_PROCESSING {
     chGenomeIndex
     chBAMProcessedFiles
     chBAMProcessedIndexFiles
+    chBAMBAIProcessedFiles
     chMultiQCFragsHeader
     chReportFrags
     chMultiQCConfig
@@ -63,9 +64,8 @@ workflow FRAGMENTS_PROCESSING {
     //************************************************************************
 
     // Fragle CT estimation **************************************************
-    chBAMProcessedIndexFilesAll = chBAMProcessedIndexFiles.collect()
-    chFragleFiles = fragle_ct_estimation(chBAMProcessedIndexFilesAll)
-    
+    chFragleFiles = fragle_ct_estimation(chBAMBAIProcessedFiles)
+
     
     chBedFiles = bam_to_bed(chNameSortedFiles) 
 
