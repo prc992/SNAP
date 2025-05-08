@@ -21,7 +21,7 @@ process fragle_ct_estimation {
     path (chBamAndBai)
     
     output:
-    path ("*.csv")
+    path ("Fragle.csv")
     
     script:
     """
