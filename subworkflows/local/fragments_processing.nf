@@ -18,7 +18,7 @@ process fragle_ct_estimation {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/fragle/", mode : 'copy'
     
     input:
-    path (chBAMProcessedFiles)
+    tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val(_)
     
     output:
     path ("*.csv")
