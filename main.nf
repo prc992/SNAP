@@ -46,6 +46,7 @@ workflow  {
     chReportFragHist = Channel.fromPath("$params.pathReportFragHist")
     chReportFrags = Channel.fromPath("$params.pathReportFrags")
     chReportPeaks = Channel.fromPath("$params.pathReportPeaks")
+    chReportCT = Channel.fromPath("$params.pathReportCT")
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
     chReportQualityLite = Channel.fromPath("$params.pathReportQualityLite")
     chMergeReportEnrichment = Channel.fromPath("$params.pathMergeReportEnrichment")
@@ -58,6 +59,7 @@ workflow  {
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
     chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
+    chMultiQCCTHeader = Channel.fromPath("$params.multiqc_tot_ct_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
 
     if (params.samplesheetBams || params.sample_dir_bam) {
@@ -132,10 +134,10 @@ workflow  {
 
         FRAGMENTS_PROCESSING(chSampleInfo,chGenome,chGenomeIndex,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,chBAMBAIProcessedFiles,
-                            chMultiQCFragsHeader,chReportFrags,
+                            chMultiQCFragsHeader,chMultiQCCTHeader,chReportFrags,
                             chMultiQCConfig,
                             chFilesReportInitialization,chFilesReportBamProcessing,
-                            chBAMProcessReport)
+                            chBAMProcessReport,chReportCT)
 
         chFragmentsSizeFiles = FRAGMENTS_PROCESSING.out.frag_size_files
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report

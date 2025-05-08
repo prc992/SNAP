@@ -10,6 +10,27 @@ include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 include {fragle_ct_estimation} from '../../modules/local/fragle_ct_estimation'
 
+process ct_report {
+    label 'low_cpu_low_mem'
+    container = params.containers.python
+    tag "All Samples" 
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
+    
+    input:
+    path (chNarrowPeakFiles)
+    each path (chMultiQCPeaksHeader)
+    each path (chReportPeaks)
+
+    output:
+    path ("*_mqc.csv")
+
+    script:
+    """
+    python $chReportPeaks
+    """
+}
+
 workflow FRAGMENTS_PROCESSING {
 
     take:
@@ -20,11 +41,13 @@ workflow FRAGMENTS_PROCESSING {
     chBAMProcessedIndexFiles
     chBAMBAIProcessedFiles
     chMultiQCFragsHeader
+    chMultiQCCTHeader
     chReportFrags
     chMultiQCConfig
     chFilesReportInitialization
     chFilesReportBamProcessing
     chBAMProcessReport
+    chReportCT
 
     main:
 
@@ -43,6 +66,7 @@ workflow FRAGMENTS_PROCESSING {
 
     // Fragle CT estimation **************************************************
     chFragleFiles = fragle_ct_estimation(chBAMBAIProcessedFiles)
+    chCTFragleFilesReport = ct_report(chFragleFiles,chMultiQCCTHeader,chReportCT)
 
     
     chBedFiles = bam_to_bed(chNameSortedFiles) 
@@ -57,6 +81,7 @@ workflow FRAGMENTS_PROCESSING {
     chBedFilesAll = chBedFiles.collect()
     //chUniqueFrags
     chFragFilesReportAll = chFragFilesReport.collect()
+    chCTFragleFilesReportAll = chCTFragleFilesReport.collect()
 
     // Combine all the channels
     chAllChannels = chNameSortedFilesAll
@@ -65,6 +90,7 @@ workflow FRAGMENTS_PROCESSING {
         .combine(chBedFilesAll)
         .combine(chUniqueFrags)
         .combine(chFragFilesReportAll)
+        .combine(chCTFragleFilesReportAll)
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
         .combine(chFragleFiles)
