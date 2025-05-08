@@ -9,6 +9,26 @@ include {frags_report} from '../../modules/local/frags_report.nf'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 
+process fragle_ct_estimation {
+
+    label 'high_cpu_high_plus_mem'
+    container = params.containers.fragle
+
+    tag "All Samples"
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/fragle/", mode : 'copy'
+    
+    input:
+    path (chBAMProcessedFiles)
+    
+    output:
+    path ("*.csv")
+    
+    script:
+    """
+    python /usr/src/app/main.py --input \$PWD --output \$PWD --mode R --cpu ${task.cpus} --threads ${task.cpus}
+    """
+}
+
 
 workflow FRAGMENTS_PROCESSING {
 
@@ -26,6 +46,8 @@ workflow FRAGMENTS_PROCESSING {
     chBAMProcessReport
 
     main:
+
+    chFragleFiles = fragle_ct_estimation(chBAMProcessedFiles)
     
     //End Motif and GC content ***********************************************
     chNameSortedFiles = sort_readname_bam(chBAMProcessedFiles)
