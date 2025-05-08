@@ -26,8 +26,8 @@ process fragle_ct_estimation {
     script:
     """
 
-    BAM_ORIG=\$(ls ${bam_and_bai_files} | grep '.bam\$')
-    BAI_ORIG=\$(ls ${bam_and_bai_files} | grep '.bai\$')
+    BAM_ORIG=\$(ls ${chBamAndBai} | grep '.bam\$')
+    BAI_ORIG=\$(ls ${chBamAndBai} | grep '.bai\$')
 
     SAMPLE_ID=\$(basename \$BAM_ORIG | sed 's/\\.dac_filtered\\.dedup\\.unique\\.sorted\\.bam\$//')
 
