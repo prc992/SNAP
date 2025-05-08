@@ -25,9 +25,19 @@ process fragle_ct_estimation {
     
     script:
     """
+    mkdir input_clean
+
+    BAM_ORIG=\$(basename ${bam_and_bai_files.find { it.name.endsWith('.bam') }})
+    BAI_ORIG=\$(basename ${bam_and_bai_files.find { it.name.endsWith('.bai') }})
+
+    SAMPLE_ID=\$(echo \$BAM_ORIG | sed 's/\\.dac_filtered\\.dedup\\.unique\\.sorted\\.bam\$//')
+
+    ln -s ../\$BAM_ORIG \$SAMPLE_ID.bam
+    ln -s ../\$BAI_ORIG \$SAMPLE_ID.bam.bai
+
     WORKDIR=\$PWD
     cd /usr/src/app
-    python /usr/src/app/main.py --input \$WORKDIR --output \$WORKDIR --mode R --cpu ${task.cpus} --threads ${task.cpus}
+    python /usr/src/app/main.py --input \$WORKDIR/input_clean --output \$WORKDIR --mode R --cpu ${task.cpus} --threads ${task.cpus}
     """
 }
 
