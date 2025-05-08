@@ -67,6 +67,7 @@ workflow FRAGMENTS_PROCESSING {
         .combine(chFragFilesReportAll)
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
+        .combine(chFragleFiles)
     
     chOnlyFilesProcessing = chAllChannels
     .flatten() // Garante que os arquivos estejam em um único fluxo
