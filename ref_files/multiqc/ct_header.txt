@@ -8,4 +8,4 @@
 # pconfig:
 #     sort_samples: true
 #     title: "Circulating tumor DNA"
-#     "tt_decimals": 0
+#     "tt_decimals": 2
