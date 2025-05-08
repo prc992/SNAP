@@ -27,7 +27,7 @@ process ct_report {
 
     script:
     """
-    python chReportPeaks
+    python $chReportPeaks
     """
 }
 
