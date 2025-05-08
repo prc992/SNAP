@@ -25,14 +25,17 @@ process fragle_ct_estimation {
     
     script:
     """
+    # Renomeia todos os .bam e .bai
+    for bam in *.dac_filtered.dedup.unique.sorted.bam; do
+        base=\$(basename "\$bam" .dac_filtered.dedup.unique.sorted.bam)
+        bai="\$bam.bai"
 
-    BAM_ORIG=\$(ls ${chBamAndBai} | grep '.bam\$')
-    BAI_ORIG=\$(ls ${chBamAndBai} | grep '.bai\$')
+        mv "\$bam" "\$base.bam"
 
-    SAMPLE_ID=\$(basename \$BAM_ORIG | sed 's/\\.dac_filtered\\.dedup\\.unique\\.sorted\\.bam\$//')
-
-    mv \$BAM_ORIG \$SAMPLE_ID.bam
-    mv \$BAI_ORIG \$SAMPLE_ID.bam.bai
+        if [ -f "\$bai" ]; then
+            mv "\$bai" "\$base.bam.bai"
+        fi
+    done
 
     WORKDIR=\$PWD
     cd /usr/src/app
