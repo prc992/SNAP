@@ -25,8 +25,9 @@ process fragle_ct_estimation {
     
     script:
     """
+    WORKDIR=\$PWD
     cd /usr/src/app
-    python /usr/src/app/main.py --input \$NXF_WORK --output \$NXF_WORK --mode R --cpu ${task.cpus} --threads ${task.cpus}
+    python /usr/src/app/main.py --input \$WORKDIR --output \$WORKDIR --mode R --cpu ${task.cpus} --threads ${task.cpus}
     """
 }
 
