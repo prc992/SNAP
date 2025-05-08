@@ -29,6 +29,7 @@ process fragle_ct_estimation {
     WORKDIR=\$PWD
     cd /usr/src/app
     python /usr/src/app/main.py --input \$WORKDIR --output \$WORKDIR --mode R --cpu ${task.cpus} --threads ${task.cpus}
+    cd \$WORKDIR
     mv Fragle.csv Fragle_mqc.csv
     """
 }
