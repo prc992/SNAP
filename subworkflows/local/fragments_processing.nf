@@ -27,8 +27,8 @@ process fragle_ct_estimation {
     """
     mkdir input_clean
 
-    BAM_ORIG=\$(basename ${bam_and_bai_files.find { it.name.endsWith('.bam') }})
-    BAI_ORIG=\$(basename ${bam_and_bai_files.find { it.name.endsWith('.bai') }})
+    BAM_ORIG=\$(basename ${chBamAndBai.find { it.name.endsWith('.bam') }})
+    BAI_ORIG=\$(basename ${chBamAndBai.find { it.name.endsWith('.bai') }})
 
     SAMPLE_ID=\$(echo \$BAM_ORIG | sed 's/\\.dac_filtered\\.dedup\\.unique\\.sorted\\.bam\$//')
 
