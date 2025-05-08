@@ -26,7 +26,7 @@ process fragle_ct_estimation {
     script:
     """
     mkdir input_clean
-
+    cd input_clean
     BAM_ORIG=\$(basename ${chBamAndBai.find { it.name.endsWith('.bam') }})
     BAI_ORIG=\$(basename ${chBamAndBai.find { it.name.endsWith('.bai') }})
 
