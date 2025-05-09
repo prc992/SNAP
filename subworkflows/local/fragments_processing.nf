@@ -31,6 +31,25 @@ process ct_report {
     """
 }
 
+process filter_bam_fragle {
+    label 'low_cpu_low_mem'
+    container = params.containers.samtools
+    tag "All Samples" 
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/filter_fragle/", mode : 'copy'
+    
+    input:
+    tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sortedBam),path (sampleBamIndex),val (_)
+
+    output:
+    path ("sites.txt")
+
+    script:
+    """
+    ls -l $params.enrichment_states_ref > sites.txt
+    """
+}
+
 workflow FRAGMENTS_PROCESSING {
 
     take:
@@ -65,6 +84,9 @@ workflow FRAGMENTS_PROCESSING {
     //************************************************************************
 
     // Fragle CT estimation **************************************************
+    // #######################################################################
+    filter_bam_fragle(chBAMProcessedIndexFiles)
+
     chFragleFiles = fragle_ct_estimation(chBAMBAIProcessedFiles)
     chCTFragleFilesReport = ct_report(chFragleFiles,chMultiQCCTHeader,chReportCT)
 
