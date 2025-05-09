@@ -32,25 +32,33 @@ process ct_report {
 }
 
 process filter_bam_fragle {
+
     label 'low_cpu_low_mem'
     container = params.containers.samtools
-    tag "All Samples" 
+    tag "$sampleId"
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/filter_fragle/", mode : 'copy'
-    
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/filter_fragle/", mode: 'copy'
+
     input:
-    tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sortedBam),path (sampleBamIndex),val (_)
-    path (chFragleSites)
+    tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(sortedBam), path(sampleBamIndex), val(_)
+    path(chFragleSites)
 
     output:
-    path ("sites.txt")
+    tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path("*.bam"), path("*.bai"), val(_)
 
     script:
     """
-    if [ "$enrichment_mark" == "$params.no_enrichment_mark" ]; then
-        echo $params.enrichment_mark > sites.txt
+    SITES_BED="$chFragleSites/$enrichment_mark/sites.bed"
+
+    if [ -f "\$SITES_BED" ]; then
+        echo "Filtrando $sortedBam com \$SITES_BED"
+
+        samtools view -b -L "\$SITES_BED" "$sortedBam" > "${sampleId}.filtered.bam"
+        samtools index "${sampleId}.filtered.bam"
     else
-        ls -l $chFragleSites/$enrichment_mark > sites.txt
+        echo "Arquivo \$SITES_BED não encontrado. Usando arquivos BAM originais."
+        cp "$sortedBam" "${sampleId}.not.filtered.bam"
+        cp "$sampleBamIndex" "${sampleId}.not.filtered.bam.bai"
     fi
     """
 }
