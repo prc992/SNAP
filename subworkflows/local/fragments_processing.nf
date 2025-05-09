@@ -47,7 +47,7 @@ process filter_bam_fragle {
 
     script:
     """
-    if [ "$enrichment_mark" == "$params.enrichment_mark" ]; then
+    if [ "$enrichment_mark" == "$params.no_enrichment_mark" ]; then
         echo $params.enrichment_mark > sites.txt
     else
         ls -l $chFragleSites/$enrichment_mark > sites.txt
