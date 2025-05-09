@@ -47,7 +47,7 @@ process filter_bam_fragle {
 
     script:
     """
-    ls -l $chFragleSites > sites.txt
+    ls -l $chFragleSites/$enrichment_mark > sites.txt
     """
 }
 
