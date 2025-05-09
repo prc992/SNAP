@@ -15,8 +15,8 @@ process fragle_ct_estimation {
     script:
     """
     # Rename  .bam e .bai
-    for bam in *.dac_filtered.dedup.unique.sorted.bam; do
-        base=\$(basename "\$bam" .dac_filtered.dedup.unique.sorted.bam)
+    for bam in *.filtered.fragle.bam; do
+        base=\$(basename "\$bam" .filtered.fragle.bam)
         bai="\$bam.bai"
 
         mv "\$bam" "\$base.bam"
