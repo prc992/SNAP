@@ -41,7 +41,7 @@ process filter_bam_fragle {
 
     input:
     tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(sortedBam), path(sampleBamIndex), val(_)
-    path(chFragleSites)
+    each path(chFragleSites)
 
     output:
     tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path("*.bam"), path("*.bai"), val(_)
