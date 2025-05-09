@@ -46,7 +46,7 @@ process filter_bam_fragle {
 
     script:
     """
-    ls -l $params.enrichment_states_ref > sites.txt
+    ls -l $params.fragle_sites_ref > sites.txt
     """
 }
 
