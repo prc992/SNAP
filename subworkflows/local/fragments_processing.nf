@@ -40,13 +40,14 @@ process filter_bam_fragle {
     
     input:
     tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sortedBam),path (sampleBamIndex),val (_)
+    path (chFragleSites)
 
     output:
     path ("sites.txt")
 
     script:
     """
-    ls -l $params.fragle_sites_ref > sites.txt
+    ls -l $chFragleSites > sites.txt
     """
 }
 
@@ -85,7 +86,8 @@ workflow FRAGMENTS_PROCESSING {
 
     // Fragle CT estimation **************************************************
     // #######################################################################
-    filter_bam_fragle(chBAMProcessedIndexFiles)
+    chFragleSites = Channel.fromPath("$params.fragle_sites_ref")
+    filter_bam_fragle(chBAMProcessedIndexFiles,chFragleSites)
 
     chFragleFiles = fragle_ct_estimation(chBAMBAIProcessedFiles)
     chCTFragleFilesReport = ct_report(chFragleFiles,chMultiQCCTHeader,chReportCT)

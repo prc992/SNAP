@@ -38,8 +38,6 @@ workflow  {
 
     //Auxiliar code
     chEnrichmentScript= Channel.fromPath("$params.pathEnrichmentScript")
-    //chRfrag_plotFragDist = Channel.fromPath("$params.pathRfrag_plotFragDist")
-    //chRComparison = Channel.fromPath("$params.pathRComparison")
     chRPileups= Channel.fromPath("$params.pathRPileups")
     chSNPSMaSH = Channel.fromPath("$params.pathSNPSMaSH")
     chSNPSMaSHPyPlot = Channel.fromPath("$params.pathSNPSMaSHPlot")
