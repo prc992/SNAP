@@ -58,12 +58,11 @@ process filter_bam_fragle {
         samtools index "\$BAM_NAME"
     else
         echo "Arquivo \$SITES_BED não encontrado. Copiando arquivos originais."
-        cp "\$sortedBam" "\$BAM_NAME"
-        cp "\$sampleBamIndex" "\$BAI_NAME"
+        cp "$sortedBam" "\$BAM_NAME"
+        cp "$sampleBamIndex" "\$BAI_NAME"
     fi
     """
 }
-
 workflow FRAGMENTS_PROCESSING {
 
     take:
