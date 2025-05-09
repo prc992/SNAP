@@ -19,15 +19,15 @@ process ct_report {
     
     input:
     path (chNarrowPeakFiles)
-    each path (chMultiQCPeaksHeader)
-    each path (chReportPeaks)
+    each path (chMultiQCCTHeader)
+    each path (chReportCT)
 
     output:
     path ("*_mqc.csv")
 
     script:
     """
-    python $chReportPeaks
+    python $chReportCT
     """
 }
 
@@ -99,9 +99,12 @@ workflow FRAGMENTS_PROCESSING {
     // Fragle CT estimation **************************************************
     // #######################################################################
     chFragleSites = Channel.fromPath("$params.fragle_sites_ref")
-    filter_bam_fragle(chBAMProcessedIndexFiles,chFragleSites)
 
-    chFragleFiles = fragle_ct_estimation(chBAMBAIProcessedFiles)
+    chAllBAMProcessedIndexFilteredSitesFiles = filter_bam_fragle(chBAMProcessedIndexFiles,chFragleSites).collect()
+    chFragleBAMandBAIIndexFiles = chAllBAMProcessedIndexFilteredSitesFiles.map { collectedFiles ->
+    collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
+    
+    chFragleFiles = fragle_ct_estimation(chFragleBAMandBAIIndexFiles)
     chCTFragleFilesReport = ct_report(chFragleFiles,chMultiQCCTHeader,chReportCT)
 
     
