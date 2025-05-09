@@ -53,12 +53,12 @@ process filter_bam_fragle {
     if [ -f "\$SITES_BED" ]; then
         echo "Filtrando $sortedBam com \$SITES_BED"
 
-        samtools view -b -L "\$SITES_BED" "$sortedBam" > "${sampleId}.filtered.bam"
-        samtools index "${sampleId}.filtered.bam"
+        samtools view -b -L "\$SITES_BED" "$sortedBam" > "${sampleId}.filtered.fragle.bam"
+        samtools index "${sampleId}.filtered.fragle.bam"
     else
         echo "Arquivo \$SITES_BED não encontrado. Usando arquivos BAM originais."
-        cp "$sortedBam" "${sampleId}.not.filtered.bam"
-        cp "$sampleBamIndex" "${sampleId}.not.filtered.bam.bai"
+        cp "$sortedBam" "${sampleId}.filtered.fragle.bam"
+        cp "$sampleBamIndex" "${sampleId}.filtered.fragle.bam.bai"
     fi
     """
 }
