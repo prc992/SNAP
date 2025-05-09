@@ -8,7 +8,7 @@ disable_version_detection: true
 
 module_order:
   - general_stats:
-      name: "General Stats (HAY)"
+      name: "General Stats"
       info: "This section of the report shows general statistics about the samples."
   - custom_content:
   - deeptools:
