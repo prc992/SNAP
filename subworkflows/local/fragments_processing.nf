@@ -49,16 +49,17 @@ process filter_bam_fragle {
     script:
     """
     SITES_BED="$chFragleSites/$enrichment_mark/sites.bed"
+    BAM_NAME=\$(basename "$sortedBam")
+    BAI_NAME=\$(basename "$sampleBamIndex")
 
     if [ -f "\$SITES_BED" ]; then
-        echo "Filtrando $sortedBam com \$SITES_BED"
-
-        samtools view -b -L "\$SITES_BED" "$sortedBam" > "${sampleId}.filtered.bam"
-        samtools index "${sampleId}.filtered.bam"
+        echo "Filtrando \$BAM_NAME com \$SITES_BED"
+        samtools view -b -L "\$SITES_BED" "\$sortedBam" > "\$BAM_NAME"
+        samtools index "\$BAM_NAME"
     else
-        echo "Arquivo \$SITES_BED não encontrado. Usando arquivos BAM originais."
-        cp "$sortedBam" "${sampleId}.not.filtered.bam"
-        cp "$sampleBamIndex" "${sampleId}.not.filtered.bam.bai"
+        echo "Arquivo \$SITES_BED não encontrado. Copiando arquivos originais."
+        cp "\$sortedBam" "\$BAM_NAME"
+        cp "\$sampleBamIndex" "\$BAI_NAME"
     fi
     """
 }
