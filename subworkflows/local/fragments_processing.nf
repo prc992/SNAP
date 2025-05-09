@@ -37,8 +37,6 @@ process filter_bam_fragle {
     container = params.containers.samtools
     tag "$sampleId"
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/filter_fragle/", mode: 'copy'
-
     input:
     tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(sortedBam), path(sampleBamIndex), val(_)
     each path(chFragleSites)
@@ -103,7 +101,7 @@ workflow FRAGMENTS_PROCESSING {
     chAllBAMProcessedIndexFilteredSitesFiles = filter_bam_fragle(chBAMProcessedIndexFiles,chFragleSites).collect()
     chFragleBAMandBAIIndexFiles = chAllBAMProcessedIndexFilteredSitesFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
-    
+
     chFragleFiles = fragle_ct_estimation(chFragleBAMandBAIIndexFiles)
     chCTFragleFilesReport = ct_report(chFragleFiles,chMultiQCCTHeader,chReportCT)
 
