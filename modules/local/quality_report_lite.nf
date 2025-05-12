@@ -10,6 +10,7 @@ process quality_report_lite {
     path enrichment_files
     path peaks_files
     path frags_process_report
+    path files_fragle_report
 
     output:
     path "QualityMetrics.csv4" 

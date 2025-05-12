@@ -157,4 +157,5 @@ workflow FRAGMENTS_PROCESSING {
     emit: frag_report = chFragFilesReport
     emit: frag_process_report = chFragsProcessReport
     emit: files_report_fragments_processing = chFilesReportFragmentsProcess
+    emir: files_fragle_report = chCTFragleFilesReport
 }

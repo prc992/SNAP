@@ -141,13 +141,14 @@ workflow  {
         chFragReport = FRAGMENTS_PROCESSING.out.frag_report
         chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
         chFilesReportFragmentsProcess = FRAGMENTS_PROCESSING.out.files_report_fragments_processing
+        chCTFragleFilesReport = FRAGMENTS_PROCESSING.out.files_fragle_report
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
         BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,skip_alignment,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
                             chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,
-                            chMultiQCConfig,chEnrichmentScript,chRGenomicAnnotation,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,
+                            chMultiQCConfig,chEnrichmentScript,chRGenomicAnnotation,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,chCTFragleFilesReport,
                             chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess,
                             chFragReport)
 
