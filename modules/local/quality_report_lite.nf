@@ -12,7 +12,7 @@ process quality_report_lite {
     path frags_process_report
 
     output:
-    path "QualityMetrics.csv" 
+    path "QualityMetrics.csv4" 
 
     script:
     """
