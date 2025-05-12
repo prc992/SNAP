@@ -9,57 +9,8 @@ include {frags_report} from '../../modules/local/frags_report.nf'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
 include {fragle_ct_estimation} from '../../modules/local/fragle_ct_estimation'
-
-process ct_report {
-    label 'low_cpu_low_mem'
-    container = params.containers.python
-    tag "All Samples" 
-
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
-    
-    input:
-    path (chNarrowPeakFiles)
-    each path (chMultiQCCTHeader)
-    each path (chReportCT)
-
-    output:
-    path ("*_mqc.csv")
-
-    script:
-    """
-    python $chReportCT
-    """
-}
-
-process filter_bam_fragle {
-
-    label 'low_cpu_low_mem'
-    container = params.containers.samtools
-    tag "$sampleId"
-
-    input:
-    tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(sortedBam), path(sampleBamIndex), val(_)
-    each path(chFragleSites)
-
-    output:
-    tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path("*.bam"), path("*.bai"), val(_)
-
-    script:
-    """
-    SITES_BED="$chFragleSites/$enrichment_mark/sites.bed"
-
-    if [ -f "\$SITES_BED" ]; then
-        echo "Filtrando $sortedBam com \$SITES_BED"
-
-        samtools view -b -L "\$SITES_BED" "$sortedBam" > "${sampleId}.filtered.fragle.bam"
-        samtools index "${sampleId}.filtered.fragle.bam"
-    else
-        echo "Arquivo \$SITES_BED não encontrado. Usando arquivos BAM originais."
-        cp "$sortedBam" "${sampleId}.filtered.fragle.bam"
-        cp "$sampleBamIndex" "${sampleId}.filtered.fragle.bam.bai"
-    fi
-    """
-}
+include {ct_report} from '../../modules/local/ct_report'
+include {filter_bam_fragle} from '../../modules/local/filter_bam_fragle'
 
 workflow FRAGMENTS_PROCESSING {
 
