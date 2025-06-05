@@ -14,13 +14,44 @@ Preprocessing
 ├── createSamplesheet
 ├── fastqc
 
-Preprocessing
+Reference Download
 ├── downloadGenome
 ├── createGenomeIndex
 ├── fetch_chrom_sizes
 ├── downloadDACFile
 ├── downloadSNPRef
 
+Alignment
+├── trim
+├── align
+
+Bam processing
+├── sort_bam
+├── filter_properly_paired
+├── lib_complex_preseq
+├── unique_sam
+├── quality_filter
+├── dedup
+├── createStatsSamtoolsfiltered
+├── index_sam
+├── createSMaSHFingerPrint
+
+Fragments processing
+├── sort_readname_bam
+├── createMotifGCfile
+├── calcFragsLengthDistribuition
+├── fragle_ct_estimation
+├── bam_to_bed
+
+Signal processing
+├── bam_to_bedgraph
+├── bedgraph_to_bigwig
+├── igv_reports
+├── call_peaks
+├── peaks_report
+├── peaks_annotations
+├── enrichmentReport
+├── report_lite
 ```
 
 ## Input Data Options
