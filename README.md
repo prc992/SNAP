@@ -7,6 +7,22 @@
 
 ## SNAP Pipeline Documentation
 
+### Detailed Processing:
+
+```
+Preprocessing
+├── createSamplesheet
+├── fastqc
+
+Preprocessing
+├── downloadGenome
+├── createGenomeIndex
+├── fetch_chrom_sizes
+├── downloadDACFile
+├── downloadSNPRef
+
+```
+
 ## Input Data Options
 There are two ways to provide input files to the pipeline:  
 1. A **directory** containing the files to be processed.  
