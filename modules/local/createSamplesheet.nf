@@ -24,7 +24,7 @@ process createSamplesheetFasta {
         if [[ \$sampleId == .* ]]; then
             continue
         fi
-        files=(\$(find \$subfolder -type f \\( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' \\) | sort))
+        files=(\$(find \$subfolder -type f \\( -name '*.fq.gz' -o -name '*.fq' -o -name '*.fastq.gz' -o -name '*.fastq' \\) | sort))
         read1=\$(realpath \${files[0]})
         read2=""
         if [ \${#files[@]} -gt 1 ]; then
