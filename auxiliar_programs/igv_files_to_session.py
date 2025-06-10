@@ -9,7 +9,7 @@
 import os
 import argparse
 import pandas as pd
-import redlkdl
+import re
 
 
 ############################################
@@ -61,6 +61,11 @@ def get_color_by_mark(df: pd.DataFrame, mark: str) -> str:
         return result.iloc[0]['color']
     return "153,153,153"
 
+def extract_mark_from_filename(filename: str) -> str:
+    """Extract the substring after the last underscore and before the first period."""
+    match = re.search(r'_([^_]+?)\.', filename)
+    return match.group(1) if match else ""
+
 ############################################
 ############################################
 ## MAIN FUNCTION
@@ -92,10 +97,14 @@ def igv_files_to_session(XMLOut,ListGenes,Genome,PathPrefix=''):
     ## ADD PANEL SECTION
     XMLStr += '\t<Panel name="DataPanel">\n'
     for ifile in fileList:
+        mark = extract_mark_from_filename(ifile)
+        color = get_color_by_mark(dfColors, mark)
+
         extension = os.path.splitext(ifile)[1].lower()
         nameSample = ifile.replace(file_extension,'')
         XMLStr += '\t\t<Track altColor="0,0,178" autoScale="true" clazz="org.broad.igv.track.FeatureTrack" '
         XMLStr += 'fontSize="10" height="60" id="%s" '% (ifile)
+        XMLStr += 'color="%s" '% (color)
         XMLStr += 'name="%s" renderer="BASIC_FEATURE" sortable="false" visible="true" windowFunction="count"/>\n' % (nameSample)
     XMLStr += '\t</Panel>\n'
 
