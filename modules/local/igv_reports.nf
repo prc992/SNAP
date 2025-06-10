@@ -91,6 +91,7 @@ process igv_session {
     input:
     path (bw)
     path (chIGVFilestoSessions)
+    path (chEnrichmentColors)
     tuple val(genome), val(_), val(_), val(_), val(_)
     path (house_keeping_genes)
 

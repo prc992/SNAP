@@ -59,6 +59,7 @@ workflow  {
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCCTHeader = Channel.fromPath("$params.multiqc_tot_ct_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
+    chEnrichmentColors = Channel.fromPath("$params.enrichment_states_colors")
 
     if (params.samplesheetBams || params.sample_dir_bam) {
         skip_alignment = true
@@ -147,7 +148,7 @@ workflow  {
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
         BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,skip_alignment,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
-                            chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,
+                            chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,chEnrichmentColors,
                             chMultiQCConfig,chEnrichmentScript,chRGenomicAnnotation,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,chCTFragleFilesReport,
                             chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess,
                             chFragReport)

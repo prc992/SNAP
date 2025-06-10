@@ -1,0 +1,8 @@
+color|mark
+102,0,255|H3K4me2 
+0,102,102|H3K4me3 
+0,102,255|H3K9me3 
+255,102,0|H3K27ac 
+0,204,255|H3K36me3
+51,51,255|MeDIP 
+153,153,153|no_enrichment_mark

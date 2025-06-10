@@ -31,6 +31,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chMultiQCEnrichmentHeader
     chMultiQCPeaksHeader
     chIGVFilestoSessions
+    chEnrichmentColors
     chMultiQCConfig
     chEnrichmentScript
     chRGenomicAnnotation
@@ -58,7 +59,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chBigWigAllFiles = chBigWig.collect()
     chBigWigOnlyFiles = chBigWigAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.bw') }} // Filter the bw files
-    chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chGenomesInfo,chPileUpBED)
+    chIGVSession = igv_session(chBigWigOnlyFiles,chIGVFilestoSessions,chEnrichmentColors,chGenomesInfo,chPileUpBED)
 
     // Match the samples with the controls
     def fake_control = file(params.dummy_control_file)
