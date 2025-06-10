@@ -43,6 +43,22 @@ def makedir(path):
             if exception.errno != errno.EEXIST:
                 raise
 
+def load_color_data(file_path: str) -> pd.DataFrame:
+    """Load the enrichment colors file into a DataFrame."""
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    data = [line.strip().split('|') for line in lines[1:]]  # skip header
+    df = pd.DataFrame(data, columns=["color", "mark"])
+    df["mark"] = df["mark"].str.strip()
+    return df
+
+def get_color_by_mark(df: pd.DataFrame, mark: str) -> str:
+    """Return the color string for a given mark (case-insensitive)."""
+    result = df[df['mark'].str.lower() == mark.lower()]
+    if not result.empty:
+        return result.iloc[0]['color']
+    return "153,153,153"
+
 ############################################
 ############################################
 ## MAIN FUNCTION
@@ -52,6 +68,9 @@ def makedir(path):
 def igv_files_to_session(XMLOut,ListGenes,Genome,PathPrefix=''):
 
     makedir(os.path.dirname(XMLOut))
+
+    file_path = "EnrichmentColors.txt"  # Update this path as needed
+    dfColors = load_color_data(file_path)
 
     # Define the file extension to search for
     file_extension = ".bw"
