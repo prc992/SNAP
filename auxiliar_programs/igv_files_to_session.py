@@ -20,6 +20,7 @@ import re
 
 Description = 'Create IGV session file from a tdf files on the current folder and a set of genes.'
 Epilog = """Example usage: python igv_files_to_session.py <XML_OUT> <LIST_GENES> <GENOME>"""
+DefaultColor = "153,153,153"
 
 argParser = argparse.ArgumentParser(description=Description, epilog=Epilog)
 
@@ -59,7 +60,7 @@ def get_color_by_mark(df: pd.DataFrame, mark: str) -> str:
     result = df[df['mark'].str.lower() == mark.lower()]
     if not result.empty:
         return result.iloc[0]['color']
-    return "153,153,153"
+    return DefaultColor
 
 def extract_mark_from_filename(filename: str) -> str:
     """Extract the substring after the last underscore and before the first period."""
