@@ -14,7 +14,7 @@ process bedgraph_to_bigwig {
     tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path("*.bw"), path ("bedgraph_to_bigwig_mqc_versions.yml")
 
     exec:
-    str_bw = sampleId + '_' + enrichment_mark '.bw'
+    str_bw = sampleId + '_' + enrichment_mark + '.bw'
 
     script:
     """
