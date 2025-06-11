@@ -24,7 +24,7 @@ process createMotifGCfile {
   String strBPmotif = sampleId + '_' + params.nmer + 'NMER_bp_motif.bed'
   
   output:
-  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),path ('*bp_motif.bed'),path ("createMotifGCfile_mqc_versions.yml")
+  tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),val(sampleBam),path ('*bp_motif.bed'),path ("createMotifGCfile_mqc_versions.yml")
 
   script:
   def motifCommand = ""
