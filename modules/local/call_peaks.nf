@@ -10,7 +10,7 @@ process call_peaks {
   tuple val(sampleId), val(enrichment_mark), val(read_method), path(sampleBam), path(sampleControl)
 
   output:
-  tuple val(sampleId), val(enrichment_mark), val(read_method), path('*treat_pileup.bdg'), path('*control_lambda.bdg'), path('*narrowPeak'), path("*.xls"), path("macs2_mqc_versions.yml")
+  tuple val(sampleId), val(enrichment_mark), val(read_method), val('*treat_pileup.bdg'), path('*control_lambda.bdg'), path('*narrowPeak'), path("*.xls"), path("macs2_mqc_versions.yml")
 
   script:
   def bamFormat = ""
