@@ -76,6 +76,12 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chPeaksFilesReport = peaks_report(chNarrowPeakFiles,chMultiQCPeaksHeader,chReportPeaks)
 
+     if (params.report_peak_genomic_annotation == true){
+        chPeaksAnnotationReport = peaks_annotations(chNarrowPeakFiles,chRGenomicAnnotation)
+     } else {
+        chPeaksAnnotationReport = Channel.of("NO_DATA")
+     }
+
     chPeaksAnnotationReport = peaks_annotations(chNarrowPeakFiles,chRGenomicAnnotation)
     
     //ENRICHMENT *********************************************************************
