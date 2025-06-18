@@ -61,6 +61,12 @@ workflow  {
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
     chEnrichmentColors = Channel.fromPath("$params.enrichment_states_colors")
 
+    if (params.report_peak_genomic_annotation == true) {
+        chMultiQCConfig Channel.fromPath("$params.multiqc_config")
+    } else {
+        chMultiQCConfig Channel.fromPath("$params.multiqc_config_no_peak_annotation")
+    }
+
     if (params.samplesheetBams || params.sample_dir_bam) {
         skip_alignment = true
     } else {
