@@ -3,7 +3,6 @@ nextflow.enable.dsl=2
 
 //local modules
 
-
 //subworkflows
 include { PREPROCESSING } from './subworkflows/local/preprocessing.nf'
 include { DOWNLOAD_REFERENCES } from './subworkflows/local/download_references'
@@ -62,7 +61,7 @@ workflow  {
     chEnrichmentColors = Channel.fromPath("$params.enrichment_states_colors")
 
     if (params.report_peak_genomic_annotation == true) {
-        chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
+        chMultiQCConfig = Channel.fromPath("$params.multiqc_config_with_peak_annotation")
     } else {
         chMultiQCConfig = Channel.fromPath("$params.multiqc_config_no_peak_annotation")
     }
