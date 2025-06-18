@@ -82,7 +82,7 @@ workflow BAM_SIGNAL_PROCESSING {
         chPeaksAnnotationReport = Channel.of("NO_DATA")
      }
 
-    chPeaksAnnotationReport = peaks_annotations(chNarrowPeakFiles,chRGenomicAnnotation)
+    //chPeaksAnnotationReport = peaks_annotations(chNarrowPeakFiles,chRGenomicAnnotation)
     
     //ENRICHMENT *********************************************************************
     chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
