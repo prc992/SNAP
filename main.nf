@@ -53,7 +53,7 @@ workflow  {
 
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
-    chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
+    
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
     chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
@@ -62,9 +62,9 @@ workflow  {
     chEnrichmentColors = Channel.fromPath("$params.enrichment_states_colors")
 
     if (params.report_peak_genomic_annotation == true) {
-        chMultiQCConfig Channel.fromPath("$params.multiqc_config")
+        chMultiQCConfig = Channel.fromPath("$params.multiqc_config")
     } else {
-        chMultiQCConfig Channel.fromPath("$params.multiqc_config_no_peak_annotation")
+        chMultiQCConfig = Channel.fromPath("$params.multiqc_config_no_peak_annotation")
     }
 
     if (params.samplesheetBams || params.sample_dir_bam) {
