@@ -22,3 +22,4 @@ work/*
 /ref_files/genome/SNP*.txt
 *.chrom.sizes
 *folder_analysis*
+*test*.csv
