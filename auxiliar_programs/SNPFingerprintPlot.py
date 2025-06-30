@@ -54,7 +54,7 @@ def plot_pvalue_heatmap_sorted_dend(df_original, output_path="heatmap.jpg"):
     figsize=(size, size)
     
     g = sns.clustermap(df_original, cmap="coolwarm", linewidths=0.5, annot=False, fmt=".1e",
-                       cbar_kws={'label': '-log10(p-value)'}, row_linkage=row_linkage, col_linkage=col_linkage,
+                       cbar_kws={'label': '-log10 (p-value)'}, row_linkage=row_linkage, col_linkage=col_linkage,
                        figsize=figsize)
     
     cbar = g.ax_heatmap.collections[0].colorbar
@@ -66,7 +66,7 @@ def plot_pvalue_heatmap_sorted_dend(df_original, output_path="heatmap.jpg"):
     plt.close()
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate a clustered heatmap from a p-value matrix.")
+    parser = argparse.ArgumentParser(description="Generate a clustered heatmap from a p-value matrix")
     parser.add_argument("-i", "--input", type=str, default="pval_out.txt", help="Input file path (default: pval_out.txt)")
     parser.add_argument("-o", "--output", type=str, default="heatmap.jpg", help="Output image file path (default: heatmap.jpg)")
 
