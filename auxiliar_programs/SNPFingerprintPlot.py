@@ -50,7 +50,7 @@ def plot_pvalue_heatmap_sorted_dend(df_original, output_path="heatmap.jpg"):
     
     row_linkage = linkage(row_dist, method='average')
     col_linkage = linkage(col_dist, method='average')
-    size = max(df_original.shape[0]/2,8)
+    size = max(df_original.shape[0]/2,10)
     figsize=(size, size)
     
     g = sns.clustermap(df_original, cmap="coolwarm", linewidths=0.5, annot=False, fmt=".1e",
