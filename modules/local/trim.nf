@@ -4,7 +4,7 @@ process trim {
   container = params.containers.trim_galore
 
   tag "Sample - $sampleId"
-  publishDir "${workflow.projectDir}/${params.outputFolder}/trim/${sampleId}", mode: 'copy'
+  //publishDir "${workflow.projectDir}/${params.outputFolder}/trim/${sampleId}", mode: 'copy'
 
   input:
   tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(reads)
