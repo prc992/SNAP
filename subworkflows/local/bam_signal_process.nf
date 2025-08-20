@@ -46,6 +46,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportBamProcessing
     chFilesReportFragmentsProcess
     chBedFiles
+    chDACFileRef
     chRMEDIPSignalCalculation
     chRMARKSSignalCalculation
     chRegions_of_interest_MEDIP_signal
@@ -99,7 +100,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
     //Signal Intensity Calculation ********************************
-    signalIntensityCalculation(chBedFiles,\
+    signalIntensityCalculation(chBedFiles,chDACFileRef,\
                                 chRMEDIPSignalCalculation,chRMARKSSignalCalculation,
                                 chRegions_of_interest_MEDIP_signal,chRegions_of_interest_MARKS_signal,\
                                 chHousekeeping_MEDIP_signal,chHousekeeping_H3K4ME3_signal,chHousekeeping_H3K27AC_signal)
