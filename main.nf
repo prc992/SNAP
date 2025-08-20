@@ -157,6 +157,7 @@ workflow  {
         chFragsProcessReport = FRAGMENTS_PROCESSING.out.frag_process_report
         chFilesReportFragmentsProcess = FRAGMENTS_PROCESSING.out.files_report_fragments_processing
         chCTFragleFilesReport = FRAGMENTS_PROCESSING.out.files_fragle_report
+        chBedFiles = FRAGMENTS_PROCESSING.out.files_sample_bed
         }
 
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
@@ -165,6 +166,7 @@ workflow  {
                             chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,chEnrichmentColors,
                             chMultiQCConfig,chEnrichmentScript,chRGenomicAnnotation,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,chCTFragleFilesReport,
                             chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess,
+                            chBedFiles,
                             chRMEDIPSignalCalculation,chRMARKSSignalCalculation,
                             chRegions_of_interest_MEDIP_signal,chRegions_of_interest_MARKS_signal,
                             chHousekeeping_MEDIP_signal,chHousekeeping_H3K4ME3_signal,chHousekeeping_H3K27AC_signal,
