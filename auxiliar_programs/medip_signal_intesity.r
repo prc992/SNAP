@@ -11,7 +11,7 @@
 #              processes with housekeeping genes for normalization, and 
 #              calculates normalized signal intensity against sites of interest.
 #
-# Usage: Rscript medip_pipeline.R <sample.bed> <housekeeping_genes.bed> <sites_of_interest.bed>
+# Usage: Rscript medip_signal_intesity.r <sample.bed> <housekeeping_genes.bed> <sites_of_interest.bed>
 #
 # Output: MEDIP_Signal_Intensity_Matrix_<SampleName>.csv
 #===============================================================================
@@ -142,8 +142,8 @@ main <- function() {
   args <- commandArgs(trailingOnly = TRUE)
   
   if (length(args) != 3) {
-    cat("Usage: Rscript medip_pipeline.R <sample.bed> <housekeeping_genes.bed> <sites_of_interest.bed>\n")
-    cat("Example: Rscript medip_pipeline.R MdHP10028203.bed housekeeping_5mC.bed HeartvsWBC_Hyper.bed\n")
+    cat("Usage: Rscript medip_signal_intesity.r <sample.bed> <housekeeping_genes.bed> <sites_of_interest.bed>\n")
+    cat("Example: Rscript medip_signal_intesity.r MdHP10028203.bed housekeeping_5mC.bed HeartvsWBC_Hyper.bed\n")
     cat("Output: MEDIP_Signal_Intensity_Matrix_<SampleName>.csv\n")
     cat("\nAuthors: Ze Zhang & Paulo Cordeiro (2025)\n")
     quit(status = 1)

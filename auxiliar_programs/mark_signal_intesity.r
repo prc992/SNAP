@@ -12,7 +12,7 @@
 #              sites of interest with normalization using housekeeping regions,
 #              and generates normalized signal intensity matrix.
 #
-# Usage: Rscript cfchip_pipeline.R <input.bed> <blacklist.bed> <sites_of_interest.bed> <housekeeping.bed> <mark>
+# Usage: Rscript mark_signal_intesity.r <input.bed> <blacklist.bed> <sites_of_interest.bed> <housekeeping.bed> <mark>
 #
 # Output: <SampleName>_<MARK>_Signal_Intensity_Matrix.csv
 #===============================================================================
@@ -30,8 +30,8 @@ library(data.table)
 check_args <- function() {
   args <- commandArgs(trailingOnly = TRUE)
   if (length(args) != 5) {
-    cat("Usage: Rscript cfchip_pipeline.R <input.bed> <blacklist.bed> <sites_of_interest.bed> <housekeeping.bed> <mark>\n")
-    cat("Example: Rscript cfchip_pipeline.R sample_fragments.bed hg19-blacklist.v2.bed PRAD_vs_WBC_up.bed housekeeping_k4me3.bed H3K4me3\n")
+    cat("Usage: Rscript mark_signal_intesity.r <input.bed> <blacklist.bed> <sites_of_interest.bed> <housekeeping.bed> <mark>\n")
+    cat("Example: Rscript mark_signal_intesity.r sample_fragments.bed hg19-blacklist.v2.bed PRAD_vs_WBC_up.bed housekeeping_k4me3.bed H3K4me3\n")
     cat("Output: <SampleName>_<MARK>_Signal_Intensity_Matrix.csv\n")
     cat("\nAuthors: Ze Zhang & Paulo Cordeiro (2025)\n")
     quit(status = 1)
