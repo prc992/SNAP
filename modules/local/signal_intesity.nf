@@ -7,7 +7,9 @@ process signalIntensityCalculation {
 
     input:
     tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path (bed_file),val (yml)
-    //each path(chReportEnrichment)
+    each path(chRMEDIPSignalCalculation), path(chRMARKSSignalCalculation)
+    each path(chRegions_of_interest_MEDIP_signal), path(chRegions_of_interest_MARKS_signal)
+    each path(chHousekeeping_MEDIP_signal), path(chHousekeeping_H3K4ME3_signal), path(chHousekeeping_H3K27AC_signal)    
 
     output:
     path ("*_Signal_Intensity_Matrix.csv")
