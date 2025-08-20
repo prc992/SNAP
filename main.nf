@@ -50,9 +50,18 @@ workflow  {
     chIGVFilestoSessions = Channel.fromPath("$params.pathIGVFilestoSessions")
     chRGenomicAnnotation = Channel.fromPath("$params.pathRGenomicAnnotation")
 
+    chRMEDIPSignalCalculation= Channel.fromPath("$params.pathRMEDIPSignalCalculation")
+    chRMARKSSignalCalculation= Channel.fromPath("$params.pathRMARKSSignalCalculation")
+
     //Assets
     chPileUpBED = Channel.fromPath("$params.genes_pileup_report")
-    
+
+    chRegions_of_interest_MEDIP_signal = Channel.fromPath("$params.regions_of_interest_MEDIP_signal")
+    chRegions_of_interest_MARKS_signal = Channel.fromPath("$params.regions_of_interest_MARKS_signal")
+    chHousekeeping_MEDIP_signal = Channel.fromPath("$params.housekeeping_MEDIP_signal")
+    chHousekeeping_H3K4ME3_signal = Channel.fromPath("$params.housekeeping_H3K4ME3_signal")
+    chHousekeeping_H3K27AC_signal = Channel.fromPath("$params.housekeeping_H3K27AC_signal")
+
     chMultiQCHousekeepingHeader = Channel.fromPath("$params.multiqc_housekeeping_header")
     chMultiQCFragsHeader = Channel.fromPath("$params.multiqc_tot_frag_header")
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
