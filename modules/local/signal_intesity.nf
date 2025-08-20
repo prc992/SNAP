@@ -10,7 +10,7 @@ process signalIntensityCalculation {
     //each path(chReportEnrichment)
 
     output:
-    path ("*_report.csv")
+    path ("*_Signal_Intensity_Matrix.csv")
 
     script:
     """
