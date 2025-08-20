@@ -17,7 +17,7 @@ process signalIntensityCalculation {
     each path(chHousekeeping_H3K27AC_signal)
 
     output:
-    path ("*_Signal_Intensity_Matrix.csv")
+    path ("*_Signal_Intensity_Matrix_*.csv")
 
     script:
     """
