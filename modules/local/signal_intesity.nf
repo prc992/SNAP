@@ -1,6 +1,6 @@
 process signalIntensityCalculation {
     label 'low_cpu_low_mem'
-    container = params.containers.r_data_analysis
+    container = params.containers.r_signal_intensity
     tag "Sample - $sampleId" 
 
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/signal_intensity/", mode: 'copy'
