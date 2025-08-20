@@ -28,10 +28,5 @@ process signalIntensityCalculation {
     elif [ "\$(echo '${enrichment_mark}' | tr '[:upper:]' '[:lower:]')" = "h3k27ac" ]; then
         Rscript ${chRMARKSSignalCalculation} ${bed_file} ${chDACFileRef} ${chRegions_of_interest_MARKS_signal} ${chHousekeeping_H3K27AC_signal} ${enrichment_mark}
     fi
-    
-    # Verificar se o arquivo de saída foi criado, caso contrário criar um arquivo vazio
-    if [ ! -f ${sampleId}_${enrichment_mark}_Signal_Intensity_Matrix.csv ]; then
-        touch ${sampleId}_${enrichment_mark}_Signal_Intensity_Matrix.csv
-    fi
     """
 }
