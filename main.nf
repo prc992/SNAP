@@ -165,6 +165,9 @@ workflow  {
                             chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,chEnrichmentColors,
                             chMultiQCConfig,chEnrichmentScript,chRGenomicAnnotation,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,chCTFragleFilesReport,
                             chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess,
+                            chRMEDIPSignalCalculation,chRMARKSSignalCalculation,
+                            chRegions_of_interest_MEDIP_signal,chRegions_of_interest_MARKS_signal,
+                            chHousekeeping_MEDIP_signal,chHousekeeping_H3K4ME3_signal,chHousekeeping_H3K27AC_signal,
                             chFragReport)
 
 

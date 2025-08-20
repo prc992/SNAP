@@ -11,6 +11,7 @@ include {igv_consolidate_report} from '../../modules/local/igv_reports'
 include {igv_session} from '../../modules/local/igv_reports'
 include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
+include {signalIntensityCalculation} from '../../modules/local/signal_intesity.nf'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
 include {quality_report_lite} from '../../modules/local/quality_report_lite'
 include {multiqc} from '../../modules/local/multiqc'
@@ -44,6 +45,13 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportInitialization
     chFilesReportBamProcessing
     chFilesReportFragmentsProcess
+    chRMEDIPSignalCalculation
+    chRMARKSSignalCalculation
+    chRegions_of_interest_MEDIP_signal
+    chRegions_of_interest_MARKS_signal
+    chHousekeeping_MEDIP_signal
+    chHousekeeping_H3K4ME3_signal
+    chHousekeeping_H3K27AC_signal
     chFragsProcessReport
     
 
