@@ -113,7 +113,7 @@ medip_pipeline <- function(bed_file, housekeeping_bed, sites_bed) {
   # Create result data frame
   meta_sub <- data.frame(
     Sample_Name = sample_name,
-    "Normalized Signal" = Normalized_Signal,
+    "Normalized_Signal" = Normalized_Signal,
     check.names = FALSE
   )
   
