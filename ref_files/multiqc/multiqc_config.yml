@@ -44,6 +44,9 @@ custom_content:
     - merged_enrichment_MEDIP
     - merged_enrichment_H3K4ME3
     - merged_enrichment_H3K27AC
+    - merged_signal_MEDIP
+    - merged_signal_H3K4ME3
+    - merged_signal_H3K27AC
     - fragment_lengths
     - ct_fragle_plot
     - dendogram_of_samples_by_snp_profile
