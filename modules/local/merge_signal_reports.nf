@@ -12,7 +12,7 @@ process merge_signal_reports {
     tuple val (sampleId), val (enrichment_mark), val(bam), val(control), val(read_method)
     
     output:
-    path ("merged_signal*.csvf")
+    path ("merged_signal*.csv")
 
     script:
     """
