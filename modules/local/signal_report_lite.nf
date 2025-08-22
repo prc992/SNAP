@@ -6,7 +6,7 @@ process signal_report_lite {
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/metrics_lite/", mode: 'copy'
 
     input:
-    path chReportQualityLite
+    path chMergedSignalReport
 
     output:
     path "SignalMetrics.csv" 
