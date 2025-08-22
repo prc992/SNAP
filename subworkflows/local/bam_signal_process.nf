@@ -113,9 +113,8 @@ workflow BAM_SIGNAL_PROCESSING {
     //********************************
 
     quality_report_lite(chReportQualityLite,chEnrichmentFilesReport,chPeaksFilesReport,chFragsProcessReport,chCTFragleFilesReport)
+    signal_report_lite(chMergedSignalReport)
     
-
-
     // Collect all the files to generate the MultiQC report
     chBedGraphFilesAll = chBedGraphFiles.collect()
     chBigWigAllFiles = chBigWig.collect()
@@ -129,22 +128,6 @@ workflow BAM_SIGNAL_PROCESSING {
     chEnrichmentFilesReportAll = chEnrichmentFilesReport.collect()
     chMergedEnrichmentReportAll = chMergedEnrichmentReport.collect()
     chMergedSignalReportAll = chMergedSignalReport.collect()
-
-    //
-    chMergedSignalReportAllUnique = chMergedSignalReportAll
-    .flatten() // Garante que os arquivos estejam em um único fluxo
-    .collect() // Junta todos os arquivos antes de processá-los
-    .map { files -> 
-        def uniqueFiles = [:] as LinkedHashMap
-        files.findAll { it instanceof Path } // 🔹 Mantém apenas arquivos (Path)
-             .each { file -> uniqueFiles.putIfAbsent(file.getName(), file) } // Mantém apenas a primeira ocorrência do nome
-        return uniqueFiles.values() // Retorna apenas os arquivos únicos
-    }
-    .flatten() // Garante que cada arquivo seja emitido separadamente no canal
-
-    signal_report_lite(chMergedSignalReportAllUnique)
-    //
-
     
 
     // Combine all the channels

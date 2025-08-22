@@ -9,10 +9,10 @@ process signal_report_lite {
     path chReportQualityLite
 
     output:
-    path "QualityMetrics.csv" 
+    path "SignalMetrics.csv" 
 
     script:
     """
-    touch test.csv
+    touch signal_report_lite_test.csv
     """
 }
