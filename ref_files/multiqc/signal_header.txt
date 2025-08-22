@@ -1,0 +1,7 @@
+# section_name: "Normalized Signal Intensity for <MARK> markers"
+# format: "csv"
+# plot_type: "table"
+# headers:
+#     SampleName:
+#     Normalized_Signal:
+#         format: '{:,.0f}'

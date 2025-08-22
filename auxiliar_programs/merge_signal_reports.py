@@ -5,7 +5,7 @@ import pandas as pd
 import argparse
 
 # Path to the header file
-header_file = 'enrichment_header.txt'
+header_file = 'signal_header.txt'
 
 # Read the content of the header file
 with open(header_file, 'r') as file:
@@ -29,11 +29,11 @@ def find_files_with_suffix(root_directory, suffix):
 
 current_directory = os.getcwd()
 
-list_files =  find_files_with_suffix(current_directory,'_report.csv')
+list_files =  find_files_with_suffix(current_directory,'.csv')
 
 data = {
     "File": list_files,
-    "Mark": [path.split('/')[-1].split('_')[1] for path in list_files]  # Extraction between the first and second '_'
+    "Mark": [path.split('/')[-1].split('_Signal_Intensity_Matrix')[0].split('_')[-1] for path in list_files]
 }
 
 df = pd.DataFrame(data)
@@ -63,7 +63,7 @@ for mark, group in df.groupby('Mark'):
     merged_data[mark] = pd.concat(dfs, ignore_index=True)
     merged_data[mark] = merged_data[mark].drop(columns=['mark'], errors='ignore')
 
-    output_file = f"merged_enrichment_{mark}_mqc.csv"
+    output_file = f"merged_signal_{mark}_mqc.csv"
     header_content = header_content_original.replace('<MARK>', mark)
 
     # Write header
