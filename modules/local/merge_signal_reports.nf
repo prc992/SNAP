@@ -18,11 +18,5 @@ process merge_signal_reports {
     """
     python $chMergeReportSignal
     
-    # If no file *_mqc.csv was created because there is no enrichment mark availabe
-    # create an empty one to satisfy the output requirement but that is not going to be used by multiqc
-
-    if ! ls *_mqc.csv 1> /dev/null 2>&1; then
-        touch ${sampleId}.csv
-    fi
     """
 }
