@@ -125,6 +125,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chEnrichmentFilesCSVAll = chEnrichmentFilesCSV.collect()
     chEnrichmentFilesReportAll = chEnrichmentFilesReport.collect()
     chMergedEnrichmentReportAll = chMergedEnrichmentReport.collect()
+    chMergedSignalReportAll = chMergedSignalReport.collect()
 
     // Combine all the channels
     chAllChannelsProcessing = chBedGraphFilesAll
@@ -139,6 +140,7 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chEnrichmentFilesCSVAll)
         .combine(chEnrichmentFilesReportAll)
         .combine(chMergedEnrichmentReportAll)
+        .combine(chMergedSignalReportAll)
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
         .combine(chFilesReportFragmentsProcess)
