@@ -118,7 +118,7 @@ medip_pipeline <- function(bed_file, housekeeping_bed, sites_bed) {
   )
   
   # Generate output filename
-  output_file <- paste0("MEDIP_Signal_Intensity_Matrix_", sample_name, ".csv")
+  output_file <- paste0("medip_Signal_Intensity_Matrix_", sample_name, ".csv")
   
   message("Step 4: Saving final results...")
   write.csv(meta_sub, output_file, row.names = FALSE)

@@ -124,7 +124,7 @@ cfchip_pipeline <- function(input_bed, blacklist_bed, sites_interest_bed, housek
   
   # Generate output file name with sample name and mark
   sample_name <- tools::file_path_sans_ext(basename(input_bed))
-  output_csv <- paste0(sample_name, "_", mark, "_Signal_Intensity_Matrix.csv")
+  output_csv <- paste0(mark, "_Signal_Intensity_Matrix","_",sample_name,".csv")
   
   # Check if input files exist
   files_to_check <- c(input_bed, blacklist_bed, sites_interest_bed, housekeeping_bed)
