@@ -64,7 +64,7 @@ for mark, group in df.groupby('Mark'):
     merged_data[mark] = merged_data[mark].drop(columns=['mark'], errors='ignore')
 
     output_file = f"merged_signal_{mark}_mqc.csv"
-    header_content = header_content_original.replace('<MARK>', mark)
+    header_content = header_content_original.replace('<MARK>', mark.upper())
 
     # Write header
     with open(output_file, 'w') as file:
