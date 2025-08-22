@@ -113,7 +113,7 @@ workflow BAM_SIGNAL_PROCESSING {
     //********************************
 
     quality_report_lite(chReportQualityLite,chEnrichmentFilesReport,chPeaksFilesReport,chFragsProcessReport,chCTFragleFilesReport)
-    signal_report_lite(chMergedSignalReport)
+    
 
 
     // Collect all the files to generate the MultiQC report
@@ -129,6 +129,8 @@ workflow BAM_SIGNAL_PROCESSING {
     chEnrichmentFilesReportAll = chEnrichmentFilesReport.collect()
     chMergedEnrichmentReportAll = chMergedEnrichmentReport.collect()
     chMergedSignalReportAll = chMergedSignalReport.collect()
+
+    signal_report_lite(chMergedSignalReportAll)
 
     // Combine all the channels
     chAllChannelsProcessing = chBedGraphFilesAll
