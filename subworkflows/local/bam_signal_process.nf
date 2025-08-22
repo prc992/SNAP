@@ -13,6 +13,7 @@ include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
 include {signalIntensityCalculation} from '../../modules/local/signal_intesity.nf'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
+include {merge_signal_reports} from '../../modules/local/merge_signal_reports'
 include {quality_report_lite} from '../../modules/local/quality_report_lite'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
@@ -102,10 +103,11 @@ workflow BAM_SIGNAL_PROCESSING {
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
     //Signal Intensity Calculation ********************************
-    signalIntensityCalculation(chBedFiles,chDACFileRef,\
+    chSignalFilesReport = signalIntensityCalculation(chBedFiles,chDACFileRef,\
                                 chRMEDIPSignalCalculation,chRMARKSSignalCalculation,
                                 chRegions_of_interest_MEDIP_signal,chRegions_of_interest_MARKS_signal,\
-                                chHousekeeping_MEDIP_signal,chHousekeeping_H3K4ME3_signal,chHousekeeping_H3K27AC_signal)
+                                chHousekeeping_MEDIP_signal,chHousekeeping_H3K4ME3_signal,chHousekeeping_H3K27AC_signal).collect()
+    chMergedSignalReport = merge_signal_reports(chSignalFilesReport,chMultiQCSignalHeader,chMergeReportSignal,chSampleInfo).collect()
     //********************************
     //********************************
 
