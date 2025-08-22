@@ -54,6 +54,8 @@ workflow BAM_SIGNAL_PROCESSING {
     chHousekeeping_MEDIP_signal
     chHousekeeping_H3K4ME3_signal
     chHousekeeping_H3K27AC_signal
+    chMultiQCSignalHeader
+    chMergeReportSignal
     chFragsProcessReport
     
 

@@ -47,6 +47,7 @@ workflow  {
     chReportEnrichment = Channel.fromPath("$params.pathReportEnrichment")
     chReportQualityLite = Channel.fromPath("$params.pathReportQualityLite")
     chMergeReportEnrichment = Channel.fromPath("$params.pathMergeReportEnrichment")
+    chMergeReportSignal = Channel.fromPath("$params.pathMergeReportSignal")
     chIGVFilestoSessions = Channel.fromPath("$params.pathIGVFilestoSessions")
     chRGenomicAnnotation = Channel.fromPath("$params.pathRGenomicAnnotation")
 
@@ -67,6 +68,7 @@ workflow  {
     chMultiQCPeaksHeader = Channel.fromPath("$params.multiqc_tot_peaks_header")
     chMultiQCCTHeader = Channel.fromPath("$params.multiqc_tot_ct_header")
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
+    chMultiQCSignalHeader = Channel.fromPath("$params.multiqc_signal_header")
     chEnrichmentColors = Channel.fromPath("$params.enrichment_states_colors")
 
     if (params.report_peak_genomic_annotation == true) {
@@ -170,6 +172,7 @@ workflow  {
                             chRMEDIPSignalCalculation,chRMARKSSignalCalculation,
                             chRegions_of_interest_MEDIP_signal,chRegions_of_interest_MARKS_signal,
                             chHousekeeping_MEDIP_signal,chHousekeeping_H3K4ME3_signal,chHousekeeping_H3K27AC_signal,
+                            chMultiQCSignalHeader,chMergeReportSignal,
                             chFragReport)
 
 
