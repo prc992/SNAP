@@ -4,4 +4,4 @@
 # headers:
 #     SampleName:
 #     Normalized_Signal:
-#         format: '{:,.0f}'
+#         format: '{:,.4f}'
