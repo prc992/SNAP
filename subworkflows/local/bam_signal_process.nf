@@ -104,11 +104,11 @@ workflow BAM_SIGNAL_PROCESSING {
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     
     //Signal Intensity Calculation ********************************
-    chSignalFilesReport = signalIntensityCalculation(chBedFiles,chDACFileRef,\
+    /*chSignalFilesReport = signalIntensityCalculation(chBedFiles,chDACFileRef,\
                                 chRMEDIPSignalCalculation,chRMARKSSignalCalculation,
                                 chRegions_of_interest_MEDIP_signal,chRegions_of_interest_MARKS_signal,\
                                 chHousekeeping_MEDIP_signal,chHousekeeping_H3K4ME3_signal,chHousekeeping_H3K27AC_signal).collect()
-    chMergedSignalReport = merge_signal_reports(chSignalFilesReport,chMultiQCSignalHeader,chMergeReportSignal,chSampleInfo).collect()
+    chMergedSignalReport = merge_signal_reports(chSignalFilesReport,chMultiQCSignalHeader,chMergeReportSignal,chSampleInfo).collect()*/
     //********************************
     //********************************
 
@@ -128,7 +128,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chEnrichmentFilesCSVAll = chEnrichmentFilesCSV.collect()
     chEnrichmentFilesReportAll = chEnrichmentFilesReport.collect()
     chMergedEnrichmentReportAll = chMergedEnrichmentReport.collect()
-    chMergedSignalReportAll = chMergedSignalReport.collect()
+    //chMergedSignalReportAll = chMergedSignalReport.collect()
     
 
     // Combine all the channels
@@ -144,7 +144,7 @@ workflow BAM_SIGNAL_PROCESSING {
         .combine(chEnrichmentFilesCSVAll)
         .combine(chEnrichmentFilesReportAll)
         .combine(chMergedEnrichmentReportAll)
-        .combine(chMergedSignalReportAll)
+        //.combine(chMergedSignalReportAll)
         .combine(chFilesReportBamProcessing)
         .combine(chFilesReportInitialization)
         .combine(chFilesReportFragmentsProcess)
