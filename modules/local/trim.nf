@@ -51,7 +51,6 @@ process trim_fastp {
   script:
   def trimCommand = ""
 
-  fastp -i %s -I %s -o %s -O %s -h ./reports/%s.html -j ./reports/%s.json --disable_quality_filtering --disable_length_filtering 
 
   if (read_method == "PE") {
         trimCommand = "fastp -i ${reads[0]} -I ${reads[1]} -o ${sampleId}_R1_trimmed.fq.gz -O ${sampleId}_R2_trimmed.fq.gz --thread $task.cpus --json ${sampleId}_fastp.json --html ${sampleId}_fastp.html"
@@ -59,21 +58,14 @@ process trim_fastp {
         trimCommand = "fastp -i ${reads[0]} -I ${reads[1]} -o ${sampleId}_R1_trimmed.fq.gz -O ${sampleId}_R2_trimmed.fq.gz --thread $task.cpus --json ${sampleId}_fastp.json --html ${sampleId}_fastp.html"
     }
 
-  if (read_method == "PE") {
-    trimCommand = "trim_galore --paired ${reads[0]} ${reads[1]} --gzip --cores $task.cpus $params.trimming_params"
-  } else {
-    trimCommand = "trim_galore ${reads[0]} --gzip --cores $task.cpus $params.trimming_params"
-  }
-
   """
   echo "Running fastp for sample $sampleId in $read_method mode"
   echo "Command executed: $trimCommand"
   $trimCommand
 
   cat <<-END_VERSIONS > trim_mqc_versions.yml
-  "${task.process}":
-      trimgalore: \$(trim_galore --version 2>&1 | sed 's/^.*version //; s/Last.*\$//')
-      cutadapt: \$(cutadapt --version)
-  END_VERSIONS
+    "${task.process}":
+        fastp: \$(fastp --version 2>&1 | sed 's/fastp //g')
+    END_VERSIONS
   """
 }
