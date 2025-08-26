@@ -46,7 +46,7 @@ process trim_fastp {
   tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path(reads)
 
   output:
-  tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path('*.fq.gz'), path("*report.txt"), path("trim_mqc_versions.yml")
+  tuple val(sampleId), val(enrichment_mark), val(control), val(read_method), path('*.fq.gz'), path("*_fastp.json"), path("*_fastp.html")
 
   script:
   def trimCommand = ""

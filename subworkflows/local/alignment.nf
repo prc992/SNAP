@@ -2,6 +2,7 @@ nextflow.enable.dsl=2
 
 // Import the required processes from the modules
 include {trim} from '../../modules/local/trim'
+include {trim_fastp} from '../../modules/local/trim'
 include {align} from '../../modules/local/align'
 include {multiqc} from '../../modules/local/multiqc'
 include {moveSoftFiles} from '../../modules/local/moveSoftFiles'
@@ -19,7 +20,7 @@ workflow ALIGNMENT {
 
     main:
     
-    chTrim = trim(chSampleInfo)
+    chTrim = trim_fastp(chSampleInfo)
     chAlign = align(chTrim,chGenome,chGenomeIndex)
 
     // Collect all the files to generate the MultiQC report
