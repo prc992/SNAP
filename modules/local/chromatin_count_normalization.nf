@@ -11,8 +11,7 @@ process chromatin_count_normalization {
   tuple val(_), val(_), val(_), val(_), path(bedFile), val(_)
 
   output:
-  path "logs",     type: 'dir' 
-  path "matrices", type: 'dir' 
+  path "output",     type: 'dir' 
 
   script:
   """
