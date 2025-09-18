@@ -9,9 +9,9 @@ process chromatin_count_normalization {
   tuple val(sampleId), val(enrichment_mark), val(read_method), val(_), val(_), path(narrowPeakFile), val(_), val(_)
   tuple val(_), val(_), val(_), val(_), path(bedFile), val(_)
 
-output:
-  dir "logs"     , emit: logs
-  dir "matrices" , emit: matrices
+  output:
+  dir "logs"    into logs_ch
+  dir "matrices" into matrices_ch
 
   script:
   """
