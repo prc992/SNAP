@@ -16,6 +16,6 @@ process chromatin_count_normalization {
 
   script:
   """
-  chromatin-frags-normalization --sample-name ${sampleId} --fragment-file ${bedFile} --target-sites ${narrowPeakFile} --verbose
+  Rscript /workspace/chromatin_count_norm_v2.R --sample-name ${sampleId} --fragment-file ${bedFile} --target-sites ${narrowPeakFile} --verbose
   """
 }
