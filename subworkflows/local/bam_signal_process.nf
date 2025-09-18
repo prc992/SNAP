@@ -12,6 +12,7 @@ include {igv_session} from '../../modules/local/igv_reports'
 include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
 include {signalIntensityCalculation} from '../../modules/local/signal_intesity.nf'
+include {chromatin_count_normalization} from '../../modules/local/chromatin_count_normalization.nf'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
 include {merge_signal_reports} from '../../modules/local/merge_signal_reports'
 include {quality_report_lite} from '../../modules/local/quality_report_lite'
@@ -84,6 +85,8 @@ workflow BAM_SIGNAL_PROCESSING {
     chSamplesListMix = chSamplesListFilter.mix(chSamplesListNoControl)
 
     chPeakFiles = call_peaks(chSamplesListMix)
+    chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles)
+
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files
