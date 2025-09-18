@@ -1,7 +1,7 @@
 process chromatin_count_normalization {
   label 'med_cpu_med_mem'
   container params.containers.chromatin_count_normalization
-  containerOptions '--platform=linux/arm64'
+  containerOptions '--platform=linux/arm64 --entrypoint ""'
 
   tag "Sample - $sampleId"
   publishDir "${workflow.projectDir}/${params.outputFolder}/chromatin_count_normalization/${sampleId}", mode: 'copy'
