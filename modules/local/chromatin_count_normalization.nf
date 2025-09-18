@@ -18,10 +18,6 @@ process chromatin_count_normalization {
   """
   echo "Running chromatin-frags-normalization for sample ${sampleId}"
 
-  chromatin-frags-normalization \
-    --sample-name ${sampleId} \
-    --fragment-file ${bedFile} \
-    --target-sites ${narrowPeakFile} \
-    --verbose
+  chromatin-frags-normalization --sample-name ${sampleId} --fragment-file ${bedFile} --target-sites ${narrowPeakFile} --verbose
   """
 }
