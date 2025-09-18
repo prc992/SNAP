@@ -1,7 +1,7 @@
 process chromatin_count_normalization {
   label 'med_cpu_med_mem'
   container params.containers.chromatin_count_normalization
-  containerOptions '--platform=linux/arm64 --entrypoint chromatin-frags-normalization'
+  containerOptions '--platform=linux/arm64'
 
   tag "Sample - $sampleId"
   publishDir "${workflow.projectDir}/${params.outputFolder}/chromatin_count_normalization/${sampleId}", mode: 'copy'
@@ -16,7 +16,6 @@ process chromatin_count_normalization {
 
   script:
   """
-  echo "Running chromatin-frags-normalization for sample ${sampleId}"
-  --sample-name ${sampleId} --fragment-file ${bedFile} --target-sites ${narrowPeakFile} --verbose
+  chromatin-frags-normalization --sample-name ${sampleId} --fragment-file ${bedFile} --target-sites ${narrowPeakFile} --verbose
   """
 }
