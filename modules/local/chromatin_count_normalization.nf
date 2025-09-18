@@ -10,8 +10,8 @@ process chromatin_count_normalization {
   tuple val(_), val(_), val(_), val(_), path(bedFile), val(_)
 
   output:
-  path "logs",     type: 'dir' into logs_ch
-  path "matrices", type: 'dir' into matrices_ch
+  path "logs",     type: 'dir' 
+  path "matrices", type: 'dir' 
 
   script:
   """
