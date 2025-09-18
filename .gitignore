@@ -23,3 +23,5 @@ work/*
 *.chrom.sizes
 *folder_analysis*
 *test*.csv
+raw_data_k36_small/*
+run*.sh
