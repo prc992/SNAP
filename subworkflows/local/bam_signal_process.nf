@@ -87,7 +87,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chPeakFiles = call_peaks(chSamplesListMix)
 
     chReferenceSites = params.chromatin_count_reference ? \
-    Channel.fromPath(params.chromatin_count_reference, checkIfExists: true) : Channel.of("NO_DATA")
+    Channel.fromPath(params.chromatin_count_reference, checkIfExists: true) : Channel.fromPath(params.dummy_control_file)
     chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSites)
 
     chPeakAllFiles = chPeakFiles.collect()

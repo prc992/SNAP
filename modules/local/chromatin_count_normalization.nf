@@ -15,7 +15,7 @@ process chromatin_count_normalization {
 
   script:
   // If referenceSitesFile exist, use as an argument
-  def ref_arg = referenceSitesFile ? "--reference-sites ${referenceSitesFile}" : ""
+  def ref_arg = params.chromatin_count_reference ? "--reference-sites ${referenceSitesFile}" : ""
 
   """
   Rscript /workspace/chromatin_count_norm_v2.R \
