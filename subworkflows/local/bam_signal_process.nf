@@ -89,13 +89,6 @@ workflow BAM_SIGNAL_PROCESSING {
     chReferenceSites = params.chromatin_count_reference ? \
     Channel.fromPath(params.chromatin_count_reference, checkIfExists: true) : \
     Channel.empty()
-
-    if (params.chromatin_count_reference) {
-        chReferenceSites.view { "Using reference genes from: ${it}" }
-    } else {
-        println "No reference genes file provided. Skipping chromatin count normalization step."
-    }
-
     chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSites)
 
     chPeakAllFiles = chPeakFiles.collect()
