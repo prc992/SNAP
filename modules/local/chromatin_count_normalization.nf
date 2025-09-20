@@ -8,7 +8,7 @@ process chromatin_count_normalization {
   input:
   tuple val(sampleId), val(enrichment_mark), val(read_method), val(_), val(_), path(narrowPeakFile), val(_), val(_)
   tuple val(_), val(_), val(_), val(_), path(bedFile), val(_)
-  path referenceSitesFile, optional: true
+  path (referenceSitesFile)
 
   output:
   path "output", type: 'dir' 
