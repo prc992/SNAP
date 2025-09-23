@@ -50,6 +50,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chFilesReportFragmentsProcess
     chBedFiles
     chDACFileRef
+    chTSSPromoterPeaks_ref
     chRMEDIPSignalCalculation
     chRMARKSSignalCalculation
     chRegions_of_interest_MEDIP_signal
@@ -90,7 +91,10 @@ workflow BAM_SIGNAL_PROCESSING {
     Channel.fromPath(params.chromatin_count_reference, checkIfExists: true) : Channel.fromPath(params.dummy_control_file)
 
     chTargetSitesCCN = params.chromatin_count_target_sites ? \
-    Channel.fromPath(params.chromatin_count_target_sites, checkIfExists: true) : Channel.fromPath(params.dummy_control_file)
+    chTSSPromoterPeaks_ref : Channel.fromPath(params.chromatin_count_target_sites, checkIfExists: true)
+
+    //chTargetSitesCCN = params.chromatin_count_target_sites ? \
+    //Channel.fromPath(params.chromatin_count_target_sites, checkIfExists: true) : Channel.fromPath(params.dummy_control_file)
 
     chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
 
