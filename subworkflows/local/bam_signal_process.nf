@@ -87,19 +87,11 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chPeakFiles = call_peaks(chSamplesListMix)
 
+    //CHROMATIN COUNT NORMALIZATION *******************************
     chReferenceSitesCCN = params.chromatin_count_reference ? \
     Channel.fromPath(params.chromatin_count_reference, checkIfExists: true) : Channel.fromPath(params.dummy_control_file)
-
-    // Debug do parâmetro
-    log.info "[params] chromatin_count_target_sites = ${params.chromatin_count_target_sites ?: '<NULL/EMPTY>'}"
-
-    chTargetSitesCCN = params.chromatin_count_target_sites \
-    ? Channel.fromPath(params.chromatin_count_target_sites, checkIfExists: true) \
-    : chTSSPromoterPeaks_ref
-
-    //chTargetSitesCCN = params.chromatin_count_target_sites ? \
-    //Channel.fromPath(params.chromatin_count_target_sites, checkIfExists: true) : Channel.fromPath(params.dummy_control_file)
-
+    chTargetSitesCCN = params.chromatin_count_target_sites ? \
+    Channel.fromPath(params.chromatin_count_target_sites, checkIfExists: true) : chTSSPromoterPeaks_ref
     chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
 
     chPeakAllFiles = chPeakFiles.collect()
