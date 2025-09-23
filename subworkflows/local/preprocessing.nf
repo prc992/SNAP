@@ -27,11 +27,11 @@ workflow PREPROCESSING {
         | splitCsv(header:true) \
         | filter { row -> row.Genome == params.genome } \
         | ifEmpty { error "No matching Genome found in the GenomePaths spreadsheet. Exiting workflow." }
-        | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP) }
+        | map { row-> tuple(row.Genome,row.faGZFile,row.GeneAnotation, row.DACList,row.SNP,row.TSSPromoterPeaks) }
     // Destructure and store each column into separate variables
     chGenomesInfo
-        .map { genome, faGZFile, geneAnnotation, dacList, snp ->
-            [genome, faGZFile, geneAnnotation, dacList, snp]
+        .map { genome, faGZFile, geneAnnotation, dacList, snp, tssPromoterPeaks ->
+            [genome, faGZFile, geneAnnotation, dacList, snp, tssPromoterPeaks]
         }
 
     if (chSkipAlignment) {

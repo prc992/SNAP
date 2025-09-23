@@ -1,12 +1,12 @@
 process downloadSNPRef {
     label 'low_cpu_low_mem'
-    tag "Dowloading - $genome"
+    tag "Dowloading SNPs - $genome"
     publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
 
     container = params.containers.wget
 
     input:
-    tuple val(genome), val(_), val(_), val(_), val(snp)
+    tuple val(genome), val(_), val(_), val(_), val(snp), val(_)
 
     output:
     file "snps_${genome}.vcf"
@@ -16,6 +16,27 @@ process downloadSNPRef {
     
     """
     wget -O ${snpFile} ${snp}
+    """
+}
+
+process downloadTSSPromoterPeaks {
+    label 'low_cpu_low_mem'
+    tag "Dowloading TSS Promoter Peaks- $genome"
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
+
+    container = params.containers.wget
+
+    input:
+    tuple val(genome), val(_), val(_), val(_), val(_), val(tssPromoterPeaks)
+
+    output:
+    file "tss_promoter_peaks_${genome}.bed"
+
+    script:
+    def tssFile = "tss_promoter_peaks_${genome}.bed"
+
+    """
+    wget -O ${tssFile} ${tssPromoterPeaks}
     """
 }
 
@@ -56,7 +77,7 @@ process downloadGeneAnotation {
     container = params.containers.wget
     
     input:
-    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp), val(tssPromoterPeaks)
     path refDir
 
     output:
@@ -90,7 +111,7 @@ process downloadGenome {
     genomeOut = refDir
 
     input:
-    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp), val(tssPromoterPeaks)
     path refDir
 
     output:

@@ -104,6 +104,7 @@ workflow  {
         chChromSizes = DOWNLOAD_REFERENCES.out.chrom_sizes
         chDACFileRef = DOWNLOAD_REFERENCES.out.dac_file_ref
         chSNPS_ref = DOWNLOAD_REFERENCES.out.snp_ref
+        chTSSPromoterPeaks_ref = DOWNLOAD_REFERENCES.out.tss_promoter_peaks_ref
         }
 
     
