@@ -5,7 +5,7 @@ process createGenomeIndex {
     tag "Creating Index - $genome" 
 
     input:
-    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp), val(tssPromoterPeaks)
     path genomeFile
     path refDir
 
