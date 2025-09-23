@@ -48,7 +48,7 @@ process downloadDACFile {
     container = params.containers.wget
     
     input:
-    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp)
+    tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp), val(tssPromoterPeaks)
     path refDir
 
     output:
