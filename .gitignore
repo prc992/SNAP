@@ -26,3 +26,4 @@ work/*
 raw_data_k36_small/*
 run*.sh
 *_results_*
+tss_promoter_peaks*
