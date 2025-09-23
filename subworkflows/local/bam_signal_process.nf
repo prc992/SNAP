@@ -90,6 +90,9 @@ workflow BAM_SIGNAL_PROCESSING {
     chReferenceSitesCCN = params.chromatin_count_reference ? \
     Channel.fromPath(params.chromatin_count_reference, checkIfExists: true) : Channel.fromPath(params.dummy_control_file)
 
+    // Debug do parâmetro
+    log.info "[params] chromatin_count_target_sites = ${params.chromatin_count_target_sites ?: '<NULL/EMPTY>'}"
+
     chTargetSitesCCN = params.chromatin_count_target_sites ? \
     chTSSPromoterPeaks_ref : Channel.fromPath(params.chromatin_count_target_sites, checkIfExists: true)
 
