@@ -97,7 +97,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chromatin_count_mode = params.chromatin_count_mode.toLowerCase()
     if (chromatin_count_mode == "single") {
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
-        chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
+        chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
         chBedFiles.collect().view()
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
