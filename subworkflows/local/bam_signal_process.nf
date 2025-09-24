@@ -103,7 +103,7 @@ workflow BAM_SIGNAL_PROCESSING {
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
 
-    chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
+    //chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
 
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
