@@ -100,9 +100,6 @@ workflow BAM_SIGNAL_PROCESSING {
         chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
 
-        chBeds = chBedFiles.map { items -> items[4] }
-        chBedsList = chBeds.collect()
-
         chBedsAllFiles = chBeds.collect()
         chOnlyBedsFiles = chBedsAllFiles.map { collectedFiles ->
         collectedFiles.findAll { it.toString().endsWith('.bed') }} // Filter the bed files
