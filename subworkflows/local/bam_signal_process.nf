@@ -100,25 +100,7 @@ workflow BAM_SIGNAL_PROCESSING {
         chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
 
-        // 1) Extrair apenas os Paths .bed do canal
-        chBeds = chBedFiles
-        .map { items ->
-            // Se vier como lista de 6 (o seu caso)
-            if (items instanceof List && items.size() >= 5) {
-            return items[4]
-            }
-            // Se por acaso vierem Paths isolados
-            if (items instanceof Path) {
-            return items
-            }
-            return null
-        }
-        .filter { bed ->
-            bed && bed instanceof Path && bed.toString().endsWith('.bed')
-        }
-        .unique()   // opcional: remove duplicatas
-
-        // 2) Coletar todos os BEDs em UMA lista (um único item no canal)
+        chBeds = chBedFiles.map { items -> items[4] }
         chBedsList = chBeds.collect()
 
         // (opcional) debug rápido
