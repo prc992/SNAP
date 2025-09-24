@@ -100,30 +100,37 @@ workflow BAM_SIGNAL_PROCESSING {
         chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
 
-        // 1) Reagrupar em blocos de 6 e extrair (id, bed) — tudo no CANAL
+        // 0) ver o bruto
+        chBedFiles.view { "RAW -> ${it}" }
+
+        // 1) agrupar por amostra
         chPerSample = chBedFiles
-        .collate(6)                         // Nextflow Channel operator
-        .map { items ->                     // use um único arg p/ evitar erro de destruturação
+        .collate(6)
+        .map { items ->
             def id  = items[0] as String
-            def bed = items[4]                // Path
-            // (opcional) validar extensão .bed
-            if (!bed || !bed.toString().endsWith('.bed')) return null
-            tuple(id, bed)
+            def bed = items[4]
+            (bed && bed.toString().endsWith('.bed')) ? tuple(id, bed) : null
         }
-        .filter { it != null }              // remove entradas inválidas
+        .filter { it != null }
 
-        // 2) Agora sim, coleto tudo em UMA emissão com duas listas alinhadas
+        // 2) ver por amostra
+        chPerSample.view { (id, bed) -> "PAIR -> ${id} | ${bed}" }
+
+        // 3) coletar em listas
         chBatchLists = chPerSample.collect().map { pairs ->
-        def sampleNames = pairs.collect { it[0] as String }
-        def bedFiles    = pairs.collect { it[1] }         // List<Path>
-        tuple(sampleNames, bedFiles)
+        def names = pairs.collect { it[0] as String }
+        def beds  = pairs.collect { it[1] }
+        tuple(names, beds)
         }
 
-        // 3) Debug
-        chBatchLists.view { tupleVal ->
-            def (sampleNames, bedFiles) = tupleVal
-            "Samples: ${sampleNames}\nBeds: ${bedFiles}"
-        }
+        // 4) duplicar para log + processo
+        chBatchLists.into { chBatchForLog; chBatchForProc }
+
+        // 5) log com log.info (vai para nextflow.log)
+        chBatchForLog.subscribe { (names, beds) ->
+        log.info "BATCH Samples (${names.size()}): ${names}"
+        log.info "BATCH BEDs (${beds.size()}): ${beds}"
+}
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
 
