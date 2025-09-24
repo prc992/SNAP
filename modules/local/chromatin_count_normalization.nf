@@ -6,7 +6,7 @@ process chromatin_count_normalization_single {
   publishDir "${workflow.projectDir}/${params.outputFolder}/chromatin_count_normalization/${sampleId}", mode: 'copy'
 
   input:
-  path bedFiles from chBedsList
+  path (bedFiles)
   path (referenceSitesFile)
   path (targetSitesFile)
 
