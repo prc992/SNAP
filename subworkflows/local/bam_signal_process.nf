@@ -100,15 +100,21 @@ workflow BAM_SIGNAL_PROCESSING {
         chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
 
-        chBedFilesAll = chBedFiles.collect()
+        // NÃO coletem aqui; use o canal original
+        chPerSample = chBedFiles
+        .collate(6)
+        .map { items ->                          // evita o erro do '_'
+            tuple(items[0] as String, items[4])    // 0 = sampleId, 4 = bed
+        }
 
-        chPerSample = chBedFilesAll.collate(6).map { id, _, _, _, bed, _ -> tuple(id as String, bed as Path)}
+        // Coleta tudo em listas paralelas: [nomes], [beds]
         chBatchLists = chPerSample.collect().map { pairs ->
-            def sampleNames = pairs.collect { it[0] }  // lista de String
-            def bedFiles    = pairs.collect { it[1] }  // lista de Path
-            tuple(sampleNames, bedFiles)
-            }
+        def sampleNames = pairs.collect { it[0] }
+        def bedFiles    = pairs.collect { it[1] }
+        tuple(sampleNames, bedFiles)
+        }
 
+        // Debug opcional
         chBatchLists.view()
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
