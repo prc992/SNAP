@@ -6,7 +6,7 @@ process chromatin_count_normalization_single {
   publishDir "${workflow.projectDir}/${params.outputFolder}/chromatin_count_normalization/${sampleId}", mode: 'copy'
 
   input:
-  path(bedFiles)
+  path bedFiles from chBedsList
   path (referenceSitesFile)
   path (targetSitesFile)
 
@@ -18,6 +18,10 @@ process chromatin_count_normalization_single {
   def ref_arg = params.chromatin_count_reference ? "--reference-sites ${referenceSitesFile}" : ""
 
   """
+  echo "Total de BEDs: ${bedFiles.size()}"
+  for f in ${bedFiles}; do
+    echo \$f
+  done
   """
 }
 
