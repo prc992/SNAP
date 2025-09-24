@@ -124,12 +124,12 @@ workflow BAM_SIGNAL_PROCESSING {
         }
 
         // 4) duplicar para log + processo
-        chBatchLists.into { chBatchForLog; chBatchForProc }
+        //chBatchLists.into { chBatchForLog; chBatchForProc }
 
         // 5) log com log.info (vai para nextflow.log)
-        chBatchForLog.subscribe { (names, beds) ->
-        log.info "BATCH Samples (${names.size()}): ${names}"
-        log.info "BATCH BEDs (${beds.size()}): ${beds}"
+        //chBatchForLog.subscribe { (names, beds) ->
+        //log.info "BATCH Samples (${names.size()}): ${names}"
+        //log.info "BATCH BEDs (${beds.size()}): ${beds}"
 }
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
