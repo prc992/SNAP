@@ -1,4 +1,4 @@
-process chromatin_count_normalization_single {
+process chromatin_count_normalization_batch {
   label 'med_cpu_med_mem'
   container params.containers.chromatin_count_normalization
 
@@ -7,8 +7,8 @@ process chromatin_count_normalization_single {
 
   input:
   path (bedFiles)
-  path (referenceSitesFile)
-  path (targetSitesFile)
+  each path (referenceSitesFile)
+  each path (targetSitesFile)
 
   output:
   path "output", type: 'dir' 
@@ -25,7 +25,7 @@ process chromatin_count_normalization_single {
   """
 }
 
-process chromatin_count_normalization_batch {
+process chromatin_count_normalization_single {
   label 'med_cpu_med_mem'
   container params.containers.chromatin_count_normalization
 
