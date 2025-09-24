@@ -102,11 +102,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
         chBeds = chBedFiles.map { items -> items[4] }
         chBedsList = chBeds.collect()
-
-        // (opcional) debug rápido
-        chBeds.view { "BED -> ${it}" }
-        chBedsList.view { beds -> "TOTAL BEDs: ${beds.size()} | ${beds}" }
-
+        chChromatinCountNormalization = chromatin_count_normalization_batch(chBedsList,chReferenceSitesCCN,chTargetSitesCCN)
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
 
