@@ -130,7 +130,7 @@ workflow BAM_SIGNAL_PROCESSING {
         //chBatchForLog.subscribe { (names, beds) ->
         //log.info "BATCH Samples (${names.size()}): ${names}"
         //log.info "BATCH BEDs (${beds.size()}): ${beds}"
-}
+
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
 
