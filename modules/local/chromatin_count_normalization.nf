@@ -22,6 +22,26 @@ process chromatin_count_normalization_batch {
   for f in ${bedFiles}; do
     echo \$f
   done
+
+  echo "Gerando arquivo sample_name..."
+
+  # cria um arquivo com os nomes das amostras
+  > sample_name
+  i=1
+  for f in ${bedFiles}; do
+      printf "sample%03d\\n" \$i >> sample_name
+      ((i++))
+  done
+
+  echo "Arquivo sample_name gerado:"
+  cat sample_name
+
+  Rscript chromatin_count_norm_v2.R \
+  --samplesheet input/samples.tsv \
+  --target-sites ${targetSitesFile} \
+  --frags-dir . \
+  ${ref_arg} \
+  --verbose
   """
 }
 
