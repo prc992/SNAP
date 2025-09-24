@@ -102,7 +102,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
         chBedFilesAll = chBedFiles.collect()
 
-        chPerSample = chBedFilesAll.collate(6).map { id, _, _, _, bed, _ ->tuple(id as String, bed as Path)}
+        chPerSample = chBedFilesAll.collate(6).map { id, _, _, _, bed, _ -> tuple(id as String, bed as Path)}
         chBatchLists = chPerSample.collect().map { pairs ->
             def sampleNames = pairs.collect { it[0] }  // lista de String
             def bedFiles    = pairs.collect { it[1] }  // lista de Path
