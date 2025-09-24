@@ -12,7 +12,8 @@ include {igv_session} from '../../modules/local/igv_reports'
 include {enrichment} from '../../modules/local/enrichment'
 include {enrichmentReport} from '../../modules/local/enrichmentReport'
 include {signalIntensityCalculation} from '../../modules/local/signal_intesity.nf'
-include {chromatin_count_normalization} from '../../modules/local/chromatin_count_normalization.nf'
+include {chromatin_count_normalization_single} from '../../modules/local/chromatin_count_normalization.nf'
+include {chromatin_count_normalization_batch} from '../../modules/local/chromatin_count_normalization.nf'
 include {merge_enrichment_reports} from '../../modules/local/merge_enrichment_reports'
 include {merge_signal_reports} from '../../modules/local/merge_signal_reports'
 include {quality_report_lite} from '../../modules/local/quality_report_lite'
@@ -96,7 +97,9 @@ workflow BAM_SIGNAL_PROCESSING {
     chromatin_count_mode = params.chromatin_count_mode.toLowerCase()
     if (chromatin_count_mode == "single") {
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
+        chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
+        chBedFiles.collect().view()
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
 
