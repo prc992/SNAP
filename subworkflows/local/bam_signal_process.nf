@@ -100,35 +100,30 @@ workflow BAM_SIGNAL_PROCESSING {
         chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
 
-        // 0) ver o bruto
-        //chBedFiles.view { "RAW -> ${it}" }
-
-        // 1) extrair (id, bed) de cada emissão
-        chPerSample = chBedFiles
+        // 1) Extrair apenas os Paths .bed do canal
+        chBeds = chBedFiles
         .map { items ->
-            def id  = items[0] as String
-            def bed = items[4]
-            (bed && bed.toString().endsWith('.bed')) ? tuple(id, bed) : null
+            // Se vier como lista de 6 (o seu caso)
+            if (items instanceof List && items.size() >= 5) {
+            return items[4]
+            }
+            // Se por acaso vierem Paths isolados
+            if (items instanceof Path) {
+            return items
+            }
+            return null
         }
-        .filter { it != null }
+        .filter { bed ->
+            bed && bed instanceof Path && bed.toString().endsWith('.bed')
+        }
+        .unique()   // opcional: remove duplicatas
 
-        // 2) ver por amostra
-        chPerSample.view { (id, bed) -> "PAIR -> ${id} | ${bed}" }
+        // 2) Coletar todos os BEDs em UMA lista (um único item no canal)
+        chBedsList = chBeds.collect()
 
-        // 3) coletar em listas
-        //chBatchLists = chPerSample.collect().map { pairs ->
-        //def names = pairs.collect { it[0] as String }
-        //def beds  = pairs.collect { it[1] }
-        //tuple(names, beds)
-        //}
-
-        // 4) duplicar para log + processo
-        //chBatchLists.into { chBatchForLog; chBatchForProc }
-
-        // 5) log com log.info (vai para nextflow.log)
-        //chBatchForLog.subscribe { (names, beds) ->
-        //log.info "BATCH Samples (${names.size()}): ${names}"
-        //log.info "BATCH BEDs (${beds.size()}): ${beds}"
+        // (opcional) debug rápido
+        chBeds.view { "BED -> ${it}" }
+        chBedsList.view { beds -> "TOTAL BEDs: ${beds.size()} | ${beds}" }
 
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
