@@ -96,22 +96,16 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chromatin_count_mode = params.chromatin_count_mode.toLowerCase()
     if (chromatin_count_mode == "single") {
-        log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
         chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
 
         chBedsAllFiles = chBedFiles.collect()
         chOnlyBedsFiles = chBedsAllFiles.map { collectedFiles ->
         collectedFiles.findAll { it.toString().endsWith('.bed') }} // Filter the bed files
-
-        chOnlyBedsFiles.view()
-
         chChromatinCountNormalization = chromatin_count_normalization_batch(chOnlyBedsFiles,chReferenceSitesCCN,chTargetSitesCCN)
-        log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
-
-    //chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
-
+    //***************************************************************
+    
     chPeakAllFiles = chPeakFiles.collect()
     chNarrowPeakFiles = chPeakAllFiles.map { collectedFiles ->
     collectedFiles.findAll { it.toString().endsWith('.narrowPeak') }} // Filter the narrowPeak files

@@ -18,22 +18,14 @@ process chromatin_count_normalization_batch {
   def ref_arg = params.chromatin_count_reference ? "--reference-sites ${referenceSitesFile}" : ""
 
   """
-  echo "Total de BEDs: ${bedFiles.size()}"
-  for f in ${bedFiles}; do
-    echo \$f
-  done
-
-  echo "Gerando arquivo sample_name com header..."
+  echo "Creating sample_name list with header..."
   > sample_name
-  echo "sample_name" >> sample_name        # cabeçalho
+  echo "sample_name" >> sample_name        # header
   for f in ${bedFiles}; do
     bn=\$(basename "\$f")                  # ex: DV_53_M2413... .bed
-    name="\${bn%.bed}"                     # remove extensão .bed
+    name="\${bn%.bed}"                     # remove .bed extension
     printf "%s\\n" "\$name" >> sample_name
   done
-
-  echo "Arquivo sample_name:"
-  cat sample_name
 
   Rscript /workspace/chromatin_count_norm_v2.R \
   --samplesheet sample_name \
