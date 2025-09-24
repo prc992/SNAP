@@ -2,7 +2,7 @@ process chromatin_count_normalization_batch {
   label 'med_cpu_med_mem'
   container params.containers.chromatin_count_normalization
 
-  tag "Sample - $sampleId"
+  tag "All Samples"
   publishDir "${workflow.projectDir}/${params.outputFolder}/chromatin_count_normalization/batch", mode: 'copy'
 
   input:
