@@ -100,25 +100,26 @@ workflow BAM_SIGNAL_PROCESSING {
         chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
 
-        // NÃO coletem aqui; use o canal original
+        // 1) Reagrupar em blocos de 6 e extrair (id, bed) — tudo no CANAL
         chPerSample = chBedFiles
-        .collate(6)
-        .map { id, _1, _2, _3, bed, _4 ->
-            (bed && bed.toString().endsWith('.bed')) ? tuple(id as String, bed) : null
+        .collate(6)                         // Nextflow Channel operator
+        .map { items ->                     // use um único arg p/ evitar erro de destruturação
+            def id  = items[0] as String
+            def bed = items[4]                // Path
+            // (opcional) validar extensão .bed
+            if (!bed || !bed.toString().endsWith('.bed')) return null
+            tuple(id, bed)
         }
-        .filter { it != null }    // remove tuplas nulas
+        .filter { it != null }              // remove entradas inválidas
 
-        // Coleta tudo em listas paralelas: [nomes], [beds]
+        // 2) Agora sim, coleto tudo em UMA emissão com duas listas alinhadas
         chBatchLists = chPerSample.collect().map { pairs ->
-        if (!pairs) return tuple([], [])   // se não houver amostras
-        // findResults filtra nulos automaticamente
-        def sampleNames = pairs.findResults { p -> p?.getAt(0) as String }
-        def bedFiles    = pairs.findResults { p -> p?.getAt(1) }
+        def sampleNames = pairs.collect { it[0] as String }
+        def bedFiles    = pairs.collect { it[1] }         // List<Path>
         tuple(sampleNames, bedFiles)
         }
 
-
-        // Debug opcional
+        // 3) Debug
         chBatchLists.view()
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
