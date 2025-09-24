@@ -104,6 +104,8 @@ workflow BAM_SIGNAL_PROCESSING {
         chOnlyBedsFiles = chBedsAllFiles.map { collectedFiles ->
         collectedFiles.findAll { it.toString().endsWith('.bed') }} // Filter the bed files
 
+        chOnlyBedsFiles.view()
+
         chChromatinCountNormalization = chromatin_count_normalization_batch(chOnlyBedsFiles,chReferenceSitesCCN,chTargetSitesCCN)
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
