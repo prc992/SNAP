@@ -36,8 +36,7 @@ process chromatin_count_normalization_batch {
   publishDir "${workflow.projectDir}/${params.outputFolder}/chromatin_count_normalization/${sampleId}", mode: 'copy'
 
   input:
-  tuple val(sampleId), val(enrichment_mark), val(read_method), val(_), val(_), val(_), val(_), val(_)
-  tuple val(_), val(_), val(_), val(_), path(bedFile), val(_)
+  tuple val(sampleId), val(_), val(_), val(_), path(bedFile), val(_)
   path (referenceSitesFile)
   path (targetSitesFile)
 

@@ -99,7 +99,17 @@ workflow BAM_SIGNAL_PROCESSING {
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
         chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
-        chBedFiles.collect().view()
+
+        chBedFilesAll = chBedFiles.collect()
+
+        chPerSample = chBedFilesAll.collate(6).map { id, _, _, _, bed, _ ->tuple(id as String, bed as Path)}
+        chBatchLists = chPerSample.collect().map { pairs ->
+            def sampleNames = pairs.collect { it[0] }  // lista de String
+            def bedFiles    = pairs.collect { it[1] }  // lista de Path
+            tuple(sampleNames, bedFiles)
+            }
+
+        chBatchLists.view()
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
 
