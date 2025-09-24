@@ -3,7 +3,7 @@ process chromatin_count_normalization_batch {
   container params.containers.chromatin_count_normalization
 
   tag "Sample - $sampleId"
-  publishDir "${workflow.projectDir}/${params.outputFolder}/chromatin_count_normalization/${sampleId}", mode: 'copy'
+  publishDir "${workflow.projectDir}/${params.outputFolder}/chromatin_count_normalization/batch", mode: 'copy'
 
   input:
   path (bedFiles)
@@ -23,21 +23,19 @@ process chromatin_count_normalization_batch {
     echo \$f
   done
 
-  echo "Gerando arquivo sample_name..."
-
-  # cria um arquivo com os nomes das amostras
+  echo "Gerando arquivo sample_name a partir dos BEDs (sem .bed)..."
   > sample_name
-  i=1
   for f in ${bedFiles}; do
-      printf "sample%03d\\n" \$i >> sample_name
-      ((i++))
+    bn=\$(basename "\$f")     # ex: DV_53_M2413_K36... .bed
+    name="\${bn%.bed}"        # remove a extensão .bed
+    printf "%s\\n" "\$name" >> sample_name
   done
 
-  echo "Arquivo sample_name gerado:"
+  echo "Arquivo sample_name:"
   cat sample_name
 
-  Rscript chromatin_count_norm_v2.R \
-  --samplesheet input/samples.tsv \
+  Rscript /workspace/chromatin_count_norm_v2.R \
+  --samplesheet sample_name \
   --target-sites ${targetSitesFile} \
   --frags-dir . \
   ${ref_arg} \
