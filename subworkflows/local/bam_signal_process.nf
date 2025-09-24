@@ -92,15 +92,14 @@ workflow BAM_SIGNAL_PROCESSING {
     Channel.fromPath(params.chromatin_count_reference, checkIfExists: true) : Channel.fromPath(params.dummy_control_file)
     chTargetSitesCCN = params.chromatin_count_target_sites ? \
     Channel.fromPath(params.chromatin_count_target_sites, checkIfExists: true) : chTSSPromoterPeaks_ref
-`
-    chromatin_count_mode = params.chromatin_count_mode.toLowerCase()
 
+    chromatin_count_mode = params.chromatin_count_mode.toLowerCase()
     if (chromatin_count_mode == "single") {
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     } else if (chromatin_count_mode == "batch") {
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
-    
+
     chChromatinCountNormalization = chromatin_count_normalization(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
 
     chPeakAllFiles = chPeakFiles.collect()
