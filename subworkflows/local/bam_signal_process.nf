@@ -103,16 +103,20 @@ workflow BAM_SIGNAL_PROCESSING {
         // NÃO coletem aqui; use o canal original
         chPerSample = chBedFiles
         .collate(6)
-        .map { items ->                          // evita o erro do '_'
-            tuple(items[0] as String, items[4])    // 0 = sampleId, 4 = bed
+        .map { id, _1, _2, _3, bed, _4 ->
+            (bed && bed.toString().endsWith('.bed')) ? tuple(id as String, bed) : null
         }
+        .filter { it != null }    // remove tuplas nulas
 
         // Coleta tudo em listas paralelas: [nomes], [beds]
         chBatchLists = chPerSample.collect().map { pairs ->
-        def sampleNames = pairs.collect { it[0] }
-        def bedFiles    = pairs.collect { it[1] }
+        if (!pairs) return tuple([], [])   // se não houver amostras
+        // findResults filtra nulos automaticamente
+        def sampleNames = pairs.findResults { p -> p?.getAt(0) as String }
+        def bedFiles    = pairs.findResults { p -> p?.getAt(1) }
         tuple(sampleNames, bedFiles)
         }
+
 
         // Debug opcional
         chBatchLists.view()
