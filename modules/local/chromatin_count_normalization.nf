@@ -23,11 +23,12 @@ process chromatin_count_normalization_batch {
     echo \$f
   done
 
-  echo "Gerando arquivo sample_name a partir dos BEDs (sem .bed)..."
+  echo "Gerando arquivo sample_name com header..."
   > sample_name
+  echo "sample_name" >> sample_name        # cabeçalho
   for f in ${bedFiles}; do
-    bn=\$(basename "\$f")     # ex: DV_53_M2413_K36... .bed
-    name="\${bn%.bed}"        # remove a extensão .bed
+    bn=\$(basename "\$f")                  # ex: DV_53_M2413... .bed
+    name="\${bn%.bed}"                     # remove extensão .bed
     printf "%s\\n" "\$name" >> sample_name
   done
 
