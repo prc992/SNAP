@@ -120,7 +120,10 @@ workflow BAM_SIGNAL_PROCESSING {
         }
 
         // 3) Debug
-        chBatchLists.view()
+        chBatchLists.view { tupleVal ->
+            def (sampleNames, bedFiles) = tupleVal
+            "Samples: ${sampleNames}\nBeds: ${bedFiles}"
+        }
         log.info "chromatin_count_mode: ${params.chromatin_count_mode}"
     }
 
