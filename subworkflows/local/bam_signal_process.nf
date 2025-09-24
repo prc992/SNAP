@@ -103,9 +103,8 @@ workflow BAM_SIGNAL_PROCESSING {
         // 0) ver o bruto
         chBedFiles.view { "RAW -> ${it}" }
 
-        // 1) agrupar por amostra
+        // 1) extrair (id, bed) de cada emissão
         chPerSample = chBedFiles
-        .collate(6)
         .map { items ->
             def id  = items[0] as String
             def bed = items[4]
@@ -117,11 +116,11 @@ workflow BAM_SIGNAL_PROCESSING {
         chPerSample.view { (id, bed) -> "PAIR -> ${id} | ${bed}" }
 
         // 3) coletar em listas
-        chBatchLists = chPerSample.collect().map { pairs ->
-        def names = pairs.collect { it[0] as String }
-        def beds  = pairs.collect { it[1] }
-        tuple(names, beds)
-        }
+        //chBatchLists = chPerSample.collect().map { pairs ->
+        //def names = pairs.collect { it[0] as String }
+        //def beds  = pairs.collect { it[1] }
+        //tuple(names, beds)
+        //}
 
         // 4) duplicar para log + processo
         //chBatchLists.into { chBatchForLog; chBatchForProc }
