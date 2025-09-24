@@ -101,7 +101,7 @@ workflow BAM_SIGNAL_PROCESSING {
     } else if (chromatin_count_mode == "batch") {
 
         // 0) ver o bruto
-        chBedFiles.view { "RAW -> ${it}" }
+        //chBedFiles.view { "RAW -> ${it}" }
 
         // 1) extrair (id, bed) de cada emissão
         chPerSample = chBedFiles
