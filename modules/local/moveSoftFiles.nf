@@ -24,6 +24,7 @@ process moveSoftFiles {
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*gz_trimming_report.txt' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name '*-dummy.txt' -exec rm {} \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name 'mark_for_deletion_*' -exec rm {} \\; || true
+    find ${workflow.projectDir}/${params.outputFolder} -type f -name 'tss_promoter_peaks*' -exec rm {} \\; || true
     find ${workflow.projectDir}/${params.outputFolder} -type f -name 'igv_housekeeping_genes_mqc.html' -exec mv {} ${workflow.projectDir}/${params.outputFolder}/stats_files/ \\; || true
 
     echo "Finalizing moveSoftFiles step" >&1
