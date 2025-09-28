@@ -96,7 +96,7 @@ workflow BAM_SIGNAL_PROCESSING {
 
     chromatin_count_mode = params.chromatin_count_mode.toLowerCase()
     if (chromatin_count_mode == "single") {
-        chChromatinCountNormalization = chromatin_count_normalization_single(chPeakFiles,chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
+        chChromatinCountNormalization = chromatin_count_normalization_single(chBedFiles,chReferenceSitesCCN,chTargetSitesCCN)
     } else if (chromatin_count_mode == "batch") {
 
         chBedsAllFiles = chBedFiles.collect()
