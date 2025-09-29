@@ -45,8 +45,8 @@ process chromatin_count_normalization_single {
 
   input:
   tuple val(sampleId), val(_), val(_), val(_), path(bedFile), val(_)
-  path (referenceSitesFile)
-  path (targetSitesFile)
+  each path (referenceSitesFile)
+  each path (targetSitesFile)
 
   output:
   path "output", type: 'dir' 
