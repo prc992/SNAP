@@ -9,12 +9,12 @@ process enrichment {
 
   input:
   tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val(_)
-  path (chEnrichmentFilesFolder)
+  each path (chEnrichmentFilesFolder)
   each path (chEnrichmentScript)
 
 
   exec:
-  strCSV = sampleId + '_enrichment_states.csv2'
+  strCSV = sampleId + '_enrichment_states.csv'
 
   output:
   path("*.csv")
