@@ -14,7 +14,7 @@ process enrichment {
 
 
   exec:
-  strCSV = sampleId + '_enrichment_states.csv'
+  strCSV = sampleId + '_enrichment_states.csv2'
 
   output:
   path("*.csv")
