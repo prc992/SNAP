@@ -37,6 +37,7 @@ workflow BAM_SIGNAL_PROCESSING {
     chMultiQCPeaksHeader
     chIGVFilestoSessions
     chEnrichmentColors
+    chEnrichmentFilesFolder
     chMultiQCConfig
     chEnrichmentScript
     chRGenomicAnnotation
@@ -121,7 +122,7 @@ workflow BAM_SIGNAL_PROCESSING {
     //chPeaksAnnotationReport = peaks_annotations(chNarrowPeakFiles,chRGenomicAnnotation)
     
     //ENRICHMENT *********************************************************************
-    chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentScript).collect()
+    chEnrichmentFilesCSV = enrichment(chBAMProcessedFiles,chEnrichmentFilesFolder,chEnrichmentScript).collect()
     chEnrichmentFilesReport = enrichmentReport(chSampleInfo,chEnrichmentFilesCSV,chReportEnrichment).collect()
     chMergedEnrichmentReport = merge_enrichment_reports(chEnrichmentFilesReport,chMultiQCEnrichmentHeader,chMergeReportEnrichment,chSampleInfo).collect()
     

@@ -70,6 +70,7 @@ workflow  {
     chMultiQCEnrichmentHeader = Channel.fromPath("$params.multiqc_enrichment_header")
     chMultiQCSignalHeader = Channel.fromPath("$params.multiqc_signal_header")
     chEnrichmentColors = Channel.fromPath("$params.enrichment_states_colors")
+    chEnrichmentFilesFolder = Channel.fromPath("$params.enrichment_states_ref")
 
     if (params.report_peak_genomic_annotation == true) {
         chMultiQCConfig = Channel.fromPath("$params.multiqc_config_with_peak_annotation")
@@ -166,7 +167,7 @@ workflow  {
     if ('BAM_SIGNAL_PROCESSING' in run_steps) {
         BAM_SIGNAL_PROCESSING (chSampleInfo, chGenome, chGenomeIndex,chChromSizes,skip_alignment,
                             chBAMProcessedFiles,chBAMProcessedIndexFiles,
-                            chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,chEnrichmentColors,
+                            chGenomesInfo,chMultiQCHousekeepingHeader,chMultiQCEnrichmentHeader,chMultiQCPeaksHeader,chIGVFilestoSessions,chEnrichmentColors,chEnrichmentFilesFolder,
                             chMultiQCConfig,chEnrichmentScript,chRGenomicAnnotation,chPileUpBED,chReportPeaks,chReportEnrichment,chMergeReportEnrichment,chReportQualityLite,chCTFragleFilesReport,
                             chFilesReportInitialization,chFilesReportBamProcessing,chFilesReportFragmentsProcess,
                             chBedFiles,chDACFileRef,chTSSPromoterPeaks_ref,
@@ -178,11 +179,6 @@ workflow  {
 
 
 
-        //chIGVReportMerged = BAM_SIGNAL_PROCESSING.out.igv_report_merged
-        //chEnrichmentFilesReport = BAM_SIGNAL_PROCESSING.out.merge_enrichment_reports
-        //chPeaksReport = BAM_SIGNAL_PROCESSING.out.peaks_report
-        //chFilesReportSignalProcess = BAM_SIGNAL_PROCESSING.out.files_report_bam_signal_processing
-        //chBAMSignalReport = BAM_SIGNAL_PROCESSING.out.bam_signal_report
         }
     
 }

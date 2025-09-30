@@ -9,6 +9,7 @@ process enrichment {
 
   input:
   tuple val(sampleId),val(enrichment_mark),val(control),val(read_method),path(sampleBam),val(_)
+  path (chEnrichmentFilesFolder)
   each path (chEnrichmentScript)
 
 
