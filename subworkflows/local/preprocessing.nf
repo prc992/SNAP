@@ -47,12 +47,6 @@ workflow PREPROCESSING {
             chSampleSheetFasta = Channel.fromPath(params.samplesheetfasta)
         } else if (params.sample_dir_fasta) {
             //Creating samplesheet because none was provided
-
-            // DEBUG: imprimir os params usados
-            log.info "DEBUG params:"
-            log.info "  sample_dir_fasta = ${params.sample_dir_fasta}"
-            log.info "  enrichment_mark  = ${params.enrichment_mark}"
-            log.info "  sample_control   = ${params.sample_control}"
             chSampleSheetFasta = createSamplesheetFasta (params.sample_dir_fasta, params.enrichment_mark, params.sample_control)
         }    
     }
