@@ -51,7 +51,7 @@ process createSMaSHFingerPrintPlot{
     if [[ ! -s "$chSMaSHOutout" ]]; then
         touch empty.jpg
     else
-        python3 $chSNPSMaSHPyPlot -i $chSMaSHOutout -o Dendrogram_of_Samples_by_SNP_Profile.jpg
+        python3 $chSNPSMaSHPyPlot -i $chSMaSHOutout -o Dendrogram_of_Samples_by_SNP_Profile.jpg --logp-max 50 --cmap coolwarm
     fi
     """
 }
