@@ -122,7 +122,20 @@ sampleId, enrichment_mark, read1, read2,control
 
 - The **enrichment_mark** field can be left blank if no enrichment mark calculation is required.
 - The **read2** field can be left blank for **single-end** FASTA files.
-- The **control** field is used when you wanto to indicate which sample is going to be used as a control, in that case you just provide the sampleid of the samples here, if you left blank the samples will have no control sample.
+- The **control** field is used to indicate which sample will serve as the control reference for each experimental sample. In this column, you should provide the sampleId of the control sample (which must also be included in the sample sheet like any other sample).
+  If you leave the field blank, the sample will not have an associated control.
+  If multiple samples share the same control, you can repeat the control sampleId in their rows.
+  
+  Example:
+
+  ```
+	sampleId,enrichment_mark,read1,read2,control
+	sample1,no_enrichment_mark,/data/baca/sample1_1.fq.gz,/data/baca/sample1_2.fq.gz,sample_ctrl
+	sample2,no_enrichment_mark,/data/baca/sample2_1.fq.gz,/data/baca/sample2_2.fq.gz,sample_ctrl
+	sample3,no_enrichment_mark,/data/baca/sample3_1.fq.gz,/data/baca/sample3_2.fq.gz,sample_ctrl
+	sample_ctrl,no_enrichment_mark,/data/baca/sample_crtl_1.fq.gz,/data/baca/sample_crtl_2.fq.gz,
+  ```
+Here, sample1, sample2, and sample3 all use sample_ctrl as their control. The last line defines the control sample itself, and since it is the control, its own control field is left blank.
 
 ---
 
