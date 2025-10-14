@@ -19,8 +19,14 @@ workflow ALIGNMENT {
     chMultiQCConfig
 
     main:
-    
-    chTrim = trim_fastp(chSampleInfo)
+    if (params.trim_method == 'FASTP') {
+        println "Using FASTP for trimming"
+        chTrim = trim_fastp(chSampleInfo)
+    } else {
+        println "Using TRIM_GALORE for trimming"
+        chTrim = trim(chSampleInfo)
+    }
+
     chAlign = align(chTrim,chGenome,chGenomeIndex)
 
     // Collect all the files to generate the MultiQC report
