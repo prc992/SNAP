@@ -1,5 +1,5 @@
 process dedup {
-  label 'med_cpu_med_mem'
+  label 'process_high'
 
   container = params.containers.picard
 
@@ -17,7 +17,7 @@ process dedup {
   
   script:
   """
-  picard MarkDuplicates \\
+  picard -Xmx${ task.memory.toGiga() - 4 }g MarkDuplicates \\
   I=$sampleBam \\
   O=$strDedupBam \\
   REMOVE_DUPLICATES=true \\
