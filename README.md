@@ -242,6 +242,32 @@ The pipeline generates an **END motif analysis file** at:motifs/bp_motif.bed
 By default, this analysis considers **4-mers**, but this value can be adjusted using the parameter **--nmer**
 
 ---
+## Chromatin Count Normalization
+
+SNAP includes an integrated module for chromatin fragment count quantification and normalization at user-defined genomic regions. This step generates fragment count matrices from BED-formatted fragment files and supports both single-sample and batch execution modes. Detailed implementation and normalization logic are documented in the upstream module repository.
+
+Parameters :
+
+--chromatin_count_mode (single/batch)
+
+Controls how the normalization step is executed:
+
+**single**
+	Runs the normalization independently for each sample, producing one output directory per sample.	
+
+**batch**
+	Runs the normalization jointly across all samples, generating a single site-by-sample matrix. This mode is recommended when downstream analyses require direct comparison between samples.
+
+--reference-sites (optional)
+
+Specifies a BED file containing reference genomic regions used for reference-based normalization.
+
+When provided, fragment counts at target regions are normalized by the total fragment signal observed across these reference loci.
+
+- This helps correct for global signal-to-noise differences between samples and is particularly useful for cfDNA and other low-input assays.
+- If not provided, normalization is performed using library-size–based scaling only.
+
+---
 
 ## Pileup Reports
 The SNAP pipeline generates **pileup reports** in two formats:
