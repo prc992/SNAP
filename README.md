@@ -302,6 +302,9 @@ output_folder/
 ├── peaks/
 │   ├── Sample1/
 │   ├── Sample2/
+├── chromatin_count_normalization/
+│   ├── Sample1/
+│   ├── Sample2/
 ├── reports/
 │   ├── igv_session/
 │   ├── multiqc/
