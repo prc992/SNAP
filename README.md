@@ -1,8 +1,7 @@
 # SNAP
 ### Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma.
 
-
-![Pipeline Workflow](workflow-SNAP.png)
+![Pipeline Workflow](fig1.png)
 
 
 ## SNAP Pipeline Documentation
@@ -32,6 +31,7 @@ Bam processing
 ├── unique_sam
 ├── quality_filter
 ├── dedup
+├── dac_exclusion
 ├── createStatsSamtoolsfiltered
 ├── index_sam
 ├── createSMaSHFingerPrint
@@ -42,12 +42,14 @@ Fragments processing
 ├── calcFragsLengthDistribuition
 ├── fragle_ct_estimation
 ├── bam_to_bed
+├── unique_frags
 
 Signal processing
 ├── bam_to_bedgraph
 ├── bedgraph_to_bigwig
 ├── igv_reports
 ├── call_peaks
+├── chromatin_count_normalization
 ├── peaks_report
 ├── peaks_annotations
 ├── enrichmentReport
