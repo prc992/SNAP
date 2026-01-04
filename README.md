@@ -331,7 +331,7 @@ output_folder/
 - Contains subdirectories for each sample with **trimmed reads** after adapter removal and quality filtering.
 - These are the cleaned sequencing reads used for downstream processing.
 
-#### `frag/`
+#### `frags/`
 - Contains subdirectories for each sample with fragment length distribution data.
 - Useful for downstream analysis such as **nucleosome positioning studies**.
 
@@ -344,11 +344,16 @@ output_folder/
 - Contains subdirectories for each sample with peak-calling results (if applicable).
 - Include **peak files** (`.bed`, `.narrowPeak`, `.bedgraph`, `.bw`, `.control_lambda.bdg`,`.treat_pileup.bdg`,`peaks.xls).
 
+#### `chromatin_count_normalization/`
+- Contains the analysis_summary.txt and also the the cpm and raw matrices used for the chromatin fragment counter
+
 #### `reports/`
 - Stores different types of reports generated during the analysis.
 - **Subdirectories:**
+	- **`fragle/`** → Contains **ctDNA_Burden** for all samples calculated using Fragle.
   - **`igv_session/`** → Contains **IGV session files** for easy visualization of sequencing data in **Integrative Genomics Viewer (IGV)**.
   - **`multiqc/`** → Aggregated **MultiQC report** summarizing quality control metrics.
+  - **`metrics_lite/`** → Aggregated text file with only the basic metrics.
   - **`SMaSH/`** → A dendogram clustering the samples using SMAsH (https://github.com/rbundschuh/SMaSH) that is also included in the final report.
 
 #### `snap-samplesheet-fasta-<timestamp>.csv`
