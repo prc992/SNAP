@@ -293,7 +293,7 @@ output_folder/
 ├── trim/
 │   ├── Sample1/
 │   ├── Sample2/
-├── frag/
+├── frags/
 │   ├── Sample1/
 │   ├── Sample2/
 ├── motifs/
@@ -306,10 +306,12 @@ output_folder/
 │   ├── Sample1/
 │   ├── Sample2/
 ├── reports/
+│   ├── fragle/
 │   ├── igv_session/
+│   ├── metrics_lite/
 │   ├── multiqc/
 │   ├── SMaSH/
-├── snap-samplesheet-fasta-.csv
+├── snap-samplesheet-fasta.csv
 ├── software_versions/
 ├── stats_files/
 
