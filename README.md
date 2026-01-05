@@ -246,7 +246,7 @@ By default, this analysis considers **4-mers**, but this value can be adjusted u
 
 SNAP includes an integrated module for chromatin fragment count quantification and normalization at user-defined genomic regions. This step generates fragment count matrices from BED-formatted fragment files and supports both single-sample and batch execution modes. Detailed implementation and normalization logic are documented in the upstream module repository.
 
-Parameters :
+**Parameters :**
 
 --chromatin_count_mode (single/batch)
 
@@ -258,9 +258,14 @@ Controls how the normalization step is executed:
 **batch**
 	Runs the normalization jointly across all samples, generating a single site-by-sample matrix. This mode is recommended when downstream analyses require direct comparison between samples.
 
+--target-sites 
+
+Target regions BED file
+
 --reference-sites (optional)
 
 Specifies a BED file containing reference genomic regions used for reference-based normalization.
+
 
 When provided, fragment counts at target regions are normalized by the total fragment signal observed across these reference loci.
 
