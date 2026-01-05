@@ -244,7 +244,8 @@ By default, this analysis considers **4-mers**, but this value can be adjusted u
 ---
 ## Chromatin Count Normalization
 
-SNAP includes an integrated module for chromatin fragment count quantification and normalization at user-defined genomic regions. This step generates fragment count matrices from BED-formatted fragment files and supports both single-sample and batch execution modes. Detailed implementation and normalization logic are documented in the upstream module repository.
+SNAP includes an integrated module for chromatin fragment count quantification and normalization at user-defined genomic regions. This step generates fragment count matrices from BED-formatted fragment files and supports both single-sample and batch execution modes. The description and behavior of this module are fully implemented within SNAP and are based on the upstream Chromatin Fragment Count Normalization library
+(https://github.com/chhetribsurya/chromatin-frags-normalization), which provides a standalone and more advanced implementation, including detailed normalization logic, execution examples, and extended customization options.
 
 **Parameters :**
 
