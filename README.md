@@ -1,8 +1,7 @@
 # SNAP
 ### Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma.
 
-
-![Pipeline Workflow](workflow-SNAP.png)
+![Pipeline Workflow](fig1.png)
 
 
 ## SNAP Pipeline Documentation
@@ -32,6 +31,7 @@ Bam processing
 ├── unique_sam
 ├── quality_filter
 ├── dedup
+├── dac_exclusion
 ├── createStatsSamtoolsfiltered
 ├── index_sam
 ├── createSMaSHFingerPrint
@@ -42,12 +42,14 @@ Fragments processing
 ├── calcFragsLengthDistribuition
 ├── fragle_ct_estimation
 ├── bam_to_bed
+├── unique_frags
 
 Signal processing
 ├── bam_to_bedgraph
 ├── bedgraph_to_bigwig
 ├── igv_reports
 ├── call_peaks
+├── chromatin_count_normalization
 ├── peaks_report
 ├── peaks_annotations
 ├── enrichmentReport
@@ -240,6 +242,38 @@ The pipeline generates an **END motif analysis file** at:motifs/bp_motif.bed
 By default, this analysis considers **4-mers**, but this value can be adjusted using the parameter **--nmer**
 
 ---
+## Chromatin Count Normalization
+
+SNAP includes an integrated module for chromatin fragment count quantification and normalization at user-defined genomic regions. This step generates fragment count matrices from BED-formatted fragment files and supports both single-sample and batch execution modes. The description and behavior of this module are fully implemented within SNAP and are based on the upstream Chromatin Fragment Count Normalization library
+(https://github.com/chhetribsurya/chromatin-frags-normalization), which provides a standalone and more advanced implementation, including detailed normalization logic, execution examples, and extended customization options.
+
+**Parameters :**
+
+--chromatin_count_mode (single/batch)
+
+Controls how the normalization step is executed:
+
+**single**
+	Runs the normalization independently for each sample, producing one output directory per sample.	
+
+**batch**
+	Runs the normalization jointly across all samples, generating a single site-by-sample matrix. This mode is recommended when downstream analyses require direct comparison between samples.
+
+--target-sites 
+
+Target regions BED file
+
+--reference-sites (optional)
+
+Specifies a BED file containing reference genomic regions used for reference-based normalization.
+
+
+When provided, fragment counts at target regions are normalized by the total fragment signal observed across these reference loci.
+
+- This helps correct for global signal-to-noise differences between samples and is particularly useful for cfDNA and other low-input assays.
+- If not provided, normalization is performed using library-size–based scaling only.
+
+---
 
 ## Pileup Reports
 The SNAP pipeline generates **pileup reports** in two formats:
@@ -265,7 +299,7 @@ output_folder/
 ├── trim/
 │   ├── Sample1/
 │   ├── Sample2/
-├── frag/
+├── frags/
 │   ├── Sample1/
 │   ├── Sample2/
 ├── motifs/
@@ -274,11 +308,16 @@ output_folder/
 ├── peaks/
 │   ├── Sample1/
 │   ├── Sample2/
+├── chromatin_count_normalization/
+│   ├── Sample1/
+│   ├── Sample2/
 ├── reports/
+│   ├── fragle/
 │   ├── igv_session/
+│   ├── metrics_lite/
 │   ├── multiqc/
 │   ├── SMaSH/
-├── snap-samplesheet-fasta-.csv
+├── snap-samplesheet-fasta.csv
 ├── software_versions/
 ├── stats_files/
 
@@ -298,7 +337,7 @@ output_folder/
 - Contains subdirectories for each sample with **trimmed reads** after adapter removal and quality filtering.
 - These are the cleaned sequencing reads used for downstream processing.
 
-#### `frag/`
+#### `frags/`
 - Contains subdirectories for each sample with fragment length distribution data.
 - Useful for downstream analysis such as **nucleosome positioning studies**.
 
@@ -311,11 +350,16 @@ output_folder/
 - Contains subdirectories for each sample with peak-calling results (if applicable).
 - Include **peak files** (`.bed`, `.narrowPeak`, `.bedgraph`, `.bw`, `.control_lambda.bdg`,`.treat_pileup.bdg`,`peaks.xls).
 
+#### `chromatin_count_normalization/`
+- Contains the analysis_summary.txt and also the the cpm and raw matrices used for the chromatin fragment counter
+
 #### `reports/`
 - Stores different types of reports generated during the analysis.
 - **Subdirectories:**
+	- **`fragle/`** → Contains **ctDNA_Burden** for all samples calculated using Fragle.
   - **`igv_session/`** → Contains **IGV session files** for easy visualization of sequencing data in **Integrative Genomics Viewer (IGV)**.
   - **`multiqc/`** → Aggregated **MultiQC report** summarizing quality control metrics.
+  - **`metrics_lite/`** → Aggregated text file with only the basic metrics.
   - **`SMaSH/`** → A dendogram clustering the samples using SMAsH (https://github.com/rbundschuh/SMaSH) that is also included in the final report.
 
 #### `snap-samplesheet-fasta-<timestamp>.csv`
