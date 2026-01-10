@@ -15,7 +15,7 @@ include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 workflow  {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.2.0 - All processes in the pipeline"
+    def releaseVersion = "v1.5.15"
 
     // ASCII art for SNAP
     def asciiArt = """

@@ -1,7 +1,9 @@
 process downloadSNPRef {
+
     label 'low_cpu_low_mem'
-    tag "Dowloading SNPs - $genome"
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
+    tag "Downloading SNPs - ${genome}"
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode: 'copy'
 
     container = params.containers.wget
 
@@ -13,16 +15,39 @@ process downloadSNPRef {
 
     script:
     def snpFile = "snps_${genome}.vcf"
-    
+
     """
-    wget -O ${snpFile} ${snp}
+    if [[ "${snp}" =~ ^https?:// ]]; then
+        echo "[INFO] Detected URL input"
+
+        if wget --spider -q "${snp}"; then
+            echo "[INFO] URL exists. Downloading..."
+            wget -O ${snpFile} "${snp}"
+        else
+            echo "[WARNING] URL not accessible. Creating empty VCF file."
+            : > ${snpFile}
+        fi
+
+    else
+        echo "[INFO] Detected local file input"
+
+        if [[ -f "${snp}" ]]; then
+            echo "[INFO] Local file exists. Copying..."
+            cp "${snp}" ${snpFile}
+        else
+            echo "[WARNING] Local file not found. Creating empty VCF file."
+            : > ${snpFile}
+        fi
+    fi
     """
 }
 
 process downloadTSSPromoterPeaks {
+
     label 'low_cpu_low_mem'
-    tag "Dowloading TSS Promoter Peaks- $genome"
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode : 'copy'
+    tag "Downloading TSS Promoter Peaks - ${genome}"
+
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/multiqc/", mode: 'copy'
 
     container = params.containers.wget
 
@@ -36,17 +61,38 @@ process downloadTSSPromoterPeaks {
     def tssFile = "tss_promoter_peaks_${genome}.bed"
 
     """
-    wget -O ${tssFile} ${tssPromoterPeaks}
+    if [[ "${tssPromoterPeaks}" =~ ^https?:// ]]; then
+        echo "[INFO] Detected URL input"
+
+        if wget --spider -q "${tssPromoterPeaks}"; then
+            echo "[INFO] URL exists. Downloading..."
+            wget -O ${tssFile} "${tssPromoterPeaks}"
+        else
+            echo "[WARNING] URL not accessible. Creating empty BED file."
+            : > ${tssFile}
+        fi
+
+    else
+        echo "[INFO] Detected local file input"
+
+        if [[ -f "${tssPromoterPeaks}" ]]; then
+            echo "[INFO] Local file exists. Copying..."
+            cp "${tssPromoterPeaks}" ${tssFile}
+        else
+            echo "[WARNING] Local file not found. Creating empty BED file."
+            : > ${tssFile}
+        fi
+    fi
     """
 }
 
 process downloadDACFile {
 
     label 'low_cpu_low_mem'
-    tag "Dowloading DAC File - $genome" 
+    tag "Dowloading DAC File - ${genome}"
 
     container = params.containers.wget
-    
+
     input:
     tuple val(genome), val(faGZFile), val(geneAnnotation), val(dacList), val(snp), val(tssPromoterPeaks)
     path refDir
@@ -55,17 +101,52 @@ process downloadDACFile {
     file "${genome}.DAC.bed"
 
     script:
-    def dacFile = "${genome}.DAC.bed"
+    def dacFile   = "${genome}.DAC.bed"
     def dacFilegz = "${genome}.DAC.bed.gz"
-    
+
     """
-    if [ ! -f ${refDir}/${dacFile} ]; then
-        wget -O ${refDir}/${dacFilegz} ${dacList}
-        gunzip ${refDir}/${dacFilegz} 
+    mkdir -p "${refDir}"
+
+    # If cached uncompressed file exists, reuse it
+    if [[ -f "${refDir}/${dacFile}" ]]; then
+        echo "[INFO] File ${refDir}/${dacFile} already exists. Skipping download."
+
     else
-        echo "File ${refDir}/${dacFile} already exists. Skipping download."
+        # Need to create it (from URL or local)
+        if [[ "${dacList}" =~ ^https?:// ]]; then
+            echo "[INFO] Detected URL input"
+
+            if wget --spider -q "${dacList}"; then
+                echo "[INFO] URL exists. Downloading gz and unzipping..."
+                wget -O "${refDir}/${dacFilegz}" "${dacList}"
+
+                if gunzip -f "${refDir}/${dacFilegz}"; then
+                    echo "[INFO] Unzipped successfully."
+                else
+                    echo "[WARNING] gunzip failed. Creating empty DAC BED."
+                    : > "${refDir}/${dacFile}"
+                    rm -f "${refDir}/${dacFilegz}" || true
+                fi
+            else
+                echo "[WARNING] URL not accessible. Creating empty DAC BED."
+                : > "${refDir}/${dacFile}"
+            fi
+
+        else
+            echo "[INFO] Detected local file input"
+
+            if [[ -f "${dacList}" ]]; then
+                echo "[INFO] Local file exists. Copying into refDir..."
+                cp "${dacList}" "${refDir}/${dacFile}"
+            else
+                echo "[WARNING] Local file not found. Creating empty DAC BED."
+                : > "${refDir}/${dacFile}"
+            fi
+        fi
     fi
-    ln -s ${refDir}/${dacFile} ${dacFile}
+
+    # Link into task workdir as the official process output
+    ln -sf "${refDir}/${dacFile}" "${dacFile}"
     """
 }
 

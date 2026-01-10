@@ -1,12 +1,12 @@
-process createSMaSHFingerPrint{
+process createSMaSHFingerPrint {
+
     label 'med_cpu_med_mem'
+    tag "All Samples"
 
     container = params.containers.python
 
-    tag "All Samples"   
+    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/SMaSH/", mode: 'copy'
 
-    publishDir "${workflow.projectDir}/${params.outputFolder}/reports/SMaSH/", mode : 'copy'
-    
     input:
     path (chSNPSMaSH)
     path (chSNPS_ref)
@@ -17,14 +17,30 @@ process createSMaSHFingerPrint{
 
     script:
     """
-    #check if there are more than one BAM file if not create an empty pval_out.txt
+    
+    # Count BAM files
     num_bams=\$(ls *.bam 2>/dev/null | wc -l)
+    echo "[INFO] Number of BAM files: \$num_bams"
 
-    if [[ "\$num_bams" -gt 1 ]]; then
-        python3 $chSNPSMaSH -i $chSNPS_ref ALL
+    # Check SNP file
+    if [[ ! -f "${chSNPS_ref}" ]]; then
+        echo "[WARNING] SNP reference file not found: ${chSNPS_ref}"
+        snp_ok=false
+    elif [[ ! -s "${chSNPS_ref}" ]]; then
+        echo "[WARNING] SNP reference file is empty: ${chSNPS_ref}"
+        snp_ok=false
     else
-        echo "Only one BAM file detected, creating empty pval_out.txt."
-        touch pval_out.txt
+        echo "[INFO] SNP reference file is present and non-empty"
+        snp_ok=true
+    fi
+
+    # Decision logic
+    if [[ "\$num_bams" -gt 1 && "\$snp_ok" == true ]]; then
+        echo "[INFO] Running SMaSH fingerprint"
+        python3 ${chSNPSMaSH} -i ${chSNPS_ref} ALL
+    else
+        echo "[INFO] Conditions not met. Creating empty pval_out.txt"
+        : > pval_out.txt
     fi
     """
 }
