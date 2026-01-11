@@ -47,14 +47,21 @@ workflow FRAGMENTS_PROCESSING {
 
     // Fragle CT estimation **************************************************
     // #######################################################################
-    chFragleSites = Channel.fromPath("$params.fragle_sites_ref")
 
-    chAllBAMProcessedIndexFilteredSitesFiles = filter_bam_fragle(chBAMProcessedIndexFiles,chFragleSites).collect()
-    chFragleBAMandBAIIndexFiles = chAllBAMProcessedIndexFilteredSitesFiles.map { collectedFiles ->
-    collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
+    if (params.fragle_ct_estimation == true){
+        chFragleSites = Channel.fromPath("$params.fragle_sites_ref")
 
-    chFragleFiles = fragle_ct_estimation(chFragleBAMandBAIIndexFiles)
-    chCTFragleFilesReport = ct_report(chFragleFiles,chMultiQCCTHeader,chReportCT)
+        chAllBAMProcessedIndexFilteredSitesFiles = filter_bam_fragle(chBAMProcessedIndexFiles,chFragleSites).collect()
+        chFragleBAMandBAIIndexFiles = chAllBAMProcessedIndexFilteredSitesFiles.map { collectedFiles ->
+        collectedFiles.findAll { it.toString().endsWith('.bam') || it.toString().endsWith('.bai') }}
+
+        chFragleFiles = fragle_ct_estimation(chFragleBAMandBAIIndexFiles)
+        chCTFragleFilesReport = ct_report(chFragleFiles,chMultiQCCTHeader,chReportCT)
+     } else {
+        chCTFragleFilesReport = Channel.of(params.dummy_control_file)
+        chFragleFiles = Channel.of(params.dummy_control_file)
+     }
+
 
     
     chBedFiles = bam_to_bed(chNameSortedFiles) 

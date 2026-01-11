@@ -36,7 +36,10 @@ df_enrichment = load_enrichment_csvs()
 
 def join_sample_dataframes(df_frags, df_peaks, df_fragle,df_enrichment):
     merged = pd.merge(df_frags, df_peaks, on='SampleName', how='inner')
-    merged = pd.merge(merged,df_fragle,left_on='SampleName', right_on='Sample_ID')
+
+    if not df_fragle.empty:
+        merged = pd.merge(merged,df_fragle,left_on='SampleName', right_on='Sample_ID')
+        
     if not df_enrichment.empty:
         merged = pd.merge(merged, df_enrichment, on='SampleName', how='outer')
     return merged
