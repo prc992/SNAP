@@ -14,23 +14,23 @@ include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 
 workflow  {
     // Static information about the pipeline
-    def githubPath = "https://github.com/prc992/SNAP"
-    def releaseVersion = "v1.5.16"
+    def githubPath = "https://github.com/prc992/SNAPIE"
+    def releaseVersion = "v1.5.17"
 
-    // ASCII art for SNAP
+    // ASCII art for SNAPIE
     def asciiArt = """
-      ███████╗ ███╗   ██╗ █████╗ ██████╗ 
-      ██╔════╝ ████╗  ██║██╔══██╗██╔══██╗
-      ███████╗ ██╔██╗ ██║███████║██████╔╝
-      ╚════██║ ██║╚██╗██║██╔══██║██╔═══╝ 
-      ███████╗ ██║ ╚████║██║  ██║██║     
-      ╚══════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     
+      ███████╗ ███╗   ██╗ █████╗ ██████╗  ██╗ ██████╗
+      ██╔════╝ ████╗  ██║██╔══██╗██╔══██╗ ██║ ██╗
+      ███████╗ ██╔██╗ ██║███████║██████╔╝ ██║ ██████╗
+      ╚════██║ ██║╚██╗██║██╔══██║██╔═══╝  ██║ ██╗
+      ███████╗ ██║ ╚████║██║  ██║██║      ██║ ██████╗
+      ╚══════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝      ╚═╝ ╚═════╝
     """
 
     // Print the introductory message
     println asciiArt
-    println "SNAP pipeline running, created by BacaLab. https://bacalab.dana-farber.org/"
-    println "SNAP: Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma."
+    println "SNAPIE pipeline running, created by BacaLab. https://bacalab.dana-farber.org/"
+    println "SNAPIE: Streamlined Nextflow Analysis Pipeline for Immunoprecipitation-Based Epigenomic Profiling of Circulating Chromatin"
     println "GitHub repository: ${githubPath}"
     println "Release version: ${releaseVersion}"
     println "Running pipeline with profile: ${workflow.profile}"
