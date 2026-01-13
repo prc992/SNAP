@@ -96,7 +96,7 @@ sampleId, enrichment_mark, read1, read2, control
 - You can specify which **enrichment mark** should be calculated using the `--enrichment_mark` parameter.
 
 ### Enrichment Marks
-By default, the SNAP pipeline supports the following enrichment marks:
+By default, the SNAPIE pipeline supports the following enrichment marks:
 - **H3K4me3**
 - **H3K27ac**
 - **MeDIP**
@@ -196,7 +196,7 @@ Specify the reference genome version using:
 
 –genome <reference_genome>
 
-The SNAP pipeline is pre-configured to support:
+The SNAPIE pipeline is pre-configured to support:
 - **hg19**
 - **hg38**
 
@@ -215,7 +215,7 @@ The output directory where results will be saved is specified with:
 
 (Default: `analysis_folder`)
 
-The SNAP pipeline consists of **six main processing stages**. By default, all stages are executed, but you can stop the pipeline at a specific stage using the `--until` parameter:
+The SNAPIE pipeline consists of **six main processing stages**. By default, all stages are executed, but you can stop the pipeline at a specific stage using the `--until` parameter:
 
 ```
 PREPROCESSING
@@ -228,7 +228,7 @@ BAM_SIGNAL_PROCESSING
 ---
 
 ## Excluding Blacklisted Genomic Regions
-By default, the SNAP pipeline **removes genomic regions known to cause artifacts**, reducing false positives and biases in the analysis.
+By default, the SNAPIE pipeline **removes genomic regions known to cause artifacts**, reducing false positives and biases in the analysis.
 
 To **disable** this step, set:
 
@@ -244,7 +244,7 @@ By default, this analysis considers **4-mers**, but this value can be adjusted u
 ---
 ## Chromatin Count Normalization
 
-SNAP includes an integrated module for chromatin fragment count quantification and normalization at user-defined genomic regions. This step generates fragment count matrices from BED-formatted fragment files and supports both single-sample and batch execution modes. The description and behavior of this module are fully implemented within SNAP and are based on the upstream Chromatin Fragment Count Normalization library
+SNAPIE includes an integrated module for chromatin fragment count quantification and normalization at user-defined genomic regions. This step generates fragment count matrices from BED-formatted fragment files and supports both single-sample and batch execution modes. The description and behavior of this module are fully implemented within SNAPIE and are based on the upstream Chromatin Fragment Count Normalization library
 (https://github.com/chhetribsurya/chromatin-frags-normalization), which provides a standalone and more advanced implementation, including detailed normalization logic, execution examples, and extended customization options.
 
 **Parameters :**
@@ -276,7 +276,7 @@ When provided, fragment counts at target regions are normalized by the total fra
 ---
 
 ## Pileup Reports
-The SNAP pipeline generates **pileup reports** in two formats:
+The SNAPIE pipeline generates **pileup reports** in two formats:
 1. **MultiQC report** (found in `reports/multiqc/`)
 2. **IGV session file** (stored in `reports/igv_session/`, viewable in IGV Browser)
 
@@ -284,9 +284,9 @@ By default, both reports use regions defined in: ref_files/pileup_report/test_ho
 
 To use **custom regions**, specify:–genes_pileup_report <path_to_custom_bed_file>
 
-# SNAP Pipeline Output Directory Structure  
+# SNAPIE Pipeline Output Directory Structure  
 
-After running the SNAP pipeline, the results will be organized into several directories within the output folder which you can provide via the parameter **--outputFolder** (the default value for this parameter is analysis_folder). Each directory stores specific files related to different stages of the pipeline. Below is an explanation of each directory:  
+After running the SNAPIE pipeline, the results will be organized into several directories within the output folder which you can provide via the parameter **--outputFolder** (the default value for this parameter is analysis_folder). Each directory stores specific files related to different stages of the pipeline. Below is an explanation of each directory:  
 
 ```
 output_folder/
@@ -375,7 +375,7 @@ output_folder/
 
 ## Usage Examples
 
-Below are some practical examples showing how to run the SNAP pipeline in different scenarios. These examples aim to help you get started quickly, whether you’re working with FASTA or BAM files, using spreadsheets or directory-based input.
+Below are some practical examples showing how to run the SNAPIE pipeline in different scenarios. These examples aim to help you get started quickly, whether you’re working with FASTA or BAM files, using spreadsheets or directory-based input.
 
 #### `Example 1: Running the pipeline with FASTA files using a spreadsheet/`
 
