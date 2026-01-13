@@ -1,10 +1,10 @@
-# SNAP
-### Streamlined Nextflow Analysis Pipeline for profiling circulating histone modifications identifies tumor epigenomic signatures in cancer plasma.
+# SNAPIE
+### Streamlined Nextflow Analysis Pipeline for Immunoprecipitation-Based Epigenomic Profiling of Circulating Chromatin
 
 ![Pipeline Workflow](fig1.png)
 
 
-## SNAP Pipeline Documentation
+## SNAPIE Pipeline Documentation
 
 ### Detailed Processing:
 
