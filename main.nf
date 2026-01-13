@@ -15,7 +15,7 @@ include { BAM_SIGNAL_PROCESSING } from './subworkflows/local/bam_signal_process'
 workflow  {
     // Static information about the pipeline
     def githubPath = "https://github.com/prc992/SNAPIE"
-    def releaseVersion = "v1.5.17"
+    def releaseVersion = "v1.5.18"
 
     // ASCII art for SNAPIE
     def asciiArt = """
