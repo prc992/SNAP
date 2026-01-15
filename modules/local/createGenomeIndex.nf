@@ -17,7 +17,8 @@ process createGenomeIndex {
     """
     if [ ! -f ${refDir}/${genomeFilePac} ]; then
         echo "${refDir}/${genomeFilePac} file not found. Creating index files."
-        bwa index ${genomeFile}
+        bwa index ${refDir}/${genome}.fa
+
     else
         echo "Index files already exist in ${refDir}. Skipping index creation."
         echo "Creating symlinks to index files."
